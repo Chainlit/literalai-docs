@@ -43,7 +43,8 @@
         "python-client/quickstart",
         "python-client/authentication",
         "python-client/create-a-thread",
-        "python-client/create-a-step"
+        "python-client/create-a-step",
+        "python-client/entities"
       ]
     }
   ],

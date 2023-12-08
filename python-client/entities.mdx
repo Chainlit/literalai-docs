@@ -1,0 +1,108 @@
+---
+title: Manipulating entities
+description: "Create Read Update and Delete methods for Chainlit platform entities"
+---
+
+If you prefer to manipulate Chainlit plateform entities without using instrumentation, here is a collection of methods to do so.
+Checkout the [authentication](/python-client/authentication) page for more information on how to instanciate a client.
+
+All entities have a `to_dict` method that will help you visualize its content.
+
+## User
+
+### Create an User
+
+```python
+from chainlit_client import ChainlitClient
+
+client = ChainlitClient()
+new_user = client.api.create_user(identifier="John Doe")
+```
+
+### Get an User
+
+```python
+user = client.api.get_user(id="1234")
+```
+
+<Warning>If the user does not exist `None` is returned</Warning>
+
+### Update an User
+
+```python
+updated_user = client.api.update_user(id="1234", identifier="Jane Doe")
+```
+
+### Delete an User
+
+```python
+user = client.api.delete_user(id="1234")
+```
+
+## Thread
+
+Checkout the documentation about [threads](/concepts/thread) for more information.
+
+### Fetching threads
+
+You can query threads with filter:
+
+```python
+threads = client.api.list_threads(first=None, after=None, filters=None)
+
+print(threads["pageInfo"])
+for thread in threads["data"]:
+    print(thread.to_dict())
+```
+
+Filters is a dict that can contain the following keys:
+
+```
+attachmentsName
+createdAt
+afterCreatedAt
+beforeCreatedAt
+duration
+environment
+feedbacksValue
+participantsIdentifier
+search
+tokenCount
+```
+
+You can also fetch a single thread by id
+
+```python
+thread = client.api.get_thread(id="1234")
+```
+
+### Update thread
+
+```python
+updated_thread = client.update_thread(
+    id="1234",
+    metadata=None,
+    participant_id=None,
+    environment=None,
+    tags=None,
+)
+```
+
+### Upsert tread
+
+It will either create a new thread of update the existing one.
+
+```python
+thread = client.upsert_thread(
+    metadata=None,
+    participant_id=None,
+    environment=None,
+    tags=None
+)
+```
+
+### Delete thread
+
+```python
+client.api.delete_thread(id="1234")
+```
