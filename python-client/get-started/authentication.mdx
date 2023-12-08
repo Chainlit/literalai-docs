@@ -1,0 +1,27 @@
+---
+title: "Authentication"
+description: 'How to authenticate with the Chainlit Platform'
+---
+
+You can use the Chainlit api key in two ways to configure the Chainlit client:
+
+1. Pass it to the `ChainlitClient` constructor:
+
+```python
+client = ChainlitClient(api_key="YOUR_API_KEY")
+```
+
+2. Set the `CHAINLIT_API_KEY` environment variable, you can then instantiate the client without passing the api key:
+
+```python
+client = ChainlitClient()
+```
+
+Our recommendation is to store the `CHAINLIT_API_KEY` environment variable in a `.env` file and to load it using [python-dotenv](https://pypi.org/project/python-dotenv/).
+
+```python
+from dotenv import load_dotenv
+load_dotenv()
+
+client = ChainlitClient()
+```

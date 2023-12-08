@@ -11,16 +11,16 @@ There are three methods to create a step:
 ## Using the `with` statement
 
 ```python
-with sdk.step() as step:
+with client.step() as step:
     # do something
 ```
 
 ## Using the decorator on a function
 
-The simplest way to create a step is to use the `@sdk.step` decorator on a function:
+The simplest way to create a step is to use the `@client.step` decorator on a function:
 
 ```python
-@sdk.step
+@client.step
 def my_step():
     # do something
 ```
@@ -28,14 +28,17 @@ def my_step():
 If you already have a step id that you want to use, you can pass it to the decorator. Bear in mind that the step id must be unique across all steps in your project.
 
 ```python
-@sdk.step(id="my-step-id")
+@client.step(id="my-step-id")
 def my_step():
     # do something
 ```
 
 ## Using the `step` method
 
-You can also create a step using the `step` method:
+You can also create a step using the `step` method. This method returns a `Step` object that you can use to finalize the step. Finalizing a step is mandatory to send the data to the Chainlit platform.
 
 ```python
-sdk.step(i)
+step = client.step(i)
+# do something
+step.finalize()
+```

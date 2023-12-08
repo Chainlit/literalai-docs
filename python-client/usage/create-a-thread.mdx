@@ -10,16 +10,16 @@ There are two methods to create a thread:
 ## Using the `with` statement
 
 ```python
-with sdk.thread() as thread:
+with client.thread() as thread:
     # do something
 ```
 
 ## Using the decorator on a function
 
-The simplest way to create a thread is to use the `@sdk.thread` decorator on a function:
+The simplest way to create a thread is to use the `@client.thread` decorator on a function:
 
 ```python
-@sdk.thread
+@client.thread
 def my_thread():
     # do something
 ```
@@ -27,7 +27,7 @@ def my_thread():
 If you already have a thread id that you want to use, you can pass it to the decorator. Bear in mind that the thread id must be unique across all threads in your project.
 
 ```python
-@sdk.thread(thread_id="my-thread-id")
+@client.thread(thread_id="my-thread-id")
 def my_thread():
     # do something
 ```

@@ -36,21 +36,21 @@ from openai import OpenAI
 
 load_dotenv()
 
-client = OpenAI()
+openai_client = OpenAI()
 
-sdk = ChainlitClient()
-sdk.instrument_openai()
+client = ChainlitClient()
+client.instrument_openai()
 
 
-@sdk.thread
+@client.thread
 def run():
     welcome_message = "What's your name? "
-    sdk.message(content=welcome_message, type="SYSTEM_MESSAGE")
+    client.message(content=welcome_message, type="SYSTEM_MESSAGE")
 
     text = input(welcome_message)
-    sdk.message(content=text, type="USER_MESSAGE")
+    client.message(content=text, type="USER_MESSAGE")
 
-    completion = client.chat.completions.create(
+    completion = openai_client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {
@@ -68,11 +68,11 @@ def run():
         ],
     )
     print(completion.choices[0].message.content)
-    sdk.message(content=completion, type="ASSISTANT_MESSAGE")
+    client.message(content=completion, type="ASSISTANT_MESSAGE")
 
 
 run()
-sdk.wait_until_queue_empty()
+client.wait_until_queue_empty()
 ```
 
 ## Next Steps

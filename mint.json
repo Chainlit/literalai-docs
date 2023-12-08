@@ -34,17 +34,36 @@
     },
     {
       "group": "Concepts",
-      "pages": ["concepts/thread", "concepts/step", "concepts/instrumentation"]
+      "pages": [
+        "concepts/thread",
+        "concepts/step",
+        "concepts/message",
+        "concepts/instrumentation"
+      ]
     },
     {
       "group": "Python client",
       "pages": [
-        "python-client/introduction",
-        "python-client/quickstart",
-        "python-client/authentication",
-        "python-client/create-a-thread",
-        "python-client/create-a-step",
-        "python-client/entities"
+        {
+          "group": "Get started",
+          "pages": [
+            "python-client/get-started/introduction",
+            "python-client/get-started/quickstart",
+            "python-client/get-started/authentication"
+          ]
+        },
+        {
+          "group": "Usage",
+          "pages": [
+            "python-client/usage/create-a-thread",
+            "python-client/usage/create-a-step",
+            "python-client/usage/create-a-message"
+          ]
+        },
+        {
+          "group": "API Reference",
+          "pages": ["python-client/api-reference/entities"]
+        }
       ]
     }
   ],
