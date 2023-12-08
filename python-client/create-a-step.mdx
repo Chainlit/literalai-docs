@@ -1,0 +1,41 @@
+---
+title: "Create a step"
+---
+
+There are three methods to create a step:
+
+1. Using the `with` statement
+2. Using the decorator on a function
+3. Using the `step` method
+
+## Using the `with` statement
+
+```python
+with sdk.step() as step:
+    # do something
+```
+
+## Using the decorator on a function
+
+The simplest way to create a step is to use the `@sdk.step` decorator on a function:
+
+```python
+@sdk.step
+def my_step():
+    # do something
+```
+
+If you already have a step id that you want to use, you can pass it to the decorator. Bear in mind that the step id must be unique across all steps in your project.
+
+```python
+@sdk.step(id="my-step-id")
+def my_step():
+    # do something
+```
+
+## Using the `step` method
+
+You can also create a step using the `step` method:
+
+```python
+sdk.step(i)

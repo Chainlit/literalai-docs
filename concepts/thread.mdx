@@ -2,6 +2,7 @@
 title: "Thread"
 ---
 
-A Thread is a conversation between a human and one or several agents.
+A Thread represents a group of interactions between a user and an AI app. It can be a conversation between a human and one or several agents, or an agent generating a document piece by piece from a user input...
 
-The SDK is flexible to enable use cases that don't exactly match human-agent conversation to also be instrumented. For example, your application could be a query that then generates a document, and this would be a valid use case for the SDK.
+A Thread is composed of Steps. A Step can be a message, or an internal AI step like an LLM call.
+

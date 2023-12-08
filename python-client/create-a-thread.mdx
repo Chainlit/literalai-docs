@@ -1,0 +1,33 @@
+---
+title: "Create a thread"
+---
+
+There are two methods to create a thread:
+
+1. Using the `with` statement
+2. Using the decorator on a function
+
+## Using the `with` statement
+
+```python
+with sdk.thread() as thread:
+    # do something
+```
+
+## Using the decorator on a function
+
+The simplest way to create a thread is to use the `@sdk.thread` decorator on a function:
+
+```python
+@sdk.thread
+def my_thread():
+    # do something
+```
+
+If you already have a thread id that you want to use, you can pass it to the decorator. Bear in mind that the thread id must be unique across all threads in your project.
+
+```python
+@sdk.thread(thread_id="my-thread-id")
+def my_thread():
+    # do something
+```
