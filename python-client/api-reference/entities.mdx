@@ -19,11 +19,19 @@ client = ChainlitClient()
 new_user = client.api.create_user(identifier="John Doe")
 ```
 
+<ParamField path="identifier" type="string">
+  The identifier of the user
+</ParamField>
+
 ### Get an User
 
 ```python
 user = client.api.get_user(id="1234")
 ```
+
+<ParamField path="id" type="string">
+  The id of the user
+</ParamField>
 
 <Warning>If the user does not exist `None` is returned</Warning>
 
@@ -33,11 +41,27 @@ user = client.api.get_user(id="1234")
 updated_user = client.api.update_user(id="1234", identifier="Jane Doe")
 ```
 
+<ParamField path="id" type="string">
+  The id of the user
+</ParamField>
+
+<ParamField path="identifier" type="string">
+  The identifier of the user
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  The metadata of the user
+</ParamField>
+
 ### Delete an User
 
 ```python
 user = client.api.delete_user(id="1234")
 ```
+
+<ParamField path="id" type="string">
+  The id of the user
+</ParamField>
 
 ## Thread
 
@@ -55,26 +79,37 @@ for thread in threads["data"]:
     print(thread.to_dict())
 ```
 
-Filters is a dict that can contain the following keys:
+<ParamField path="first after" type="int">
+  Pagination parameters, checkout [GraphQL
+  doc](https://graphql.org/learn/pagination/) for more information
+</ParamField>
 
-```
-attachmentsName
-createdAt
-afterCreatedAt
-beforeCreatedAt
-duration
-environment
-feedbacksValue
-participantsIdentifier
-search
-tokenCount
-```
+<ParamField path="filter" type="dict">
+  Filter for threads
+</ParamField>
+
+The following options are valid:
+
+- attachmentsName
+- createdAt
+- afterCreatedAt
+- beforeCreatedAt
+- duration
+- environment
+- feedbacksValue
+- participantsIdentifier
+- search
+- tokenCount
 
 You can also fetch a single thread by id
 
 ```python
 thread = client.api.get_thread(id="1234")
 ```
+
+<ParamField path="id" type="string">
+  The id of the thread
+</ParamField>
 
 ### Update thread
 
@@ -88,12 +123,33 @@ updated_thread = client.update_thread(
 )
 ```
 
+<ParamField path="id" type="string">
+  The id of the thread
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  The metadata of the thread
+</ParamField>
+
+<ParamField path="participant_id" type="string">
+  The participant id of the thread
+</ParamField>
+
+<ParamField path="environment" type="string">
+  The environment of the thread
+</ParamField>
+
+<ParamField path="tags" type="list">
+  The tags of the thread
+</ParamField>
+
 ### Upsert tread
 
-It will either create a new thread of update the existing one.
+It will either create a new thread is the thread_id does not exist of update the existing one.
 
 ```python
 thread = client.upsert_thread(
+    thead_id="1234",
     metadata=None,
     participant_id=None,
     environment=None,
@@ -101,8 +157,32 @@ thread = client.upsert_thread(
 )
 ```
 
+<ParamField path="thread_id" type="string">
+  The id of the thread
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  The metadata of the thread
+</ParamField>
+
+<ParamField path="participant_id" type="string">
+  The participant id of the thread
+</ParamField>
+
+<ParamField path="environment" type="string">
+  The environment of the thread
+</ParamField>
+
+<ParamField path="tags" type="list">
+  The tags of the thread
+</ParamField>
+
 ### Delete thread
 
 ```python
 client.api.delete_thread(id="1234")
 ```
+
+<ParamField path="id" type="string">
+  The id of the thread
+</ParamField>
