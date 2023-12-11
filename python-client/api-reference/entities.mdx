@@ -186,3 +186,56 @@ client.api.delete_thread(id="1234")
 <ParamField path="id" type="string">
   The id of the thread
 </ParamField>
+
+## Step
+
+Checkout the documentation about [steps](/concepts/step) for more information.
+
+### Create a step
+
+```python
+step = client.api.create_step(
+    thread_id: "1234"
+    type = "UNDEFINED",
+)
+```
+
+<ParamField path="thread_id" type="string">
+  The id of the thread
+</ParamField>
+
+<ParamField path="type" type="string">
+  The type of the step
+</ParamField>
+
+<ParamField path="start_time" type="string">
+  Starting time in string format
+</ParamField>
+
+<ParamField path="end_time" type="string">
+  Ending time in string format
+</ParamField>
+
+<ParamField path="input" type="string">
+  Input in string format
+</ParamField>
+
+<ParamField path="output" type="string">
+  Output in string format
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  Metadata as a dict
+</ParamField>
+
+<ParamField path="parent_id" type="string">
+  Parent ID in string format
+</ParamField>
+
+<ParamField path="name" type="string">
+  Name in string format
+</ParamField>
+
+<ParamField path="tags" type="List[string]">
+  List of tags in string format
+</ParamField>
