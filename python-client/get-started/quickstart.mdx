@@ -45,10 +45,10 @@ client.instrument_openai()
 @client.thread
 def run():
     welcome_message = "What's your name? "
-    client.message(content=welcome_message, type="SYSTEM_MESSAGE")
+    client.message(content=welcome_message, type="system_message")
 
     text = input(welcome_message)
-    client.message(content=text, type="USER_MESSAGE")
+    client.message(content=text, type="user_message")
 
     completion = openai_client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -68,7 +68,7 @@ def run():
         ],
     )
     print(completion.choices[0].message.content)
-    client.message(content=completion, type="ASSISTANT_MESSAGE")
+    client.message(content=completion, type="assistant_message")
 
 
 run()

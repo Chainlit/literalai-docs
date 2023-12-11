@@ -6,18 +6,18 @@ A Step is a container of work in a Thread. It can be nested to include several c
 
 A Step can be one of the following types:
 
-- `RUN`: A generic step
-- `TOOL`: A step that runs a tool
-- `LLM`: A step that runs a language model
-- `EMBEDDING`: A step that runs an embedding model
-- `RETRIEVAL`: A step that retrieves documents
-- `RERANK`: A step that reranks documents
-- `UNDEFINED`: An undefined step
+- `run`: A generic step
+- `tool`: A step that runs a tool
+- `llm`: A step that runs a language model
+- `embedding`: A step that runs an embedding model
+- `retrieval`: A step that retrieves documents
+- `rerank`: A step that reranks documents
+- `undefined`: An undefined step
 
 
 A Step can also represent Messages in a Thread. In this case, the Step will have a `type` field that can be one of the following:
 
-- `USER_MESSAGE`: A message from the user
-- `SYSTEM_MESSAGE`: A message from the system
-- `ASSISTANT_MESSAGE`: A message from the assistant
+- `user_message`: A message from the user
+- `system_message`: A message from the system
+- `assistant_message`: A message from the assistant
   
