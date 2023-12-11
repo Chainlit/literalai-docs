@@ -2,4 +2,14 @@
 title: "Message"
 ---
 
+A Message is a special Step. It represents a message from the user, the system or the assistant.
 
+A Message has a `type` field that can be one of the following:
+
+- `assistant_message`: A message from the assistant
+- `user_message`: A message from the user
+- `system_message`: A message from the system (e.g. a static prompt sent to the user at the beginning of a conversation)
+
+A Message must have a `content` field that contains the text of the message.
+
+Like with Steps, you can either set use the auto-generated message ids, or use custom ones to match your own system. Because messages are implemented as steps, their ids must be unique across your project from any other step or message.
