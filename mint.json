@@ -24,7 +24,8 @@
     {
       "name": "Python client",
       "url": "python-client"
-    }
+    },
+    { "name": "Cloud", "url": "cloud" }
   ],
   "anchors": [],
   "navigation": [
@@ -65,7 +66,8 @@
           "pages": ["python-client/api-reference/entities"]
         }
       ]
-    }
+    },
+    { "group": "Cloud", "pages": ["cloud/deployment"] }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/chainlit_io",
