@@ -109,6 +109,9 @@ APP_GCS_PROJECT_ID="project id"
 APP_GCS_CLIENT_EMAIL="client email"
 # note: the private key needs to be encoded in base64
 APP_GCS_PRIVATE_KEY="private key"
+# Or for Azure storage https://learn.microsoft.com/en-us/azure/storage/blobs/quickstart-storage-explorer
+APP_AZURE_STORAGE_ACCOUNT="azure storage account"
+APP_AZURE_STORAGE_ACCESS_KEY="azure storage key"
 ```
 
 3. [OPTIONAL] Setup Redis to reduce latency:
@@ -176,7 +179,7 @@ SENTRY_AUTH_TOKEN="sentry-auth-token"
 In order to be able to use the storage solution of your choice, you will need to configure CORS for it.
 
 - For [AWS S3](https://repost.aws/knowledge-center/s3-configure-cors)
-- For [Google Cloud Storage](https://saturncloud.io/blog/how-to-set-up-cors-on-google-cloud-storage/)
+- For [Google Cloud Storage](https://github.com/lrakai/google-cloud-storage-signed-urls/blob/master/README.md)
 - For [Azure Blob Storage](https://learn.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services)
 
 ## Configure OAuth providers
