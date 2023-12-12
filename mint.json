@@ -42,34 +42,30 @@
         "concepts/instrumentation"
       ]
     },
+
     {
-      "group": "Python client",
+      "group": "Get started",
       "pages": [
-        {
-          "group": "Get started",
-          "pages": [
-            "python-client/get-started/introduction",
-            "python-client/get-started/authentication",
-            "python-client/get-started/send-a-first-step"
-          ]
-        },
-        {
-          "group": "Usage",
-          "pages": [
-            "python-client/usage/create-a-thread",
-            "python-client/usage/create-a-step",
-            "python-client/usage/create-a-message"
-          ]
-        },
-        {
-          "group": "Tutorial",
-          "pages": ["python-client/tutorial/conversation-with-openai"]
-        },
-        {
-          "group": "API Reference",
-          "pages": ["python-client/api-reference/entities"]
-        }
+        "python-client/get-started/introduction",
+        "python-client/get-started/authentication",
+        "python-client/get-started/send-a-first-step"
       ]
+    },
+    {
+      "group": "Usage",
+      "pages": [
+        "python-client/usage/create-a-thread",
+        "python-client/usage/create-a-step",
+        "python-client/usage/create-a-message"
+      ]
+    },
+    {
+      "group": "Tutorial",
+      "pages": ["python-client/tutorial/conversation-with-openai"]
+    },
+    {
+      "group": "API Reference",
+      "pages": ["python-client/api-reference/entities"]
     },
     { "group": "Cloud", "pages": ["cloud/deployment"] }
   ],

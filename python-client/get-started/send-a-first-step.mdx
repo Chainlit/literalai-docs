@@ -9,14 +9,20 @@ Copy the following code in a file called `step-example.py`:
 ```python step-example.py
 from chainlit_client import ChainlitClient
 from dotenv import load_dotenv
+
 load_dotenv()
 
 client = ChainlitClient()
 
+@client.step(type="run")
+def my_step(input):
+    return f"World" 
+
+
 @client.thread
 def main():
-    with client.step(type="tool") as step:
-      step.metadata = {"hello": "world"}
+    print(my_step("Hello"))
+
 
 main()
 client.wait_until_queue_empty()
@@ -27,11 +33,13 @@ Run the code, you should see something similar to the following output:
 
 ```bash
 $ python step-example.py
-In step 4956b1be-7145-4a3c-a1b7-318f61a80038
+World
 Done
 ```
 
 Now you can go the cloud platform and see your step in the thread view:
 
-![One step thread in the Chainlit platform](/images/1-step.png)
+<Frame caption="The result in Chainlit platform">
+  <img src="/images/1-step.png" alt="One step thread in the Chainlit platform" />
+</Frame>
 
