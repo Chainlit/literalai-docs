@@ -62,6 +62,10 @@
           ]
         },
         {
+          "group": "Tutorial",
+          "pages": ["python-client/tutorial/conversation-with-openai"]
+        },
+        {
           "group": "API Reference",
           "pages": ["python-client/api-reference/entities"]
         }
