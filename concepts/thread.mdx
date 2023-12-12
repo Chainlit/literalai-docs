@@ -6,25 +6,39 @@ A Thread represents a group of interactions between a user and an AI app. It can
 
 A Thread is composed of Steps. A Step can be a message, or an internal AI step like an LLM call.
 
+## A simple thread
+
 <CodeGroup>
 ```python step-example.py
+import time
 from chainlit_client import ChainlitClient
 
 client = ChainlitClient()
 
+
 @client.step(type="tool")
-async def my_tool():
+def my_tool():
     # do something
+
+    time.sleep(1)
 
     return "Response from the tool"
 
-async def main():
-    tool_response = await my_tool()
+
+@client.thread
+def main():
+    tool_response = my_tool()
 
     client.message(content=tool_response, type="assistant_message")
     print(tool_response)
+
+
+main()
+client.wait_until_queue_empty()
 ```
 </CodeGroup>
+
+![Simple thread platform view](/images/thread-1-step-1-message.png)
 
 ## Thread API
 

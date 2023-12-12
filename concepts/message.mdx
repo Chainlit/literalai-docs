@@ -13,3 +13,51 @@ A Message has a `type` field that can be one of the following:
 A Message must have a `content` field that contains the text of the message.
 
 Like with Steps, you can either set use the auto-generated message ids, or use custom ones to match your own system. Because messages are implemented as steps, their ids must be unique across your project from any other step or message.
+
+## A simple message
+
+In this example, we create a message with the `message` method. The message is automatically sent to the Chainlit platform. The type is set to `assistant_message` to convey that it's a message from the AI assistant.
+
+Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the Chainlit platform before the program exits.
+
+<CodeGroup>
+```python step-example.py
+import time
+from chainlit_client import ChainlitClient
+
+client = ChainlitClient()
+
+
+@client.step(type="tool")
+def my_tool():
+    # do something
+
+    time.sleep(1)
+
+    return "Response from the tool"
+
+
+@client.thread
+def main():
+    tool_response = my_tool()
+
+    client.message(content=tool_response, type="assistant_message")
+    print(tool_response)
+
+
+main()
+client.wait_until_queue_empty()
+```
+</CodeGroup>
+
+![Simple thread platform view](/images/thread-1-step-1-message.png)
+
+## Message API
+
+Use the `client.message` to create a message.
+
+<CardGroup cols={2}>
+  <Card title="Message method" icon="code" href="/python-client/usage/create-a-message">
+    Use the `message` method to create a message.
+  </Card>
+</CardGroup>

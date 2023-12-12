@@ -4,26 +4,43 @@ title: "Step"
 
 A Step is a container of work in a Thread. It can be nested to include several children Steps.
 
+## A simple step
+
+In this example, we create a step with the decorator. The step is automatically sent to the Chainlit platform. The type is set to `tool` to convey that the function contains a tool used by an AI assistant.
+
+Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the Chainlit platform before the program exits.
 
 <CodeGroup>
 ```python step-example.py
+import time
 from chainlit_client import ChainlitClient
 
 client = ChainlitClient()
 
+
 @client.step(type="tool")
-async def my_tool():
+def my_tool():
     # do something
+
+    time.sleep(1)
 
     return "Response from the tool"
 
-async def main():
-    tool_response = await my_tool()
+
+@client.thread
+def main():
+    tool_response = my_tool()
 
     client.message(content=tool_response, type="assistant_message")
     print(tool_response)
+
+
+main()
+client.wait_until_queue_empty()
 ```
 </CodeGroup>
+
+![Simple thread platform view](/images/thread-1-step-1-message.png)
 
 ## Step API
 
