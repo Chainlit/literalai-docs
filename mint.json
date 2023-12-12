@@ -49,8 +49,8 @@
           "group": "Get started",
           "pages": [
             "python-client/get-started/introduction",
-            "python-client/get-started/quickstart",
-            "python-client/get-started/authentication"
+            "python-client/get-started/authentication",
+            "python-client/get-started/send-a-first-step"
           ]
         },
         {
