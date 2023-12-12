@@ -196,7 +196,7 @@ Checkout the documentation about [steps](/concepts/step) for more information.
 ```python
 step = client.api.create_step(
     thread_id: "1234"
-    type = "UNDEFINED",
+    type = "undefined",
 )
 ```
 
@@ -238,4 +238,210 @@ step = client.api.create_step(
 
 <ParamField path="tags" type="List[string]">
   List of tags in string format
+</ParamField>
+
+### Update a step
+
+```python
+step = client.api.update_step(
+  id="1234",
+  type = "user_message",
+)
+```
+
+<ParamField path="id" type="string">
+  Id as a string
+</ParamField>
+
+<ParamField path="type" type="StepType">
+  Type of the step as StepType
+</ParamField>
+
+<ParamField path="input" type="string">
+  Input in string format
+</ParamField>
+
+<ParamField path="output" type="string">
+  Output in string format
+</ParamField>
+
+<ParamField path="metadata" type="Dict">
+  Metadata in dictionary format
+</ParamField>
+
+<ParamField path="name" type="string">
+  Name in string format
+</ParamField>
+
+<ParamField path="tags" type="List[string]">
+  List of tags in string format
+</ParamField>
+
+<ParamField path="start_time" type="string">
+  Start time as a string
+</ParamField>
+
+<ParamField path="end_time" type="string">
+  End time as a string
+</ParamField>
+
+<ParamField path="parent_id" type="string">
+  Parent identifier as a string
+</ParamField>
+
+### Get a step
+
+```python
+step = client.api.get_step(
+  id="1234",
+)
+```
+
+<ParamField path="id" type="string">
+  Id as a string
+</ParamField>
+
+### Delete a step
+
+```python
+step = client.api.delete_step(
+  id="1234",
+)
+```
+
+<ParamField path="id" type="string">
+  Id as a string
+</ParamField>
+
+### Send Steps
+
+Used to send multiple steps at the same time to the Chainlit platform.
+
+```python
+steps = [
+    {
+        "thread_id": "1234",
+        "type": "undefined",
+    },
+    {
+        "thread_id": "1234",
+        "type": "undefined",
+    },
+]
+
+client.api.send_steps(steps=[Step.from_dict(step) for step in steps])
+```
+
+## Attachment
+
+### Attachment create
+
+```python
+attachment = client.api.create_attachment(
+    thread_id="1234",
+    name="my_attachment",
+    content_type="text/plain",
+    content="Hello world",
+)
+```
+
+<ParamField path="thread_id" type="string">
+  Thread id in string format
+</ParamField>
+
+<ParamField path="step_id" type="string">
+  Step id in string format
+</ParamField>
+
+<ParamField path="id" type="string">
+  Id in string format
+</ParamField>
+
+<ParamField path="metadata" type="Dict">
+  Metadata in dictionary format
+</ParamField>
+
+<ParamField path="mime" type="string">
+  Mime in string format
+</ParamField>
+
+<ParamField path="name" type="string">
+  Name in string format
+</ParamField>
+
+<ParamField path="object_key" type="string">
+  Object key in string format
+</ParamField>
+
+<ParamField path="url" type="string">
+  Url in string format
+</ParamField>
+
+<ParamField path="content" type="Union[bytes, str]">
+  Content that can be either of bytes or string format
+</ParamField>
+
+<ParamField path="path" type="string">
+  Path in string format
+</ParamField>
+
+### Update attachment
+
+```python
+attachment = client.api.update_attachment(
+    id="1234",
+    update_params={
+        "name": "my_attachment",
+        "content_type": "text/plain",
+        "content": "Hello world",
+    },
+)
+```
+
+### Get attachment
+
+```python
+attachment = client.api.get_attachment(id="1234")
+```
+
+<ParamField path="id" type="string">
+  Id in string format
+</ParamField>
+
+### Delete attachment
+
+```python
+attachment = client.api.delete_attachment(id="1234")
+```
+
+<ParamField path="id" type="string">
+  Id in string format
+</ParamField>
+
+## Feedback
+
+### Create a feedback
+
+```python
+feedback = client.api.create_feedback(
+    thread_id="1234",
+    value=1,
+    comment="Hello world",
+)
+```
+
+<ParamField path="step_id" type="string">
+  Step id in string format
+</ParamField>
+
+<ParamField path="value" type="int">
+  Value in integer format, 1 for positive feedback and 0 for negative feedback
+</ParamField>
+
+<ParamField path="comment" type="str">
+  Comment in string format
+</ParamField>
+
+<ParamField path="strategy" type="FeedbackStrategy">
+  Strategy represented as FeedbackStrategy
 </ParamField>
