@@ -441,10 +441,21 @@ feedback = client.api.create_feedback(
 <ParamField path="comment" type="str">
   Comment in string format
 </ParamField>
-
 <ParamField path="strategy" type="FeedbackStrategy">
   Strategy represented as FeedbackStrategy
 </ParamField>
+
+A `FeedbackStrategy` can be one of the following:
+
+```
+BINARY
+STARS
+BIG_STARS
+LIKERT
+CONTINUOUS
+LETTERS
+PERCENTAGE
+```
 
 ### Update a feedback
 
