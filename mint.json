@@ -18,7 +18,7 @@
   "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://cloud.chainlit.io/"
+    "url": "https://staging.chainlit.io/"
   },
   "tabs": [
     {
