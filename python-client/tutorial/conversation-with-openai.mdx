@@ -1,0 +1,85 @@
+---
+title: Monitoring a simple conversation with OpenAI
+---
+
+## Setup
+
+Configure your Chainlit and OpenAI token. Checkout the [quickstart guide](/python-client/get-started/quickstart) for that.
+
+## A conversation with myself
+
+We can create a simple message to be displayed on Chainlit's platform:
+
+```python
+client = ChainlitClient()
+
+with client.thread() as thread:
+    message = client.message(content="Hello World", type="user_message")
+
+client.wait_until_queue_empty() # All API calls to Chainlit are done in background
+
+```
+
+You should see a thread on the Chainlit platform :
+
+TODO add image from run a.py
+
+## Calling OpenAI
+
+We can automatically create steps using the [instrumentation](concepts/instrumentation)
+
+```python
+openai_client = OpenAI()
+
+chainlit_client = ChainlitClient()
+chainlit_client.instrument_openai()
+
+
+with chainlit_client.thread() as thread:
+    completion = openai_client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "user",
+                "content": "Say this is a test",
+            }
+        ],
+    )
+
+    print(completion.choices[0].message.content)
+
+chainlit_client.wait_until_queue_empty()
+
+```
+
+We get something like on the Chainlit platform:
+
+TODO add image from run a2.py
+
+### Adding additional steps
+
+```python
+with chainlit_client.thread() as thread:
+    welcome_message = "What's your name?"
+    chainlit_client.message(content=welcome_message, type="assistant_message")
+    name = input(welcome_message + "\n")
+
+    completion = openai_client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "system",
+                "content": "Tell an inspiring quote to the user, mentioning their name. Be extremely supportive while keeping it short. Write one sentence per line.",
+            },
+            {
+                "role": "user",
+                "content": f"My name is {name}",
+            },
+        ],
+    )
+    print(completion.choices[0].message.content)
+
+chainlit_client.wait_until_queue_empty()
+```
+
+TODO add image from run a3.py
