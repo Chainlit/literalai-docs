@@ -4,21 +4,39 @@ title: "Step"
 
 A Step is a container of work in a Thread. It can be nested to include several children Steps.
 
-A Step can be one of the following types:
 
-- `run`: A generic step
-- `tool`: A step that runs a tool
-- `llm`: A step that runs a language model
-- `embedding`: A step that runs an embedding model
-- `retrieval`: A step that retrieves documents
-- `rerank`: A step that reranks documents
-- `undefined`: An undefined step
+<CodeGroup>
+```python step-example.py
+from chainlit_client import ChainlitClient
 
+client = ChainlitClient()
 
-A Step can also represent Messages in a Thread. In this case, the Step will have a `type` field that can be one of the following:
+@client.step(type="tool")
+async def my_tool():
+    # do something
 
-- `user_message`: A message from the user
-- `system_message`: A message from the system
-- `assistant_message`: A message from the assistant
+    return "Response from the tool"
 
-You can either set use the auto-generated step ids, or use custom ones to match your own system. Step ids must be unique across your project.
+async def main():
+    tool_response = await my_tool()
+
+    client.message(content=tool_response, type="assistant_message")
+    print(tool_response)
+```
+</CodeGroup>
+
+## Step API
+
+There are three ways to create steps. Using the `with` statement, using the decorator on a function, or using the `start_step` method.
+
+<CardGroup cols={2}>
+  <Card title="Step decorator" icon="at" href="/python-client/usage/create-a-step#using-the-with-statement">
+    Use the decorator on your step function.
+  </Card>
+  <Card title="With statement" icon="w" href="/python-client/usage/create-a-step#using-the-decorator-on-a-function">
+    Use the with statement when your step is not a function.
+  </Card>
+  <Card title="start_step" icon="code" href="/python-client/usage/create-a-step#using-the-start-step-method">
+    Use `start_step` when you want fine-grained control over your step.
+  </Card>
+</CardGroup>

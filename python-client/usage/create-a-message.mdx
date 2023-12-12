@@ -7,3 +7,57 @@ There is only one method to create a message. The message is automatically sent 
 ```python
 client.message(content="Hello World", type="ASSISTANT_MESSAGE")
 ```
+
+## Message parameters
+
+<ParamField path="thread_id" type="string" required>
+  The id of the thread
+</ParamField>
+
+<ParamField path="id" type="string">
+  The id of the message. If not provided, a random uuid will be generated.
+</ParamField>
+
+<ParamField path="name" type="string">
+  The name of the message
+</ParamField>
+
+<ParamField path="type" type="MessageStepType" default="undefined">
+  The type of the message. A Message can be one of the following types:
+
+- `system_message`: A system message (e.g. a static welcome message)
+- `user_message`: A message sent by the user
+- `assistant_message`: A message sent by the assistant
+</ParamField>
+
+<ParamField path="metadata" type="dict" default="{}">
+  Metadata associated with the message. This enables you to add custom fields to your messages.
+</ParamField>
+
+<ParamField path="parent_id" type="string">
+  The id of the parent message. This enables you to keep track of the parent step.
+</ParamField>
+
+<ParamField path="timestamp" type="string">
+  The timestamp when the message was created.
+</ParamField>
+
+<ParamField path="created_at" type="string">
+  The server-side creation time of the message.
+</ParamField>
+
+<ParamField path="content" type="string">
+  The content of the message.
+</ParamField>
+
+<ParamField path="tags" type="List[str]" default="[]">
+  The tags of the message. This is a complimentary field to the metadata field. It enables you to add custom tags to your messages.
+</ParamField>
+
+<ParamField path="feedback" type="Feedback">
+  The feedback object associated with the message.
+</ParamField>
+
+<ParamField path="attachments" type="List[Attachment]" default="[]">
+  The attachments associated with the message.
+</ParamField>

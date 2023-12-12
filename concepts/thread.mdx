@@ -6,3 +6,35 @@ A Thread represents a group of interactions between a user and an AI app. It can
 
 A Thread is composed of Steps. A Step can be a message, or an internal AI step like an LLM call.
 
+<CodeGroup>
+```python step-example.py
+from chainlit_client import ChainlitClient
+
+client = ChainlitClient()
+
+@client.step(type="tool")
+async def my_tool():
+    # do something
+
+    return "Response from the tool"
+
+async def main():
+    tool_response = await my_tool()
+
+    client.message(content=tool_response, type="assistant_message")
+    print(tool_response)
+```
+</CodeGroup>
+
+## Thread API
+
+There are two ways to create thread. Using the `with` statement or using the decorator on a function.
+
+<CardGroup cols={2}>
+  <Card title="Thread decorator" icon="at" href="/python-client/usage/create-a-thread#using-the-with-statement">
+    Use the decorator on your thread function.
+  </Card>
+  <Card title="With statement" icon="w" href="/python-client/usage/create-a-thread#using-the-decorator-on-a-function">
+    Use the with statement when your thread is not a function.
+  </Card>
+</CardGroup>
