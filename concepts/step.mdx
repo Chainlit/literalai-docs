@@ -12,35 +12,29 @@ Note that we call `client.wait_until_queue_empty()` to make sure all messages an
 
 <CodeGroup>
 ```python step-example.py
-import time
 from chainlit_client import ChainlitClient
 
 client = ChainlitClient()
 
-
-@client.step(type="tool")
-def my_tool():
-    # do something
-
-    time.sleep(1)
-
-    return "Response from the tool"
+@client.step(type="run")
+def my_step(input):
+    return f"World" 
 
 
 @client.thread
 def main():
-    tool_response = my_tool()
-
-    client.message(content=tool_response, type="assistant_message")
-    print(tool_response)
+    print(my_step("Hello"))
 
 
 main()
 client.wait_until_queue_empty()
+print("Done")
 ```
 </CodeGroup>
 
-![Simple thread platform view](/images/thread-1-step-1-message.png)
+<Frame caption="The result in Chainlit platform">
+  <img src="/images/one-step.png" alt="A one-step thread in the Chainlit platform" />
+</Frame>
 
 ## Step API
 

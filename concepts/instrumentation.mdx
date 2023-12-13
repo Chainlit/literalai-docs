@@ -2,21 +2,13 @@
 title: "Instrumentation"
 ---
 
-The Chainlit client offers tools to create steps automatically when using existing librairies.
+The Chainlit client offers tools to create steps automatically when using existing librairies. Dive into each integration to learn more about how to use them.
 
-Right now we have one integration with OpenAI.
+# Next up
 
-## OpenAI
+<CardGroup cols={2}>
+  <Card title="OpenAI" icon="link" href="/python-client/instrumentation/openai">
+    LLM steps for OpenAI API calls.
+  </Card>
+</CardGroup>
 
-When using the OpenAI python client, you can use the `instrument_openai` method to instrument the client.
-
-```python
-from chainlit_client import ChainlitClient
-
-client = ChainlitClient()
-client.instrument_openai()
-```
-
-This will create a step for each call to the OpenAI API.
-
-Note that we only support the OpenAI python package starting at version `1.0.0`. And that we don't support the Assistant API yet.

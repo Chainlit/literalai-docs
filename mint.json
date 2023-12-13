@@ -48,6 +48,10 @@
       ]
     },
     {
+      "group": "Instrumentation",
+      "pages": ["python-client/instrumentation/openai"]
+    },
+    {
       "group": "Usage",
       "pages": [
         "python-client/usage/create-a-thread",
