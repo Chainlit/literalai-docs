@@ -50,11 +50,14 @@ step.end()
 </ParamField>
 
 <ParamField path="id" type="string">
-  The id of the step. If not provided, a random uuid will be generated. Use custom ones to match your own system. Step ids must be unique across your project.
+  The id of the step. If not provided, a random uuid will be generated. Use
+  custom ones to match your own system. Step ids must be unique across your
+  project.
 </ParamField>
 
-<ParamField path="name" type="string" default=' '>
-  The name of the step (automatically set to the function name if using the decorator)
+<ParamField path="name" type="string" default=" ">
+  The name of the step (automatically set to the function name if using the
+  decorator)
 </ParamField>
 
 <ParamField path="type" type="StepType" default="undefined">
@@ -67,10 +70,12 @@ step.end()
 - `retrieval`: A step that retrieves documents
 - `rerank`: A step that reranks documents
 - `undefined`: An undefined step
+
 </ParamField>
 
 <ParamField path="metadata" type="dict" default="{}">
-  Metadata associated with the step. This enables you to add custom fields to your steps.
+  Metadata associated with the step. This enables you to add custom fields to
+  your steps.
 </ParamField>
 
 <ParamField path="parent_id" type="string">
@@ -90,15 +95,18 @@ step.end()
 </ParamField>
 
 <ParamField path="input" type="string">
-  The input of the step. This is automatically set to the arguments of the function if using the decorator.
+  The input of the step. This is automatically set to the arguments of the
+  function if using the decorator.
 </ParamField>
 
 <ParamField path="output" type="string">
-  The output of the step. This is automatically set to the return value of the function if using the decorator.
+  The output of the step. This is automatically set to the return value of the
+  function if using the decorator.
 </ParamField>
 
 <ParamField path="tags" type="List[str]" default="[]">
-  The tags of the step. This is a complimentary field to the metadata field. It enables you to add custom tags to your steps.
+  The tags of the step. This is a complimentary field to the metadata field. It
+  enables you to add custom tags to your steps.
 </ParamField>
 
 <ParamField path="generation" type="BaseGeneration">
@@ -112,3 +120,11 @@ step.end()
 <ParamField path="attachments" type="List[Attachment]" default="[]">
   The attachments associated with the step.
 </ParamField>
+
+<Card
+  title="Using the API"
+  icon="circle-nodes"
+  href="/python-client/api-reference/entities#step"
+>
+  You can also manipulate steps directly using the API.
+</Card>

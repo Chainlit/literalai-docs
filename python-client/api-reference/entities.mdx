@@ -67,6 +67,33 @@ user = client.api.delete_user(id="1234")
 
 Checkout the documentation about [threads](/concepts/thread) for more information.
 
+### Creating a thread
+
+```python
+thread = client.api.create_thread(
+    participant_id="1234",
+    environment="production",
+    tags=["tag1", "tag2"],
+    metadata={"key": "value"},
+)
+```
+
+<ParamField path="participant_id" type="string">
+  Id of the participant
+</ParamField>
+
+<ParamField path="environment" type="string">
+  Environment of the thread
+</ParamField>
+
+<ParamField path="tags" type="list">
+  The tags of the thread
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  The metadata of the thread
+</ParamField>
+
 ### Fetching threads
 
 You can query threads with filter:

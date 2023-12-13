@@ -28,14 +28,17 @@ client.message(content="Hello World", type="assistant_message")
 - `system_message`: A system message (e.g. a static welcome message)
 - `user_message`: A message sent by the user
 - `assistant_message`: A message sent by the assistant
+
 </ParamField>
 
 <ParamField path="metadata" type="dict" default="{}">
-  Metadata associated with the message. This enables you to add custom fields to your messages.
+  Metadata associated with the message. This enables you to add custom fields to
+  your messages.
 </ParamField>
 
 <ParamField path="parent_id" type="string">
-  The id of the parent message. This enables you to keep track of the parent step.
+  The id of the parent message. This enables you to keep track of the parent
+  step.
 </ParamField>
 
 <ParamField path="timestamp" type="string">
@@ -51,7 +54,8 @@ client.message(content="Hello World", type="assistant_message")
 </ParamField>
 
 <ParamField path="tags" type="List[str]" default="[]">
-  The tags of the message. This is a complimentary field to the metadata field. It enables you to add custom tags to your messages.
+  The tags of the message. This is a complimentary field to the metadata field.
+  It enables you to add custom tags to your messages.
 </ParamField>
 
 <ParamField path="feedback" type="Feedback">
