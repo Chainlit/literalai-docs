@@ -111,22 +111,22 @@ for thread in threads["data"]:
   doc](https://graphql.org/learn/pagination/) for more information
 </ParamField>
 
-<ParamField path="filter" type="dict">
-  Filter for threads
-</ParamField>
-
-The following options are valid:
-
-- attachmentsName
-- createdAt
-- afterCreatedAt
-- beforeCreatedAt
-- duration
-- environment
-- feedbacksValue
-- participantsIdentifier
-- search
-- tokenCount
+<ResponseField name="filter" type="dict">
+  You can filter threads with the following parameters:
+  <Expandable title="properties">
+    <ResponseField name="attachmentsName" type="string"></ResponseField>
+    <ResponseField name="attachmentsName" type="string"></ResponseField>
+    <ResponseField name="createdAt" type="string"></ResponseField>
+    <ResponseField name="afterCreatedAt" type="string"></ResponseField>
+    <ResponseField name="beforeCreatedAt" type="string"></ResponseField>
+    <ResponseField name="duration" type="numeric"></ResponseField>
+    <ResponseField name="environment" type="string"></ResponseField>
+    <ResponseField name="feedbacksValue" type="numeric"></ResponseField>
+    <ResponseField name="participantsIdentifier" type="string"></ResponseField>
+    <ResponseField name="search" type="string"></ResponseField>
+    <ResponseField name="tokenCount" type="numeric"></ResponseField>
+  </Expandable>
+</ResponseField>
 
 You can also fetch a single thread by id
 
@@ -468,21 +468,18 @@ feedback = client.api.create_feedback(
 <ParamField path="comment" type="str">
   Comment in string format
 </ParamField>
-<ParamField path="strategy" type="FeedbackStrategy">
-  Strategy represented as FeedbackStrategy
-</ParamField>
 
-A `FeedbackStrategy` can be one of the following:
-
-```
-BINARY
-STARS
-BIG_STARS
-LIKERT
-CONTINUOUS
-LETTERS
-PERCENTAGE
-```
+<ResponseField name="strategy" type="string">
+  <Expandable title="properties">
+    <ResponseField name="BINARY"></ResponseField>
+    <ResponseField name="STARS"></ResponseField>
+    <ResponseField name="BIG_STARS"></ResponseField>
+    <ResponseField name="LIKERT"></ResponseField>
+    <ResponseField name="CONTINUOUS"></ResponseField>
+    <ResponseField name="LETTERS"></ResponseField>
+    <ResponseField name="PERCENTAGE"></ResponseField>
+  </Expandable>
+</ResponseField>
 
 ### Update a feedback
 
