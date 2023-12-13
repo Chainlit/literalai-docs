@@ -1,0 +1,88 @@
+---
+title: Attachment
+description: "Create Read Update and Delete methods for Attachment"
+---
+
+## Create attachment
+
+```python
+attachment = client.api.create_attachment(
+    thread_id="1234",
+    name="my_attachment",
+    content_type="text/plain",
+    content="Hello world",
+)
+```
+
+<ParamField path="thread_id" type="string">
+  Thread id in string format
+</ParamField>
+
+<ParamField path="step_id" type="string">
+  Step id in string format
+</ParamField>
+
+<ParamField path="id" type="string">
+  Id in string format
+</ParamField>
+
+<ParamField path="metadata" type="Dict">
+  Metadata in dictionary format
+</ParamField>
+
+<ParamField path="mime" type="string">
+  Mime in string format
+</ParamField>
+
+<ParamField path="name" type="string">
+  Name in string format
+</ParamField>
+
+<ParamField path="object_key" type="string">
+  Object key in string format
+</ParamField>
+
+<ParamField path="url" type="string">
+  Url in string format
+</ParamField>
+
+<ParamField path="content" type="Union[bytes, str]">
+  Content that can be either of bytes or string format
+</ParamField>
+
+<ParamField path="path" type="string">
+  Path in string format
+</ParamField>
+
+## Update attachment
+
+```python
+attachment = client.api.update_attachment(
+    id="1234",
+    update_params={
+        "name": "my_attachment",
+        "content_type": "text/plain",
+        "content": "Hello world",
+    },
+)
+```
+
+## Get attachment
+
+```python
+attachment = client.api.get_attachment(id="1234")
+```
+
+<ParamField path="id" type="string">
+  Id in string format
+</ParamField>
+
+## Delete attachment
+
+```python
+attachment = client.api.delete_attachment(id="1234")
+```
+
+<ParamField path="id" type="string">
+  Id in string format
+</ParamField>

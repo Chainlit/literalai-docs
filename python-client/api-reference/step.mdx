@@ -1,0 +1,147 @@
+---
+title: Step
+description: "Create Read Update and Delete methods for Step"
+---
+
+Checkout the documentation about [steps](/concepts/step) for more information.
+
+## Create a step
+
+```python
+step = client.api.create_step(
+    thread_id: "1234"
+    type = "undefined",
+)
+```
+
+<ParamField path="thread_id" type="string">
+  The id of the thread
+</ParamField>
+
+<ParamField path="type" type="string">
+  The type of the step
+</ParamField>
+
+<ParamField path="start_time" type="string">
+  Starting time in string format
+</ParamField>
+
+<ParamField path="end_time" type="string">
+  Ending time in string format
+</ParamField>
+
+<ParamField path="input" type="string">
+  Input in string format
+</ParamField>
+
+<ParamField path="output" type="string">
+  Output in string format
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  Metadata as a dict
+</ParamField>
+
+<ParamField path="parent_id" type="string">
+  Parent ID in string format
+</ParamField>
+
+<ParamField path="name" type="string">
+  Name in string format
+</ParamField>
+
+<ParamField path="tags" type="List[string]">
+  List of tags in string format
+</ParamField>
+
+## Update a step
+
+```python
+step = client.api.update_step(
+  id="1234",
+  type = "user_message",
+)
+```
+
+<ParamField path="id" type="string">
+  Id as a string
+</ParamField>
+
+<ParamField path="type" type="StepType">
+  Type of the step as StepType
+</ParamField>
+
+<ParamField path="input" type="string">
+  Input in string format
+</ParamField>
+
+<ParamField path="output" type="string">
+  Output in string format
+</ParamField>
+
+<ParamField path="metadata" type="Dict">
+  Metadata in dictionary format
+</ParamField>
+
+<ParamField path="name" type="string">
+  Name in string format
+</ParamField>
+
+<ParamField path="tags" type="List[string]">
+  List of tags in string format
+</ParamField>
+
+<ParamField path="start_time" type="string">
+  Start time as a string
+</ParamField>
+
+<ParamField path="end_time" type="string">
+  End time as a string
+</ParamField>
+
+<ParamField path="parent_id" type="string">
+  Parent identifier as a string
+</ParamField>
+
+## Get a step
+
+```python
+step = client.api.get_step(
+  id="1234",
+)
+```
+
+<ParamField path="id" type="string">
+  Id as a string
+</ParamField>
+
+## Delete a step
+
+```python
+step = client.api.delete_step(
+  id="1234",
+)
+```
+
+<ParamField path="id" type="string">
+  Id as a string
+</ParamField>
+
+## Send Steps
+
+Used to send multiple steps at the same time to the Chainlit platform.
+
+```python
+steps = [
+    {
+        "thread_id": "1234",
+        "type": "undefined",
+    },
+    {
+        "thread_id": "1234",
+        "type": "undefined",
+    },
+]
+
+client.api.send_steps(steps=[Step.from_dict(step) for step in steps])
+```

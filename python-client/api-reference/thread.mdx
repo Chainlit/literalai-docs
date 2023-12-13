@@ -1,0 +1,153 @@
+---
+title: Thread
+description: "Create Read Update and Delete methods for Thread"
+---
+
+Checkout the documentation about [threads](/concepts/thread) for more information.
+
+## Creating a thread
+
+```python
+thread = client.api.create_thread(
+    participant_id="1234",
+    environment="production",
+    tags=["tag1", "tag2"],
+    metadata={"key": "value"},
+)
+```
+
+<ParamField path="participant_id" type="string">
+  Id of the participant
+</ParamField>
+
+<ParamField path="environment" type="string">
+  Environment of the thread
+</ParamField>
+
+<ParamField path="tags" type="list">
+  The tags of the thread
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  The metadata of the thread
+</ParamField>
+
+## Fetching threads
+
+You can query threads with filter:
+
+```python
+threads = client.api.list_threads(first=None, after=None, filters=None)
+
+print(threads["pageInfo"])
+for thread in threads["data"]:
+    print(thread.to_dict())
+```
+
+<ParamField path="first after" type="int">
+  Pagination parameters, checkout [GraphQL
+  doc](https://graphql.org/learn/pagination/) for more information
+</ParamField>
+
+<ResponseField name="filter" type="dict">
+  You can filter threads with the following parameters:
+  <Expandable title="properties">
+    <ResponseField name="attachmentsName" type="string"></ResponseField>
+    <ResponseField name="attachmentsName" type="string"></ResponseField>
+    <ResponseField name="createdAt" type="string"></ResponseField>
+    <ResponseField name="afterCreatedAt" type="string"></ResponseField>
+    <ResponseField name="beforeCreatedAt" type="string"></ResponseField>
+    <ResponseField name="duration" type="numeric"></ResponseField>
+    <ResponseField name="environment" type="string"></ResponseField>
+    <ResponseField name="feedbacksValue" type="numeric"></ResponseField>
+    <ResponseField name="participantsIdentifier" type="string"></ResponseField>
+    <ResponseField name="search" type="string"></ResponseField>
+    <ResponseField name="tokenCount" type="numeric"></ResponseField>
+  </Expandable>
+</ResponseField>
+
+You can also fetch a single thread by id
+
+```python
+thread = client.api.get_thread(id="1234")
+```
+
+<ParamField path="id" type="string">
+  The id of the thread
+</ParamField>
+
+## Update thread
+
+```python
+updated_thread = client.update_thread(
+    id="1234",
+    metadata=None,
+    participant_id=None,
+    environment=None,
+    tags=None,
+)
+```
+
+<ParamField path="id" type="string">
+  The id of the thread
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  The metadata of the thread
+</ParamField>
+
+<ParamField path="participant_id" type="string">
+  The participant id of the thread
+</ParamField>
+
+<ParamField path="environment" type="string">
+  The environment of the thread
+</ParamField>
+
+<ParamField path="tags" type="list">
+  The tags of the thread
+</ParamField>
+
+## Upsert tread
+
+It will either create a new thread is the thread_id does not exist of update the existing one.
+
+```python
+thread = client.upsert_thread(
+    thead_id="1234",
+    metadata=None,
+    participant_id=None,
+    environment=None,
+    tags=None
+)
+```
+
+<ParamField path="thread_id" type="string">
+  The id of the thread
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  The metadata of the thread
+</ParamField>
+
+<ParamField path="participant_id" type="string">
+  The participant id of the thread
+</ParamField>
+
+<ParamField path="environment" type="string">
+  The environment of the thread
+</ParamField>
+
+<ParamField path="tags" type="list">
+  The tags of the thread
+</ParamField>
+
+## Delete thread
+
+```python
+client.api.delete_thread(id="1234")
+```
+
+<ParamField path="id" type="string">
+  The id of the thread
+</ParamField>

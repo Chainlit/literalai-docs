@@ -65,7 +65,14 @@
     },
     {
       "group": "API Reference",
-      "pages": ["python-client/api-reference/entities"]
+      "pages": [
+        "python-client/api-reference/entities",
+        "python-client/api-reference/user",
+        "python-client/api-reference/thread",
+        "python-client/api-reference/step",
+        "python-client/api-reference/attachment",
+        "python-client/api-reference/feedback"
+      ]
     },
     { "group": "Cloud", "pages": ["cloud/deployment"] }
   ],
