@@ -22,7 +22,7 @@ client.wait_until_queue_empty() # All API calls to Chainlit are done in backgrou
 
 You should see a thread on the Chainlit platform :
 
-TODO add image from run a.py
+![Thread view of a single message](/images/tutorial-1.png)
 
 ## Calling OpenAI
 
@@ -54,7 +54,7 @@ chainlit_client.wait_until_queue_empty()
 
 We get something like on the Chainlit platform:
 
-TODO add image from run a2.py
+![Thread view of a message to a LLM](/images/tutorial-2.png)
 
 ### Adding additional steps
 
@@ -82,4 +82,4 @@ with chainlit_client.thread() as thread:
 chainlit_client.wait_until_queue_empty()
 ```
 
-TODO add image from run a3.py
+![Thread view of a conversation with a LLM](/images/tutorial-3.png)
