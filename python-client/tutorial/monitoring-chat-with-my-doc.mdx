@@ -1,0 +1,110 @@
+---
+title: Monitoring "chat with my doc"
+---
+
+## Setup
+
+Checkout the [quickstart guide](/python-client/get-started/introduction).
+
+## The goal
+
+We would like to ask a LLM questions about a document.
+
+This will be done in steps:
+
+1. Ask the user to send the document
+1. Run an embedding model on the document
+1. Prompt the user for a question
+1. Answer the question using the LLM
+
+### Sending a simple message
+
+```python
+client = ChainlitClient()
+
+with client.thread() as thread:
+    message = client.message(content="Hello World", type="user_message")
+
+client.wait_until_queue_empty() # All API calls to Chainlit are done in background
+```
+
+<Frame caption="You should see a thread on the Chainlit platform">
+  <img
+    src="/images/tutorial-1.png"
+    alt="A one-step thread in the Chainlit platform"
+  />
+</Frame>
+
+### Requesting a document
+
+We declare some helper functiosn that we will use in this tutorial.
+
+```python
+
+def display_message_to_user(mesage):
+  print(message)
+  chainlit_client.message(type="assistant_message", content=message, name="ChatBot")
+
+def get_message_from_user():
+  message = input()
+  chainlit_client.message(type="user_message", content=message, name="User")
+  return message
+```
+
+```python
+
+with client.thread():
+  display_message_to_user("what is the path to your file ?")
+  file = get_message_from_user()
+```
+
+<Frame caption="We now have 2 messages on our thread">
+  <img
+    src="/images/tutorial-2.png"
+    alt="A two-step thread in the Chainlit platform"
+  />
+</Frame>
+
+### Running an embedding model
+
+For simplicity sake, let's imagine our embedding function is called `create_embedding` and takes a file path as input.
+
+```python
+
+with chainlit_client.thread():
+  display_message_to_user("what is the path to your file ?")
+  file = get_message_from_user()
+
+  with chainlit_client.step(name="embedding", type="embedding"):
+    embedding = create_embedding(file)
+
+```
+
+<Frame caption="The embedding step is present on the platform">
+  <img
+    src="/images/tutorial-3.png"
+    alt="A three-step thread in the Chainlit platform with embedding"
+  />
+</Frame>
+
+### Replying to the user
+
+```python
+with chainlit_client.thread():
+  display_message_to_user("what is the path to your file ?")
+  file = get_message_from_user()
+
+  with chainlit_client.step(name="embedding", type="embedding"):
+    embedding = create_embedding(file)
+
+  display_message_to_user("what is your question ?")
+  question = get_message_from_user()
+
+  with chainlit_client.step(type="llm", name="ChatOpenAI"):
+    answer = call_llm(question)
+    display_message_to_user(answer)
+```
+
+<Frame caption="The embedding LLM step is added to the thread">
+  <img src="/images/tutorial-4.png" alt="The chainlit platform" />
+</Frame>

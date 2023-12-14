@@ -61,7 +61,7 @@
     },
     {
       "group": "Tutorial",
-      "pages": ["python-client/tutorial/conversation-with-openai"]
+      "pages": ["python-client/tutorial/monitoring-chat-with-my-doc"]
     },
     {
       "group": "API Reference",
