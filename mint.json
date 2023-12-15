@@ -2,14 +2,27 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Starter Kit",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/logo.svg",
+    "light": "/logo/logo.svg"
+  },
+  "backgroundImage": "/background.svg",
+  "modeToggle": {
+    "default": "dark",
+    "isHidden": true
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#F80061",
-    "light": "#FFE7EB",
-    "dark": "#980039"
+    "primary": "#2ab673",
+    "light": "#55d799",
+    "dark": "#117867",
+    "background": {
+      "dark": "#111010"
+    }
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
   },
   "topbarLinks": [],
   "topbarCtaButton": {
@@ -18,8 +31,12 @@
   },
   "tabs": [
     {
-      "name": "Python client",
+      "name": "Python Client",
       "url": "python-client"
+    },
+    {
+      "name": "TypeScript Client",
+      "url": "typescript-client"
     },
     { "name": "Cloud", "url": "cloud" }
   ],
@@ -40,7 +57,7 @@
     },
 
     {
-      "group": "Get started",
+      "group": "Get Started",
       "pages": [
         "python-client/get-started/introduction",
         "python-client/get-started/authentication",
@@ -74,6 +91,7 @@
         "python-client/api-reference/feedback"
       ]
     },
+    { "group": "Get Started", "pages": ["typescript-client/introduction"] },
     { "group": "Cloud", "pages": ["cloud/deployment"] }
   ],
   "footerSocials": {
