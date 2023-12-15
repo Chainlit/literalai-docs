@@ -65,6 +65,10 @@
       ]
     },
     {
+      "group": "Callback",
+      "pages": ["python-client/callback/langchain"]
+    },
+    {
       "group": "Instrumentation",
       "pages": ["python-client/instrumentation/openai"]
     },
