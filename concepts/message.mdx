@@ -2,7 +2,7 @@
 title: "Message"
 ---
 
-A Message is a special Step. It represents a message from the user, the system or the assistant.
+A Message is a special [Step](/concepts/step). It represents a message from the user, the system or the assistant.
 
 ## A simple message
 
@@ -20,7 +20,7 @@ client = ChainlitClient()
 
 @client.thread
 def main():
-    client.message(content="Hello world", type="assistant_message")
+    client.message(content="Hello world", type="assistant_message", name="Chatbot")
     print("Hello world")
 
 
@@ -29,13 +29,15 @@ client.wait_until_queue_empty()
 ```
 </CodeGroup>
 
-<Frame caption="The result in Chainlit platform">
+Here is how it looks on the Chainlit platform:
+
+<Frame>
   <img src="/images/one-message.png" alt="A one-message thread in the Chainlit platform" />
 </Frame>
 
 ## Message API
 
-Use the `client.message` to create a message.
+Use `client.message` to create a message.
 
 <CardGroup cols={2}>
   <Card title="Message method" icon="code" href="/python-client/usage/create-a-message">

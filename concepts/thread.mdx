@@ -2,9 +2,9 @@
 title: "Thread"
 ---
 
-A Thread represents a group of interactions between a user and an AI app. It can be a conversation between a human and one or several agents, or an agent generating a document piece by piece from a user input...
+A Thread represents a group of interactions between a user and an AI app. It can be, for example, a conversation between a human and one or several agents, or an agent generating a document piece by piece from a user input.
 
-A Thread is composed of Steps. A Step can be a message, or an internal AI step like an LLM call.
+A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an internal AI step like an LLM call.
 
 ## A simple thread
 
@@ -17,7 +17,7 @@ client = ChainlitClient()
 
 
 @client.step(type="tool")
-def my_tool():
+def my_tool(input: str):
     # do something
 
     time.sleep(1)
@@ -27,9 +27,9 @@ def my_tool():
 
 @client.thread
 def main():
-    tool_response = my_tool()
+    tool_response = my_tool("Hello world")
 
-    client.message(content=tool_response, type="assistant_message")
+    client.message(content=tool_response, type="assistant_message", name="Chatbot")
     print(tool_response)
 
 
@@ -38,7 +38,9 @@ client.wait_until_queue_empty()
 ```
 </CodeGroup>
 
-<Frame caption="The result in Chainlit platform">
+Here is how it looks on the Chainlit platform:
+
+<Frame>
   <img src="/images/thread-one-step-one-message.png" alt="A thread in the Chainlit platform" />
 </Frame>
 

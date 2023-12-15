@@ -2,11 +2,19 @@
 title: "Create a message"
 ---
 
+Messages are the user-facing part of a [Thread](/concepts/thread). They represent a message from the user, the system or the assistant.
+
+Note that Messages must be created inside a [Thread](/usage/create-a-thread).
+
 There is only one method to create a message. The message is automatically sent to the Chainlit platform.
 
+We recommend setting at least the `content` (message text), `type` (user type) and `name` (user name) parameters.
+
 ```python
-client.message(content="Hello World", type="assistant_message")
+client.message(content="Hello World", type="assistant_message", name="Chatbot")
 ```
+
+By default, the message id is a random uuid. You can set a custom id to match your own system. Message ids must be unique across the messages and steps of your project.
 
 ## Message parameters
 
@@ -65,3 +73,15 @@ client.message(content="Hello World", type="assistant_message")
 <ParamField path="attachments" type="List[Attachment]" default="[]">
   The attachments associated with the message.
 </ParamField>
+
+## Message API
+
+The message is a special Step. You can use the Step API to manipulate messages.
+
+<Card
+  title="Step API"
+  icon="circle-nodes"
+  href="/python-client/api-reference/step"
+>
+  Manipulate messages directly using the API.
+</Card>

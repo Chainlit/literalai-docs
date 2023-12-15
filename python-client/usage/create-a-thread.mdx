@@ -2,21 +2,24 @@
 title: "Create a thread"
 ---
 
+The thread is the main entity of the Chainlit platform. It reprensents a conversation between the user and the AI assistant.
+
+Declaring the thread is the first step to create a conversation containing [messages](/python-client/usage/create-a-message) and [steps](/python-client/usage/create-a-step).
+
 There are two methods to create a thread:
 
-1. Using the `with` statement
-2. Using the decorator on a function
+1. Using the decorator on a function
+2. Using the `with` statement
 
-## Using the `with` statement
+The thread is sent to the Chainlit platform when a first message or step is created.
 
-```python
-with client.thread() as thread:
-    # do something
-```
+By default, the thread id is a random uuid. You can set a custom id to match your own system. Thread ids must be unique across your project.
 
 ## Using the decorator on a function
 
-The simplest way to create a thread is to use the `@client.thread` decorator on a function:
+If you want to create a thread from a function, you should use the `@client.thread` decorator.
+
+Here is how to use the decorator:
 
 ```python
 @client.thread
@@ -32,10 +35,30 @@ def my_thread():
     # do something
 ```
 
+You can access the thread object with the `get_current_thread_id` method:
+
+```python
+@client.thread
+def my_thread():
+    thread_id = client.get_current_thread_id()
+    # do something
+```
+
+## Using the `with` statement
+
+If you want to create a step from a block of code, you should use the `with` statement.
+
+```python
+with client.thread() as thread:
+    # do something
+```
+
+## Thread API
+
 <Card
-  title="Using the API"
+  title="Thread API"
   icon="circle-nodes"
-  href="/python-client/api-reference/entities#thread"
+  href="/python-client/api-reference/thread"
 >
-  You can also manipulate threads directly using the API.
+  Manipulate threads directly using the API.
 </Card>

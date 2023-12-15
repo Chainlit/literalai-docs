@@ -2,22 +2,33 @@
 title: "Create a step"
 ---
 
+Steps are the building blocks of a [Thread](/concepts/thread). They represent a unit of work in a Thread. They can be nested to include several children Steps.
+
+Note that Steps must be created inside a [Thread](/usage/create-a-thread).
+
 There are three methods to create a step:
 
-1. Using the `with` statement
-2. Using the decorator on a function
-3. Using the `step` method
+1. Using the decorator on a function
+2. Using the `with` statement
+3. Using the `start_step` method
 
-## Using the `with` statement
+The step is automatically sent to the Chainlit platform when it is ended.
 
-```python
-with client.step() as step:
-    # do something
-```
+By default, the step id is a random uuid. You can set a custom id to match your own system. Step ids must be unique across the steps and messages of your project.
 
 ## Using the decorator on a function
 
-The simplest way to create a step is to use the `@client.step` decorator on a function:
+If you want to create a step from a function, you should use the `@client.step` decorator.
+
+The step is automatically ended and sent to the Chainlit platform when the function returns.
+
+Another advantage of using the decorator is that you get several variables automatically set for you:
+
+- `name`: The name of the step. This is automatically set to the function name.
+- `input`: The input of the step. This is automatically set to the arguments of the function.
+- `output`: The output of the step. This is automatically set to the return value of the function.
+
+Here is how to use the decorator:
 
 ```python
 @client.step
@@ -25,21 +36,60 @@ def my_step():
     # do something
 ```
 
-If you already have a step id that you want to use, you can pass it to the decorator. Bear in mind that the step id must be unique across all steps in your project.
+If you want to override the default step parameters, you can pass them to the decorator:
 
 ```python
-@client.step(id="my-step-id")
+@client.step(id="my-step-id", name="My step", type="run")
 def my_step():
+    # do something
+```
+
+You can access the step object with the `get_current_step` method:
+
+```python
+@client.step
+def my_step():
+    step = client.get_current_step()
+    # do something
+```
+
+## Using the `with` statement
+
+If you want to create a step from a block of code, you should use the `with` statement.
+
+The step is automatically ended and sent to the Chainlit platform when the code exits the `with` block.
+
+```python
+with client.step() as step:
+    # do something
+```
+
+If you want to override the default step parameters, you can pass them to the `step` method:
+
+```python
+with client.step(id="my-step-id", name="My step", type="run") as step:
     # do something
 ```
 
 ## Using the `start_step` method
 
-You can also create a step using the `step` method. This method returns a `Step` object that you can use to end the step. Ending a step is mandatory to send the data to the Chainlit platform.
+This method should be used as a last resort because it doesn't automatically end the step.
+
+You must call the `end` method on the step object to end the step and send it to the Chainlit platform.
 
 ```python
 step = client.start_step(i)
 # do something
+step.end()
+```
+
+You can either pass the step parameters to the `start_step` method, or set them directly on the step object:
+
+```python
+step = client.start_step(id="my-step-id", name="My step", type="run")
+step.input = "test input"
+# do something
+step.output = "Hello world"
 step.end()
 ```
 
@@ -121,10 +171,12 @@ step.end()
   The attachments associated with the step.
 </ParamField>
 
+## Step API
+
 <Card
-  title="Using the API"
+  title="Step API"
   icon="circle-nodes"
-  href="/python-client/api-reference/entities#step"
+  href="/python-client/api-reference/step"
 >
-  You can also manipulate steps directly using the API.
+  Manipulate steps directly using the API.
 </Card>
