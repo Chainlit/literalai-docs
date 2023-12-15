@@ -25,10 +25,6 @@
     "raiseIssue": true
   },
   "topbarLinks": [],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://staging.chainlit.io/"
-  },
   "tabs": [
     {
       "name": "Python Client",
