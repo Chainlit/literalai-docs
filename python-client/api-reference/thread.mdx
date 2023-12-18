@@ -76,6 +76,44 @@ thread = client.api.get_thread(id="1234")
   The id of the thread
 </ParamField>
 
+## Exporting threads
+
+This method is optimized to export a large number of threads:
+
+```python
+after = None
+has_next_page = True
+while has_next_page:
+    result = await sdk.api.export_threads(after=after)
+    after = result.pageInfo.endCursor
+    has_next_page = result.pageInfo.hasNextPage
+
+    # Do something with the thread list in result.data
+```
+
+<ParamField path="after" type="string">
+  Pagination parameter, use the `pageInfo.endCursor` from the previous result.
+</ParamField>
+
+<ResponseField name="filter" type="dict">
+  You can filter threads with the following parameters:
+  <Expandable title="properties">
+    <ResponseField name="attachmentsName" type="string"></ResponseField>
+    <ResponseField name="attachmentsName" type="string"></ResponseField>
+    <ResponseField name="createdAt" type="string"></ResponseField>
+    <ResponseField name="afterCreatedAt" type="string"></ResponseField>
+    <ResponseField name="beforeCreatedAt" type="string"></ResponseField>
+    <ResponseField name="duration" type="numeric"></ResponseField>
+    <ResponseField name="environment" type="string"></ResponseField>
+    <ResponseField name="feedbacksValue" type="numeric"></ResponseField>
+    <ResponseField name="participantsIdentifier" type="string"></ResponseField>
+    <ResponseField name="search" type="string"></ResponseField>
+    <ResponseField name="tokenCount" type="numeric"></ResponseField>
+  </Expandable>
+</ResponseField>
+
+
+
 ## Update thread
 
 ```python
