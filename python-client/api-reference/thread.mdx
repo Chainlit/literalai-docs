@@ -1,14 +1,15 @@
 ---
 title: Thread
-description: "Create Read Update and Delete methods for Thread"
 ---
 
 Checkout the documentation about [threads](/concepts/thread) for more information.
 
+Note that only the `get_thread` and `export_threads` methods return the thread steps.
+
 ## Creating a thread
 
 ```python
-thread = client.api.create_thread(
+thread = await client.api.create_thread(
     participant_id="1234",
     environment="production",
     tags=["tag1", "tag2"],
@@ -32,12 +33,26 @@ thread = client.api.create_thread(
   The metadata of the thread
 </ParamField>
 
-## Fetching threads
+## Get a thread
 
-You can query threads with filter:
+Use the thread id to get a thread. The returned thread contains the list of steps.
 
 ```python
-threads = client.api.list_threads(first=None, after=None, filters=None)
+thread = await client.api.get_thread(id="1234")
+```
+
+<ParamField path="id" type="string">
+  The id of the thread
+</ParamField>
+
+## List threads
+
+You can list threads, with optional filters. It returns a paginated list of threads.
+
+The returned thread list doesn't contain the thread steps. If you need the steps, you should use the `export_threads` method.
+
+```python
+threads = await client.api.list_threads(first=None, after=None, filters=None)
 
 print(threads["pageInfo"])
 for thread in threads["data"]:
@@ -66,19 +81,9 @@ for thread in threads["data"]:
   </Expandable>
 </ResponseField>
 
-You can also fetch a single thread by id
-
-```python
-thread = client.api.get_thread(id="1234")
-```
-
-<ParamField path="id" type="string">
-  The id of the thread
-</ParamField>
-
 ## Exporting threads
 
-This method is optimized to export a large number of threads:
+This method is optimized to export a large number of threads. It returns a paginated list of threads with their steps.
 
 ```python
 after = None
@@ -117,7 +122,7 @@ while has_next_page:
 ## Update thread
 
 ```python
-updated_thread = client.update_thread(
+updated_thread = await client.update_thread(
     id="1234",
     metadata=None,
     participant_id=None,
@@ -146,12 +151,12 @@ updated_thread = client.update_thread(
   The tags of the thread
 </ParamField>
 
-## Upsert tread
+## Upsert thread
 
-It will either create a new thread is the thread_id does not exist of update the existing one.
+It will either create a new thread if the `thread_id` does not exist or update the existing one.
 
 ```python
-thread = client.upsert_thread(
+thread = await client.upsert_thread(
     thead_id="1234",
     metadata=None,
     participant_id=None,
@@ -183,7 +188,7 @@ thread = client.upsert_thread(
 ## Delete thread
 
 ```python
-client.api.delete_thread(id="1234")
+await client.api.delete_thread(id="1234")
 ```
 
 <ParamField path="id" type="string">

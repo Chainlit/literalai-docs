@@ -12,7 +12,7 @@ There are three methods to create a step:
 2. Using the `with` statement
 3. Using the `start_step` method
 
-The step is automatically sent to the Chainlit platform when it is ended.
+The step is automatically sent to the Chainlit platform when the `.end()` method is called.
 
 By default, the step id is a random uuid. You can set a custom id to match your own system. Step ids must be unique across the steps and messages of your project.
 
