@@ -1,0 +1,134 @@
+---
+title: Python Example
+---
+
+Let's say we have a simple LLM application that takes a user input, performs a retrieval step and generates the final response with an LLM.
+
+The code for this application would look like this:
+
+```python
+import asyncio
+
+async def semantic_search(question: str):
+  # Fake semantic search
+  await asyncio.sleep(1)
+
+  # Return fake results
+  return ["chunk 1", "chunk 2", "chunk 3"]
+
+async def generate_response(question: str, search_results: list):
+  # Fake response generation
+  await asyncio.sleep(2)
+
+  return "Fake answer"
+
+async def main():
+  question = input("What is your question?")
+  search_results = await semantic_search(question)
+  answer = await generate_response(question, search_results)
+  print(answer)
+
+if __name__ == "__main__":
+  asyncio.run(main())
+```
+
+## Logging the conversation with Chainlit
+
+First, we initialize the Chainlit client.
+
+```python
+client = ChainlitClient(api_key="")
+```
+
+### Logging the thread
+
+A [thread](/concepts/thread) is a sequence of steps that are related to each other. In our example, we have a single thread.
+To create a thread, we use the `thread` decorator.
+
+```python
+@client.thread
+async def main():
+  ...
+```
+
+### Logging the steps
+In this example we have 2 steps: `semantic_search` and `generate_response`. We can use the `step` decorator to log these steps.
+
+```python
+@client.step(type="retrieval")
+async def semantic_search(question: str):
+  ...
+
+@client.step(type="llm")
+async def generate_response(question: str, search_results: list):
+  ...
+```
+
+### Logging the user question and final answer
+
+Finally, we can log the user question and the final answer using `client.message`.
+
+```python
+async def main():
+  question = input("What is your question?")
+  # Log the user question
+  client.message(content=question, type="user_message", name="User")
+  search_results = await semantic_search(question)
+  answer = await generate_response(question, search_results)
+  # Log the final answer
+  client.message(content=answer, type="assistant_message", name="Assistant")
+  print(answer)
+```
+
+### Full code
+
+```python
+import asyncio
+from chainlit_client import ChainlitClient
+
+client = ChainlitClient(api_key="")
+
+@client.step(type="retrieval")
+async def semantic_search(question: str):
+  await asyncio.sleep(1)
+  return ["chunk 1", "chunk 2", "chunk 3"]
+
+@client.step(type="llm")
+async def generate_response(question: str, search_results: list):
+  await asyncio.sleep(2)
+  return "Fake answer"
+
+
+@client.thread
+async def main():
+  question = input("What is your question?")
+  client.message(content=question, type="user_message", name="User")
+  search_results = await semantic_search(question)
+  answer = await generate_response(question, search_results)
+  client.message(content=answer, type="assistant_message", name="Assistant")
+  print(answer)
+
+if __name__ == "__main__":
+  asyncio.run(main())
+  client.wait_until_queue_empty()
+```
+
+## Running the example
+
+To run the example, you need to install the Chainlit client:
+
+```bash
+pip install chainlit-client
+```
+
+Then, you can run the example:
+
+```bash
+python example.py
+```
+
+In the Chainlit platform, you will see the following thread being logged:
+
+<Frame caption="Rendering of the Thread">
+  <img src="/images/python-example.png" />
+</Frame>

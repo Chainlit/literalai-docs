@@ -33,14 +33,13 @@
     {
       "name": "TypeScript Client",
       "url": "typescript-client"
-    },
-    { "name": "Cloud", "url": "cloud" }
+    }
   ],
   "anchors": [],
   "navigation": [
     {
-      "group": "Get Started",
-      "pages": ["introduction", "quickstart"]
+      "group": "",
+      "pages": ["introduction", "python-example"]
     },
     {
       "group": "Concepts",
@@ -51,7 +50,7 @@
         "concepts/instrumentation"
       ]
     },
-
+    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] },
     {
       "group": "Get Started",
       "pages": [
@@ -59,14 +58,6 @@
         "python-client/get-started/authentication",
         "python-client/get-started/send-a-first-step"
       ]
-    },
-    {
-      "group": "Callback",
-      "pages": ["python-client/callback/langchain"]
-    },
-    {
-      "group": "Instrumentation",
-      "pages": ["python-client/instrumentation/openai"]
     },
     {
       "group": "Usage",
@@ -77,9 +68,14 @@
       ]
     },
     {
-      "group": "Tutorial",
-      "pages": ["python-client/tutorial/monitoring-chat-with-my-doc"]
+      "group": "Instrumentation",
+      "pages": ["python-client/instrumentation/openai"]
     },
+    {
+      "group": "Callback",
+      "pages": ["python-client/callback/langchain"]
+    },
+
     {
       "group": "API Reference",
       "pages": [
@@ -91,8 +87,7 @@
         "python-client/api-reference/feedback"
       ]
     },
-    { "group": "Get Started", "pages": ["typescript-client/introduction"] },
-    { "group": "Cloud", "pages": ["cloud/deployment"] }
+    { "group": "Get Started", "pages": ["typescript-client/introduction"] }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/chainlit_io",

@@ -2,14 +2,14 @@
 title: "Thread"
 ---
 
-A Thread represents a group of interactions between a user and an AI app. It can be, for example, a conversation between a human and one or several agents, or an agent generating a document piece by piece from a user input.
+A Thread represents a group of interactions between a user and an AI app. It can be, for example, a conversation between a human and one or several assistants, or an agent generating a document piece by piece from a user input.
 
-A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an internal AI step like an LLM call.
+A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an intermediate AI step like an LLM call.
 
 ## A simple thread
 
 <CodeGroup>
-```python step-example.py
+```python
 import time
 from chainlit_client import ChainlitClient
 
@@ -38,9 +38,8 @@ client.wait_until_queue_empty()
 ```
 </CodeGroup>
 
-Here is how it looks on the Chainlit platform:
 
-<Frame>
+<Frame caption="Output on the Chainlit platform">
   <img src="/images/thread-one-step-one-message.png" alt="A thread in the Chainlit platform" />
 </Frame>
 
@@ -49,10 +48,10 @@ Here is how it looks on the Chainlit platform:
 There are two ways to create thread. Using the `with` statement or using the decorator on a function.
 
 <CardGroup cols={2}>
-  <Card title="Thread decorator" icon="at" href="/python-client/usage/create-a-thread#using-the-with-statement">
+  <Card title="Thread decorator" icon="at" href="/python-client/usage/create-a-thread#using-the-decorator-on-a-function">
     Use the decorator on your thread function.
   </Card>
-  <Card title="With statement" icon="w" href="/python-client/usage/create-a-thread#using-the-decorator-on-a-function">
+  <Card title="With statement" icon="w" href="/python-client/usage/create-a-thread#using-the-with-statement">
     Use the with statement when your thread is not a function.
   </Card>
 </CardGroup>
