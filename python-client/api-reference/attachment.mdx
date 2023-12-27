@@ -55,6 +55,12 @@ attachment = client.api.create_attachment(
   Path in string format
 </ParamField>
 
+### Return type
+
+<ResponseField name="attachment" type="Attachment">
+  Return an Attachment
+</ResponseField>
+
 ## Update attachment
 
 ```python
@@ -92,6 +98,12 @@ attachment = client.api.update_attachment(
   Url in string format
 </ParamField>
 
+### Return type
+
+<ResponseField name="attachment" type="Attachment">
+  Return an Attachment
+</ResponseField>
+
 ## Get attachment
 
 ```python
@@ -101,6 +113,12 @@ attachment = client.api.get_attachment(id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542"
 <ParamField path="id" type="uuid" required>
   Id in string format
 </ParamField>
+
+### Return type
+
+<ResponseField name="attachment" type="Attachment">
+  Return an Attachment, can be None if the attachment is not found
+</ResponseField>
 
 ## Delete attachment
 

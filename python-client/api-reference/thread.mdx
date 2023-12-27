@@ -64,7 +64,7 @@ for thread in threads["data"]:
   doc](https://graphql.org/learn/pagination/) for more information
 </ParamField>
 
-<ResponseField name="filter" type="dict">
+<ParamField path="filter" type="dict">
   You can filter threads with the following parameters:
   <Expandable title="properties">
     <ResponseField name="attachmentsName" type="string"></ResponseField>
@@ -79,7 +79,7 @@ for thread in threads["data"]:
     <ResponseField name="search" type="string"></ResponseField>
     <ResponseField name="tokenCount" type="numeric"></ResponseField>
   </Expandable>
-</ResponseField>
+</ParamField>
 
 ## Exporting threads
 
@@ -100,7 +100,7 @@ while has_next_page:
   Pagination parameter, use the `pageInfo.endCursor` from the previous result.
 </ParamField>
 
-<ResponseField name="filter" type="dict">
+<ParamField path="filter" type="dict">
   You can filter threads with the following parameters:
   <Expandable title="properties">
     <ResponseField name="attachmentsName" type="string"></ResponseField>
@@ -115,7 +115,7 @@ while has_next_page:
     <ResponseField name="search" type="string"></ResponseField>
     <ResponseField name="tokenCount" type="numeric"></ResponseField>
   </Expandable>
-</ResponseField>
+</ParamField>
 
 ## Update thread
 

@@ -29,7 +29,7 @@ feedback = client.api.create_feedback(
   Comment in string format
 </ParamField>
 
-<ResponseField name="strategy" type="string">
+<ParamField path="strategy" type="string">
   <Expandable title="properties">
     <ResponseField name="BINARY"></ResponseField>
     <ResponseField name="STARS"></ResponseField>
@@ -39,6 +39,12 @@ feedback = client.api.create_feedback(
     <ResponseField name="LETTERS"></ResponseField>
     <ResponseField name="PERCENTAGE"></ResponseField>
   </Expandable>
+</ParamField>
+
+### Return type
+
+<ResponseField name="feedback" type="Feedback">
+  Return a Feedback
 </ResponseField>
 
 ## Update a feedback
@@ -60,3 +66,9 @@ feedback = client.api.update_feedback(
 <ParamField path="update_params" type="dict">
   Dict containing same parameters as create_feedback
 </ParamField>
+
+### Return type
+
+<ResponseField name="feedback" type="Feedback">
+  Return a Feedback
+</ResponseField>

@@ -16,6 +16,12 @@ new_user = client.api.create_user(identifier="John Doe")
   The identifier of the user
 </ParamField>
 
+### Return type
+
+<ResponseField name="user" type="User">
+  Return the user
+</ResponseField>
+
 ## Get an User
 
 ```python
@@ -49,6 +55,12 @@ updated_user = client.api.update_user(id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542",
 <ParamField path="metadata" type="dict">
   The metadata of the user
 </ParamField>
+
+### Return type
+
+<ResponseField name="user" type="User">
+  Return the user
+</ResponseField>
 
 ## Delete an User
 

@@ -20,8 +20,6 @@ step = client.api.create_step(
 
 <ParamField path="type" type="string">
   The type of the step
-</ParamField>
-<ResponseField name="type" type="string">
   <Expandable title="properties">
     <ResponseField name="run"></ResponseField>
     <ResponseField name="tool"></ResponseField>
@@ -31,7 +29,7 @@ step = client.api.create_step(
     <ResponseField name="rerank"></ResponseField>
     <ResponseField name="undefined"></ResponseField>
   </Expandable>
-</ResponseField>
+</ParamField>
 
 <ParamField path="start_time" type="string">
   Starting time in string format
@@ -64,6 +62,12 @@ step = client.api.create_step(
 <ParamField path="tags" type="List[string]">
   List of tags in string format
 </ParamField>
+
+### Return type
+
+<ResponseField name="step" type="Step">
+  Return a Step
+</ResponseField>
 
 ## Update a step
 
@@ -114,6 +118,12 @@ step = client.api.update_step(
   Parent identifier as a string
 </ParamField>
 
+### Return type
+
+<ResponseField name="step" type="Step">
+  Return a Step
+</ResponseField>
+
 ## Get a step
 
 ```python
@@ -125,6 +135,12 @@ step = client.api.get_step(
 <ParamField path="id" type="uuid" required>
   Id as a string
 </ParamField>
+
+### Return type
+
+<ResponseField name="step" type="Step">
+  Return a Step, can be None if the step is not found
+</ResponseField>
 
 ## Delete a step
 
@@ -156,3 +172,9 @@ steps = [
 
 client.api.send_steps(steps=steps)
 ```
+
+### Return type
+
+<ResponseField name="response" type="dict">
+  GraphQL response in the format: `{'data': {'step0': {'ok': True, 'message': None}}}`
+</ResponseField>
