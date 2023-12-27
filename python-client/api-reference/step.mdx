@@ -9,18 +9,29 @@ Checkout the documentation about [steps](/concepts/step) for more information.
 
 ```python
 step = client.api.create_step(
-    thread_id: "1234"
+    thread_id="37822d78-5258-4646-9a68-46906aff5337"
     type = "undefined",
 )
 ```
 
-<ParamField path="thread_id" type="string">
+<ParamField path="thread_id" type="uuid" required>
   The id of the thread
 </ParamField>
 
 <ParamField path="type" type="string">
   The type of the step
 </ParamField>
+<ResponseField name="type" type="string">
+  <Expandable title="properties">
+    <ResponseField name="run"></ResponseField>
+    <ResponseField name="tool"></ResponseField>
+    <ResponseField name="llm"></ResponseField>
+    <ResponseField name="embedding"></ResponseField>
+    <ResponseField name="retrieval"></ResponseField>
+    <ResponseField name="rerank"></ResponseField>
+    <ResponseField name="undefined"></ResponseField>
+  </Expandable>
+</ResponseField>
 
 <ParamField path="start_time" type="string">
   Starting time in string format
@@ -42,7 +53,7 @@ step = client.api.create_step(
   Metadata as a dict
 </ParamField>
 
-<ParamField path="parent_id" type="string">
+<ParamField path="parent_id" type="uuid">
   Parent ID in string format
 </ParamField>
 
@@ -58,12 +69,12 @@ step = client.api.create_step(
 
 ```python
 step = client.api.update_step(
-  id="1234",
+  id="56c68123-7caf-43e8-a756-6b88b4f3babe",
   type = "user_message",
 )
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id as a string
 </ParamField>
 
@@ -99,7 +110,7 @@ step = client.api.update_step(
   End time as a string
 </ParamField>
 
-<ParamField path="parent_id" type="string">
+<ParamField path="parent_id" type="uuid">
   Parent identifier as a string
 </ParamField>
 
@@ -107,11 +118,11 @@ step = client.api.update_step(
 
 ```python
 step = client.api.get_step(
-  id="1234",
+  id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4",
 )
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id as a string
 </ParamField>
 
@@ -119,11 +130,11 @@ step = client.api.get_step(
 
 ```python
 step = client.api.delete_step(
-  id="1234",
+  id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4",
 )
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id as a string
 </ParamField>
 
@@ -134,14 +145,14 @@ Used to send multiple steps at the same time to the Chainlit platform.
 ```python
 steps = [
     {
-        "thread_id": "1234",
-        "type": "undefined",
+        "thread_id": "da932cd3-9be5-4bfc-bdb9-27d4909e3c32",
+        "type": "llm",
     },
     {
-        "thread_id": "1234",
+        "thread_id": "adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4",
         "type": "undefined",
     },
 ]
 
-client.api.send_steps(steps=[Step.from_dict(step) for step in steps])
+client.api.send_steps(steps=steps)
 ```

@@ -7,13 +7,17 @@ description: "Create and Update methods for Feedback"
 
 ```python
 feedback = client.api.create_feedback(
-    thread_id="1234",
+    thread_id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32",
     value=1,
     comment="Hello world",
 )
 ```
 
-<ParamField path="step_id" type="string">
+<ParamField path="thread_id" type="uuid" required>
+  Thread id in string format
+</ParamField>
+
+<ParamField path="step_id" type="uuid">
   Step id in string format
 </ParamField>
 
@@ -42,14 +46,14 @@ feedback = client.api.create_feedback(
 ```python
 
 feedback = client.api.update_feedback(
-    id="1234",
+    id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4",
     update_params={
         "comment": "Hello world",
     },
 )
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id in string format
 </ParamField>
 

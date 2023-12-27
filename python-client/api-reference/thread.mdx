@@ -10,14 +10,14 @@ Note that only the `get_thread` and `export_threads` methods return the thread s
 
 ```python
 thread = await client.api.create_thread(
-    participant_id="1234",
+    participant_id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542",
     environment="production",
     tags=["tag1", "tag2"],
     metadata={"key": "value"},
 )
 ```
 
-<ParamField path="participant_id" type="string">
+<ParamField path="participant_id" type="uuid">
   Id of the participant
 </ParamField>
 
@@ -38,10 +38,10 @@ thread = await client.api.create_thread(
 Use the thread id to get a thread. The returned thread contains the list of steps.
 
 ```python
-thread = await client.api.get_thread(id="1234")
+thread = await client.api.get_thread(id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32")
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   The id of the thread
 </ParamField>
 
@@ -117,13 +117,11 @@ while has_next_page:
   </Expandable>
 </ResponseField>
 
-
-
 ## Update thread
 
 ```python
 updated_thread = await client.update_thread(
-    id="1234",
+    id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32",
     metadata=None,
     participant_id=None,
     environment=None,
@@ -131,7 +129,7 @@ updated_thread = await client.update_thread(
 )
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   The id of the thread
 </ParamField>
 
@@ -139,7 +137,7 @@ updated_thread = await client.update_thread(
   The metadata of the thread
 </ParamField>
 
-<ParamField path="participant_id" type="string">
+<ParamField path="participant_id" type="uuid">
   The participant id of the thread
 </ParamField>
 
@@ -157,7 +155,7 @@ It will either create a new thread if the `thread_id` does not exist or update t
 
 ```python
 thread = await client.upsert_thread(
-    thead_id="1234",
+    thead_id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32",
     metadata=None,
     participant_id=None,
     environment=None,
@@ -165,7 +163,7 @@ thread = await client.upsert_thread(
 )
 ```
 
-<ParamField path="thread_id" type="string">
+<ParamField path="thread_id" type="uuid" required>
   The id of the thread
 </ParamField>
 
@@ -173,7 +171,7 @@ thread = await client.upsert_thread(
   The metadata of the thread
 </ParamField>
 
-<ParamField path="participant_id" type="string">
+<ParamField path="participant_id" type="uuid">
   The participant id of the thread
 </ParamField>
 
@@ -188,9 +186,9 @@ thread = await client.upsert_thread(
 ## Delete thread
 
 ```python
-await client.api.delete_thread(id="1234")
+await client.api.delete_thread(id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32")
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   The id of the thread
 </ParamField>

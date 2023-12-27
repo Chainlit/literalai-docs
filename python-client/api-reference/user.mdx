@@ -12,29 +12,33 @@ client = ChainlitClient()
 new_user = client.api.create_user(identifier="John Doe")
 ```
 
-<ParamField path="identifier" type="string">
+<ParamField path="identifier" type="string" required>
   The identifier of the user
 </ParamField>
 
 ## Get an User
 
 ```python
-user = client.api.get_user(id="1234")
+user = client.api.get_user(id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4")
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   The id of the user
 </ParamField>
 
-<Warning>If the user does not exist `None` is returned</Warning>
+### Return type
+
+<ResponseField name="user" type="User">
+  Return the user, can be None if the user does not exist
+</ResponseField>
 
 ## Update an User
 
 ```python
-updated_user = client.api.update_user(id="1234", identifier="Jane Doe")
+updated_user = client.api.update_user(id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542", identifier="Jane Doe")
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   The id of the user
 </ParamField>
 
@@ -49,9 +53,9 @@ updated_user = client.api.update_user(id="1234", identifier="Jane Doe")
 ## Delete an User
 
 ```python
-user = client.api.delete_user(id="1234")
+user = client.api.delete_user(id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542")
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   The id of the user
 </ParamField>
