@@ -7,22 +7,23 @@ description: "Create Read Update and Delete methods for Attachment"
 
 ```python
 attachment = client.api.create_attachment(
-    thread_id="1234",
+    thread_id="<THREAD_UUID>",
+    step_id="<STEP_UUID>"
     name="my_attachment",
     content_type="text/plain",
     content="Hello world",
 )
 ```
 
-<ParamField path="thread_id" type="string">
+<ParamField path="thread_id" type="uuid" required>
   Thread id in string format
 </ParamField>
 
-<ParamField path="step_id" type="string">
+<ParamField path="step_id" type="uuid" required>
   Step id in string format
 </ParamField>
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid">
   Id in string format
 </ParamField>
 
@@ -54,11 +55,17 @@ attachment = client.api.create_attachment(
   Path in string format
 </ParamField>
 
+### Return type
+
+<ResponseField name="attachment" type="Attachment">
+  Return an Attachment
+</ResponseField>
+
 ## Update attachment
 
 ```python
 attachment = client.api.update_attachment(
-    id="1234",
+    id="<ATTACHMENT_UUID>",
     update_params={
         "name": "my_attachment",
         "content_type": "text/plain",
@@ -67,22 +74,58 @@ attachment = client.api.update_attachment(
 )
 ```
 
+<ParamField path="id" type="uuid" required>
+  Id in string format
+</ParamField>
+
+<ParamField path="metadata" type="Dict">
+  Metadata in dictionary format
+</ParamField>
+
+<ParamField path="mime" type="string">
+  Mime in string format
+</ParamField>
+
+<ParamField path="name" type="string">
+  Name in string format
+</ParamField>
+
+<ParamField path="objectKey" type="string">
+  Object key in string format
+</ParamField>
+
+<ParamField path="url" type="string">
+  Url in string format
+</ParamField>
+
+### Return type
+
+<ResponseField name="attachment" type="Attachment">
+  Return an Attachment
+</ResponseField>
+
 ## Get attachment
 
 ```python
-attachment = client.api.get_attachment(id="1234")
+attachment = client.api.get_attachment(id="<ATTACHMENT_UUID>")
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id in string format
 </ParamField>
+
+### Return type
+
+<ResponseField name="attachment" type="Attachment">
+  Return an Attachment, can be None if the attachment is not found
+</ResponseField>
 
 ## Delete attachment
 
 ```python
-attachment = client.api.delete_attachment(id="1234")
+attachment = client.api.delete_attachment(id="<ATTACHMENT_UUID>")
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id in string format
 </ParamField>

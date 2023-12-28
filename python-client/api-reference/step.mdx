@@ -9,17 +9,26 @@ Checkout the documentation about [steps](/concepts/step) for more information.
 
 ```python
 step = client.api.create_step(
-    thread_id: "1234"
-    type = "undefined",
+    thread_id="<THREAD_UUID>",
+    type="undefined",
 )
 ```
 
-<ParamField path="thread_id" type="string">
+<ParamField path="thread_id" type="uuid" required>
   The id of the thread
 </ParamField>
 
 <ParamField path="type" type="string">
   The type of the step
+  <Expandable title="properties">
+    <ResponseField name="run"></ResponseField>
+    <ResponseField name="tool"></ResponseField>
+    <ResponseField name="llm"></ResponseField>
+    <ResponseField name="embedding"></ResponseField>
+    <ResponseField name="retrieval"></ResponseField>
+    <ResponseField name="rerank"></ResponseField>
+    <ResponseField name="undefined"></ResponseField>
+  </Expandable>
 </ParamField>
 
 <ParamField path="start_time" type="string">
@@ -42,7 +51,7 @@ step = client.api.create_step(
   Metadata as a dict
 </ParamField>
 
-<ParamField path="parent_id" type="string">
+<ParamField path="parent_id" type="uuid">
   Parent ID in string format
 </ParamField>
 
@@ -54,16 +63,22 @@ step = client.api.create_step(
   List of tags in string format
 </ParamField>
 
+### Return type
+
+<ResponseField name="step" type="Step">
+  Return a Step
+</ResponseField>
+
 ## Update a step
 
 ```python
 step = client.api.update_step(
-  id="1234",
-  type = "user_message",
+  id="<STEP_UUID>",
+  type="user_message",
 )
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id as a string
 </ParamField>
 
@@ -99,31 +114,43 @@ step = client.api.update_step(
   End time as a string
 </ParamField>
 
-<ParamField path="parent_id" type="string">
+<ParamField path="parent_id" type="uuid">
   Parent identifier as a string
 </ParamField>
+
+### Return type
+
+<ResponseField name="step" type="Step">
+  Return a Step
+</ResponseField>
 
 ## Get a step
 
 ```python
 step = client.api.get_step(
-  id="1234",
+  id="<STEP_UUID>",
 )
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id as a string
 </ParamField>
+
+### Return type
+
+<ResponseField name="step" type="Step">
+  Return a Step, can be None if the step is not found
+</ResponseField>
 
 ## Delete a step
 
 ```python
 step = client.api.delete_step(
-  id="1234",
+  id="<STEP_UUID>",
 )
 ```
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid" required>
   Id as a string
 </ParamField>
 
@@ -134,14 +161,20 @@ Used to send multiple steps at the same time to the Chainlit platform.
 ```python
 steps = [
     {
-        "thread_id": "1234",
-        "type": "undefined",
+        "thread_id": "<THREAD_UUID>",
+        "type": "llm",
     },
     {
-        "thread_id": "1234",
+        "thread_id": "<THREAD_UUID>",
         "type": "undefined",
     },
 ]
 
-client.api.send_steps(steps=[Step.from_dict(step) for step in steps])
+client.api.send_steps(steps=steps)
 ```
+
+### Return type
+
+<ResponseField name="response" type="dict">
+  GraphQL response in the format: `{'data': {'step0': {'ok': True, 'message': None}}}`
+</ResponseField>

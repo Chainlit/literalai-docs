@@ -95,11 +95,11 @@ step.end()
 
 ## Step parameters
 
-<ParamField path="thread_id" type="string" required>
+<ParamField path="thread_id" type="uuid" required>
   The id of the thread
 </ParamField>
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid">
   The id of the step. If not provided, a random uuid will be generated. Use
   custom ones to match your own system. Step ids must be unique across your
   project.
@@ -128,7 +128,7 @@ step.end()
   your steps.
 </ParamField>
 
-<ParamField path="parent_id" type="string">
+<ParamField path="parent_id" type="uuid">
   The id of the parent step. This enables you to create nested steps.
 </ParamField>
 

@@ -18,11 +18,11 @@ By default, the message id is a random uuid. You can set a custom id to match yo
 
 ## Message parameters
 
-<ParamField path="thread_id" type="string" required>
+<ParamField path="thread_id" type="uuid" required>
   The id of the thread
 </ParamField>
 
-<ParamField path="id" type="string">
+<ParamField path="id" type="uuid">
   The id of the message. If not provided, a random uuid will be generated.
 </ParamField>
 
@@ -44,7 +44,7 @@ By default, the message id is a random uuid. You can set a custom id to match yo
   your messages.
 </ParamField>
 
-<ParamField path="parent_id" type="string">
+<ParamField path="parent_id" type="uuid">
   The id of the parent message. This enables you to keep track of the parent
   step.
 </ParamField>
