@@ -10,7 +10,7 @@ Note that only the `get_thread` and `export_threads` methods return the thread s
 
 ```python
 thread = await client.api.create_thread(
-    participant_id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542",
+    participant_id="<PARTICIPANT_UUID>",
     environment="production",
     tags=["tag1", "tag2"],
     metadata={"key": "value"},
@@ -38,7 +38,7 @@ thread = await client.api.create_thread(
 Use the thread id to get a thread. The returned thread contains the list of steps.
 
 ```python
-thread = await client.api.get_thread(id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32")
+thread = await client.api.get_thread(id="<THREAD_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -121,7 +121,7 @@ while has_next_page:
 
 ```python
 updated_thread = await client.update_thread(
-    id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32",
+    id="<THREAD_UUID>",
     metadata=None,
     participant_id=None,
     environment=None,
@@ -155,7 +155,7 @@ It will either create a new thread if the `thread_id` does not exist or update t
 
 ```python
 thread = await client.upsert_thread(
-    thead_id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32",
+    thead_id="<THREAD_UUID>",
     metadata=None,
     participant_id=None,
     environment=None,
@@ -186,7 +186,7 @@ thread = await client.upsert_thread(
 ## Delete thread
 
 ```python
-await client.api.delete_thread(id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32")
+await client.api.delete_thread(id="<THREAD_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>

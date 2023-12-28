@@ -7,7 +7,7 @@ description: "Create and Update methods for Feedback"
 
 ```python
 feedback = client.api.create_feedback(
-    thread_id="da932cd3-9be5-4bfc-bdb9-27d4909e3c32",
+    thread_id="<THREAD_UUID>",
     value=1,
     comment="Hello world",
 )
@@ -52,7 +52,7 @@ feedback = client.api.create_feedback(
 ```python
 
 feedback = client.api.update_feedback(
-    id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4",
+    id="<THREAD_UUID>",
     update_params={
         "comment": "Hello world",
     },

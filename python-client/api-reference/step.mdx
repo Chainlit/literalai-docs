@@ -9,8 +9,8 @@ Checkout the documentation about [steps](/concepts/step) for more information.
 
 ```python
 step = client.api.create_step(
-    thread_id="37822d78-5258-4646-9a68-46906aff5337"
-    type = "undefined",
+    thread_id="<THREAD_UUID>",
+    type="undefined",
 )
 ```
 
@@ -73,8 +73,8 @@ step = client.api.create_step(
 
 ```python
 step = client.api.update_step(
-  id="56c68123-7caf-43e8-a756-6b88b4f3babe",
-  type = "user_message",
+  id="<STEP_UUID>",
+  type="user_message",
 )
 ```
 
@@ -128,7 +128,7 @@ step = client.api.update_step(
 
 ```python
 step = client.api.get_step(
-  id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4",
+  id="<STEP_UUID>",
 )
 ```
 
@@ -146,7 +146,7 @@ step = client.api.get_step(
 
 ```python
 step = client.api.delete_step(
-  id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4",
+  id="<STEP_UUID>",
 )
 ```
 
@@ -161,11 +161,11 @@ Used to send multiple steps at the same time to the Chainlit platform.
 ```python
 steps = [
     {
-        "thread_id": "da932cd3-9be5-4bfc-bdb9-27d4909e3c32",
+        "thread_id": "<THREAD_UUID>",
         "type": "llm",
     },
     {
-        "thread_id": "adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4",
+        "thread_id": "<THREAD_UUID>",
         "type": "undefined",
     },
 ]

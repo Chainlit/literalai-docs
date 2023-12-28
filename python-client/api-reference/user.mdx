@@ -25,7 +25,7 @@ new_user = client.api.create_user(identifier="John Doe")
 ## Get an User
 
 ```python
-user = client.api.get_user(id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4")
+user = client.api.get_user(id="<USER_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -41,7 +41,7 @@ user = client.api.get_user(id="adc52cca-44ef-49b5-9c6b-af9d3b8c5ee4")
 ## Update an User
 
 ```python
-updated_user = client.api.update_user(id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542", identifier="Jane Doe")
+updated_user = client.api.update_user(id="<USER_UUID>", identifier="Jane Doe")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -65,7 +65,7 @@ updated_user = client.api.update_user(id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542",
 ## Delete an User
 
 ```python
-user = client.api.delete_user(id="c0bd9bf3-45f2-447b-ae67-d4c18ae06542")
+user = client.api.delete_user(id="<USER_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
