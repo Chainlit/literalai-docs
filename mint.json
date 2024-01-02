@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Chainlit Platform",
   "logo": {
     "dark": "/logo/logo.svg",
     "light": "/logo/logo.svg"

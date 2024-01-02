@@ -84,12 +84,21 @@ for thread in threads["data"]:
 ## Exporting threads
 
 This method is optimized to export a large number of threads. It returns a paginated list of threads with their steps.
+You can optionally filter the threads.
 
 ```python
+from chainlit_client.thread import DateTimeFilter, NumberListFilter, ThreadFilter
+
 after = None
 has_next_page = True
+
+filters = ThreadFilter(
+    createdAt=DateTimeFilter(operator="gt", value="2023-12-14"),
+    feedbacksValue=NumberListFilter(operator="in", value=[1]),
+)
+
 while has_next_page:
-    result = await sdk.api.export_threads(after=after)
+    result = await sdk.api.export_threads(after=after, filters=filters)
     after = result.pageInfo.endCursor
     has_next_page = result.pageInfo.hasNextPage
 
