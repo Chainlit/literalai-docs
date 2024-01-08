@@ -11,36 +11,31 @@ A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an 
 <CodeGroup>
 ```python
 import time
-from chainlit_client import ChainlitClient
-
-client = ChainlitClient()
-
-
+from literalai import LiteralClient
+client = LiteralClient()
 @client.step(type="tool")
-def my_tool(input: str):
-    # do something
+def my_tool(input: str): # do something
 
     time.sleep(1)
 
     return "Response from the tool"
 
-
 @client.thread
 def main():
-    tool_response = my_tool("Hello world")
+tool_response = my_tool("Hello world")
 
     client.message(content=tool_response, type="assistant_message", name="Chatbot")
     print(tool_response)
 
-
 main()
 client.wait_until_queue_empty()
+
 ```
 </CodeGroup>
 
 
-<Frame caption="Output on the Chainlit platform">
-  <img src="/images/thread-one-step-one-message.png" alt="A thread in the Chainlit platform" />
+<Frame caption="Output on the platform">
+  <img src="/images/thread-one-step-one-message.png" alt="A thread on the platform" />
 </Frame>
 
 ## Thread API
@@ -55,3 +50,4 @@ There are two ways to create thread. Using the `with` statement or using the dec
     Use the with statement when your thread is not a function.
   </Card>
 </CardGroup>
+```

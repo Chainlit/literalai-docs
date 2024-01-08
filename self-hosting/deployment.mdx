@@ -13,14 +13,14 @@ title: Self-Hosted Deployment
 2. Authenticate with your token:
 
 ```shell
-docker login --username chainlit
+docker login --username literalai
 # When prompted for a password, use the token
 ```
 
 3. Pull the image
 
 ```shell
-docker pull chainlit/chainlit-cloud:0.2.8
+docker pull literalai/platform:1.0.0
 ```
 
 ## Host the image
@@ -30,13 +30,13 @@ docker pull chainlit/chainlit-cloud:0.2.8
 1. Tag the image:
 
 ```shell
-docker tag chainlit/chainlit-cloud:latest <region>-docker.pkg.dev/<project_id>/<artifactory_name>/chainlit-cloud:latest
+docker tag literalai/platform:latest <region>-docker.pkg.dev/<project_id>/<artifactory_name>/platform:latest
 ```
 
 2. Push the image
 
 ```shell
-docker push <region>-docker.pkg.dev/<project_id>/<artifactory_name>/chainlit-cloud:latest
+docker push <region>-docker.pkg.dev/<project_id>/<artifactory_name>/platform:latest
 ```
 
 ### Google Container Registry
@@ -44,13 +44,13 @@ docker push <region>-docker.pkg.dev/<project_id>/<artifactory_name>/chainlit-clo
 1. Tag the image:
 
 ```shell
-docker tag chainlit/chainlit-cloud:latest gcr.io/<project_id>/chainlit-cloud:latest
+docker tag literalai/platform:latest gcr.io/<project_id>/platform:latest
 ```
 
 2. Push the image:
 
 ```shell
-docker push gcr.io/<project_id>/chainlit-cloud:latest
+docker push gcr.io/<project_id>/platform:latest
 ```
 
 ### Amazon ECR
@@ -58,13 +58,13 @@ docker push gcr.io/<project_id>/chainlit-cloud:latest
 1. Tag the image:
 
 ```shell
-docker tag chainlit/chainlit-cloud:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/chainlit/chainlit-cloud:latest
+docker tag literalai/platform:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/literalai/platform:latest
 ```
 
 2. Push the image
 
 ```shell
-docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/chainlit/chainlit-cloud:latest
+docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/literalai/platform:latest
 ```
 
 ### Azure Container Registry
@@ -90,7 +90,7 @@ DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<db_name><?pgbounc
 # The url used to handle migrations to your database.
 # Note: We can not perform migration through pg-bouncer, we need a direct url to your database.
 DATABASE_DIRECT_URL=postgresql://<username>:<password>@<host>:<port>/<db_name>
-# Optionally, set DATABASE_SSL to 'true' if you need to communicate with the database over a secure network. 
+# Optionally, set DATABASE_SSL to 'true' if you need to communicate with the database over a secure network.
 # DATABASE_SSL=true
 
 # Used to encrypt the NextAuth.js JWT, and to hash email verification tokens.
@@ -188,7 +188,7 @@ If you enabled OAuth authentication in the environment variables, don't forget t
 
 ```shell
 <protocol>://<domain>/api/auth/callback/<provider>
-# Example https://cloud.chainlit.io/api/auth/callback/google
+# Example https://my-literal.com/api/auth/callback/google
 ```
 
 ## Configure the port and start the container
@@ -198,9 +198,9 @@ You should now be ready to start the container.
 
 ## Configure your Chainlit app
 
-Once you successfully deployed Chainlit Cloud, don't forget to set the following environment variables in your chainlit App.
+Once you successfully deployed the Literal Platform, don't forget to set the following environment variables in your chainlit App.
 
 ```bash
-CHAINLIT_SERVER=https://my-chainlit-cloud.com
-CHAINLIT_API_KEY=my project api key
+LITERAL_SERVER=https://my-literal.com
+LITERAL_API_KEY=my project api key
 ```

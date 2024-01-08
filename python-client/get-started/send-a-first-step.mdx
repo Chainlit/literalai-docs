@@ -7,16 +7,14 @@ This guide assumes that you have set up a `.env` file with your API key. If you 
 Copy the following code in a file called `step-example.py`:
 
 ```python step-example.py
-from chainlit_client import ChainlitClient
-from dotenv import load_dotenv
+from literalai import LiteralClientfrom dotenv import load_dotenv
 
 load_dotenv()
 
-client = ChainlitClient()
-
+client = LiteralClient()
 @client.step(type="run")
 def my_step(input):
-    return f"World" 
+    return f"World"
 
 
 @client.thread
@@ -37,14 +35,21 @@ World
 Done
 ```
 
-Now you can go the cloud platform and see your step in the thread view:
+Now you can go the platform and see your step in the thread view:
 
-<Frame caption="The result in Chainlit platform">
-  <img src="/images/one-step.png" alt="One step thread in the Chainlit platform" />
+<Frame caption="Platform view">
+  <img
+    src="/images/one-step.png"
+    alt="One step thread on the Literal platform"
+  />
 </Frame>
 
 # Next up
 
-<Card title="OpenAI instrumentation" icon="link" href="/python-client/instrumentation/openai">
+<Card
+  title="OpenAI instrumentation"
+  icon="link"
+  href="/python-client/instrumentation/openai"
+>
   Automcatically instrument your code
 </Card>

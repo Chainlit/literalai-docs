@@ -2,23 +2,25 @@
 title: "OpenAI"
 ---
 
-
-<Note>We only support the OpenAI python package starting at version `1.0.0`. We don't support the Assistant API yet.</Note>
+<Note>
+  We only support the OpenAI python package starting at version `1.0.0`. We
+  don't support the Assistant API yet.
+</Note>
 
 The OpenAI integration allows you to generate an LLM Step automatically for each call to the OpenAI API.
 
-You need to call the `instrument_openai` method from the Chainlit client to enable the integration. Call it before any OpenAI API call.
+You need to call the `instrument_openai` method from the Literal client to enable the integration. Call it before any OpenAI API call.
 
 ```python
-from chainlit_client import ChainlitClient
+from literalai import LiteralClient
 from openai import OpenAI
 
 openai_client = OpenAI()
-chainlit_client = ChainlitClient()
-chainlit_client.instrument_openai()
+literal_client = LiteralClient()
+literal_client.instrument_openai()
 
 
-@chainlit_client.thread()
+@literal_client.thread()
 def main():
     completion = openai_client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -34,11 +36,14 @@ def main():
 
 
 main()
-chainlit_client.wait_until_queue_empty()
+literal_client.wait_until_queue_empty()
 ```
 
-Here is how it looks on the Chainlit platform:
+Here is how it looks on the Literal platform:
 
 <Frame>
-  <img src="/images/one-llm-step.png" alt="A thread with an OpenAI step in the Chainlit platform" />
+  <img
+    src="/images/one-llm-step.png"
+    alt="A thread with an OpenAI step on the platform"
+  />
 </Frame>

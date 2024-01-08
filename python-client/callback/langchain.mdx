@@ -15,10 +15,8 @@ from langchain.agents import AgentType, Tool, initialize_agent
 from langchain.chains import LLMMathChain
 from langchain.chat_models import ChatOpenAI
 
-from chainlit_client import ChainlitClient
-
-client = ChainlitClient()
-
+from literalai import LiteralClient
+client = LiteralClient()
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo", streaming=True)
 llm_math_chain = LLMMathChain.from_llm(llm=llm)
 tools = [
@@ -52,8 +50,11 @@ asyncio.run(main())
 client.wait_until_queue_empty()
 ```
 
-Here is how it looks on the Chainlit platform:
+Here is how it looks on the platform:
 
 <Frame>
-  <img src="/images/langchain-callback.png" alt="A thread with an Langchain agent execution in the Chainlit platform" />
+  <img
+    src="/images/langchain-callback.png"
+    alt="A thread with an Langchain agent execution on the platform"
+  />
 </Frame>

@@ -6,36 +6,33 @@ A Step is a container of work in a Thread. It can be nested to include several c
 
 ## A simple step
 
-In this example, we create a step with the decorator. The step is automatically sent to the Chainlit platform. The type is set to `tool` to convey that the function contains a tool used by an AI assistant.
+In this example, we create a step with the decorator. The step is automatically sent to the platform. The type is set to `tool` to convey that the function contains a tool used by an AI assistant.
 
-Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the Chainlit platform before the program exits.
+Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the platform before the program exits.
 
 <CodeGroup>
 ```python
-from chainlit_client import ChainlitClient
-
-client = ChainlitClient()
-
+from literalai import LiteralClient
+client = LiteralClient()
 @client.step(type="run")
 def my_step(input):
-    return f"World" 
-
+return f"World"
 
 @client.thread
 def main():
-    print(my_step("Hello"))
-
+print(my_step("Hello"))
 
 main()
 client.wait_until_queue_empty()
 print("Done")
+
 ```
 </CodeGroup>
 
-Here is how it looks on the Chainlit platform:
+Here is how it looks on the platform:
 
 <Frame>
-  <img src="/images/one-step.png" alt="A one-step thread in the Chainlit platform" />
+  <img src="/images/one-step.png" alt="A one-step thread on the platform" />
 </Frame>
 
 ## Step API
@@ -53,3 +50,4 @@ There are three ways to create steps. Using the `with` statement, using the deco
     Use `start_step` when you want fine-grained control over your step.
   </Card>
 </CardGroup>
+```

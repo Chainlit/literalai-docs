@@ -6,10 +6,8 @@ description: "Create Read Update and Delete methods for User"
 ## Create an User
 
 ```python
-from chainlit_client import ChainlitClient
-
-client = ChainlitClient()
-new_user = client.api.create_user(identifier="John Doe")
+from literalai import LiteralClient
+client = LiteralClient()new_user = client.api.create_user(identifier="John Doe")
 ```
 
 <ParamField path="identifier" type="string" required>

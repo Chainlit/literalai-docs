@@ -1,39 +1,44 @@
 ---
 title: "Authentication"
-description: 'How to authenticate with the Chainlit Platform'
+description: "How to authenticate to the platform"
 ---
 
 ## How to get my API key?
 
-You can get your API key in the Chainlit platform. Go to your project page and click on the "Settings" tab. You will find your API key in the "API Key" section.
+To get your API key, go to your project page and click on the "Settings" tab. You will find your API key in the "API Key" section.
 
-## How to configure the Chainlit client?
+## How to configure the Literal client?
 
-You can use the Chainlit api key in two ways to configure the Chainlit client:
+You can use the Literal API key in two ways to configure the Literal client:
 
-1. Pass it to the `ChainlitClient` constructor:
-
-```python
-client = ChainlitClient(api_key="YOUR_API_KEY")
-```
-
-2. Set the `CHAINLIT_API_KEY` environment variable, you can then instantiate the client without passing the api key:
+1. Pass it to the `LiteralClient` constructor:
 
 ```python
-client = ChainlitClient()
+client = LiteralClient(api_key="YOUR_API_KEY")
 ```
 
-Our recommendation is to store the `CHAINLIT_API_KEY` environment variable in a `.env` file and to load it using [python-dotenv](https://pypi.org/project/python-dotenv/).
+2. Set the `LITERAL_API_KEY` environment variable, you can then instantiate the client without passing the api key:
+
+```python
+client = LiteralClient()
+```
+
+Our recommendation is to store the `LITERAL_API_KEY` environment variable in a `.env` file and to load it using [python-dotenv](https://pypi.org/project/python-dotenv/).
 
 ```python
 from dotenv import load_dotenv
 load_dotenv()
 
-client = ChainlitClient()
+client = LiteralClient()
 ```
 
 ## Next up
 
-<Card title="How to send a step" icon="graduation-cap" href="/python-client/get-started/send-a-first-step">
-  Use a minimal example to see how to send a step to the Chainlit platform
+<Card
+  title="How to send a step"
+  icon="graduation-cap"
+  href="/python-client/get-started/send-a-first-step"
+>
+  Use a minimal example to see how to send a step to the Literal platform
 </Card>
+````

@@ -12,7 +12,7 @@ There are three methods to create a step:
 2. Using the `with` statement
 3. Using the `start_step` method
 
-The step is automatically sent to the Chainlit platform when the `.end()` method is called.
+The step is automatically sent to the platform when the `.end()` method is called.
 
 By default, the step id is a random uuid. You can set a custom id to match your own system. Step ids must be unique across the steps and messages of your project.
 
@@ -20,7 +20,7 @@ By default, the step id is a random uuid. You can set a custom id to match your 
 
 If you want to create a step from a function, you should use the `@client.step` decorator.
 
-The step is automatically ended and sent to the Chainlit platform when the function returns.
+The step is automatically ended and sent to the platform when the function returns.
 
 Another advantage of using the decorator is that you get several variables automatically set for you:
 
@@ -57,7 +57,7 @@ def my_step():
 
 If you want to create a step from a block of code, you should use the `with` statement.
 
-The step is automatically ended and sent to the Chainlit platform when the code exits the `with` block.
+The step is automatically ended and sent to the platform when the code exits the `with` block.
 
 ```python
 with client.step() as step:
@@ -75,7 +75,7 @@ with client.step(id="my-step-id", name="My step", type="run") as step:
 
 This method should be used as a last resort because it doesn't automatically end the step.
 
-You must call the `end` method on the step object to end the step and send it to the Chainlit platform.
+You must call the `end` method on the step object to end the step and send it to the platform.
 
 ```python
 step = client.start_step(i)

@@ -6,33 +6,31 @@ A Message is a special [Step](/concepts/step). It represents a message from the 
 
 ## A simple message
 
-In this example, we create a message with the `message` method. The message is automatically sent to the Chainlit platform. The type is set to `assistant_message` to convey that it's a message from the AI assistant.
+In this example, we create a message with the `message` method. The message is automatically sent to the platform. The type is set to `assistant_message` to convey that it's a message from the AI assistant.
 
-Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the Chainlit platform before the program exits.
+Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the platform before the program exits.
 
 <CodeGroup>
 ```python
 import time
-from chainlit_client import ChainlitClient
+from literalai import LiteralClient
 
-client = ChainlitClient()
-
-
+client = LiteralClient()
 @client.thread
 def main():
-    client.message(content="Hello world", type="assistant_message", name="Chatbot")
-    print("Hello world")
-
+client.message(content="Hello world", type="assistant_message", name="Chatbot")
+print("Hello world")
 
 main()
 client.wait_until_queue_empty()
+
 ```
 </CodeGroup>
 
-Here is how it looks on the Chainlit platform:
+Here is how it looks on the platform:
 
 <Frame>
-  <img src="/images/one-message.png" alt="A one-message thread in the Chainlit platform" />
+  <img src="/images/one-message.png" alt="A one-message thread on the platform" />
 </Frame>
 
 ## Message API
@@ -44,3 +42,4 @@ Use `client.message` to create a message.
     Use the `message` method to create a message.
   </Card>
 </CardGroup>
+```

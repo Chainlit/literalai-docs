@@ -32,12 +32,14 @@ if __name__ == "__main__":
   asyncio.run(main())
 ```
 
-## Logging the conversation with Chainlit
+## Logging the conversation with Literal
 
-First, we initialize the Chainlit client.
+First, we initialize the Literal client.
 
 ```python
-client = ChainlitClient(api_key="")
+from literalai import LiteralClient
+
+client = LiteralClient(api_key="")
 ```
 
 ### Logging the thread
@@ -52,6 +54,7 @@ async def main():
 ```
 
 ### Logging the steps
+
 In this example we have 2 steps: `semantic_search` and `generate_response`. We can use the `step` decorator to log these steps.
 
 ```python
@@ -84,9 +87,9 @@ async def main():
 
 ```python
 import asyncio
-from chainlit_client import ChainlitClient
+from literalai import LiteralClient
 
-client = ChainlitClient(api_key="")
+client = LiteralClient(api_key="")
 
 @client.step(type="retrieval")
 async def semantic_search(question: str):
@@ -115,10 +118,10 @@ if __name__ == "__main__":
 
 ## Running the example
 
-To run the example, you need to install the Chainlit client:
+To run the example, you need to install the Literal client:
 
 ```bash
-pip install chainlit-client
+pip install literalai
 ```
 
 Then, you can run the example:
@@ -127,7 +130,7 @@ Then, you can run the example:
 python example.py
 ```
 
-In the Chainlit platform, you will see the following thread being logged:
+On the Literal platform, you will see the following thread being logged:
 
 <Frame caption="Rendering of the Thread">
   <img src="/images/python-example.png" />
