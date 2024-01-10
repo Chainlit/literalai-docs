@@ -87,20 +87,18 @@ This method is optimized to export a large number of threads. It returns a pagin
 You can optionally filter the threads.
 
 ```python
-from literalai.thread import DateTimeFilter, NumberListFilter, ThreadFilter
-
-after = None
-has_next_page = True
+from literalai.thread import DateTimeFilter, ThreadFilter
 
 filters = ThreadFilter(
     createdAt=DateTimeFilter(operator="gt", value="2023-12-14"),
-    feedbacksValue=NumberListFilter(operator="in", value=[1]),
 )
 
-while has_next_page:
-    result = await sdk.api.export_threads(after=after, filters=filters)
-    after = result.pageInfo.endCursor
-    has_next_page = result.pageInfo.hasNextPage
+page = 1
+result = await sdk.api.export_threads(page=page, filters=filters)
+
+while result.hasNextPage:
+    page += 1
+    result = await sdk.api.export_threads(page=page, filters=filters)
 
     # Do something with the thread list in result.data
 ```
