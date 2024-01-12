@@ -14,18 +14,23 @@ You can use the Literal API key in two ways to configure the Literal client:
 1. Pass it to the `LiteralClient` constructor:
 
 ```python
+from literalai import LiteralClient
+
 client = LiteralClient(api_key="YOUR_API_KEY")
 ```
 
 2. Set the `LITERAL_API_KEY` environment variable, you can then instantiate the client without passing the api key:
 
 ```python
+from literalai import LiteralClient
+
 client = LiteralClient()
 ```
 
 Our recommendation is to store the `LITERAL_API_KEY` environment variable in a `.env` file and to load it using [python-dotenv](https://pypi.org/project/python-dotenv/).
 
 ```python
+from literalai import LiteralClient
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -41,4 +46,3 @@ client = LiteralClient()
 >
   Use a minimal example to see how to send a step to the Literal platform
 </Card>
-````

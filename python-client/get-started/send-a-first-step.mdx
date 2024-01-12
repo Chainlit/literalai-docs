@@ -7,11 +7,13 @@ This guide assumes that you have set up a `.env` file with your API key. If you 
 Copy the following code in a file called `step-example.py`:
 
 ```python step-example.py
-from literalai import LiteralClientfrom dotenv import load_dotenv
+from literalai import LiteralClient
+from dotenv import load_dotenv
 
 load_dotenv()
 
 client = LiteralClient()
+
 @client.step(type="run")
 def my_step(input):
     return f"World"
