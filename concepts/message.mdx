@@ -16,10 +16,11 @@ import time
 from literalai import LiteralClient
 
 client = LiteralClient()
+
 @client.thread
 def main():
-client.message(content="Hello world", type="assistant_message", name="Chatbot")
-print("Hello world")
+  client.message(content="Hello world", type="assistant_message", name="Chatbot")
+  print("Hello world")
 
 main()
 client.wait_until_queue_empty()
@@ -42,4 +43,3 @@ Use `client.message` to create a message.
     Use the `message` method to create a message.
   </Card>
 </CardGroup>
-```

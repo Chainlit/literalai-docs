@@ -94,11 +94,11 @@ filters = ThreadFilter(
 )
 
 page = 1
-result = await sdk.api.export_threads(page=page, filters=filters)
+result = await client.api.export_threads(page=page, filters=filters)
 
 while result.hasNextPage:
     page += 1
-    result = await sdk.api.export_threads(page=page, filters=filters)
+    result = await client.api.export_threads(page=page, filters=filters)
 
     # Do something with the thread list in result.data
 ```

@@ -14,13 +14,14 @@ Note that we call `client.wait_until_queue_empty()` to make sure all messages an
 ```python
 from literalai import LiteralClient
 client = LiteralClient()
+
 @client.step(type="run")
 def my_step(input):
-return f"World"
+  return f"World"
 
 @client.thread
 def main():
-print(my_step("Hello"))
+  print(my_step("Hello"))
 
 main()
 client.wait_until_queue_empty()
@@ -50,4 +51,3 @@ There are three ways to create steps. Using the `with` statement, using the deco
     Use `start_step` when you want fine-grained control over your step.
   </Card>
 </CardGroup>
-```
