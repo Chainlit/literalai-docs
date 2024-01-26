@@ -1,0 +1,96 @@
+---
+title: Generation
+---
+
+The following objects can be passed to a [step](/concepts/generation)
+
+## CompletionGeneration
+
+```python
+@dataclass
+class CompletionGeneration(BaseGeneration):
+    template: Optional[str] = None
+    formatted: Optional[str] = None
+    template_format: str = "f-string"
+    type = GenerationType.COMPLETION
+```
+
+<ParamField path="template" type="str" optional>
+  Template used in the CompletionGeneration class. It's a string and it's
+  optional.
+</ParamField>
+
+<ParamField path="formatted" type="str" optional>
+  Formatted template string in the CompletionGeneration class. It's a string and
+  it's optional.
+</ParamField>
+
+<ParamField path="template_format" type="str" required>
+  The format of the template in the CompletionGeneration class. It's a string
+  and its default value is "f-string".
+</ParamField>
+
+<ParamField path="type" type="GenerationType" required>
+  The type of generation in the CompletionGeneration class. It's a
+  GenerationType and its value is "COMPLETION".
+</ParamField>
+
+## ChatGeneration
+
+```python
+@dataclass
+class ChatGeneration(BaseGeneration):
+    messages: List[GenerationMessage] = Field(default_factory=list)
+    type = GenerationType.CHAT
+```
+
+<ParamField path="messages" type="List[GenerationMessage]" required>
+  List of messages in the ChatGeneration class. It's a list and its default
+  value is an empty list.
+</ParamField>
+
+<ParamField path="type" type="GenerationType" required>
+  The type of generation in the ChatGeneration class. It's a GenerationType and
+  its value is "CHAT".
+</ParamField>
+
+### GenerationMessage
+
+```python
+@dataclass
+class GenerationMessage:
+    template: Optional[str] = None
+    formatted: Optional[str] = None # This is used for Langchain's MessagesPlaceholder
+    placeholder_size: Optional[int] = None # This is used for OpenAI's function message
+    name: Optional[str] = None
+    role: Optional[GenerationMessageRole] = None
+    template_format: str = "f-string"
+```
+
+<ParamField path="template" type="str" optional>
+  Template used in the GenerationMessage class. It's a string and it's optional.
+</ParamField>
+
+<ParamField path="formatted" type="str" optional>
+  Formatted template string in the GenerationMessage class. It's a string and
+  it's optional.
+</ParamField>
+
+<ParamField path="placeholder_size" type="int" optional>
+  Placeholder size in the GenerationMessage class. It's an integer and it's
+  optional.
+</ParamField>
+
+<ParamField path="name" type="str" optional>
+  Name used in the GenerationMessage class. It's a string and it's optional.
+</ParamField>
+
+<ParamField path="role" type="GenerationMessageRole" optional>
+  Role used in the GenerationMessage class. It's a GenerationMessageRole and
+  it's optional.
+</ParamField>
+
+<ParamField path="template_format" type="str" required>
+  The format of the template in the GenerationMessage class. It's a string and
+  its default value is "f-string".
+</ParamField>

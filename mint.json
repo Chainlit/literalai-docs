@@ -46,6 +46,7 @@
         "concepts/thread",
         "concepts/step",
         "concepts/message",
+        "concepts/generation",
         "concepts/instrumentation"
       ]
     },
@@ -83,7 +84,8 @@
         "python-client/api-reference/thread",
         "python-client/api-reference/step",
         "python-client/api-reference/attachment",
-        "python-client/api-reference/feedback"
+        "python-client/api-reference/feedback",
+        "python-client/api-reference/generation"
       ]
     },
     { "group": "Get Started", "pages": ["typescript-client/introduction"] }
