@@ -96,5 +96,10 @@
     "twitter": "https://twitter.com/chainlit_io",
     "github": "https://github.com/Chainlit",
     "linkedin": "https://www.linkedin.com/company/chainlit"
+  },
+  "analytics": {
+    "gtm": {
+      "tagId": "GTM-MTHNP8VZ"
+    }
   }
 }
