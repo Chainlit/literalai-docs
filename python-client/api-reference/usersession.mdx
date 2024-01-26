@@ -1,0 +1,108 @@
+---
+title: UserSession
+---
+
+Checkout the documentation about [UserSessions](/concepts/usersession) for more information
+
+## Creating a UserSession
+
+```python
+session = await client.api.create_user_session(
+    participant_identifier="<PARTICIPANT_IDENTIFIER>",
+    is_interactive=True,
+    metadata={"key": "value"}
+)
+```
+
+<ParamField path="is_interactive" type="boolean">
+  Has the user interacted with the app
+</ParamField>
+
+<ParamField path="started_at" type="string">
+  Start datetime
+</ParamField>
+
+<ParamField path="ended_at" type="string">
+  End of session datetime
+</ParamField>
+
+<ParamField path="participant_identifier" type="string">
+  Participant identifier, can be an email or any ID that you use within your
+  system to identify users.
+</ParamField>
+
+<ParamField path="anon_participant_identifier" type="string">
+  For anonymous users or users not currently logged in, you can pass along any
+  unique user characteristics here (IP address, user agent, ...)
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  Metadata, can be additional information about the user for example
+</ParamField>
+
+### Return type
+
+<ResponseField name="usersession" type="UserSession">
+  Return a UserSession
+</ResponseField>
+
+## Updating a UserSession
+
+```python
+session = await client.api.update_user_session(
+    id="<USER_SESSION_UUID>",
+    is_interactive=False,
+)
+```
+
+<ParamField path="id" type="uuid">
+  Id of the UserSession
+</ParamField>
+
+<ParamField path="is_interactive" type="boolean">
+  Has the user interacted with the app
+</ParamField>
+
+<ParamField path="ended_at" type="string">
+  End of session datetime
+</ParamField>
+
+<ParamField path="metadata" type="dict">
+  Metadata
+</ParamField>
+
+### Return type
+
+<ResponseField name="usersession" type="UserSession">
+  Return a UserSession
+</ResponseField>
+
+## Getting a UserSession
+
+```python
+session = await client.api.get_user_session(
+    id="<USER_SESSION_UUID>",
+)
+```
+
+<ParamField path="id" type="uuid">
+  Id of the UserSession
+</ParamField>
+
+### Return type
+
+<ResponseField name="usersession" type="UserSession">
+  Return a UserSession, can be None if UserSession is not found
+</ResponseField>
+
+## Deleting a UserSession
+
+```python
+session = await client.api.delete_user_session(
+    id="<USER_SESSION_UUID>",
+)
+```
+
+<ParamField path="id" type="uuid">
+  Id of the UserSession
+</ParamField>
