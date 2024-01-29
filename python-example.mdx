@@ -42,17 +42,6 @@ from literalai import LiteralClient
 client = LiteralClient(api_key="")
 ```
 
-### Logging the thread
-
-A [thread](/concepts/thread) is a sequence of steps that are related to each other. In our example, we have a single thread.
-To create a thread, we use the `thread` decorator.
-
-```python
-@client.thread
-async def main():
-  ...
-```
-
 ### Logging the steps
 
 In this example we have 2 steps: `semantic_search` and `generate_response`. We can use the `step` decorator to log these steps.
@@ -67,18 +56,38 @@ async def generate_response(question: str, search_results: list):
   ...
 ```
 
+### Logging the run
+
+```python
+@client.step(type="run")
+async def run_rag(question: str):
+  results = await semantic_search(question)
+  answer = await generate_response(question, results)
+  return answer  
+```
+
+
+### Logging the thread
+
+A [thread](/concepts/thread) is a sequence of steps that are related to each other. In our example, we have a single thread.
+To create a thread, we use the `thread` decorator.
+
+```python
+@client.thread
+async def main():
+  ...
+```
+
 ### Logging the user question and final answer
 
 Finally, we can log the user question and the final answer using `client.message`.
 
 ```python
+@client.thread
 async def main():
   question = input("What is your question?")
-  # Log the user question
   client.message(content=question, type="user_message", name="User")
-  search_results = await semantic_search(question)
-  answer = await generate_response(question, search_results)
-  # Log the final answer
+  answer = await run_rag(question)
   client.message(content=answer, type="assistant_message", name="Assistant")
   print(answer)
 ```
@@ -89,7 +98,7 @@ async def main():
 import asyncio
 from literalai import LiteralClient
 
-client = LiteralClient(api_key="")
+client = LiteralClient(api_key="YOUR_KEY")
 
 @client.step(type="retrieval")
 async def semantic_search(question: str):
@@ -101,13 +110,17 @@ async def generate_response(question: str, search_results: list):
   await asyncio.sleep(2)
   return "Fake answer"
 
+@client.step(type="run")
+async def run_rag(question: str):
+  results = await semantic_search(question)
+  answer = await generate_response(question, results)
+  return answer
 
 @client.thread
 async def main():
   question = input("What is your question?")
   client.message(content=question, type="user_message", name="User")
-  search_results = await semantic_search(question)
-  answer = await generate_response(question, search_results)
+  answer = await run_rag(question)
   client.message(content=answer, type="assistant_message", name="Assistant")
   print(answer)
 
@@ -133,5 +146,5 @@ python example.py
 On the Literal platform, you will see the following thread being logged:
 
 <Frame caption="Rendering of the Thread">
-  <img src="/images/python-example.png" />
+  <img src="/images/python-example.jpg" />
 </Frame>
