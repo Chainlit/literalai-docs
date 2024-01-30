@@ -6,7 +6,7 @@ description: "Create and Update methods for Feedback"
 ## Create a feedback
 
 ```python
-feedback = client.api.create_feedback(
+feedback = await client.api.create_feedback(
     thread_id="<THREAD_UUID>",
     value=1,
     comment="Hello world",
@@ -51,7 +51,7 @@ feedback = client.api.create_feedback(
 
 ```python
 
-feedback = client.api.update_feedback(
+feedback = await client.api.update_feedback(
     id="<THREAD_UUID>",
     update_params={
         "comment": "Hello world",
