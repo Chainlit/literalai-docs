@@ -1,0 +1,38 @@
+---
+title: Create a generation
+---
+
+Generations are part of a [Step](/concepts/step). They synthesizes all responses from an LLM model.
+
+[Checkout the documentation about Generations](/concepts/generation)
+
+This is an example on how to create a generation object for a LLM step:
+
+```python
+@client.thread
+def conversation():
+    with client.step(type="llm") as step:
+        template = f"answer the following question pretending you are a pirate:\n"
+        llm_settings = {
+            "model": "gpt-3.5-turbo",
+            "stream": True,
+            "streaming": True,
+            "model_name": "gpt-3.5-turbo",
+            "temperature": 0,
+        }
+        response = llm_completion(
+            message=template + "Hello how are you today ?", settings=llm_settings
+        )
+        generation = CompletionGeneration(
+            token_count=response["token_count"],
+            template=template,
+            settings=llm_settings,
+            completion=response["content"],
+            provider="openai",
+        )
+        step.generation = generation
+
+    return response["content"]
+```
+
+You don't have to manually create Generations, if you are using OpenAI you can use the [instrumentation](python-client/instrumentation/openai)

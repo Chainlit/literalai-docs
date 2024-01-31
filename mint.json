@@ -65,7 +65,8 @@
       "pages": [
         "python-client/usage/create-a-thread",
         "python-client/usage/create-a-step",
-        "python-client/usage/create-a-message"
+        "python-client/usage/create-a-message",
+        "python-client/usage/create-a-generation"
       ]
     },
     {
