@@ -1,4 +1,4 @@
----
+---create
 title: "Create a step"
 ---
 
@@ -87,9 +87,9 @@ You can either pass the step parameters to the `start_step` method, or set them 
 
 ```python
 step = client.start_step(id="my-step-id", name="My step", type="run")
-step.input = "test input"
+step.input = { "content": "test input" }
 # do something
-step.output = "Hello world"
+step.output = { "content": "Hello world", "additional_key": "foobar" }
 step.end()
 ```
 
@@ -144,14 +144,16 @@ step.end()
   The server-side creation time of the step.
 </ParamField>
 
-<ParamField path="input" type="string">
+<ParamField path="input" type="dict">
   The input of the step. This is automatically set to the arguments of the
   function if using the decorator.
+  It is recommended to use the `content` key for displaying a message within the platform.
 </ParamField>
 
-<ParamField path="output" type="string">
+<ParamField path="output" type="dict">
   The output of the step. This is automatically set to the return value of the
   function if using the decorator.
+  It is recommended to use the `content` key for displaying a message within the platform.
 </ParamField>
 
 <ParamField path="tags" type="List[str]" default="[]">
