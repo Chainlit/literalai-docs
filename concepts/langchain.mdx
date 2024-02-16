@@ -1,0 +1,118 @@
+---
+title: "Langchain"
+---
+
+The Langchain integration enables you to create steps from your Python code only using a callback.
+
+You need to call the `client.langchain_callback()` to get a langchain callback. Then, you can use it in your langchain calls.
+
+Note that you should call the `client.langchain_callback()` method every time you need to pass a langchain callback.
+
+<CodeGroup>
+  <CodeBlock language="python" language="python" title="Python">
+  ```python
+  from langchain.agents import AgentType, Tool, initialize_agent
+  from langchain.chains import LLMMathChain
+  from langchain.chat_models import ChatOpenAI
+
+  from literalai import LiteralClient
+
+  client = LiteralClient()
+  llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo", streaming=True)
+  llm_math_chain = LLMMathChain.from_llm(llm=llm)
+  tools = [
+      Tool(
+          name="Calculator",
+          func=llm_math_chain.run,
+          description="useful for when you need to answer questions about math",
+      ),
+  ]
+
+  agent = initialize_agent(tools, llm, agent=AgentType.OPENAI_FUNCTIONS)
+
+
+  @client.thread
+  async def main():
+      client.message("What is your math question?", type="system_message", name="Chatbot")
+      user_input = input("What is your math question?\n> ")
+
+      client.message(user_input, type="user_message", name="User")
+
+      result = agent(
+          user_input,
+          callbacks=[client.langchain_callback()],
+      )
+
+      client.message(result["output"], type="assistant_message", name="Chatbot")
+      print(result["output"])
+
+
+  asyncio.run(main())
+  client.wait_until_queue_empty()
+  ```
+  </CodeBlock>
+
+  <CodeBlock language="typescript" language="typescript" title="TypeScript">
+  ```typescript
+  import { StringOutputParser } from '@langchain/core/output_parsers';
+    import { PromptTemplate } from '@langchain/core/prompts';
+    import { RunnableSequence } from '@langchain/core/runnables';
+    import { ChatOpenAI } from '@langchain/openai';
+    import 'dotenv/config';
+
+    import { LiteralClient } from '../src';
+
+    async function main() {
+      const client = new LiteralClient();
+
+      // Create the thread
+      const thread = await client.thread().upsert();
+
+      const promptTemplate =
+        PromptTemplate.fromTemplate(`Given the user question below, classify it as either being about \`LangChain\`, \`Anthropic\`, or \`Other\`.
+                                        
+    Do not respond with more than one word.
+
+    <question>
+    {question}
+    </question>
+
+    Classification:`);
+
+      const model = new ChatOpenAI({
+        streaming: true
+      });
+
+      const classificationChain = RunnableSequence.from([
+        promptTemplate,
+        model,
+        new StringOutputParser()
+      ]);
+
+      await classificationChain.invoke(
+        {
+          question: 'how do I call Anthropic?'
+        },
+        {
+          callbacks: [
+            await client.instrumentation.langchain.literalCallback(thread.id)
+          ]
+        }
+      );
+    }
+
+    main()
+      .then(() => process.exit(0))
+      .catch((error) => console.error(error));
+  ```
+  </CodeBlock>
+</CodeGroup>
+
+Here is how it looks on the platform:
+
+<Frame>
+  <img
+    src="/images/langchain-callback.png"
+    alt="A thread with an Langchain agent execution on the platform"
+  />
+</Frame>

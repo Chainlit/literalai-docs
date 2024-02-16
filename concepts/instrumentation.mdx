@@ -1,13 +1,75 @@
 ---
-title: "Instrumentation"
+title: "Instrumenting OpenAI"
 ---
 
-Our client offers tools to create steps automatically when using existing libraries. Dive into each integration to learn more about how to use them.
+<Note>
+  We only support the OpenAI python package starting at version `1.0.0`. We
+  don't support the Assistant API yet.
+</Note>
 
-# Next up
+The OpenAI integration allows you to generate an LLM Step automatically for each call to the OpenAI API.
 
-<CardGroup cols={2}>
-  <Card title="OpenAI" icon="link" href="/python-client/instrumentation/openai">
-    LLM steps for OpenAI API calls.
-  </Card>
-</CardGroup>
+You need to call the `instrument_openai` method from the Literal client to enable the integration. Call it before any OpenAI API call.
+
+<CodeGroup>
+    ```python example.py
+      from literalai import LiteralClient
+      from openai import OpenAI
+
+      openai_client = OpenAI()
+      literal_client = LiteralClient()
+      literal_client.instrument_openai()
+
+      @literal_client.thread()
+      def main():
+          completion = openai_client.chat.completions.create(
+              model="gpt-3.5-turbo",
+              messages=[
+                  {
+                      "role": "user",
+                      "content": "What is the country with the longest name?",
+                  }
+              ],
+          )
+          print(completion.choices[0].message.content)
+
+      main()
+      literal_client.wait_until_queue_empty()
+    ```
+
+    ```typescript example.ts
+      import { OpenAI, LiteralClient } from 'some-library'; // Replace 'some-library' with actual library name
+      const openai_client = new OpenAI();
+      const literal_client = new LiteralClient();
+      literal_client.instrument_openai();
+
+      const main = async () => {
+        const stream = await openai_client.chat.completions.create({
+          model: 'gpt-4',
+          stream: true,
+          messages: [{ role: 'user', content: 'Say this is a test' }]
+        });
+
+        const childStep = literal_client.childStep({
+          name: 'gpt-4',
+          type: 'llm',
+          input: { content: 'Hello' }
+        });
+
+        await literal_client.instrumentation.openai(childStep, stream);
+        await childStep.send();
+      };
+
+      main();
+    ```
+</CodeGroup>
+
+
+Here is how it looks on the Literal platform:
+
+<Frame>
+  <img
+    src="/images/one-llm-step.png"
+    alt="A thread with an OpenAI step on the platform"
+  />
+</Frame>
