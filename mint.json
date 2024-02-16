@@ -38,7 +38,14 @@
   "navigation": [
     {
       "group": "",
-      "pages": ["introduction", "python-example"]
+      "pages": ["introduction", "python-example", "typescript-example"]
+    },
+    {
+      "group": "Get Started",
+      "pages": [
+        "get-started/authentication",
+        "get-started/send-a-first-step"
+      ]
     },
     {
       "group": "Concepts",
@@ -51,14 +58,19 @@
         "concepts/usersession"
       ]
     },
-    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] },
+    {
+      "group": "Instrumentation",
+      "pages": ["instrumentation/openai"]
+    },
+    {
+      "group": "Callback",
+      "pages": ["callback/langchain"]
+    },
     {
       "group": "Get Started",
       "pages": [
-        "python-client/get-started/introduction",
-        "python-client/get-started/authentication",
-        "python-client/get-started/send-a-first-step"
-      ]
+        "python-client/get-started/introduction"
+      ] 
     },
     {
       "group": "Usage",
@@ -68,15 +80,6 @@
         "python-client/usage/create-a-message"
       ]
     },
-    {
-      "group": "Instrumentation",
-      "pages": ["python-client/instrumentation/openai"]
-    },
-    {
-      "group": "Callback",
-      "pages": ["python-client/callback/langchain"]
-    },
-
     {
       "group": "API Reference",
       "pages": [
@@ -90,7 +93,8 @@
         "python-client/api-reference/usersession"
       ]
     },
-    { "group": "Get Started", "pages": ["typescript-client/introduction"] }
+    { "group": "Get Started", "pages": ["typescript-client/introduction"] },
+    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/chainlit_io",

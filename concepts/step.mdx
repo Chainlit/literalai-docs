@@ -8,10 +8,14 @@ A Step is a container of work in a Thread. It can be nested to include several c
 
 In this example, we create a step with the decorator. The step is automatically sent to the platform. The type is set to `tool` to convey that the function contains a tool used by an AI assistant.
 
-Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the platform before the program exits.
 
 <CodeGroup>
-```python
+```python Python
+"""
+Note that we call `client.wait_until_queue_empty()` to make sure all messages and
+steps are sent to the platform before the program exits.
+"""
+
 from literalai import LiteralClient
 client = LiteralClient()
 
@@ -35,19 +39,3 @@ Here is how it looks on the platform:
 <Frame>
   <img src="/images/one-step.png" alt="A one-step thread on the platform" />
 </Frame>
-
-## Step API
-
-There are three ways to create steps. Using the `with` statement, using the decorator on a function, or using the `start_step` method.
-
-<CardGroup cols={2}>
-  <Card title="Step decorator" icon="at" href="/python-client/usage/create-a-step#using-the-with-statement">
-    Use the decorator on your step function.
-  </Card>
-  <Card title="With statement" icon="w" href="/python-client/usage/create-a-step#using-the-decorator-on-a-function">
-    Use the with statement when your step is not a function.
-  </Card>
-  <Card title="start_step" icon="code" href="/python-client/usage/create-a-step#using-the-start-step-method">
-    Use `start_step` when you want fine-grained control over your step.
-  </Card>
-</CardGroup>

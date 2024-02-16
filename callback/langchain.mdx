@@ -2,13 +2,15 @@
 title: "Langchain"
 ---
 
-The Langchain integration enables you to create steps from your Python code only using a callback.
+The Langchain integration enables you to create steps only using a callback.
 
-You need to call the `client.langchain_callback()` to get a langchain callback. Then, you can use it in your langchain calls.
-
+<CodeGroup>
+```python Python
+"""
+You need to call the `client.langchain_callback()` to get a langchain callback. 
+Then, you can use it in your langchain calls.
 Note that you should call the `client.langchain_callback()` method every time you need to pass a langchain callback.
-
-```python
+"""
 import asyncio
 
 from langchain.agents import AgentType, Tool, initialize_agent
@@ -50,6 +52,7 @@ async def main():
 asyncio.run(main())
 client.wait_until_queue_empty()
 ```
+</CodeGroup>
 
 Here is how it looks on the platform:
 

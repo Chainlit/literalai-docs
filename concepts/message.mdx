@@ -8,10 +8,13 @@ A Message is a special [Step](/concepts/step). It represents a message from the 
 
 In this example, we create a message with the `message` method. The message is automatically sent to the platform. The type is set to `assistant_message` to convey that it's a message from the AI assistant.
 
-Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the platform before the program exits.
 
 <CodeGroup>
-```python
+```python Python
+"""
+Note that we call `client.wait_until_queue_empty()` to make sure all messages and
+steps are sent to the platform before the program exits.
+"""
 import time
 from literalai import LiteralClient
 
@@ -33,13 +36,3 @@ Here is how it looks on the platform:
 <Frame>
   <img src="/images/one-message.png" alt="A one-message thread on the platform" />
 </Frame>
-
-## Message API
-
-Use `client.message` to create a message.
-
-<CardGroup cols={2}>
-  <Card title="Message method" icon="code" href="/python-client/usage/create-a-message">
-    Use the `message` method to create a message.
-  </Card>
-</CardGroup>

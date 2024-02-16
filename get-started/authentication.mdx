@@ -5,44 +5,42 @@ description: "How to authenticate to the platform"
 
 ## How to get my API key?
 
-To get your API key, go to your project page and click on the "Settings" tab. You will find your API key in the "API Key" section.
+To get your API key, go to your [project page](https://cloud.getliteral.ai) and click on the "Settings" tab. You will find your API key in the "API Key" section.
 
 ## How to configure the Literal client?
 
 You can use the Literal API key in two ways to configure the Literal client:
 
-1. Pass it to the `LiteralClient` constructor:
+<CodeGroup>
 
-```python
+```python Python
 from literalai import LiteralClient
 
 client = LiteralClient(api_key="YOUR_API_KEY")
-```
 
-2. Set the `LITERAL_API_KEY` environment variable, you can then instantiate the client without passing the api key:
-
-```python
-from literalai import LiteralClient
-
+# You can also set the `LITERAL_API_KEY` environment variable, you can then instantiate the client without passing the api key:
 client = LiteralClient()
-```
 
-Our recommendation is to store the `LITERAL_API_KEY` environment variable in a `.env` file and to load it using [python-dotenv](https://pypi.org/project/python-dotenv/).
-
-```python
+"""
+Our recommendation is to store the `LITERAL_API_KEY` environment variable
+in a `.env` file and to load it using python-dotenv
+"""
 from literalai import LiteralClient
 from dotenv import load_dotenv
 load_dotenv()
 
 client = LiteralClient()
+
 ```
+
+</CodeGroup>
 
 ## Next up
 
 <Card
   title="How to send a step"
   icon="graduation-cap"
-  href="/python-client/get-started/send-a-first-step"
+  href="/get-started/send-a-first-step"
 >
   Use a minimal example to see how to send a step to the Literal platform
 </Card>

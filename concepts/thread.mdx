@@ -9,7 +9,7 @@ A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an 
 ## A simple thread
 
 <CodeGroup>
-```python
+```python Python
 import time
 from literalai import LiteralClient
 client = LiteralClient()
@@ -31,20 +31,6 @@ client.wait_until_queue_empty()
 ```
 </CodeGroup>
 
-
 <Frame caption="Output on the platform">
   <img src="/images/thread-one-step-one-message.png" alt="A thread on the platform" />
 </Frame>
-
-## Thread API
-
-There are two ways to create thread. Using the `with` statement or using the decorator on a function.
-
-<CardGroup cols={2}>
-  <Card title="Thread decorator" icon="at" href="/python-client/usage/create-a-thread#using-the-decorator-on-a-function">
-    Use the decorator on your thread function.
-  </Card>
-  <Card title="With statement" icon="w" href="/python-client/usage/create-a-thread#using-the-with-statement">
-    Use the with statement when your thread is not a function.
-  </Card>
-</CardGroup>
