@@ -15,11 +15,11 @@ client = LiteralClient()
 
 @client.step(type="run")
 def my_step(input):
-return f"World"
+  return f"World"
 
 @client.thread
 def main():
-print(my_step("Hello"))
+  print(my_step("Hello"))
 
 main()
 client.wait_until_queue_empty()

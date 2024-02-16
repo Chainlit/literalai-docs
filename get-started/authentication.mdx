@@ -12,27 +12,12 @@ To get your API key, go to your [project page](https://cloud.getliteral.ai) and 
 You can use the Literal API key in two ways to configure the Literal client:
 
 <CodeGroup>
-
 ```python Python
 from literalai import LiteralClient
 
-client = LiteralClient(api_key="YOUR_API_KEY")
-
-# You can also set the `LITERAL_API_KEY` environment variable, you can then instantiate the client without passing the api key:
-client = LiteralClient()
-
-"""
-Our recommendation is to store the `LITERAL_API_KEY` environment variable
-in a `.env` file and to load it using python-dotenv
-"""
-from literalai import LiteralClient
-from dotenv import load_dotenv
-load_dotenv()
-
-client = LiteralClient()
-
+# You need to set the LITERAL_API_KEY environment variable 
+client = LiteralClient() # or pass the key as `api_key` parameter
 ```
-
 </CodeGroup>
 
 ## Next up

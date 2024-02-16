@@ -38,13 +38,14 @@
   "navigation": [
     {
       "group": "",
-      "pages": ["introduction", "python-example", "typescript-example"]
+      "pages": ["introduction"]
     },
     {
       "group": "Get Started",
       "pages": [
         "get-started/authentication",
-        "get-started/send-a-first-step"
+        "get-started/send-a-first-step",
+        "get-started/rag-example"
       ]
     },
     {
@@ -54,17 +55,13 @@
         "concepts/step",
         "concepts/message",
         "concepts/generation",
-        "concepts/instrumentation",
-        "concepts/usersession"
+        "concepts/feedback",
+        "concepts/attachment"
       ]
     },
     {
-      "group": "Instrumentation",
-      "pages": ["instrumentation/openai"]
-    },
-    {
-      "group": "Callback",
-      "pages": ["callback/langchain"]
+      "group": "Integrations",
+      "pages": ["integrations/openai", "integrations/openai-assistant", "integrations/langchain"]
     },
     {
       "group": "Get Started",
@@ -77,7 +74,8 @@
       "pages": [
         "python-client/usage/create-a-thread",
         "python-client/usage/create-a-step",
-        "python-client/usage/create-a-message"
+        "python-client/usage/create-a-message",
+        "python-client/usage/create-a-generation"
       ]
     },
     {
@@ -89,8 +87,7 @@
         "python-client/api-reference/step",
         "python-client/api-reference/attachment",
         "python-client/api-reference/feedback",
-        "python-client/api-reference/generation",
-        "python-client/api-reference/usersession"
+        "python-client/api-reference/generation"
       ]
     },
     { "group": "Get Started", "pages": ["typescript-client/introduction"] },
