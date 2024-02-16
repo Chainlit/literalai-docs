@@ -56,6 +56,7 @@
         "concepts/message",
         "concepts/generation",
         "concepts/feedback",
+        "concepts/user",
         "concepts/attachment"
       ]
     },
