@@ -8,12 +8,13 @@ To install the Python client, run the following command:
 pip install literalai
 ```
 
-To start the client:
+To instantiate the client:
 
 ```python
+import os
 from literalai import LiteralClient
 
-client = LiteralClient()
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
 ```
 
 ## Next up

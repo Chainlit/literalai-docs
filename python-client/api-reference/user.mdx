@@ -6,8 +6,10 @@ description: "Create Read Update and Delete methods for User"
 ## Create an User
 
 ```python
+import os
 from literalai import LiteralClient
-client = LiteralClient()
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 new_user = await client.api.create_user(identifier="John Doe")
 ```
 

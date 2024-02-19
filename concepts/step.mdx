@@ -15,27 +15,30 @@ In this example, we create a step with the decorator. The step is automatically 
 Note that we call `client.wait_until_queue_empty()` to make sure all messages and
 steps are sent to the platform before the program exits.
 """
-
+import os
 from literalai import LiteralClient
-client = LiteralClient()
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+@client.step(type="tool")
+def child_step(input):
+  return "I am child"
 
 @client.step(type="run")
-def my_step(input):
-  return f"World"
+def parent_step(input):
+  child_step()
+  return "I am the parent"
 
 @client.thread
 def main():
-  print(my_step("Hello"))
+  parent_step()
 
-main()
+main() 
 client.wait_until_queue_empty()
-print("Done")
-
 ```
 </CodeGroup>
 
 Here is how it looks on the platform:
 
 <Frame>
-  <img src="/images/one-step.png" alt="A one-step thread on the platform" />
+  <img src="/images/step.png" alt="A Thread with a parent and child step" />
 </Frame>

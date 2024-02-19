@@ -39,9 +39,10 @@ if __name__ == "__main__":
 First, we initialize the Literal client.
 <CodeGroup>
 ```python Python
+import os
 from literalai import LiteralClient
 
-client = LiteralClient()
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 ```
 </CodeGroup>
 
@@ -107,9 +108,10 @@ async def main():
 <CodeGroup>
 ```python Python
 import asyncio
+import os
 from literalai import LiteralClient
 
-client = LiteralClient()
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 @client.step(type="retrieval")
 async def semantic_search(question: str):

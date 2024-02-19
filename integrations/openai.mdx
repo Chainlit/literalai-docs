@@ -12,6 +12,7 @@ The OpenAI integration allows you to generate an LLM Step automatically for each
 
 <CodeGroup>
 ```python Python
+import os
 from literalai import LiteralClient
 from openai import OpenAI
 
@@ -20,7 +21,7 @@ You need to call the `instrument_openai` method from the Literal client to
 enable the integration. Call it before any OpenAI API call.
 """
 openai_client = OpenAI()
-literal_client = LiteralClient()
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 literal_client.instrument_openai()
 
 

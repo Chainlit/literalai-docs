@@ -2,29 +2,21 @@
 title: User
 ---
 
-A user can be assigned to a thread, allowing for the tracking of all interactions made by this user.
+In Literal, the concept of a user is designed to seamlessly integrate with your application, allowing developers to create and manage user profiles that mirror their own application's user base.
 
-We have a filter on thread by users:
-
-<Frame caption="User filter">     
+<Frame caption="Filtering Threads by User">     
   <img
     src="/images/user-filter.png"
     alt="The user filter on threads"
   />
 </Frame>
 
-You can access the list of your users from the User page:
-<Frame caption="User page">     
-  <img
-    src="/images/users.png"
-    alt="The user page"
-  />
-</Frame>
 
-To create a User with our SDK:
+## Create a User
 
 <CodeGroup>
 ```python Python
-new_user = await client.api.create_user(identifier="John Doe")
+identifier = "ORIGINAL_USER_ID"
+new_user = await client.api.create_user(identifier=identifier)
 ```
 </CodeGroup>

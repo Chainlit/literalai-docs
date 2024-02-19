@@ -44,7 +44,7 @@
       "group": "Get Started",
       "pages": [
         "get-started/authentication",
-        "get-started/send-a-first-step",
+        "get-started/create-your-first-thread",
         "get-started/rag-example"
       ]
     },

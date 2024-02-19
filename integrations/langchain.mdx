@@ -12,6 +12,7 @@ Then, you can use it in your langchain calls.
 Note that you should call the `client.langchain_callback()` method every time you need to pass a langchain callback.
 """
 import asyncio
+import os
 
 from langchain.agents import AgentType, Tool, initialize_agent
 from langchain.chains import LLMMathChain
@@ -19,7 +20,7 @@ from langchain.chat_models import ChatOpenAI
 
 from literalai import LiteralClient
 
-client = LiteralClient()
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo", streaming=True)
 llm_math_chain = LLMMathChain.from_llm(llm=llm)
 tools = [

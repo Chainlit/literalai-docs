@@ -8,22 +8,38 @@ A Message is a special [Step](/concepts/step). It represents a message from the 
 
 In this example, we create a message with the `message` method. The message is automatically sent to the platform. The type is set to `assistant_message` to convey that it's a message from the AI assistant.
 
-
 <CodeGroup>
 ```python Python
 """
 Note that we call `client.wait_until_queue_empty()` to make sure all messages and
 steps are sent to the platform before the program exits.
 """
-import time
+import os
+from openai import OpenAI
 from literalai import LiteralClient
 
-client = LiteralClient()
+openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+client.instrument_openai() # Optional, this will create automatically logs of the LLM calls
+
+@client.step(type="run")
+def my_assistant(query):
+    res = openai_client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": query},
+        ],
+    )
+    text_response = res.choices[0].message.content
+    client.message(content=text_response, type="assistant_message", name="My assistant")
+    return text_response
 
 @client.thread
 def main():
-  client.message(content="Hello world", type="assistant_message", name="Chatbot")
-  print("Hello world")
+    query = input("What do you want to ask ?\n")
+    response = my_assistant(query)
+    print(response)
 
 main()
 client.wait_until_queue_empty()

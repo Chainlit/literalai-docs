@@ -1,17 +1,15 @@
 ---
-title: "Send a first step"
+title: Create your first Thread
 ---
 
 This guide assumes that you have set up authentication, if not, checkout [authentication guide](/get-started/authentication).
 
 <CodeGroup>
 ```python Python
+import os
 from literalai import LiteralClient
-from dotenv import load_dotenv
 
-load_dotenv()
-
-client = LiteralClient()
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 @client.step(type="run")
 def my_step(input):
@@ -25,7 +23,7 @@ main()
 client.wait_until_queue_empty()
 print("Done")
 
-````
+```
 </CodeGroup>
 
 Run the code, you should see something similar to the following output:
@@ -36,7 +34,6 @@ $ python step-example.py
 World
 Done
 ````
-
 </CodeGroup>
 
 Now you can go the platform and see your step in the thread view:
@@ -50,6 +47,6 @@ Now you can go the platform and see your step in the thread view:
 
 # Next up
 
-<Card title="OpenAI integration" icon="link" href="/integrations/openai">
-  Automatically instrument your code
+<Card title="Literal's Concepts" icon="graduation-cap" href="/concepts">
+  Learn more about Literal's Concepts and Entities
 </Card>

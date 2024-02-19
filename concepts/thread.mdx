@@ -10,9 +10,10 @@ A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an 
 
 <CodeGroup>
 ```python Python
+import os
 import time
 from literalai import LiteralClient
-client = LiteralClient()
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 @client.step(type="tool")
 def my_tool(input: str): # do something

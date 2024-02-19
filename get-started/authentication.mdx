@@ -13,19 +13,19 @@ You can use the Literal API key in two ways to configure the Literal client:
 
 <CodeGroup>
 ```python Python
+import os
 from literalai import LiteralClient
 
-# You need to set the LITERAL_API_KEY environment variable 
-client = LiteralClient() # or pass the key as `api_key` parameter
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) # This is the default and can be omitted
 ```
 </CodeGroup>
 
 ## Next up
 
 <Card
-  title="How to send a step"
+  title="Create your first Thread"
   icon="graduation-cap"
-  href="/get-started/send-a-first-step"
+  href="/get-started/create-your-first-thread"
 >
-  Use a minimal example to see how to send a step to the Literal platform
+  Use a minimal example to see how create a Thread on Literal
 </Card>
