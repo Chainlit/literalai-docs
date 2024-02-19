@@ -11,9 +11,9 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#2ab673",
-    "light": "#55d799",
-    "dark": "#117867"
+    "primary": "#F80061",
+    "light": "#FFE7EB",
+    "dark": "#980039"
   },
   "topbarCtaButton": {
     "name": "Dashboard",
@@ -54,7 +54,6 @@
         "concepts/thread",
         "concepts/step",
         "concepts/message",
-        "concepts/generation",
         "concepts/feedback",
         "concepts/user",
         "concepts/attachment"
@@ -77,12 +76,10 @@
       "pages": ["python-client/get-started/introduction"]
     },
     {
-      "group": "Usage",
+      "group": "Abstractions",
       "pages": [
-        "python-client/usage/create-a-thread",
-        "python-client/usage/create-a-step",
-        "python-client/usage/create-a-message",
-        "python-client/usage/create-a-generation"
+        "python-client/abstractions/thread",
+        "python-client/abstractions/step"
       ]
     },
     {

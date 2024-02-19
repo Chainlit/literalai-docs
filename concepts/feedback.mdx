@@ -18,7 +18,7 @@ It allows your users to provide direct feedback on the interaction, which can be
 <CodeGroup>
 ```python Python
 feedback = await client.api.create_feedback(
-    thread_id="<THREAD_UUID>",
+    step_id="<STEP_UUID>",
     value=1,
     comment="Hello world",
     strategy="BINARY",
@@ -26,9 +26,9 @@ feedback = await client.api.create_feedback(
 ```
 ```typescript TypeScript
 const feedback = await client.api.createFeedback({
-  stepId: finalStep.id!,
+  stepId: '<STEP_UUID>',
   value: 1,
-  comment: 'Great!'
+  comment: 'Example feedback',
 });
 ```
 </CodeGroup>

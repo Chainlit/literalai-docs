@@ -1,18 +1,6 @@
 ---
-title: "Create a thread"
+title: "Thread"
 ---
-
-A thread represents a conversation between the user and the AI assistant.
-Threads consist of [messages](/python-client/usage/create-a-message) and [steps](/python-client/usage/create-a-step).
-
-Two methods are available to create a thread:
-
-1. Using the decorator on a function
-2. Using the `with` statement
-
-When `client.thread` is called a thread ID is set in the context, both steps and messages use this thread id. After sending a step or message to the platform, a thread is created with the given ID if it does not exist yet.
-
-By default, the thread id is a random uuid. You can set a custom id to match your own system. Thread ids must be unique across your project.
 
 ## Using the decorator on a function
 

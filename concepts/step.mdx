@@ -37,12 +37,11 @@ client.wait_until_queue_empty()
 ```
 
 ```typescript TypeScript
-import { v4 as uuidv4 } from 'uuid';
 import { LiteralClient } from '@literalai/client';
 
 const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
-const thread = await client.thread({ id: uuidv4() }).upsert();
+const thread = await client.thread().upsert();
 const step = await thread
   .step({ type: 'run', output: 'Hello', name: 'parent_step' })
   .send();

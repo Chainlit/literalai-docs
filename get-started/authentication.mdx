@@ -1,11 +1,17 @@
 ---
-title: "Authentication"
-description: "How to authenticate to the platform"
+title: "Installation"
+description: "Install the Literal client and get your API key"
 ---
 
-## How to get my API key?
+<CodeGroup>
+```shell Python
+pip install literalai
+```
 
-To get your API key, go to your [project page](https://cloud.getliteral.ai) and click on the **Settings** tab. You will find your API key in the **API Key** section.
+```shell TypeScript
+npm i @literalai/client
+```
+</CodeGroup>
 
 ## Instantiate the Literal client
 
@@ -20,9 +26,14 @@ client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) # This is the defa
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const client = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
 ```
 </CodeGroup>
+
+## How to get my API key?
+
+To get your API key, go to your [project page](https://cloud.getliteral.ai) and click on the **Settings** tab. You will find your API key in the **API Key** section.
+
 
 ## Next up
 

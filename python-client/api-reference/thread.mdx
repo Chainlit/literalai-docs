@@ -129,6 +129,7 @@ while result.hasNextPage:
 ```python
 updated_thread = await client.update_thread(
     id="<THREAD_UUID>",
+    name=None,
     metadata=None,
     participant_id=None,
     environment=None,
@@ -138,6 +139,10 @@ updated_thread = await client.update_thread(
 
 <ParamField path="id" type="uuid" required>
   The id of the thread
+</ParamField>
+
+<ParamField path="name" type="str">
+  The name of the thread
 </ParamField>
 
 <ParamField path="metadata" type="dict">
@@ -163,6 +168,7 @@ It will either create a new thread if the `thread_id` does not exist or update t
 ```python
 thread = await client.upsert_thread(
     thead_id="<THREAD_UUID>",
+    name=None,
     metadata=None,
     participant_id=None,
     environment=None,
@@ -172,6 +178,10 @@ thread = await client.upsert_thread(
 
 <ParamField path="thread_id" type="uuid" required>
   The id of the thread
+</ParamField>
+
+<ParamField path="name" type="str">
+  The name of the thread
 </ParamField>
 
 <ParamField path="metadata" type="dict">

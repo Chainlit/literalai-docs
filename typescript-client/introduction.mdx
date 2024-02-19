@@ -1,32 +1,19 @@
 ---
-title: Introduction
+title: Installation
 ---
 
-Check the Literal TypeScript Client on [NPM](https://www.npmjs.com/package/@literalai/client).
-
-## Installation
+Check the Literal TypeScript Client on [NPM](https://www.npmjs.com/package/@literalai/client) for the documentation.
 
 ```shell
 npm i @literalai/client
 ```
 
-## Get an API key
 
-To get an API key, go to the [Literal AI](https://cloud.getliteral.ai), create an account and copy your API key from the settings page.
-
-## Usage
+## Instantiation
 
 ```ts
-import OpenAI from "openai";
-
 import { LiteralClient } from "@literalai/client";
 
-const openai = new OpenAI({
-  apiKey: process.env["OPENAI_API_KEY"],
-});
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 ```
 
-<Card title="Get Started" icon="lock" href="/get-started/authentication">
-  Get started with authentication
-</Card>

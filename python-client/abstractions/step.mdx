@@ -1,20 +1,7 @@
 ---
-title: "Create a step"
+title: "Step"
 ---
 
-Steps are the building blocks of a [Thread](/concepts/thread). They represent a unit of work in a Thread. They can be nested to include several children Steps.
-
-Note that Steps must be created inside a [Thread](/python-client/usage/create-a-thread).
-
-There are three methods to create a step:
-
-1. Using the decorator on a function
-2. Using the `with` statement
-3. Using the `start_step` method
-
-The step is automatically sent to the platform when the `.end()` method is called.
-
-By default, the step id is a random uuid. You can set a custom id to match your own system. Step ids must be unique across the steps and messages of your project.
 
 ## Using the decorator on a function
 
@@ -78,7 +65,7 @@ This method should be used as a last resort because it doesn't automatically end
 You must call the `end` method on the step object to end the step and send it to the platform.
 
 ```python
-step = client.start_step(i)
+step = client.start_step()
 # do something
 step.end()
 ```

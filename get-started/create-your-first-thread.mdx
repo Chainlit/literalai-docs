@@ -5,7 +5,7 @@ title: Create your first Thread
 This guide assumes that you have set up authentication, if not, checkout [authentication guide](/get-started/authentication).
 
 <CodeGroup>
-```python Python
+```python first-thread.py
 import os
 from literalai import LiteralClient
 
@@ -25,13 +25,12 @@ print("Done")
 ```
 
 
-```typescript TypeScript
-import { v4 as uuidv4 } from 'uuid';
+```typescript first-thread.ts
 import { LiteralClient } from '@literalai/client';
 
 const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
-const thread = await client.thread({ id: uuidv4() }).upsert();
+const thread = await client.thread().upsert();
 
 const step = await thread
   .step({ type: "run", name: "firstStep" })
@@ -43,20 +42,18 @@ Run the code, you should see something similar to the following output:
 
 <CodeGroup>
 ```bash python
-$ python step-example.py
-World
-Done
+python first-thread.py
 ```
-
 ```typescript TypeScript
-npx ts-node index.ts
+npx ts-node first-thread.ts
 ```
-
 </CodeGroup>
 
-Now you can go the platform and see your step in the thread view:
+## Visualize the Thread
 
-<Frame caption="Platform view">
+Navigate to the threads page on the Literal platform, you should see a new thread.
+
+<Frame>
   <img
     src="/images/one-step.png"
     alt="One step thread on the Literal platform"

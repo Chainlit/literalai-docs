@@ -2,10 +2,6 @@
 title: "OpenAI"
 ---
 
-<Note>
-  We only support the OpenAI python package starting at version `1.0.0`. We
-  don't support the Assistant API yet.
-</Note>
 
 The OpenAI integration allows you to generate an LLM Step automatically for each call to the OpenAI API.
 
@@ -45,24 +41,23 @@ literal_client.wait_until_queue_empty()
 ```
 
 ```typescript TypeScript
+const thread = await client.thread().upsert();
+
+const step = await thread
+  .step({ type: "llm", name: "gpt-4" })
+
 const stream = await openai.chat.completions.create({
   model: 'gpt-4',
   stream: true,
   messages: [{ role: 'user', content: 'Say this is a test' }]
 });
 
-// Create a child llm step
-const childStep = step.childStep({
-  name: 'gpt-4',
-  type: 'llm',
-  input: { content: 'Hello' }
-});
 
 // Instrument the openai response
-await client.instrumentation.openai(childStep, stream);
+await client.instrumentation.openai(step, stream);
 
 // Send the child step
-await childStep.send();
+await step.send();
 ```
 </CodeGroup>
 

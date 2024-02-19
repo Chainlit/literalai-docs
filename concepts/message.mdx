@@ -46,8 +46,10 @@ client.wait_until_queue_empty()
 ```
 
 ```typescript TypeScript
+const thread = await client.thread().upsert();
+
 const step = await thread
-  .step({ name: userIdentifier, type: 'user_message', output: 'Hello' })
+  .step({ type: 'user_message', output: 'Hello' })
   .send();
 
 const stream = await openai.chat.completions.create({
