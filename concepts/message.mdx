@@ -43,7 +43,30 @@ def main():
 
 main()
 client.wait_until_queue_empty()
+```
 
+```typescript TypeScript
+const step = await thread
+  .step({ name: userIdentifier, type: 'user_message', output: 'Hello' })
+  .send();
+
+const stream = await openai.chat.completions.create({
+  model: 'gpt-4',
+  stream: true,
+  messages: [{ role: 'user', content: 'Say this is a test' }]
+});
+
+const childStep = step.childStep({
+  name: 'gpt-4',
+  type: 'llm',
+  input: 'Hello'
+});
+
+// Instrument the openai response
+await client.instrumentation.openai(childStep, stream);
+
+// Send the child step
+await childStep.send();
 ```
 </CodeGroup>
 

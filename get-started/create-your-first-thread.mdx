@@ -22,7 +22,20 @@ def main():
 main()
 client.wait_until_queue_empty()
 print("Done")
+```
 
+
+```typescript TypeScript
+import { v4 as uuidv4 } from 'uuid';
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+const thread = await client.thread({ id: uuidv4() }).upsert();
+
+const step = await thread
+  .step({ type: "run", name: "firstStep" })
+  .send();
 ```
 </CodeGroup>
 
@@ -33,7 +46,12 @@ Run the code, you should see something similar to the following output:
 $ python step-example.py
 World
 Done
-````
+```
+
+```typescript TypeScript
+npx ts-node index.ts
+```
+
 </CodeGroup>
 
 Now you can go the platform and see your step in the thread view:

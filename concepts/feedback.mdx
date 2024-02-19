@@ -24,5 +24,12 @@ feedback = await client.api.create_feedback(
     strategy="BINARY",
 )
 ```
+```typescript TypeScript
+const feedback = await client.api.createFeedback({
+  stepId: finalStep.id!,
+  value: 1,
+  comment: 'Great!'
+});
+```
 </CodeGroup>
 

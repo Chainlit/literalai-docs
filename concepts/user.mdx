@@ -19,4 +19,10 @@ In Literal, the concept of a user is designed to seamlessly integrate with your 
 identifier = "ORIGINAL_USER_ID"
 new_user = await client.api.create_user(identifier=identifier)
 ```
+
+```typescript TypeScript
+const userIdentifier = 'foobar';
+const participantId = await client.api.getOrCreateUser(userIdentifier);
+```
+
 </CodeGroup>
