@@ -1,3 +1,28 @@
 ---
 Attachments
 ---
+
+In LLM apps such as RAGs, users can send attachements.
+
+On literal, we host those attachements adding them to steps so you can review them.
+
+<Frame caption="An attachment">
+  <img
+    src="/images/attachment.png"
+    alt="An attachment on a step"
+  />
+</Frame>
+
+To create an attachment:
+
+<CodeGroup>
+```python Python
+attachment = await client.api.create_attachment(
+    thread_id="<THREAD_UUID>",
+    step_id="<STEP_UUID>"
+    name="my_attachment",
+    content_type="text/plain",
+    content="Hello world",
+)
+```
+</CodeGroup>

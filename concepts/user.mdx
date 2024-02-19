@@ -1,3 +1,30 @@
 ---
 title: User
 ---
+
+A user can be assigned to a thread, allowing for the tracking of all interactions made by this user.
+
+We have a filter on thread by users:
+
+<Frame caption="User filter">     
+  <img
+    src="/images/user-filter.png"
+    alt="The user filter on threads"
+  />
+</Frame>
+
+You can access the list of your users from the User page:
+<Frame caption="User page">     
+  <img
+    src="/images/users.png"
+    alt="The user page"
+  />
+</Frame>
+
+To create a User with our SDK:
+
+<CodeGroup>
+```python Python
+new_user = await client.api.create_user(identifier="John Doe")
+```
+</CodeGroup>

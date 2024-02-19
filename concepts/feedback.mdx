@@ -1,3 +1,37 @@
 ---
 title : Feedback
 ---
+
+End user can leave feedback on their interaction with your LLM app. 
+
+<Frame caption="The feedback page">     
+  <img
+    src="/images/feedback.png"
+    alt="A list of feedback left by users on steps"
+  />
+</Frame>
+
+You can mark those feedbacks as reviewed to keep improving your LLM app.
+
+Feedbacks can have many strategies: 
+- Binary: -1 or 1 
+- Stars: from 1 to 5
+- Big stars: from 1 to 10
+- Likert: likert scale
+- Continuous: numerical value
+- letters: A through F
+- percentage: 1 to 100
+
+Currently the frontend only handles the binary feedback.
+
+<CodeGroup>
+```python Python
+feedback = await client.api.create_feedback(
+    thread_id="<THREAD_UUID>",
+    value=1,
+    comment="Hello world",
+    strategy="BINARY",
+)
+```
+</CodeGroup>
+
