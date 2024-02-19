@@ -6,7 +6,8 @@
     "light": "/logo/logo-light.svg"
   },
   "modeToggle": {
-    "default": "light"
+    "default": "light",
+    "isHidden": true
   },
   "favicon": "/favicon.svg",
   "colors": {
@@ -44,8 +45,7 @@
       "group": "Get Started",
       "pages": [
         "get-started/authentication",
-        "get-started/create-your-first-thread",
-        "get-started/rag-example"
+        "get-started/create-your-first-thread"
       ]
     },
     {
@@ -62,13 +62,19 @@
     },
     {
       "group": "Integrations",
-      "pages": ["integrations/openai", "integrations/openai-assistant", "integrations/langchain"]
+      "pages": [
+        "integrations/openai",
+        "integrations/openai-assistant",
+        "integrations/langchain"
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": ["examples/rag-example"]
     },
     {
       "group": "Get Started",
-      "pages": [
-        "python-client/get-started/introduction"
-      ] 
+      "pages": ["python-client/get-started/introduction"]
     },
     {
       "group": "Usage",

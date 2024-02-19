@@ -15,22 +15,26 @@ import time
 from literalai import LiteralClient
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-@client.step(type="tool")
-def my_tool(input: str): # do something
+@client.step(type="llm")
+def my_llm(input: str): # do something
     time.sleep(1)
-    return "Response from the tool"
+    return "Response from the llm"
 
 @client.thread
 def main():
-    tool_response = my_tool("Hello world")
-    client.message(content=tool_response, type="assistant_message", name="Chatbot")
-    print(tool_response)
+    llm_response = my_llm("Hello world")
+    client.message(content=llm_response, type="assistant_message", name="Chatbot")
+    print(llm_response)
 
 main()
 client.wait_until_queue_empty()
 
 ```
 </CodeGroup>
+
+## Visualize the thread on Literal
+
+Navigate to the `Threads` page on the platform to see the thread you just created.
 
 <Frame caption="Output on the platform">
   <img src="/images/thread-one-step-one-message.png" alt="A thread on the platform" />

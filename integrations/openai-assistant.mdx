@@ -1,3 +1,29 @@
 ---
 title: OpenAI Assistant
 ---
+
+You can sync your OpenAI Assistant threads with Literal in a few lines of code.
+
+<CodeGroup>
+```ts Typescript
+import OpenAI from 'openai';
+
+import { LiteralClient, User } from '@literalai/client';
+
+const openai = new OpenAI();
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const syncer = client.openai(openai).assistant.syncer;
+
+async function main() {
+  // You can sync a thread at any moment. We recommend to sync it once you get a `completed` run status.
+  const threadId = 'THREAD_ID_TO_SYNC';
+
+  // Optional: Add/update a user to the thread. Use any unique identifier you like.
+  const user = new User({ identifier: 'willy', metadata: { name: 'Willy' } });
+  await syncer.syncThread(threadId, user);
+}
+
+main();
+```
+</CodeGroup>

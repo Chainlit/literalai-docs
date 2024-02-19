@@ -20,7 +20,7 @@ from literalai import LiteralClient
 
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-client.instrument_openai() # Optional, this will create automatically logs of the LLM calls
+client.instrument_openai() # Optional, this will create automatically an LLM step
 
 @client.step(type="run")
 def my_assistant(query):
@@ -47,7 +47,9 @@ client.wait_until_queue_empty()
 ```
 </CodeGroup>
 
-Here is how it looks on the platform:
+## Visualize the Message
+
+Navigate to the `Threads` page on the platform to see the thread + message you just created.
 
 <Frame>
   <img src="/images/one-message.png" alt="A one-message thread on the platform" />
