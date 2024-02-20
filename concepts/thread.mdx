@@ -13,18 +13,22 @@ A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an 
 import os
 import time
 from literalai import LiteralClient
+
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 @client.step(type="llm")
-def my_llm(input: str): # do something
+def my_llm(input: str): # fake LLM call
     time.sleep(1)
     return "Response from the llm"
 
-@client.thread
 def main():
-    llm_response = my_llm("Hello world")
-    client.message(content=llm_response, type="assistant_message", name="Chatbot")
-    print(llm_response)
+    user_query = "Hello World"
+    # You can also continue a thread by passing the thread id
+    with client.thread() as thread:
+      print(thread.id)
+      client.message(content=user_query, type="user_message", name="User")
+      llm_response = my_llm(user_query)
+      client.message(content=llm_response, type="assistant_message", name="Assistant")
 
 main()
 client.wait_until_queue_empty()
@@ -35,7 +39,8 @@ import { LiteralClient } from '@literalai/client';
 
 const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
-const thread = await client.thread().upsert();
+// You can also continue a thread by passing the thread id
+const thread = client.thread();
 
 const step = await thread
   .step({ type: "run", name: "firstStep" })

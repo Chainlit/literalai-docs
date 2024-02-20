@@ -35,18 +35,22 @@ def my_assistant(query):
     client.message(content=text_response, type="assistant_message", name="My assistant")
     return text_response
 
-@client.thread
 def main():
-    query = input("What do you want to ask ?\n")
-    response = my_assistant(query)
-    print(response)
+    # You can also continue a thread by passing the thread id
+    with client.thread() as thread:
+      welcome_message = "What do you want to ask ?\n"
+      client.message(content=welcome_message, type="assistant_message", name="My assistant")
+      query = input(welcome_message)
+      client.message(content=query, type="user_message", name="User")
+      response = my_assistant(query)
+      print(response)
 
 main()
 client.wait_until_queue_empty()
 ```
 
 ```typescript TypeScript
-const thread = await client.thread().upsert();
+const thread = client.thread();
 
 const step = await thread
   .step({ type: 'user_message', output: 'Hello' })

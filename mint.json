@@ -43,10 +43,7 @@
     },
     {
       "group": "Get Started",
-      "pages": [
-        "get-started/authentication",
-        "get-started/create-your-first-thread"
-      ]
+      "pages": ["get-started/authentication"]
     },
     {
       "group": "Concepts",

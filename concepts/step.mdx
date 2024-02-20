@@ -20,17 +20,19 @@ from literalai import LiteralClient
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 @client.step(type="tool")
-def child_step(input):
+def child_step():
   return "I am child"
 
 @client.step(type="run")
-def parent_step(input):
+def parent_step():
   child_step()
   return "I am the parent"
 
-@client.thread
+
 def main():
-  parent_step()
+  # You can also continue a thread by passing the thread id
+  with client.thread() as thread:
+    parent_step()
 
 main() 
 client.wait_until_queue_empty()
@@ -41,7 +43,8 @@ import { LiteralClient } from '@literalai/client';
 
 const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
-const thread = await client.thread().upsert();
+// You can continue a thread by passing the thread id
+const thread = client.thread();
 const step = await thread
   .step({ type: 'run', output: 'Hello', name: 'parent_step' })
   .send();

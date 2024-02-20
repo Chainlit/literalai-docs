@@ -2,43 +2,25 @@
 title: "Thread"
 ---
 
-## Using the decorator on a function
-
-If you want to create a thread from a function, you should use the `@client.thread` decorator.
-
-Here is how to use the decorator:
-
-```python
-@client.thread
-def my_thread():
-    # do something
-```
-
-If you already have a thread id that you want to use, you can pass it to the decorator. Bear in mind that the thread id must be unique across all threads in your project.
-
-```python
-@client.thread(thread_id="my-thread-id")
-def my_thread():
-    # do something
-```
-
-You can access the thread object with the `get_current_thread_id` method:
-
-```python
-@client.thread
-def my_thread():
-    thread_id = client.get_current_thread_id()
-    # do something
-```
-
 ## Using the `with` statement
 
-If you want to create a step from a block of code, you should use the `with` statement.
+You can create a thread and execute code within it using the `with` statement:
 
 ```python
 with client.thread() as thread:
     # do something
 ```
+
+You can also continue a thread by passing the thread id to the `thread` method:
+
+```python
+
+previous_thread_id = "UUID"
+
+with client.thread(thread_id=previous_thread_id) as thread:
+    # do something
+```
+
 
 ## Thread API
 
