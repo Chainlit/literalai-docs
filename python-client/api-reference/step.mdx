@@ -39,12 +39,14 @@ step = await client.api.create_step(
   Ending time in string format
 </ParamField>
 
-<ParamField path="input" type="string">
-  Input in string format
+<ParamField path="input" type="dict">
+  A dictionary symbolizing an input.
+  Prefer using `content` key to store a message.
 </ParamField>
 
-<ParamField path="output" type="string">
-  Output in string format
+<ParamField path="output" type="dict">
+  A dictionary symbolizing an output.
+  Prefer using `content` key to store a message.
 </ParamField>
 
 <ParamField path="metadata" type="dict">

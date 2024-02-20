@@ -131,14 +131,14 @@ step.end()
   The server-side creation time of the step.
 </ParamField>
 
-<ParamField path="input" type="string">
-  The input of the step. This is automatically set to the arguments of the
-  function if using the decorator.
+<ParamField path="input" type="dict">
+  A dictionary symbolizing an input.
+  Prefer using `content` key to store a message.
 </ParamField>
 
-<ParamField path="output" type="string">
-  The output of the step. This is automatically set to the return value of the
-  function if using the decorator.
+<ParamField path="output" type="dict">
+  A dictionary symbolizing an output.
+  Prefer using `content` key to store a message.
 </ParamField>
 
 <ParamField path="tags" type="List[str]" default="[]">
