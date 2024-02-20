@@ -1,0 +1,29 @@
+---
+title: "Langchain"
+---
+
+The Langchain integration enables to monitor your Langchain agents and chains with a single line of code.
+
+<CodeGroup>
+```python Python
+"""
+You need to call the `client.langchain_callback()` to get a langchain callback. 
+Then, you can use it in your langchain calls.
+Note that you should call the `client.langchain_callback()` for each invocation.
+"""
+
+from literalai import LiteralClient
+
+cb = client.langchain_callback()
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+
+// Literal thread ID is optional
+const cb = client.instrumentation.langchain.literalCallback("OPTIONAL_LITERAL_THREAD_ID");
+```
+</CodeGroup>
+

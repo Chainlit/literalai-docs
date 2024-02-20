@@ -1,12 +1,13 @@
 ---
-title: Python Example
+title: RAG Example
 ---
 
 Let's say we have a simple LLM application that takes a user input, performs a retrieval step and generates the final response with an LLM.
 
 The code for this application would look like this:
 
-```python
+<CodeGroup>
+```python Python
 import asyncio
 
 async def semantic_search(question: str):
@@ -31,22 +32,26 @@ async def main():
 if __name__ == "__main__":
   asyncio.run(main())
 ```
+</CodeGroup>
 
 ## Logging the conversation with Literal
 
 First, we initialize the Literal client.
-
-```python
+<CodeGroup>
+```python Python
+import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key="")
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 ```
+</CodeGroup>
 
 ### Logging the steps
 
 In this example we have 2 steps: `semantic_search` and `generate_response`. We can use the `step` decorator to log these steps.
 
-```python
+<CodeGroup>
+```python Python
 @client.step(type="retrieval")
 async def semantic_search(question: str):
   ...
@@ -55,34 +60,39 @@ async def semantic_search(question: str):
 async def generate_response(question: str, search_results: list):
   ...
 ```
+</CodeGroup>
 
 ### Logging the run
 
-```python
+<CodeGroup>
+```python Python
 @client.step(type="run")
 async def run_rag(question: str):
   results = await semantic_search(question)
   answer = await generate_response(question, results)
   return answer  
 ```
-
+</CodeGroup>
 
 ### Logging the thread
 
 A [thread](/concepts/thread) is a sequence of steps that are related to each other. In our example, we have a single thread.
 To create a thread, we use the `thread` decorator.
 
-```python
+<CodeGroup>
+```python Python
 @client.thread
 async def main():
   ...
 ```
+</CodeGroup>
 
 ### Logging the user question and final answer
 
 Finally, we can log the user question and the final answer using `client.message`.
 
-```python
+<CodeGroup>
+```python Python
 @client.thread
 async def main():
   question = input("What is your question?")
@@ -91,14 +101,17 @@ async def main():
   client.message(content=answer, type="assistant_message", name="Assistant")
   print(answer)
 ```
+</CodeGroup>
 
 ### Full code
 
-```python
+<CodeGroup>
+```python Python
 import asyncio
+import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key="YOUR_KEY")
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 @client.step(type="retrieval")
 async def semantic_search(question: str):
@@ -128,8 +141,9 @@ if __name__ == "__main__":
   asyncio.run(main())
   client.wait_until_queue_empty()
 ```
+</CodeGroup>
 
-## Running the example
+## Running the example in Python
 
 To run the example, you need to install the Literal client:
 

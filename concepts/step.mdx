@@ -8,46 +8,59 @@ A Step is a container of work in a Thread. It can be nested to include several c
 
 In this example, we create a step with the decorator. The step is automatically sent to the platform. The type is set to `tool` to convey that the function contains a tool used by an AI assistant.
 
-Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the platform before the program exits.
 
 <CodeGroup>
-```python
+```python Python
+"""
+Note that we call `client.wait_until_queue_empty()` to make sure all messages and
+steps are sent to the platform before the program exits.
+"""
+import os
 from literalai import LiteralClient
-client = LiteralClient()
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+@client.step(type="tool")
+def child_step():
+  return "I am child"
 
 @client.step(type="run")
-def my_step(input):
-  return f"World"
+def parent_step():
+  child_step()
+  return "I am the parent"
 
-@client.thread
+
 def main():
-  print(my_step("Hello"))
+  # You can also continue a thread by passing the thread id
+  with client.thread() as thread:
+    parent_step()
 
-main()
+main() 
 client.wait_until_queue_empty()
-print("Done")
+```
 
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+// You can continue a thread by passing the thread id
+const thread = client.thread();
+const step = await thread
+  .step({ type: 'run', output: 'Hello', name: 'parent_step' })
+  .send();
+
+const childStep = step.childStep({
+  name: 'child_step',
+  type: 'tool',
+  input: 'Hello'
+});
 ```
 </CodeGroup>
 
-Here is how it looks on the platform:
+## Visualize the run on Literal
+
+Navigate to the `Runs` page on the platform to see the run you just created.
 
 <Frame>
-  <img src="/images/one-step.png" alt="A one-step thread on the platform" />
+  <img src="/images/step.png" alt="A Thread with a parent and child step" />
 </Frame>
-
-## Step API
-
-There are three ways to create steps. Using the `with` statement, using the decorator on a function, or using the `start_step` method.
-
-<CardGroup cols={2}>
-  <Card title="Step decorator" icon="at" href="/python-client/usage/create-a-step#using-the-with-statement">
-    Use the decorator on your step function.
-  </Card>
-  <Card title="With statement" icon="w" href="/python-client/usage/create-a-step#using-the-decorator-on-a-function">
-    Use the with statement when your step is not a function.
-  </Card>
-  <Card title="start_step" icon="code" href="/python-client/usage/create-a-step#using-the-start-step-method">
-    Use `start_step` when you want fine-grained control over your step.
-  </Card>
-</CardGroup>

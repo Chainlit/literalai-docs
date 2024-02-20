@@ -6,13 +6,15 @@ description: "Create Read Update and Delete methods for User"
 ## Create an User
 
 ```python
+import os
 from literalai import LiteralClient
-client = LiteralClient()
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 new_user = await client.api.create_user(identifier="John Doe")
 ```
 
 <ParamField path="identifier" type="string" required>
-  The identifier of the user
+  The identifier of the user in your system
 </ParamField>
 
 ### Return type
@@ -28,7 +30,7 @@ user = await client.api.get_user(id="<USER_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
-  The id of the user
+  The Literal id of the user
 </ParamField>
 
 ### Return type
@@ -44,11 +46,11 @@ updated_user = await client.api.update_user(id="<USER_UUID>", identifier="Jane D
 ```
 
 <ParamField path="id" type="uuid" required>
-  The id of the user
+  The Literal id of the user
 </ParamField>
 
 <ParamField path="identifier" type="string">
-  The identifier of the user
+  The identifier of the user in your system
 </ParamField>
 
 <ParamField path="metadata" type="dict">
@@ -68,5 +70,5 @@ user = await client.api.delete_user(id="<USER_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
-  The id of the user
+  The Literal id of the user
 </ParamField>

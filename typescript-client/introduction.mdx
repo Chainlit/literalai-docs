@@ -1,5 +1,19 @@
 ---
-title: Introduction
+title: Installation
 ---
 
-Check the Literal TypeScript Client on [NPM](https://www.npmjs.com/package/@literalai/client).
+Check the Literal TypeScript Client on [NPM](https://www.npmjs.com/package/@literalai/client) for the documentation.
+
+```shell
+npm i @literalai/client
+```
+
+
+## Instantiation
+
+```ts
+import { LiteralClient } from "@literalai/client";
+
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+```
+

@@ -1,5 +1,5 @@
 ---
-title: Introduction
+title: Installation
 ---
 
 To install the Python client, run the following command:
@@ -8,12 +8,11 @@ To install the Python client, run the following command:
 pip install literalai
 ```
 
-## Next up
+To instantiate the client:
 
-<Card
-  title="Authentication"
-  icon="lock"
-  href="/python-client/get-started/authentication"
->
-  Setup your API key
-</Card>
+```python
+import os
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
+```

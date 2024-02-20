@@ -8,38 +8,78 @@ A Message is a special [Step](/concepts/step). It represents a message from the 
 
 In this example, we create a message with the `message` method. The message is automatically sent to the platform. The type is set to `assistant_message` to convey that it's a message from the AI assistant.
 
-Note that we call `client.wait_until_queue_empty()` to make sure all messages and steps are sent to the platform before the program exits.
-
 <CodeGroup>
-```python
-import time
+```python Python
+"""
+Note that we call `client.wait_until_queue_empty()` to make sure all messages and
+steps are sent to the platform before the program exits.
+"""
+import os
+from openai import OpenAI
 from literalai import LiteralClient
 
-client = LiteralClient()
+openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+client.instrument_openai() # Optional, this will create automatically an LLM step
 
-@client.thread
+@client.step(type="run")
+def my_assistant(query):
+    res = openai_client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": query},
+        ],
+    )
+    text_response = res.choices[0].message.content
+    client.message(content=text_response, type="assistant_message", name="My assistant")
+    return text_response
+
 def main():
-  client.message(content="Hello world", type="assistant_message", name="Chatbot")
-  print("Hello world")
+    # You can also continue a thread by passing the thread id
+    with client.thread() as thread:
+      welcome_message = "What do you want to ask ?\n"
+      client.message(content=welcome_message, type="assistant_message", name="My assistant")
+      query = input(welcome_message)
+      client.message(content=query, type="user_message", name="User")
+      response = my_assistant(query)
+      print(response)
 
 main()
 client.wait_until_queue_empty()
+```
 
+```typescript TypeScript
+const thread = client.thread();
+
+const step = await thread
+  .step({ type: 'user_message', output: 'Hello' })
+  .send();
+
+const stream = await openai.chat.completions.create({
+  model: 'gpt-4',
+  stream: true,
+  messages: [{ role: 'user', content: 'Say this is a test' }]
+});
+
+const childStep = step.childStep({
+  name: 'gpt-4',
+  type: 'llm',
+  input: 'Hello'
+});
+
+// Instrument the openai response
+await client.instrumentation.openai(childStep, stream);
+
+// Send the child step
+await childStep.send();
 ```
 </CodeGroup>
 
-Here is how it looks on the platform:
+## Visualize the Message
+
+Navigate to the `Threads` page on the platform to see the thread + message you just created.
 
 <Frame>
   <img src="/images/one-message.png" alt="A one-message thread on the platform" />
 </Frame>
-
-## Message API
-
-Use `client.message` to create a message.
-
-<CardGroup cols={2}>
-  <Card title="Message method" icon="code" href="/python-client/usage/create-a-message">
-    Use the `message` method to create a message.
-  </Card>
-</CardGroup>

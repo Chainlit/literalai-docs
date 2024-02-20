@@ -1,0 +1,28 @@
+---
+title: User
+---
+
+In Literal, the concept of a user is designed to seamlessly integrate with your application, allowing developers to create and manage user profiles that mirror their own application's user base.
+
+<Frame caption="Filtering Threads by User">     
+  <img
+    src="/images/user-filter.png"
+    alt="The user filter on threads"
+  />
+</Frame>
+
+
+## Create a User
+
+<CodeGroup>
+```python Python
+identifier = "ORIGINAL_USER_ID"
+new_user = await client.api.create_user(identifier=identifier)
+```
+
+```typescript TypeScript
+const userIdentifier = 'foobar';
+const participantId = await client.api.getOrCreateUser(userIdentifier);
+```
+
+</CodeGroup>

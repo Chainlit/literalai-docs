@@ -1,0 +1,35 @@
+---
+title : Feedback
+---
+
+Human feedback is a crucial part of developing your LLM app or agent.
+
+It allows your users to provide direct feedback on the interaction, which can be used to improve the performance and accuracy of your system.
+
+<Frame caption="Example of Feedback collected on Literal">     
+  <img
+    src="/images/feedback.png"
+    alt="A list of feedback left by users on steps"
+  />
+</Frame>
+
+### Create a feedback
+
+<CodeGroup>
+```python Python
+feedback = await client.api.create_feedback(
+    step_id="<STEP_UUID>",
+    value=1,
+    comment="Hello world",
+    strategy="BINARY",
+)
+```
+```typescript TypeScript
+const feedback = await client.api.createFeedback({
+  stepId: '<STEP_UUID>',
+  value: 1,
+  comment: 'Example feedback',
+});
+```
+</CodeGroup>
+

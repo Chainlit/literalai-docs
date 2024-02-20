@@ -9,42 +9,50 @@ A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an 
 ## A simple thread
 
 <CodeGroup>
-```python
+```python Python
+import os
 import time
 from literalai import LiteralClient
-client = LiteralClient()
 
-@client.step(type="tool")
-def my_tool(input: str): # do something
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+@client.step(type="llm")
+def my_llm(input: str): # fake LLM call
     time.sleep(1)
-    return "Response from the tool"
+    return "Response from the llm"
 
-@client.thread
 def main():
-    tool_response = my_tool("Hello world")
-    client.message(content=tool_response, type="assistant_message", name="Chatbot")
-    print(tool_response)
+    user_query = "Hello World"
+    # You can also continue a thread by passing the thread id
+    with client.thread() as thread:
+      print(thread.id)
+      client.message(content=user_query, type="user_message", name="User")
+      llm_response = my_llm(user_query)
+      client.message(content=llm_response, type="assistant_message", name="Assistant")
 
 main()
 client.wait_until_queue_empty()
-
 ```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+// You can also continue a thread by passing the thread id
+const thread = client.thread();
+
+const step = await thread
+  .step({ type: "run", name: "firstStep" })
+  .send();
+```
+
 </CodeGroup>
 
+## Visualize the thread on Literal
+
+Navigate to the `Threads` page on the platform to see the thread you just created.
 
 <Frame caption="Output on the platform">
   <img src="/images/thread-one-step-one-message.png" alt="A thread on the platform" />
 </Frame>
-
-## Thread API
-
-There are two ways to create thread. Using the `with` statement or using the decorator on a function.
-
-<CardGroup cols={2}>
-  <Card title="Thread decorator" icon="at" href="/python-client/usage/create-a-thread#using-the-decorator-on-a-function">
-    Use the decorator on your thread function.
-  </Card>
-  <Card title="With statement" icon="w" href="/python-client/usage/create-a-thread#using-the-with-statement">
-    Use the with statement when your thread is not a function.
-  </Card>
-</CardGroup>

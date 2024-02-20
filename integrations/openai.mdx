@@ -1,0 +1,63 @@
+---
+title: "OpenAI"
+---
+
+
+The OpenAI integration allows you to generate an LLM Step automatically for each call to the OpenAI API.
+
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+from openai import OpenAI
+
+"""
+You need to call the `instrument_openai` method from the Literal client to
+enable the integration. Call it before any OpenAI API call.
+"""
+openai_client = OpenAI()
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client.instrument_openai()
+
+
+@literal_client.thread()
+def main():
+    completion = openai_client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "user",
+                "content": "What is the country with the longest name?",
+            }
+        ],
+    )
+
+    print(completion.choices[0].message.content)
+
+
+main()
+literal_client.wait_until_queue_empty()
+```
+
+```typescript TypeScript
+const thread = await client.thread().upsert();
+
+const step = await thread
+  .step({ type: "llm", name: "gpt-4" })
+
+const stream = await openai.chat.completions.create({
+  model: 'gpt-4',
+  stream: true,
+  messages: [{ role: 'user', content: 'Say this is a test' }]
+});
+
+
+// Instrument the openai response
+await client.instrumentation.openai(step, stream);
+
+// Send the child step
+await step.send();
+```
+</CodeGroup>
+

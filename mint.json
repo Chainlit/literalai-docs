@@ -6,13 +6,14 @@
     "light": "/logo/logo-light.svg"
   },
   "modeToggle": {
-    "default": "light"
+    "default": "light",
+    "isHidden": true
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#2ab673",
-    "light": "#55d799",
-    "dark": "#117867"
+    "primary": "#F80061",
+    "light": "#FFE7EB",
+    "dark": "#980039"
   },
   "topbarCtaButton": {
     "name": "Dashboard",
@@ -38,7 +39,11 @@
   "navigation": [
     {
       "group": "",
-      "pages": ["introduction", "python-example"]
+      "pages": ["introduction"]
+    },
+    {
+      "group": "Get Started",
+      "pages": ["get-started/authentication"]
     },
     {
       "group": "Concepts",
@@ -46,37 +51,35 @@
         "concepts/thread",
         "concepts/step",
         "concepts/message",
-        "concepts/generation",
-        "concepts/instrumentation",
-        "concepts/usersession"
+        "concepts/feedback",
+        "concepts/user",
+        "concepts/attachment"
       ]
     },
-    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/openai",
+        "integrations/openai-assistant",
+        "integrations/chainlit",
+        "integrations/langchain"
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": ["examples/rag-example"]
+    },
     {
       "group": "Get Started",
+      "pages": ["python-client/get-started/introduction"]
+    },
+    {
+      "group": "Abstractions",
       "pages": [
-        "python-client/get-started/introduction",
-        "python-client/get-started/authentication",
-        "python-client/get-started/send-a-first-step"
+        "python-client/abstractions/thread",
+        "python-client/abstractions/step"
       ]
     },
-    {
-      "group": "Usage",
-      "pages": [
-        "python-client/usage/create-a-thread",
-        "python-client/usage/create-a-step",
-        "python-client/usage/create-a-message"
-      ]
-    },
-    {
-      "group": "Instrumentation",
-      "pages": ["python-client/instrumentation/openai"]
-    },
-    {
-      "group": "Callback",
-      "pages": ["python-client/callback/langchain"]
-    },
-
     {
       "group": "API Reference",
       "pages": [
@@ -86,11 +89,11 @@
         "python-client/api-reference/step",
         "python-client/api-reference/attachment",
         "python-client/api-reference/feedback",
-        "python-client/api-reference/generation",
-        "python-client/api-reference/usersession"
+        "python-client/api-reference/generation"
       ]
     },
-    { "group": "Get Started", "pages": ["typescript-client/introduction"] }
+    { "group": "Get Started", "pages": ["typescript-client/introduction"] },
+    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/chainlit_io",

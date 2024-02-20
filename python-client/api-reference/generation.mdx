@@ -2,38 +2,7 @@
 title: Generation
 ---
 
-The following objects can be passed to a [step](/concepts/generation)
-
-## CompletionGeneration
-
-```python
-@dataclass
-class CompletionGeneration(BaseGeneration):
-    template: Optional[str] = None
-    formatted: Optional[str] = None
-    template_format: str = "f-string"
-    type = GenerationType.COMPLETION
-```
-
-<ParamField path="template" type="str" optional>
-  Template used in the CompletionGeneration class. It's a string and it's
-  optional.
-</ParamField>
-
-<ParamField path="formatted" type="str" optional>
-  Formatted template string in the CompletionGeneration class. It's a string and
-  it's optional.
-</ParamField>
-
-<ParamField path="template_format" type="str" required>
-  The format of the template in the CompletionGeneration class. It's a string
-  and its default value is "f-string".
-</ParamField>
-
-<ParamField path="type" type="GenerationType" required>
-  The type of generation in the CompletionGeneration class. It's a
-  GenerationType and its value is "COMPLETION".
-</ParamField>
+The following objects can be passed to a [step](/concepts/step)
 
 ## ChatGeneration
 
@@ -44,53 +13,125 @@ class ChatGeneration(BaseGeneration):
     type = GenerationType.CHAT
 ```
 
-<ParamField path="messages" type="List[GenerationMessage]" required>
-  List of messages in the ChatGeneration class. It's a list and its default
-  value is an empty list.
+<ParamField path="messages" type="List[Dict]">
+  List of messages sent to the LLM. Following the openai chat format.
 </ParamField>
 
-<ParamField path="type" type="GenerationType" required>
-  The type of generation in the ChatGeneration class. It's a GenerationType and
-  its value is "CHAT".
+<ParamField path="provider" type="str" optional>
+  The provider of the LLM, like `openai`.
 </ParamField>
 
-### GenerationMessage
-
-```python
-@dataclass
-class GenerationMessage:
-    template: Optional[str] = None
-    formatted: Optional[str] = None # This is used for Langchain's MessagesPlaceholder
-    placeholder_size: Optional[int] = None # This is used for OpenAI's function message
-    name: Optional[str] = None
-    role: Optional[GenerationMessageRole] = None
-    template_format: str = "f-string"
-```
-
-<ParamField path="template" type="str" optional>
-  Template used in the GenerationMessage class. It's a string and it's optional.
+<ParamField path="model" type="str" optional>
+  The model used for the generation, like `gpt-4`.
 </ParamField>
 
-<ParamField path="formatted" type="str" optional>
-  Formatted template string in the GenerationMessage class. It's a string and
-  it's optional.
+<ParamField path="error" type="str" optional>
+  The error message if the generation failed.
 </ParamField>
 
-<ParamField path="placeholder_size" type="int" optional>
-  Placeholder size in the GenerationMessage class. It's an integer and it's
-  optional.
+<ParamField path="settings" type="Dict" optional>
+  The settings of the LLM, like `temperature`...
 </ParamField>
 
-<ParamField path="name" type="str" optional>
-  Name used in the GenerationMessage class. It's a string and it's optional.
+<ParamField path="variables" type="Dict" optional>
+  The variables used to format the prompt.
 </ParamField>
 
-<ParamField path="role" type="GenerationMessageRole" optional>
-  Role used in the GenerationMessage class. It's a GenerationMessageRole and
-  it's optional.
+<ParamField path="tags" type="List[str]" optional>
+  Optional tags to add to the generation.
 </ParamField>
 
-<ParamField path="template_format" type="str" required>
-  The format of the template in the GenerationMessage class. It's a string and
-  its default value is "f-string".
+<ParamField path="prompt" type="str" optional>
+  The prompt used for the generation.
 </ParamField>
+
+<ParamField path="tools" type="Dict" optional>
+  The tools used to generate the completion, following the openai format.
+</ParamField>
+
+<ParamField path="message_completion" type="Dict" optional>
+  The message returned by the LLM, following the openai chat format.
+</ParamField>
+
+<ParamField path="token_count" type="int" optional>
+  The token count of the completion.
+</ParamField>
+
+<ParamField path="input_token_count" type="int" optional>
+  The token count of the input.
+</ParamField>
+
+<ParamField path="output_token_count" type="int" optional>
+  The token count of the output.
+</ParamField>
+
+<ParamField path="tt_first_token" type="float" optional>
+  The time it took to generate the first token. Only available when streaming.
+</ParamField>
+
+<ParamField path="token_throughput_in_s" type="float" optional>
+  The token throughput in tokens per second. Only available when streaming.
+</ParamField>
+
+<ParamField path="duration" type="float" optional>
+  The duration of the generation in ms.
+</ParamField>
+
+## CompletionGeneration
+
+<ParamField path="provider" type="str" optional>
+  The provider of the LLM, like `openai`.
+</ParamField>
+
+<ParamField path="model" type="str" optional>
+  The model used for the generation, like `gpt-4`.
+</ParamField>
+
+<ParamField path="error" type="str" optional>
+  The error message if the generation failed.
+</ParamField>
+
+<ParamField path="settings" type="Dict" optional>
+  The settings of the LLM, like `temperature`...
+</ParamField>
+
+<ParamField path="variables" type="Dict" optional>
+  The variables used to format the prompt.
+</ParamField>
+
+<ParamField path="tags" type="List[str]" optional>
+  Optional tags to add to the generation.
+</ParamField>
+
+<ParamField path="prompt" type="str" optional>
+  The prompt used for the generation.
+</ParamField>
+
+<ParamField path="completion" type="str" optional>
+  The completion returned by the LLM.
+</ParamField>
+
+<ParamField path="token_count" type="int" optional>
+  The token count of the completion.
+</ParamField>
+
+<ParamField path="input_token_count" type="int" optional>
+  The token count of the input.
+</ParamField>
+
+<ParamField path="output_token_count" type="int" optional>
+  The token count of the output.
+</ParamField>
+
+<ParamField path="tt_first_token" type="float" optional>
+  The time it took to generate the first token. Only available when streaming.
+</ParamField>
+
+<ParamField path="token_throughput_in_s" type="float" optional>
+  The token throughput in tokens per second. Only available when streaming.
+</ParamField>
+
+<ParamField path="duration" type="float" optional>
+  The duration of the generation in ms.
+</ParamField>
+
