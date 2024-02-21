@@ -38,19 +38,18 @@
   "anchors": [],
   "navigation": [
     {
-      "group": "",
-      "pages": ["introduction"]
-    },
-    {
       "group": "Get Started",
-      "pages": ["get-started/authentication"]
+      "pages": [
+        "get-started/overview",
+        "get-started/installation",
+        "get-started/quick-start"
+      ]
     },
     {
       "group": "Concepts",
       "pages": [
         "concepts/thread",
         "concepts/step",
-        "concepts/message",
         "concepts/feedback",
         "concepts/user",
         "concepts/attachment"

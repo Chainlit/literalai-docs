@@ -6,7 +6,7 @@ A Thread represents a group of interactions between a user and an AI app. It can
 
 A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an intermediate AI step like an LLM call.
 
-## A simple thread
+## Log a Thread
 
 <CodeGroup>
 ```python Python
@@ -16,43 +16,99 @@ from literalai import LiteralClient
 
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-@client.step(type="llm")
-def my_llm(input: str): # fake LLM call
+@client.step(type="run")
+def my_assistant(input: str):
+    # Implement your assistant logic here
     time.sleep(1)
-    return "Response from the llm"
+    response = "My assistant response"
+    client.message(content=response, type="assistant_message", name="Assistant")
+    return response
 
 def main():
-    user_query = "Hello World"
     # You can also continue a thread by passing the thread id
-    with client.thread() as thread:
+    with client.thread(name="Thread Example") as thread:
       print(thread.id)
+      user_query = "Hello World"
       client.message(content=user_query, type="user_message", name="User")
-      llm_response = my_llm(user_query)
-      client.message(content=llm_response, type="assistant_message", name="Assistant")
+      my_assistant(user_query)
+
+      # Let's say the user has a follow up question
+      follow_up_query = "Follow up!"
+      client.message(content=follow_up_query, type="user_message", name="User")
+      my_assistant(user_query)
 
 main()
 client.wait_until_queue_empty()
 ```
 
 ```typescript TypeScript
-import { LiteralClient } from '@literalai/client';
+import { LiteralClient, Thread } from '@literalai/client';
 
 const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
-// You can also continue a thread by passing the thread id
-const thread = client.thread();
+async function myAssistant(thread: Thread, query: string) {
+  const run = thread.step({
+    type: "run",
+    name: "My Assistant",
+    input: { content: query },
+  });
 
-const step = await thread
-  .step({ type: "run", name: "firstStep" })
-  .send();
+  // Implement your assistant logic here
+  await new Promise((r) => setTimeout(r, 1000));
+  const response = { content: "My assistant response" };
+
+  run.output = response;
+  await run.send();
+
+  await run
+    .step({
+      type: "assistant_message",
+      name: "Assistant",
+      output: response,
+    })
+    .send();
+}
+
+async function main() {
+  // You can also continue a thread by passing the thread id
+  const thread = await client.thread({ name: "Thread Example" }).upsert();
+  console.log(thread.id);
+
+  const userQuery = "Hello World";
+  thread
+    .step({
+      type: "user_message",
+      name: "User",
+      output: { content: userQuery },
+    })
+    .send();
+
+  await myAssistant(thread, userQuery);
+
+  const followUpQuery = "Follow up!";
+  thread
+    .step({
+      type: "user_message",
+      name: "User",
+      output: { content: followUpQuery },
+    })
+    .send();
+
+  await myAssistant(thread, userQuery);
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => console.error(error));
+
 ```
 
 </CodeGroup>
 
-## Visualize the thread on Literal
+## Visualize the Thread on Literal
 
 Navigate to the `Threads` page on the platform to see the thread you just created.
 
 <Frame caption="Output on the platform">
-  <img src="/images/thread-one-step-one-message.png" alt="A thread on the platform" />
+  <img src="/images/thread-example.png" alt="A thread on the platform" />
 </Frame>

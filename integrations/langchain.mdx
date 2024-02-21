@@ -4,15 +4,14 @@ title: "Langchain"
 
 The Langchain integration enables to monitor your Langchain agents and chains with a single line of code.
 
+<Note>You should create a new instance of the callback handler for each invocation.</Note>
+
 <CodeGroup>
 ```python Python
-"""
-You need to call the `client.langchain_callback()` to get a langchain callback. 
-Then, you can use it in your langchain calls.
-Note that you should call the `client.langchain_callback()` for each invocation.
-"""
-
+import os
 from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 cb = client.langchain_callback()
 ```
@@ -22,8 +21,34 @@ import { LiteralClient } from '@literalai/client';
 
 const client = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
 
-// Literal thread ID is optional
-const cb = client.instrumentation.langchain.literalCallback("OPTIONAL_LITERAL_THREAD_ID");
+const cb = client.instrumentation.langchain.literalCallback();
 ```
 </CodeGroup>
 
+## Multiple langchain calls in a single thread
+
+You can combine the Langchain callback handler with the concept of [Thread](/concepts/thread) to monitor multiple langchain calls in a single thread.
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+with literal_client.thread(name="Langchain example") as thread:
+    cb = client.langchain_callback()
+    # Call your Langchain agent here
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+
+const thread = await client.thread({ name: "Langchain Example" }).upsert();
+const cb = client.instrumentation.langchain.literalCallback(thread.id);
+
+// Call your Langchain agent here
+```
+</CodeGroup>
