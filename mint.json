@@ -66,7 +66,7 @@
     },
     {
       "group": "Examples",
-      "pages": ["examples/rag-example"]
+      "pages": ["examples/rag-example", "examples/agent-run", "examples/conversational-agent", "examples/conversational-agent-fastapi"]
     },
     {
       "group": "Get Started",

@@ -87,7 +87,7 @@ def main():
 main()
 # Network requests by the SDK are performed asynchronously.
 # Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
-# This step is not required for code that runs continuously in production.
+# WARNING: If you run a continuous server, you should not use this method.
 literal_client.flush_and_stop()
 ```
 
