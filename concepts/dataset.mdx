@@ -1,0 +1,69 @@
+---
+title: "Dataset"
+---
+
+A dataset is an essential component in refining your LLM application's performance. It comprises a collection of input/output samples for conducting tests and validations.
+
+Our SDK facilitates dataset management, enabling both manual handling and the transformation of existing steps into actionable samples. This feature is designed for iterative development and fine-tuning of your application.
+
+### Create a dataset
+
+<CodeGroup>
+```python Python
+dataset = await sdk.api.create_dataset(
+  name="Foo", description="A dataset to store samples.", metadata={"isDemo": True}
+)
+```
+```typescript TypeScript
+const dataset = await client.api.createDataset({
+  name: 'Foo',
+  description: 'A dataset to store samples.',
+  metadata: { isDemo: true }
+});
+```
+</CodeGroup>
+
+### Create a dataset item
+
+<CodeGroup>
+```python Python
+dataset_item = await sdk.api.create_dataset_item(
+  dataset_id=dataset.id,
+  input={ "content": "What is literal?" },
+  output={ "content": "Literal is an observability solution." }
+)
+
+step_item = await sdk.api.add_step_to_dataset(dataset.id, step.id)
+```
+```typescript TypeScript
+const datasetItem = await client.api.createDatasetItem(
+  dataset.id,
+  {
+    input: { "content": "What is literal?" },
+    output: { "content": "Literal is an observability solution." },
+  }
+);
+
+const stepItem = await client.api.addStepToDataset(dataset.id, step.id);
+```
+</CodeGroup>
+
+### Get a dataset
+
+<CodeGroup>
+```python Python
+dataset = await sdk.api.get_dataset(id="dataset_id")
+
+for item in dataset.items:
+  pass
+```
+```typescript TypeScript
+const dataset = await client.api.getDataset("dataset_id");
+
+dataset.items.forEach((item) => {
+  // ...
+});
+```
+</CodeGroup>
+
+

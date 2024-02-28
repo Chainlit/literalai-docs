@@ -52,7 +52,8 @@
         "concepts/step",
         "concepts/feedback",
         "concepts/user",
-        "concepts/attachment"
+        "concepts/attachment",
+        "concepts/dataset"
       ]
     },
     {
@@ -88,10 +89,15 @@
         "python-client/api-reference/step",
         "python-client/api-reference/attachment",
         "python-client/api-reference/feedback",
-        "python-client/api-reference/generation"
+        "python-client/api-reference/generation",
+        "python-client/api-reference/dataset"
       ]
     },
     { "group": "Get Started", "pages": ["typescript-client/introduction"] },
+    {
+      "group": "API Reference",
+      "pages": ["typescript-client/api-reference/dataset"]
+    },
     { "group": "Self Hosting", "pages": ["self-hosting/deployment"] }
   ],
   "footerSocials": {
