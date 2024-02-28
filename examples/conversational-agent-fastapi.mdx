@@ -8,7 +8,7 @@ The agent can process user messages, make decisions on tool usage, and generate 
 
 **This example demonstrates thread-based monitoring, allowing for detailed tracking and analysis of conversational threads.**
 
-```.env
+```bash .env
 LITERAL_API_KEY=
 OPENAI_API_KEY=
 ```
@@ -19,7 +19,7 @@ pip install uvicorn
 ```
 
 <CodeGroup>
-```server.py
+```python server.py
 import json
 from openai import AsyncOpenAI
 from openai.types.chat import *
@@ -139,12 +139,11 @@ async def process_conversation(input: ProcessInput):
         lc.message(content=message_history[-1]["content"], name="user", type="user_message")
         message_history = await run(message_history)
         lc.message(content=message_history[-1].content, name="assistant", type="assistant_message")
-    # TODO: EXPLAIN THAT flush_and_stop is not for servers
-    # lc.flush_and_stop()
+        
     return {"message_history": message_history}
 
 ```
-<CodeGroup>
+</CodeGroup>
 
 ```bash
 uvicorn thread-fastapi:app --reload
@@ -152,7 +151,7 @@ uvicorn thread-fastapi:app --reload
 
 Then, you can send requests from a client:
 
-```python
+```python client.py
 import requests
 
 url = 'http://127.0.0.1:8000/process/'

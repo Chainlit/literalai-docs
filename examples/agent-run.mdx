@@ -6,7 +6,7 @@ This code integrates an asynchronous OpenAI client with a LiteralAI client to cr
 It utilizes LiteralAI's step decorators for structured logging and tool orchestration within a conversational flow. 
 The agent can process user messages, make decisions on tool usage, and generate responses based on a predefined set of tools and a maximum iteration limit to prevent infinite loops.
 
-```.env
+```bash .env
 LITERAL_API_KEY=
 OPENAI_API_KEY=
 ```
@@ -115,6 +115,6 @@ if __name__ == "__main__":
     message_history = asyncio.run(run(message_history))
     lc.flush_and_stop()
 ```
-<CodeGroup>
+</CodeGroup>
 
 With the integration of Literal AI, you can now visualize runs and LLM calls directly on the Literal AI platform, enhancing transparency and debuggability of your AI-driven applications.
