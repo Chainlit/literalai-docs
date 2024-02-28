@@ -38,7 +38,10 @@ def main():
       my_assistant(user_query)
 
 main()
-client.wait_until_queue_empty()
+# Network requests by the SDK are performed asynchronously.
+# Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
+# This step is not required for code that runs continuously in production.
+client.flush_and_stop()
 ```
 
 ```typescript TypeScript
