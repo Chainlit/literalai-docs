@@ -27,16 +27,16 @@ const dataset = await client.api.createDataset({
 
 <CodeGroup>
 ```python Python
-dataset_item = await sdk.api.create_dataset_item(
+dataset_item = await dataset.create_dataset_item(
   dataset_id=dataset.id,
   input={ "content": "What is literal?" },
   output={ "content": "Literal is an observability solution." }
 )
 
-step_item = await sdk.api.add_step_to_dataset(dataset.id, step.id)
+step_item = await dataset.add_step_to_dataset(dataset.id, step.id)
 ```
 ```typescript TypeScript
-const datasetItem = await client.api.createDatasetItem(
+const datasetItem = await dataset.createDatasetItem(
   dataset.id,
   {
     input: { "content": "What is literal?" },
@@ -44,7 +44,7 @@ const datasetItem = await client.api.createDatasetItem(
   }
 );
 
-const stepItem = await client.api.addStepToDataset(dataset.id, step.id);
+const stepItem = await dataset.addStepToDataset(dataset.id, step.id);
 ```
 </CodeGroup>
 

@@ -195,6 +195,12 @@ const datasetItem = await client.api.createDatasetItem("dataset_id", {
   input: { content: "What is Literal?" },
   expectedOutput: { content: "Literal is an observability solution." },
 });
+
+# Or directly through a Dataset
+const datasetItem = await dataset.createDatasetItem("dataset_id", {
+  input: { content: "What is Literal?" },
+  expectedOutput: { content: "Literal is an observability solution." },
+});
 ```
 
 #### Params
@@ -229,6 +235,9 @@ const datasetItem = await client.api.createDatasetItem("dataset_id", {
 
 ```typescript
 const datasetItem = await client.api.addStepToDataset("dataset_id", "step_id");
+
+# Or directly through a Dataset
+const datasetItem = await dataset.addStepToDataset("dataset_id", "step_id");
 ```
 
 #### Params
@@ -254,7 +263,7 @@ const datasetItem = await client.api.addStepToDataset("dataset_id", "step_id");
 ### Get a dataset item
 
 ```typescript
-const datasetItem = await client.api.getDatasetItem("dataset_item_id")
+const datasetItem = await client.api.getDatasetItem("dataset_item_id");
 ```
 
 #### Params
@@ -272,7 +281,10 @@ const datasetItem = await client.api.getDatasetItem("dataset_item_id")
 ### Delete a dataset item
 
 ```typescript
-await client.api.deleteDatasetItem("dataset_item_id")
+await client.api.deleteDatasetItem("dataset_item_id");
+
+# Or directly through a Dataset
+await dataset.deleteDatasetItem("dataset_item_id");
 ```
 
 #### Params
