@@ -154,7 +154,7 @@ type DatasetItem = {
   datasetId: string;
   metadata: Record<string, any>;
   input: Record<string, any>;
-  output?: Maybe<Record<string, any>>;
+  expectedOutput?: Maybe<Record<string, any>>;
   intermediarySteps: Record<string, any>[];
 }
 ```
@@ -179,7 +179,7 @@ type DatasetItem = {
   The input data for this dataset item. Typically contains the parameters or information that forms the LLM request.
 </ParamField>
 
-<ParamField path="output" type="Maybe<Record<string, any>>">
+<ParamField path="expectedOutput" type="Maybe<Record<string, any>>">
   The optional output data for this dataset item. Represents the result or outcome associated with the item's input.
 </ParamField>
 
@@ -193,7 +193,7 @@ type DatasetItem = {
 ```typescript
 const datasetItem = await client.api.createDatasetItem("dataset_id", {
   input: { content: "What is Literal?" },
-  output: { content: "Literal is an observability solution." },
+  expectedOutput: { content: "Literal is an observability solution." },
 });
 ```
 
@@ -211,7 +211,7 @@ const datasetItem = await client.api.createDatasetItem("dataset_id", {
   The input data for this dataset item. Typically contains the parameters or information that forms the LLM request.
 </ParamField>
 
-<ParamField path="datasetItem.output" type="Maybe<Record<string, any>>">
+<ParamField path="datasetItem.expectedOutput" type="Maybe<Record<string, any>>">
   The optional output data for this dataset item. Represents the result or outcome associated with the item's input.
 </ParamField>
 
@@ -239,6 +239,10 @@ const datasetItem = await client.api.addStepToDataset("dataset_id", "step_id");
 
 <ParamField path="stepId" type="string">
   The identifier of the step created beforehand. 
+</ParamField>
+
+<ParamField path="metadata" type="Maybe<Record<string, any>>">
+  A dictionary containing additional data associated with this dataset item. This can include specific details relevant to the item.
 </ParamField>
 
 #### Response
