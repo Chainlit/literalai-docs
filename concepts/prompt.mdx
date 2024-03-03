@@ -94,7 +94,10 @@ const openai = new OpenAI({
 async function main() {
   const prompt = await literalClient.api.getPrompt('Default');
 
-  const messages = prompt.format();
+  // Optionally pass variables to the prompt
+  const variables = { foo: 'bar' };
+
+  const messages = prompt.format(variables);
 
   const result = await openai.chat.completions.create({
     ...prompt.settings,
