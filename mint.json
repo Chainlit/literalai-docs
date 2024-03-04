@@ -49,11 +49,16 @@
       "group": "Concepts",
       "pages": [
         "concepts/prompt",
-        "concepts/thread",
-        "concepts/step",
-        "concepts/feedback",
-        "concepts/user",
-        "concepts/attachment"
+        {
+          "group": "Observability",
+          "pages": [
+            "concepts/thread",
+            "concepts/step",
+            "concepts/feedback",
+            "concepts/user",
+            "concepts/attachment"
+          ]
+        }
       ]
     },
     {
