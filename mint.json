@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Literal Platform",
+  "name": "Literal Doc",
   "logo": {
     "dark": "/logo/logo-dark.svg",
     "light": "/logo/logo-light.svg"
@@ -48,12 +48,18 @@
     {
       "group": "Concepts",
       "pages": [
-        "concepts/thread",
-        "concepts/step",
-        "concepts/feedback",
-        "concepts/user",
-        "concepts/attachment",
-        "concepts/dataset"
+        "concepts/prompt",
+        "concepts/dataset",
+        {
+          "group": "Observability",
+          "pages": [
+            "concepts/thread",
+            "concepts/step",
+            "concepts/feedback",
+            "concepts/user",
+            "concepts/attachment"
+          ]
+        }
       ]
     },
     {
@@ -67,7 +73,12 @@
     },
     {
       "group": "Examples",
-      "pages": ["examples/rag-example", "examples/agent-run", "examples/conversational-agent", "examples/conversational-agent-fastapi"]
+      "pages": [
+        "examples/rag-example",
+        "examples/agent-run",
+        "examples/conversational-agent",
+        "examples/conversational-agent-fastapi"
+      ]
     },
     {
       "group": "Get Started",

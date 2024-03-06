@@ -11,17 +11,58 @@ The Langchain integration enables to monitor your Langchain agents and chains wi
 import os
 from literalai import LiteralClient
 
+from langchain_openai import ChatOpenAI
+from langchain.schema.runnable.config import RunnableConfig
+from langchain.schema import StrOutputParser
+from langchain.prompts import ChatPromptTemplate
+
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 cb = client.langchain_callback()
+
+prompt = ChatPromptTemplate.from_messages(
+    ['human', 'Tell me a short joke about {topic}']
+)
+
+model = ChatOpenAI(streaming=True)
+runnable = prompt | model | StrOutputParser()
+
+res = runnable.invoke(
+    {"topic": "ice cream"},
+    config=RunnableConfig(callbacks=[cb], run_name="joke")
+    )
 ```
 
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
+import { StringOutputParser } from '@langchain/core/output_parsers';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { ChatOpenAI } from '@langchain/openai';
+
 const client = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
 
 const cb = client.instrumentation.langchain.literalCallback();
+
+// Example of using the callback
+const prompt = ChatPromptTemplate.fromMessages([
+    ['human', 'Tell me a short joke about {topic}']
+  ]);
+
+const model = new ChatOpenAI({});
+const outputParser = new StringOutputParser();
+
+const chain = prompt.pipe(model).pipe(outputParser);
+
+const response = await chain.invoke(
+{
+    topic: 'ice cream'
+},
+{
+    runName: 'joke',
+    callbacks: [cb]
+}
+);
 ```
 </CodeGroup>
 
