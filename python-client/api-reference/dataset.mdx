@@ -1,0 +1,349 @@
+---
+title: Dataset
+---
+
+## Dataset
+
+```python
+@dataclass
+class Dataset:
+    id: str
+    created_at: str
+    metadata: Dict
+    name: Optional[str] = None
+    description: Optional[str] = None
+    items: Optional[List[DatasetItemDict]] = None
+```
+
+<ParamField path="id" type="str">
+  The unique identifier of the dataset. This is an immutable field generated when the dataset is created.
+</ParamField>
+
+<ParamField path="created_at" type="str">
+  The date and time when the dataset was created, expressed in ISO 8601 format. 
+</ParamField>
+
+<ParamField path="metadata" type="Dict">
+  A dictionary containing additional data associated with the dataset. This can include user-defined key-value pairs that provide more context or details about the dataset.
+</ParamField>
+
+<ParamField path="name" type="Optional[str]">
+  An optional name for the dataset. This can be used to give a descriptive, human-readable title to the dataset for easier identification.
+</ParamField>
+
+<ParamField path="description" type="Optional[str]">
+  An optional description field that can provide more detailed information about the dataset, such as its purpose, contents, or specific characteristics.
+</ParamField>
+
+<ParamField path="items" type="Optional[List[DatasetItemDict]]">
+  An optional list of items contained within the dataset. Each item in the list is a dictionary representing a specific data entry in the dataset.
+</ParamField>
+
+### Create a dataset
+
+<CodeGroup>
+```python Async
+dataset = await sdk.api.create_dataset(
+    name="Foo", description="A dataset to store samples.", metadata={ "isDemo": True }
+)
+```
+```python Sync
+dataset = sdk.api.create_dataset_sync(
+    name="Foo", description="A dataset to store samples.", metadata={ "isDemo": True }
+)
+```
+</CodeGroup>
+
+#### Params
+
+<ParamField path="name" type="Optional[str]">
+  An optional name for the dataset. This can be used to give a descriptive, human-readable title to the dataset for easier identification.
+</ParamField>
+
+<ParamField path="description" type="Optional[str]">
+  An optional description field that can provide more detailed information about the dataset, such as its purpose, contents, or specific characteristics.
+</ParamField>
+
+<ParamField path="metadata" type="Optional[str]">
+  A dictionary containing additional data associated with the dataset. This can include user-defined key-value pairs that provide more context or details about the dataset.
+</ParamField>
+
+#### Response
+
+<ResponseField name="dataset" type="Dataset">
+  Return a Dataset
+</ResponseField>
+
+### Update a dataset
+
+<CodeGroup>
+```python Async
+dataset = await sdk.api.update_dataset(
+    id="dataset_id", name="foo", description="bar", metadata={"demo": True}
+)
+```
+```python Sync
+dataset = sdk.api.update_dataset_sync(
+    id="dataset_id", name="foo", description="bar", metadata={"demo": True}
+)
+```
+</CodeGroup>
+
+#### Params
+
+<ParamField path="id" type="str">
+  The unique identifier of the dataset. This is an immutable field generated when the dataset is created.
+</ParamField>
+
+<ParamField path="name" type="Optional[str]">
+  An optional name for the dataset. This can be used to give a descriptive, human-readable title to the dataset for easier identification.
+</ParamField>
+
+<ParamField path="description" type="Optional[str]">
+  An optional description field that can provide more detailed information about the dataset, such as its purpose, contents, or specific characteristics.
+</ParamField>
+
+<ParamField path="metadata" type="Optional[str]">
+  A dictionary containing additional data associated with the dataset. This can include user-defined key-value pairs that provide more context or details about the dataset.
+</ParamField>
+
+#### Response
+
+<ResponseField name="dataset" type="Dataset">
+  Return a Dataset
+</ResponseField>
+
+### Get a dataset
+
+<CodeGroup>
+```python Async
+dataset = await sdk.api.get_dataset(id="dataset_id")
+```
+```python Sync
+dataset = sdk.api.get_dataset_sync(id="dataset_id")
+```
+</CodeGroup>
+
+#### Params
+
+<ParamField path="id" type="str">
+  The unique identifier of the dataset. This is an immutable field generated when the dataset is created.
+</ParamField>
+
+#### Response
+
+<ResponseField name="dataset" type="Dataset">
+  Return a Dataset
+</ResponseField>
+
+### Delete a dataset
+
+<CodeGroup>
+```python Async
+await sdk.api.delete_dataset(id="dataset_id")
+```
+```python Sync
+sdk.api.delete_dataset_sync(id="dataset_id")
+```
+</CodeGroup>
+
+#### Params
+
+<ParamField path="id" type="str">
+  The unique identifier of the dataset. This is an immutable field generated when the dataset is created.
+</ParamField>
+
+#### Response
+
+<ResponseField name="dataset" type="Dataset">
+  Return a Dataset
+</ResponseField>
+
+## DatasetItem
+
+```python
+@dataclass
+class DatasetItem:
+    id: str
+    created_at: str
+    dataset_id: str
+    metadata: Dict
+    input: Dict
+    expected_output: Optional[Dict] = None
+    intermediary_steps: Optional[List[Dict]] = None
+```
+
+<ParamField path="id" type="str">
+  The unique identifier of the dataset item. Each item within a dataset has its own unique ID.
+</ParamField>
+
+<ParamField path="created_at" type="str">
+   The date and time when the dataset item was created, expressed in ISO 8601 format.
+</ParamField>
+
+<ParamField path="dataset_id" type="str">
+  The identifier of the dataset to which this item belongs. Links the item to its parent dataset.
+</ParamField>
+
+<ParamField path="metadata" type="Dict">
+  A dictionary containing additional data associated with this dataset item. This can include specific details relevant to the item.
+</ParamField>
+
+<ParamField path="input" type="Dict">
+  The input data for this dataset item. Typically contains the parameters or information that forms the LLM request.
+</ParamField>
+
+<ParamField path="expected_output" type="Optional[Dict]">
+  The optional output data for this dataset item. Represents the result or outcome associated with the item's input.
+</ParamField>
+
+<ParamField path="intermediary_steps" type="Optional[List[Dict]]">
+  An optional list of intermediary steps involved in the output. This can include any processing steps or intermediate results. They are automatically generated when using "steps" to build a dataset.
+</ParamField>
+
+
+### Create a dataset item
+
+<CodeGroup>
+```python Async
+dataset_item = await sdk.api.create_dataset_item(
+  dataset_id="dataset_id",
+  input={ "content": "What is Literal?" },
+  expected_output={ "content": "Literal is an observability solution." }
+)
+
+# Or directly through a Dataset
+dataset_item = await dataset.create_dataset_item(
+  dataset_id="dataset_id",
+  input={ "content": "What is Literal?" },
+  expected_output={ "content": "Literal is an observability solution." }
+)
+```
+```python Sync
+dataset_item = sdk.api.create_dataset_item_sync(
+  dataset_id="dataset_id",
+  input={ "content": "What is Literal?" },
+  expected_output={ "content": "Literal is an observability solution." }
+)
+
+# Or directly through a Dataset
+dataset_item = dataset.create_dataset_item_sync(
+  dataset_id="dataset_id",
+  input={ "content": "What is Literal?" },
+  expected_output={ "content": "Literal is an observability solution." }
+)
+```
+</CodeGroup>
+
+#### Params
+
+<ParamField path="dataset_id" type="str">
+  The identifier of the dataset to which this item belongs.
+</ParamField>
+
+<ParamField path="input" type="Dict">
+  The input data for this dataset item. Typically contains the parameters or information that forms the LLM request.
+</ParamField>
+
+<ParamField path="expected_output" type="Optional[Dict]">
+  The optional output data for this dataset item. Represents the result or outcome associated with the item's input.
+</ParamField>
+
+<ParamField path="metadata" type="Optional[Dict]">
+  A dictionary containing additional data associated with this dataset item. This can include specific details relevant to the item.
+</ParamField>
+
+#### Response
+
+<ResponseField name="dataset_item" type="DatasetItem">
+  Return a DatasetItem
+</ResponseField>
+
+### Add a step to a dataset
+
+<CodeGroup>
+```python Async
+dataset_item = await sdk.api.add_step_to_dataset(dataset_id="dataset_id", step_id="step_id")
+
+# Or directly through a Dataset
+dataset_item = await dataset.add_step_to_dataset(dataset_id="dataset_id", step_id="step_id")
+```
+```python Sync
+dataset_item = sdk.api.add_step_to_dataset_sync(dataset_id="dataset_id", step_id="step_id")
+
+# Or directly through a Dataset
+dataset_item = dataset.add_step_to_dataset_sync(dataset_id="dataset_id", step_id="step_id")
+```
+</CodeGroup>
+
+#### Params
+
+<ParamField path="dataset_id" type="str">
+  The identifier of the dataset to which this item belongs. 
+</ParamField>
+
+<ParamField path="step_id" type="str">
+  The identifier of the step created beforehand. 
+</ParamField>
+
+<ParamField path="metadata" type="Optional[Dict]">
+  A dictionary containing additional data associated with this dataset item. This can include specific details relevant to the item.
+</ParamField>
+
+#### Response
+
+<ResponseField name="dataset_item" type="DatasetItem">
+  Return a DatasetItem
+</ResponseField>
+
+### Get a dataset item
+
+<CodeGroup>
+```python Async
+dataset_item = await sdk.api.get_dataset_item(id="dataset_item_id")
+```
+```python Sync
+dataset_item = sdk.api.get_dataset_item_sync(id="dataset_item_id")
+```
+</CodeGroup>
+
+#### Params
+
+<ParamField path="id" type="str">
+  The unique identifier of the dataset item. Each item within a dataset has its own unique ID.
+</ParamField>
+
+#### Response
+
+<ResponseField name="dataset_item" type="DatasetItem">
+  Return a DatasetItem
+</ResponseField>
+
+### Delete a dataset item
+
+<CodeGroup>
+```python Async
+await sdk.api.delete_dataset_item(id="dataset_item_id")
+
+# Or directly through a Dataset
+await dataset.delete_dataset_item(id="dataset_item_id")
+```
+```python Sync
+sdk.api.delete_dataset_item_sync(id="dataset_item_id")
+
+# Or directly through a Dataset
+dataset.delete_dataset_item_sync(id="dataset_item_id")
+```
+</CodeGroup>
+
+#### Params
+
+<ParamField path="id" type="str">
+  The unique identifier of the dataset item. Each item within a dataset has its own unique ID.
+</ParamField>
+
+#### Response
+
+<ResponseField name="dataset_item" type="DatasetItem">
+  Return a DatasetItem
+</ResponseField>
