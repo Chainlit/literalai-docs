@@ -59,7 +59,8 @@
             "concepts/user",
             "concepts/attachment"
           ]
-        }
+        },
+        "concepts/evaluation"
       ]
     },
     {
