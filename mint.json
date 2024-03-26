@@ -78,7 +78,8 @@
         "examples/rag-example",
         "examples/agent-run",
         "examples/conversational-agent",
-        "examples/conversational-agent-fastapi"
+        "examples/conversational-agent-fastapi",
+        "examples/embedded-chatbot"
       ]
     },
     {
