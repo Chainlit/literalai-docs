@@ -2,13 +2,30 @@
 title: "Prompt"
 ---
 
-You can draft and iterate on prompts on the Literal Prompt Playground. Once you are happy with your prompt, you can save it and use it in your code.
+You can view your prompts in the Prompt Management page. This overview shows the prompts that you have created, manage different versions of these prompts and lets you create and test prompt templates in collaboration with your teammates. In the [Literal Prompt Playground](#prompt-playground), which is connected to prompts and threads, you can debug prompts in-context, draft and iterates on prompts. Once you are happy with your prompt, you can save it and use it in your code.
 
-Moving prompts out of your code has several benefits:
+Prompts are managed in the Literal platform, which has several benefits:
 - Non technical people can draft and iterate on prompts.
 - You can deploy a new version of your prompt without deploying your code.
 - You can track which prompt version for a specific generation.
 - You can compare prompt versions to see which one performs better.
+
+
+# Prompt Playground
+
+The playground is an environment in which you can create, test, and debug prompts. You can access the playground via
+1. **The main menu**. This allows you to create, test and save prompts from scratch.
+2. **Prompts**. This allows you to view, edit and test your prompt template and LLM settings and manage prompt versioning.
+3. **LLM Generations**. Via Generations you can access the playground with an individual generation from a real chat conversation. This allows you to debug a single generation of the LLM in context.
+
+## Design prompt templates
+
+On the left hand side of the view you can create prompt templates. In a `system message` you give instructions about the role of the assistant. For example, you can say that the assistant should provide concise answers. 
+
+<Frame caption="Playground Prompt Template">
+  <img src="/images/playground-prompt-template.png" alt="An example of a prompt template in the playground." />
+</Frame>
+
 
 ## Get a Prompt
 
