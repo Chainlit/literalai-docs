@@ -1,0 +1,57 @@
+---
+title: "Anthropic, Mistral, etc."
+---
+
+With Literal's integration capabilities, you can seamlessly monitor all the [providers](https://python.langchain.com/docs/integrations/platforms/) supported by Langchain. This allows for a unified observability experience across different AI models and services, ensuring that you can track and analyze the performance and usage of each provider within the Literal platform.
+
+You can thus monitor Anthropic, Mistral, and many other LLM providers.
+
+<CodeGroup>
+```python Python
+import os, asyncio
+from literalai import LiteralClient
+
+from langchain_anthropic import ChatAnthropic
+from langchain_core.messages import HumanMessage
+from langchain.schema.runnable.config import RunnableConfig
+
+from dotenv import load_dotenv
+load_dotenv()
+
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+cb = literal_client.langchain_callback()
+
+
+model = ChatAnthropic(model='claude-3-opus-20240229', anthropic_api_key=os.getenv("ANTHROPIC_API_KEY"))
+message = HumanMessage(content="What is the capital of France?")
+response = model.invoke([message], config=RunnableConfig(callbacks=[cb]))
+
+literal_client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient } from "@literalai/client";
+
+import { HumanMessage } from "@langchain/core/messages";
+import { ChatAnthropic } from "@langchain/anthropic";
+
+const literal_client = new LiteralClient(process.env.LITERAL_API_KEY);
+const cb = literal_client.instrumentation.langchain.literalCallback();
+
+// Example of using the callback
+const message = new HumanMessage({ content: "What is the capital of France?" });
+
+const model = new ChatAnthropic({
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY,
+});
+model.invoke([message], {
+  callbacks: [cb],
+}).then(response => {
+  console.log(response)
+}).catch(error => {
+  // Handle any errors here
+});
+```
+</CodeGroup>
+

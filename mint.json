@@ -69,7 +69,8 @@
         "integrations/openai",
         "integrations/openai-assistant",
         "integrations/chainlit",
-        "integrations/langchain"
+        "integrations/langchain",
+        "integrations/llm-providers"
       ]
     },
     {
