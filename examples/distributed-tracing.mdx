@@ -6,6 +6,11 @@ Distributed tracing is a method for monitoring and visualizing the flow of reque
 
 In the TypeScript example, a `LiteralClient` is used to create a step that logs a particular action, in this case, fetching weather data. This step is associated with a `parent_step_id`, which allows for the **tracing** of the request's journey through the system. Similarly, in the Python code, the `LiteralClient` is used to instrument the OpenAI client, and a decorator `@literal_client.step` is used to mark the function `run()` as a traceable step. This enables the **tracking** of the request as it interacts with an external weather service and the subsequent processing by the AI model. By using **distributed tracing**, developers can gain insights into the **performance** of their system, **debug** issues, and understand the behavior of complex, interconnected services.
 
+```bash
+export OPENAI_API_KEY=
+export LITERAL_API_KEY=
+```
+
 
 ```typescript server.ts
 import * as http from "http";
