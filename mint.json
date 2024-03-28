@@ -57,6 +57,7 @@
             "concepts/step",
             "concepts/feedback",
             "concepts/user",
+            "concepts/metadata",
             "concepts/attachment"
           ]
         },
