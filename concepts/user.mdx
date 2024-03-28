@@ -4,6 +4,9 @@ title: User
 
 In Literal, the concept of a user is designed to seamlessly integrate with your application, allowing developers to create and manage user profiles that mirror their own application's user base.
 
+It's important to note that the concept of User only exists at the Thread level, not at the Step level.
+
+
 <Frame caption="Filtering Threads by User">     
   <img
     src="/images/user-filter.png"
@@ -16,13 +19,100 @@ In Literal, the concept of a user is designed to seamlessly integrate with your 
 
 <CodeGroup>
 ```python Python
-identifier = "ORIGINAL_USER_ID"
-new_user = await client.api.create_user(identifier=identifier)
+import os
+from literalai import LiteralClient
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+@literal_client.step()
+def my_step(input_message):
+    # some code, llm call, tool call, etc.
+    answer = "answer"
+    return answer
+
+async def run(input_message):
+    with literal_client.thread() as thread:
+        literal_client.message(content=input_message, type="user_message", name="User")
+        user = await literal_client.api.create_user(identifier="John Doe")
+        # user = await literal_client.api.get_user(identifier="John Doe")
+        thread.user = user
+        answer = my_step(input_message)
+        literal_client.message(content=answer, type="assistant_message", name="Assistant")
+    return answer
 ```
 
 ```typescript TypeScript
-const userIdentifier = 'foobar';
-const participantId = await client.api.getOrCreateUser(userIdentifier);
+import { LiteralClient, Thread } from "@literalai/client";
+
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+// The Assistant could have intermediary steps
+async function myAssistant(thread: Thread, query: string) {
+  const run = thread.step({
+    type: "run",
+    name: "My Assistant Run",
+    input: { content: query },
+  });
+
+  // Implement your assistant logic here
+  await new Promise((r) => setTimeout(r, 1000));
+  const response = { content: "My assistant response" };
+
+  run.output = response;
+  await run.send();
+
+  return response;
+}
+
+async function main() {
+  const participantId = await client.api.getOrCreateUser("John Doe");
+
+  // You can also continue a thread by passing the thread id
+  const thread = await client
+    .thread({ name: "Thread Example", participantId: participantId })
+    .upsert();
+
+  console.log(thread.id);
+
+  const userQuery = "Hello World";
+  await thread
+    .step({
+      type: "user_message",
+      name: "User",
+      output: { content: userQuery },
+    })
+    .send();
+
+  const assistantResponse = await myAssistant(thread, userQuery);
+  await thread
+    .step({
+      type: "assistant_message",
+      name: "Assistant",
+      output: assistantResponse,
+    })
+    .send();
+
+  const followUpQuery = "Follow up!";
+  await thread
+    .step({
+      type: "user_message",
+      name: "User",
+      output: { content: followUpQuery },
+    })
+    .send();
+
+  const followUpResponse = await myAssistant(thread, followUpQuery);
+  await thread
+    .step({
+      type: "assistant_message",
+      name: "Assistant",
+      output: followUpResponse,
+    })
+    .send();
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => console.error(error));
 ```
 
 </CodeGroup>

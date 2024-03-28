@@ -45,14 +45,15 @@ client.flush_and_stop()
 ```
 
 ```typescript TypeScript
-import { LiteralClient, Thread } from '@literalai/client';
+import { LiteralClient, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
+// The Assistant could have intermediary steps
 async function myAssistant(thread: Thread, query: string) {
   const run = thread.step({
     type: "run",
-    name: "My Assistant",
+    name: "My Assistant Run",
     input: { content: query },
   });
 
@@ -63,22 +64,21 @@ async function myAssistant(thread: Thread, query: string) {
   run.output = response;
   await run.send();
 
-  await run
-    .step({
-      type: "assistant_message",
-      name: "Assistant",
-      output: response,
-    })
-    .send();
+  return response;
 }
 
 async function main() {
+  const participantId = await client.api.getOrCreateUser("John Doe");
+
   // You can also continue a thread by passing the thread id
-  const thread = await client.thread({ name: "Thread Example" }).upsert();
+  const thread = await client
+    .thread({ name: "Thread Example", participantId: participantId })
+    .upsert();
+
   console.log(thread.id);
 
   const userQuery = "Hello World";
-  thread
+  await thread
     .step({
       type: "user_message",
       name: "User",
@@ -86,10 +86,17 @@ async function main() {
     })
     .send();
 
-  await myAssistant(thread, userQuery);
+  const assistantResponse = await myAssistant(thread, userQuery);
+  await thread
+    .step({
+      type: "assistant_message",
+      name: "Assistant",
+      output: assistantResponse,
+    })
+    .send();
 
   const followUpQuery = "Follow up!";
-  thread
+  await thread
     .step({
       type: "user_message",
       name: "User",
@@ -97,13 +104,19 @@ async function main() {
     })
     .send();
 
-  await myAssistant(thread, userQuery);
+  const followUpResponse = await myAssistant(thread, followUpQuery);
+  await thread
+    .step({
+      type: "assistant_message",
+      name: "Assistant",
+      output: followUpResponse,
+    })
+    .send();
 }
 
 main()
   .then(() => process.exit(0))
   .catch((error) => console.error(error));
-
 ```
 
 </CodeGroup>
