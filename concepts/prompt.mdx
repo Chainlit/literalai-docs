@@ -133,7 +133,7 @@ async def main():
     messages = prompt.format(variables)
 
     # Optionally pass settings
-    settings = {"temperature": 0, "stream": True, "model": gpt-4-turbo-preview}
+    settings = {"temperature": 0, "stream": True, "model": "gpt-4-turbo-preview"}
 
     stream = await openai_client.chat.completions.create(
         messages=messages,
