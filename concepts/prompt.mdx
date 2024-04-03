@@ -37,9 +37,19 @@ On the left hand side of the view you can create prompt templates (1).
 * In a `system message` you give instructions about the role of the assistant. For example, you can say that the assistant should provide concise answers. 
 * In `User`, you give a format of the user query to the LLM. In this example, two variables are used. First, context documents are given, in a for-loop. The content of the variables can be defined below, but are usually defined in the code of the application. Then, the question that the user entered in the chatbot window is given.
 * `Assistant` messages are responses by the LLM. 
-* `Tool` messages are responses by the tool or function. 
+* `Tool` messages are responses by the tool or function.
 
 You can also pass functions to the prompt template. They are defined in the code or in `Tools`. The LLM model can detect when a specific function needs to be called based on the user's input. 
+
+#### Formatting
+The text and code in the prompt template is formatted according to the [the Mustache prompt templating format](https://scalate.github.io/scalate/documentation/mustache.html#Syntax). Tags are surrounded by "mustaches" or double curly brackets. With tags and mustaches, variables, sections, loops and functions can be declared. A variable is written like `{{variable}}`, and an if statement and for-loop is written like the following. If `x` is a boolean value, the section tag acts like an `if` conditional. When `x` is an array, this acts like a `for each` loop. 
+
+```
+# if statement / for loop using Mustache templating format
+{{#x}}
+{{.}}
+{{/x}}
+```
 
 ### 2. LLM settings
 
@@ -64,6 +74,13 @@ You can also use multimodality here. For example, you can upload an image in the
 ### 4. Save
 
 Once you are happy with the template and settings, you can save the setup (4). 
+
+When you save a new template, a screen will pop up with a diff comparison. In this changelog, like using Git, you can see what you have changed, before you save these changes. 
+
+<Frame caption="Playground Diff Comparison">
+  <img src="/images/playground-diff.png" alt="Diff comparison when you save a new prompt template."/>
+</Frame>
+
 
 ### 5. Promote
 
