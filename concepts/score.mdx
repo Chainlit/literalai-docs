@@ -98,4 +98,27 @@ const score = await client.api.createScore({
 ```
 </CodeGroup>
 
+The example below highlights how you can receive human feedback on a
+FastAPI server by calling the `create_score` API in Python.
 
+```python server.py
+from fastapi import FastAPI
+
+app = FastAPI()
+
+class HumanFeedback():
+    step_id: str
+    value: float
+
+
+@app.post("/feedback/")
+async def receive_human_feedback(feedback: HumanFeedback):
+
+    # Create a score on the `Step` the user gave feedback for.
+    return client.api.create_score(
+            type=ScoreType.HUMAN,
+            name="user-feedback",
+            value=feedback.value,
+            step_id=feedback.step_id,
+        )
+```
