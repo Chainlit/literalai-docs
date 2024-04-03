@@ -55,7 +55,7 @@
           "pages": [
             "concepts/thread",
             "concepts/step",
-            "concepts/feedback",
+            "concepts/score",
             "concepts/user",
             "concepts/metadata",
             "concepts/attachment"
@@ -103,7 +103,7 @@
         "python-client/api-reference/thread",
         "python-client/api-reference/step",
         "python-client/api-reference/attachment",
-        "python-client/api-reference/feedback",
+        "python-client/api-reference/score",
         "python-client/api-reference/generation",
         "python-client/api-reference/dataset"
       ]
