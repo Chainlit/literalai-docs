@@ -110,6 +110,8 @@ APP_AZURE_STORAGE_ACCOUNT="azure storage account"
 APP_AZURE_STORAGE_ACCESS_KEY="azure storage key"
 ```
 
+<Warning>The [pgcrypto](https://www.postgresql.org/docs/current/pgcrypto.html) module is required. When using Azure you will need to manually [add the extension](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions).</Warning>
+
 3. [OPTIONAL] Setup Redis to reduce latency:
 
 ```shell
