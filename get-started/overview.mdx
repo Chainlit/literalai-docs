@@ -4,22 +4,73 @@ title: Overview
 
 Literal is an all in one **observability**, **evaluation** and **analytics** platform for building **production-grade LLM apps**.
 
-It covers a wide range of use cases, from conversational applications to task automation. Literal can be used with any LLM framework, for example [Chainlit](http://localhost:3000/integrations/chainlit) and [LangChain](http://localhost:3000/integrations/langchain). It integrates well with [OpenAI](http://localhost:3000/integrations/openai), [Anthrophic, Mistral and many other LLM providers](http://localhost:3000/integrations/llm-providers).
+It covers a wide range of use cases, from conversational applications to task automation. Literal can be used with any LLM framework, for example [Chainlit](http://localhost:3000/integrations/chainlit) and [LangChain](http://localhost:3000/integrations/langchain). It integrates well with many LLM providers, like [OpenAI](http://localhost:3000/integrations/openai), [Anthrophic and Mistral](http://localhost:3000/integrations/llm-providers).
 
-Literal is developed by Chainlit, builders of the open-source Conversational AI Python framework [Chainlit](https://github.com/Chainlit/chainlit).
+Literal is developed by the builders of [Chainlit](https://github.com/Chainlit/chainlit), the open-source Conversational AI Python framework.
+
+<Frame caption="Literal Platform Example Thread">
+  <img src="/images/overview.png" alt="Literal Platform Example Thread"/>
+</Frame>
 
 # Key Features
 
-1. **Observability**: Monitor your LLM app (including conversations, intermediary steps, feedback, files, prompts, token consumption) in a few minutes with our SDKs. Literal provides a unified view of all your data in one place.
+<CardGroup cols={2}>
 
-2. **Dataset**: Create datasets mixing production data and hand written examples to run non regression tests.
+<Card
+  title="Observability"
+  icon="eye"
+  color="#ea5a0c"
+  href="/concepts/thread">
+  Monitor your LLM app (including steps, feedback, prompts, token consumption) in a few minutes with our SDKs. Literal provides a unified view of all your data in one place.
+</Card>
 
-3. **Online Evals**: Evaluate your threads and runs in real time using off the shelf and custom evaluators.
+  <Card
+  title="Dataset"
+  icon="database"
+  color="#0285c7"
+  href="/concepts/dataset">
+  Create datasets mixing production data and hand written examples to run non regression tests.
+</Card>
 
-4. **Prompt Collaboration**: Safely iterate, version and deploy prompts directly from Literal.
+<Card
+  title="Online Evaluations"
+  icon="magnifying-glass"
+  color="#dc2626"
+  href="/concepts/evaluation">
+  Evaluate your threads and runs in real time using off the shelf and custom evaluators.
+</Card>
+
+<Card
+  title="Prompt Collaboration"
+  icon="gears"
+  color="#F80061"
+  href="/concepts/prompt">
+  Safely design, try, debug, version and deploy prompts directly from Literal.
+</Card>
+
+</CardGroup>
+
+
 
 ## Next up
 
-<Card title="Install the Literal SDK" icon="code" href="/get-started/installation">
-  Learn more about Literal's Concepts and Entities
+<CardGroup cols={2}>
+
+<Card title="Get Started" icon="code" color="#0285c7" href="/get-started/installation">
+  Install the Literal SDK and get your API key.
 </Card>
+
+<Card title="Learn more about integrations" icon="circle" color="#ea5a0c" href="/get-started/quick-start">
+  Learn about OpenAI, LangChain and Chainlit with Literal.
+</Card>
+
+</CardGroup>
+
+## More
+
+Use this documentation to 
+* Learn: [Concepts](/concepts/prompt), [Integrations](/integrations)
+* Find SDK references: [Python](/python-client/get-started/introduction), [TypeScript](/typescript-client/introduction)
+* Get inspired: [Examples](/examples), [Blog](/blog/guide-tag-scores-metadata)
+
+
