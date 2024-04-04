@@ -33,6 +33,10 @@
     {
       "name": "TypeScript Client",
       "url": "typescript-client"
+    },
+    {
+      "name": "Blog",
+      "url": "blog"
     }
   ],
   "anchors": [],
@@ -113,7 +117,13 @@
       "group": "API Reference",
       "pages": ["typescript-client/api-reference/dataset"]
     },
-    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] }
+    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] },
+    {
+      "group": "Blog",
+      "pages": [
+        "blog/guide-tag-scores-metadata"
+      ]
+    }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/chainlit_io",
