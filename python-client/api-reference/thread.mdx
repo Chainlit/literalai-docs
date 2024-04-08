@@ -147,11 +147,11 @@ updated_thread = client.update_thread(
 
 ## Upsert thread
 
-It will either create a new thread if the `thread_id` does not exist or update the existing one.
+It will either create a new thread if the `id` does not exist or update the existing one.
 
 ```python
 thread = client.upsert_thread(
-    thead_id="<THREAD_UUID>",
+    id="<THREAD_UUID>",
     name=None,
     metadata=None,
     participant_id=None,
@@ -160,7 +160,7 @@ thread = client.upsert_thread(
 )
 ```
 
-<ParamField path="thread_id" type="uuid" required>
+<ParamField path="id" type="uuid" required>
   The id of the thread
 </ParamField>
 
