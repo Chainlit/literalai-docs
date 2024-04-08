@@ -27,3 +27,14 @@ from literalai import AsyncLiteralClient
 
 async_client = AsyncLiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
 ```
+
+#### Disable Decorators
+
+When instantiating the client, you have the option to disable the decorators that comes with the SDK. This can be useful when you want to disable the decorators without chaning the code. 
+
+```python
+import os
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True) 
+```

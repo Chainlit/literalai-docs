@@ -17,3 +17,12 @@ import { LiteralClient } from "@literalai/client";
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 ```
 
+#### Disable Decorators
+
+When instantiating the client, you have the option to disable the decorators that comes with the SDK. This can be useful when you want to disable the decorators without chaning the code. 
+
+```ts
+import { LiteralClient } from "@literalai/client";
+
+const client = new LiteralClient(process.env["LITERAL_API_KEY"], disabled: true);
+```
