@@ -17,7 +17,7 @@ It allows your users to provide direct feedback on the interaction, which can be
 
 <CodeGroup>
 ```python Python
-feedback = await client.api.create_feedback(
+feedback = client.api.create_feedback(
     step_id="<STEP_UUID>",
     value=1,
     comment="Hello world",

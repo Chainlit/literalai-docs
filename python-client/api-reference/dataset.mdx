@@ -42,13 +42,8 @@ class Dataset:
 ### Create a dataset
 
 <CodeGroup>
-```python Async
-dataset = await sdk.api.create_dataset(
-    name="Foo", description="A dataset to store samples.", metadata={ "isDemo": True }
-)
-```
-```python Sync
-dataset = sdk.api.create_dataset_sync(
+```python
+dataset = sdk.api.create_dataset(
     name="Foo", description="A dataset to store samples.", metadata={ "isDemo": True }
 )
 ```
@@ -77,13 +72,8 @@ dataset = sdk.api.create_dataset_sync(
 ### Update a dataset
 
 <CodeGroup>
-```python Async
-dataset = await sdk.api.update_dataset(
-    id="dataset_id", name="foo", description="bar", metadata={"demo": True}
-)
-```
-```python Sync
-dataset = sdk.api.update_dataset_sync(
+```python 
+dataset = sdk.api.update_dataset(
     id="dataset_id", name="foo", description="bar", metadata={"demo": True}
 )
 ```
@@ -116,11 +106,8 @@ dataset = sdk.api.update_dataset_sync(
 ### Get a dataset
 
 <CodeGroup>
-```python Async
-dataset = await sdk.api.get_dataset(id="dataset_id")
-```
-```python Sync
-dataset = sdk.api.get_dataset_sync(id="dataset_id")
+```python 
+dataset = sdk.api.get_dataset(id="dataset_id")
 ```
 </CodeGroup>
 
@@ -139,11 +126,8 @@ dataset = sdk.api.get_dataset_sync(id="dataset_id")
 ### Delete a dataset
 
 <CodeGroup>
-```python Async
-await sdk.api.delete_dataset(id="dataset_id")
-```
-```python Sync
-sdk.api.delete_dataset_sync(id="dataset_id")
+```python 
+sdk.api.delete_dataset(id="dataset_id")
 ```
 </CodeGroup>
 
@@ -205,29 +189,15 @@ class DatasetItem:
 ### Create a dataset item
 
 <CodeGroup>
-```python Async
-dataset_item = await sdk.api.create_dataset_item(
+```python
+dataset_item = sdk.api.create_dataset_item(
   dataset_id="dataset_id",
   input={ "content": "What is Literal?" },
   expected_output={ "content": "Literal is an observability solution." }
 )
 
 # Or directly through a Dataset
-dataset_item = await dataset.create_dataset_item(
-  dataset_id="dataset_id",
-  input={ "content": "What is Literal?" },
-  expected_output={ "content": "Literal is an observability solution." }
-)
-```
-```python Sync
-dataset_item = sdk.api.create_dataset_item_sync(
-  dataset_id="dataset_id",
-  input={ "content": "What is Literal?" },
-  expected_output={ "content": "Literal is an observability solution." }
-)
-
-# Or directly through a Dataset
-dataset_item = dataset.create_dataset_item_sync(
+dataset_item = dataset.create_dataset_item(
   dataset_id="dataset_id",
   input={ "content": "What is Literal?" },
   expected_output={ "content": "Literal is an observability solution." }
@@ -262,17 +232,11 @@ dataset_item = dataset.create_dataset_item_sync(
 ### Add a step to a dataset
 
 <CodeGroup>
-```python Async
-dataset_item = await sdk.api.add_step_to_dataset(dataset_id="dataset_id", step_id="step_id")
+```python 
+dataset_item = sdk.api.add_step_to_dataset(dataset_id="dataset_id", step_id="step_id")
 
 # Or directly through a Dataset
-dataset_item = await dataset.add_step_to_dataset(dataset_id="dataset_id", step_id="step_id")
-```
-```python Sync
-dataset_item = sdk.api.add_step_to_dataset_sync(dataset_id="dataset_id", step_id="step_id")
-
-# Or directly through a Dataset
-dataset_item = dataset.add_step_to_dataset_sync(dataset_id="dataset_id", step_id="step_id")
+dataset_item = dataset.add_step_to_dataset(dataset_id="dataset_id", step_id="step_id")
 ```
 </CodeGroup>
 
@@ -299,11 +263,8 @@ dataset_item = dataset.add_step_to_dataset_sync(dataset_id="dataset_id", step_id
 ### Get a dataset item
 
 <CodeGroup>
-```python Async
-dataset_item = await sdk.api.get_dataset_item(id="dataset_item_id")
-```
-```python Sync
-dataset_item = sdk.api.get_dataset_item_sync(id="dataset_item_id")
+```python
+dataset_item = sdk.api.get_dataset_item(id="dataset_item_id")
 ```
 </CodeGroup>
 
@@ -322,17 +283,11 @@ dataset_item = sdk.api.get_dataset_item_sync(id="dataset_item_id")
 ### Delete a dataset item
 
 <CodeGroup>
-```python Async
-await sdk.api.delete_dataset_item(id="dataset_item_id")
+```python
+sdk.api.delete_dataset_item(id="dataset_item_id")
 
 # Or directly through a Dataset
-await dataset.delete_dataset_item(id="dataset_item_id")
-```
-```python Sync
-sdk.api.delete_dataset_item_sync(id="dataset_item_id")
-
-# Or directly through a Dataset
-dataset.delete_dataset_item_sync(id="dataset_item_id")
+dataset.delete_dataset_item(id="dataset_item_id")
 ```
 </CodeGroup>
 

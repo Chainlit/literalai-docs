@@ -9,7 +9,7 @@ Note that only the `get_thread` and `export_threads` methods return the thread s
 ## Creating a thread
 
 ```python
-thread = await client.api.create_thread(
+thread = client.api.create_thread(
     participant_id="<PARTICIPANT_UUID>",
     environment="production",
     tags=["tag1", "tag2"],
@@ -38,7 +38,7 @@ thread = await client.api.create_thread(
 Use the thread id to get a thread. The returned thread contains the list of steps.
 
 ```python
-thread = await client.api.get_thread(id="<THREAD_UUID>")
+thread = client.api.get_thread(id="<THREAD_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -52,7 +52,7 @@ You can list threads, with optional filters. It returns a paginated list of thre
 The returned thread list doesn't contain the thread steps. If you need the steps, you should use the `export_threads` method.
 
 ```python
-threads = await client.api.list_threads(first=None, after=None, filters=None)
+threads = client.api.list_threads(first=None, after=None, filters=None)
 
 print(threads["pageInfo"])
 for thread in threads["data"]:
@@ -94,11 +94,11 @@ filters = ThreadFilter(
 )
 
 page = 1
-result = await client.api.export_threads(page=page, filters=filters)
+result = client.api.export_threads(page=page, filters=filters)
 
 while result.hasNextPage:
     page += 1
-    result = await client.api.export_threads(page=page, filters=filters)
+    result = client.api.export_threads(page=page, filters=filters)
 
     # Do something with the thread list in result.data
 ```
@@ -127,7 +127,7 @@ while result.hasNextPage:
 ## Update thread
 
 ```python
-updated_thread = await client.update_thread(
+updated_thread = client.update_thread(
     id="<THREAD_UUID>",
     name=None,
     metadata=None,
@@ -166,7 +166,7 @@ updated_thread = await client.update_thread(
 It will either create a new thread if the `thread_id` does not exist or update the existing one.
 
 ```python
-thread = await client.upsert_thread(
+thread = client.upsert_thread(
     thead_id="<THREAD_UUID>",
     name=None,
     metadata=None,
@@ -203,7 +203,7 @@ thread = await client.upsert_thread(
 ## Delete thread
 
 ```python
-await client.api.delete_thread(id="<THREAD_UUID>")
+client.api.delete_thread(id="<THREAD_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>

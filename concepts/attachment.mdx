@@ -15,7 +15,7 @@ An attachement is a file that has been generated or processed by a [Step](/conce
 
 <CodeGroup>
 ```python Python
-attachment = await client.api.create_attachment(
+attachment = client.api.create_attachment(
     thread_id="<THREAD_UUID>",
     step_id="<STEP_UUID>"
     name="my_attachment",
