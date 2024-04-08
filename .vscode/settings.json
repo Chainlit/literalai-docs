@@ -1,3 +1,7 @@
 {
-    "editor.formatOnSaveMode": "modifications"
+    "editor.formatOnSaveMode": "modifications",
+    "[mdx]": {
+        "editor.acceptSuggestionOnEnter": "off",
+        "editor.acceptSuggestionOnCommitCharacter": false
+    }
 }

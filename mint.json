@@ -33,6 +33,10 @@
     {
       "name": "TypeScript Client",
       "url": "typescript-client"
+    },
+    {
+      "name": "Blog",
+      "url": "blog"
     }
   ],
   "anchors": [],
@@ -55,7 +59,7 @@
           "pages": [
             "concepts/thread",
             "concepts/step",
-            "concepts/feedback",
+            "concepts/score",
             "concepts/user",
             "concepts/metadata",
             "concepts/attachment"
@@ -103,7 +107,7 @@
         "python-client/api-reference/thread",
         "python-client/api-reference/step",
         "python-client/api-reference/attachment",
-        "python-client/api-reference/feedback",
+        "python-client/api-reference/score",
         "python-client/api-reference/generation",
         "python-client/api-reference/dataset"
       ]
@@ -113,7 +117,13 @@
       "group": "API Reference",
       "pages": ["typescript-client/api-reference/dataset"]
     },
-    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] }
+    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] },
+    {
+      "group": "Blog",
+      "pages": [
+        "blog/guide-tag-scores-metadata"
+      ]
+    }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/chainlit_io",

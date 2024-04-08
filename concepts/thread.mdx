@@ -128,3 +128,110 @@ Navigate to the `Threads` page on the platform to see the thread you just create
 <Frame caption="Output on the platform">
   <img src="/images/thread-example.png" alt="A thread on the platform" />
 </Frame>
+
+
+## Tags
+
+You can add tags to a Thread, [Step](/concepts/step) or Generation. Similar to Github labels, you can use tags to filter data both from the Literal UI and the clients. Tags are shared between units (Threads, Steps and Generations). 
+
+To add a tag to a Thread or Generation, open the specific item and add the tag on the top of the window. Here, you can also add new tags. Adding tags to Steps is possible in the Step itself. 
+
+<Frame caption="Add new Tag">
+  <img src="/images/new-tag.png" alt="Add new Tag to a Thread" />
+</Frame>
+
+**Using the SDKs:**
+
+When you add a Tag that doesn't exist yet, a new Tag will be automatically created. 
+
+Note: When you update the Tags in using `update_thread()` (Python) or `upsertThread()` (TypeScript), you replace all previous assigned tags to this Thread.
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+async def add_tags():
+  updated_thread = await client.api.update_thread(
+    id="<THREAD_UUID>",
+    tags=["outlier", "to review"], # add tags here
+)
+
+asyncio.run(add_tags())
+
+# Network requests by the SDK are performed asynchronously.
+# Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
+# WARNING: If you run a continuous server, you should not use this method.
+client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient, Thread } from "@literalai/client";
+
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+
+const thread = await client.api.upsertThread({ 
+  threadId: "<THREAD_UUID>", 
+  tags: ["outlier", "to review"]});
+```
+
+</CodeGroup>
+
+Next, you can filter Threads or Generations by tags.
+
+<Frame caption="Filter by Tag">
+  <img src="/images/filter-by-tag.png" alt="Filter Threads by Tag" />
+</Frame>
+
+Using the SDKs:
+
+<CodeGroup>
+
+```python Python
+import os
+import asyncio
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+async def get_filtered_threads():
+    filtered_threads = await client.api.list_threads(
+        filters = [{
+            "operator": "in",
+            "field": "tags",
+            "value": ["outlier"],
+        }]
+    )
+    return filtered_threads
+
+filtered_threads = asyncio.run(get_filtered_threads())
+
+print(filtered_threads.pageInfo)
+for thread in filtered_threads.data:
+    print(thread.to_dict())
+
+# Network requests by the SDK are performed asynchronously.
+# Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
+# WARNING: If you run a continuous server, you should not use this method.
+client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient, Thread } from "@literalai/client";
+
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+const filtered_threads = await client.api
+  .getThreads({ 
+    filters: [{
+      operator: "in",
+      field: "tags",
+      value: ["outlier"],
+    }]
+  });
+```
+
+</CodeGroup>

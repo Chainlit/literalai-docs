@@ -67,17 +67,18 @@ for thread in threads["data"]:
 <ParamField path="filter" type="dict">
   You can filter threads with the following parameters:
   <Expandable title="properties">
-    <ResponseField name="attachmentsName" type="string"></ResponseField>
-    <ResponseField name="attachmentsName" type="string"></ResponseField>
-    <ResponseField name="createdAt" type="string"></ResponseField>
-    <ResponseField name="afterCreatedAt" type="string"></ResponseField>
-    <ResponseField name="beforeCreatedAt" type="string"></ResponseField>
-    <ResponseField name="duration" type="numeric"></ResponseField>
-    <ResponseField name="environment" type="string"></ResponseField>
-    <ResponseField name="feedbacksValue" type="numeric"></ResponseField>
-    <ResponseField name="participantsIdentifier" type="string"></ResponseField>
-    <ResponseField name="search" type="string"></ResponseField>
+    <ResponseField name="id" type="string"></ResponseField>
+    <ResponseField name="createdAt" type="DateTime"></ResponseField>
+    <ResponseField name="stepType" type="StepType"></ResponseField>
+    <ResponseField name="stepName" type="string"></ResponseField>
+    <ResponseField name="stepOutput" type="Json"></ResponseField>
+    <ResponseField name="metadata" type="Json"></ResponseField>
     <ResponseField name="tokenCount" type="numeric"></ResponseField>
+    <ResponseField name="tags" type="string"></ResponseField>
+    <ResponseField name="participantId" type="string"></ResponseField>
+    <ResponseField name="participantsIdentifiers" type="string"></ResponseField>
+    <ResponseField name="scoreValue" type="numeric"></ResponseField>
+    <ResponseField name="duration" type="numeric"></ResponseField>
   </Expandable>
 </ParamField>
 
@@ -105,23 +106,6 @@ while result.hasNextPage:
 
 <ParamField path="after" type="string">
   Pagination parameter, use the `pageInfo.endCursor` from the previous result.
-</ParamField>
-
-<ParamField path="filter" type="dict">
-  You can filter threads with the following parameters:
-  <Expandable title="properties">
-    <ResponseField name="attachmentsName" type="string"></ResponseField>
-    <ResponseField name="attachmentsName" type="string"></ResponseField>
-    <ResponseField name="createdAt" type="string"></ResponseField>
-    <ResponseField name="afterCreatedAt" type="string"></ResponseField>
-    <ResponseField name="beforeCreatedAt" type="string"></ResponseField>
-    <ResponseField name="duration" type="numeric"></ResponseField>
-    <ResponseField name="environment" type="string"></ResponseField>
-    <ResponseField name="feedbacksValue" type="numeric"></ResponseField>
-    <ResponseField name="participantsIdentifier" type="string"></ResponseField>
-    <ResponseField name="search" type="string"></ResponseField>
-    <ResponseField name="tokenCount" type="numeric"></ResponseField>
-  </Expandable>
 </ParamField>
 
 ## Update thread
