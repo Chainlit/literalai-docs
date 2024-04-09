@@ -17,3 +17,12 @@ import { LiteralClient } from "@literalai/client";
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 ```
 
+#### Disable Thread and Step Ingestion APIs
+
+When instantiating the client, you have the option to disable the Thread and Step ingestion APIs that comes with the SDK, like `thread.step()`. This can be useful when you want to disable this without changing the code. 
+
+```ts
+import { LiteralClient } from "@literalai/client";
+
+const client = new LiteralClient(process.env["LITERAL_API_KEY"], disabled: true);
+```

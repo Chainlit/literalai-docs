@@ -163,13 +163,13 @@ from literalai import LiteralClient
 
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-async def add_tags():
-  updated_thread = await client.api.update_thread(
+def add_tags():
+  updated_thread = client.api.update_thread(
     id="<THREAD_UUID>",
     tags=["outlier", "to review"], # add tags here
 )
 
-asyncio.run(add_tags())
+add_tags()
 
 # Network requests by the SDK are performed asynchronously.
 # Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
@@ -202,13 +202,12 @@ Using the SDKs:
 
 ```python Python
 import os
-import asyncio
 from literalai import LiteralClient
 
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-async def get_filtered_threads():
-    filtered_threads = await client.api.list_threads(
+def get_filtered_threads():
+    filtered_threads = client.api.list_threads(
         filters = [{
             "operator": "in",
             "field": "tags",
@@ -217,7 +216,7 @@ async def get_filtered_threads():
     )
     return filtered_threads
 
-filtered_threads = asyncio.run(get_filtered_threads())
+filtered_threads = get_filtered_threads()
 
 print(filtered_threads.pageInfo)
 for thread in filtered_threads.data:
