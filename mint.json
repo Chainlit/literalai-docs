@@ -88,7 +88,8 @@
         "examples/agent-run",
         "examples/conversational-agent",
         "examples/conversational-agent-fastapi",
-        "examples/distributed-tracing"
+        "examples/distributed-tracing",
+        "examples/dataset"
       ]
     },
     {
