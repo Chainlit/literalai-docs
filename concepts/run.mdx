@@ -1,0 +1,73 @@
+---
+title: "Run"
+---
+
+A `run` signifies the execution of an agent or a chain that takes multiple steps. It is a sequence of Steps, that, unlike other Step types, does not have to be part of a Thread. This is useful if you are monitoring non-conversational use cases.
+
+`Runs` are visualized as part of Thread on the `Threads` page, but they can also be viewed on their own `Runs` page on Literal. Here, all Runs are visualized, not only runs that are part of Threads. Runs have a unique ID (different from the `Thread ID`, since Runs are different from Threads). The `Steps` in a Run can be scored and tagged as usual.
+
+The example in the following image shows a Run called `Query` of a RAG chatbot agent, that Retrieves context documents and Generates an answer using a GPT-4 model.
+
+<Frame caption="An example of a Run on Literal">     
+  <img
+    src="/images/run-example.png"
+    alt="An example of a Run"
+  />
+</Frame>
+
+In the following code example you can see that you can tag steps with the type `"Run"`, by writing `@client.step(type="run")` in Python or `@client.step(type="run")` in TypeScript:
+
+<CodeGroup>
+
+```python Python
+import os
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+# Here you can define the type of the step as run
+@client.step(type="run")
+def my_run():
+    # Implement your custom logic here
+    return "Success"
+    
+# Network requests by the SDK are performed asynchronously.
+# Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
+# WARNING: If you run a continuous server, you should not use this method.
+client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient, Step, Thread } from "@literalai/client";
+
+const client = new LiteralClient('your_api_key');
+
+// Run example
+// Run example
+async function myRun() {
+  const run = client.step({
+    name: "My Run",
+    type: "run",
+    input: { content: "My run Input" },
+  });
+
+  // Implement your custom logic here
+  const response = { content: "Success" };
+
+  run.output = response;
+  await run.send();
+  return response;
+}
+
+async function main() {
+  await myRun();
+}
+
+main().catch((error) => {
+  console.error("Error running main function:", error);
+});
+
+
+```
+
+</CodeGroup>

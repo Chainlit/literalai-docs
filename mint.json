@@ -59,10 +59,10 @@
           "pages": [
             "concepts/thread",
             "concepts/step",
+            "concepts/run",
+            "concepts/generation",
             "concepts/score",
-            "concepts/user",
-            "concepts/metadata",
-            "concepts/attachment"
+            "concepts/user"
           ]
         },
         "concepts/evaluation",
