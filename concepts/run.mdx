@@ -43,8 +43,9 @@ import { LiteralClient, Step, Thread } from "@literalai/client";
 const client = new LiteralClient('your_api_key');
 
 // Run example
-async function myRun(thread: Thread) {
-  const run = thread.step({
+// Run example
+async function myRun() {
+  const run = client.step({
     name: "My Run",
     type: "run",
     input: { content: "My run Input" },
@@ -55,23 +56,17 @@ async function myRun(thread: Thread) {
 
   run.output = response;
   await run.send();
-
   return response;
 }
 
 async function main() {
-  const thread = client.thread();
-  // Message example
-  await thread
-    .step({
-      output: { content: "Hello World" },
-      type: "assistant_message",
-      name: "My Assistant",
-    })
-    .send();
-
-  await myRun(thread);
+  await myRun();
 }
+
+main().catch((error) => {
+  console.error("Error running main function:", error);
+});
+
 
 ```
 
