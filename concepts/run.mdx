@@ -30,10 +30,6 @@ client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 def my_run():
     # Implement your custom logic here
     return "Success"
-
-with client.thread() as thread:
-    client.message(content="Hello World", type="assistant_message", name="My Assistant")
-    my_run()
     
 # Network requests by the SDK are performed asynchronously.
 # Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
