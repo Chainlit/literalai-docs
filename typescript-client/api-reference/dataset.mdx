@@ -12,6 +12,7 @@ type Dataset = {
   description?: Maybe<string>;
   metadata: Record<string, any>;
   items?: Maybe<DatasetItem[]>;
+  type?: Maybe<DatasetType>
 }
 ```
 
@@ -37,6 +38,10 @@ type Dataset = {
 
 <ParamField path="items" type="Maybe<DatasetItem[]>">
   An optional list of items contained within the dataset. Each item in the list is a dictionary representing a specific data entry in the dataset.
+</ParamField>
+
+<ParamField path="type" type="Maybe<DatasetType>">
+  An optional type of dataset. Defaults to "key_value", other option is "generation".
 </ParamField>
 
 ### Create a dataset
@@ -237,7 +242,7 @@ const datasetItem = await dataset.createDatasetItem("dataset_id", {
 const datasetItem = await client.api.addStepToDataset("dataset_id", "step_id");
 
 # Or directly through a Dataset
-const datasetItem = await dataset.addStepToDataset("dataset_id", "step_id");
+const datasetItem = await dataset.addStep("step_id");
 ```
 
 #### Params
@@ -259,6 +264,36 @@ const datasetItem = await dataset.addStepToDataset("dataset_id", "step_id");
 <ResponseField name="datasetItem" type="DatasetItem">
   Return a DatasetItem
 </ResponseField>
+
+### Add a generation to a dataset
+
+```typescript
+const datasetItem = await client.api.addGeneationToDataset("dataset_id", "generation_id");
+
+# Or directly through a Dataset
+const datasetItem = await dataset.addGeneration("generation_id");
+```
+
+#### Params
+
+<ParamField path="datasetId" type="string">
+  The identifier of the dataset to which this item belongs. 
+</ParamField>
+
+<ParamField path="generationId" type="string">
+  The identifier of the generation created beforehand. 
+</ParamField>
+
+<ParamField path="metadata" type="Maybe<Record<string, any>>">
+  A dictionary containing additional data associated with this dataset item. This can include specific details relevant to the item.
+</ParamField>
+
+#### Response
+
+<ResponseField name="datasetItem" type="DatasetItem">
+  Return a DatasetItem
+</ResponseField>
+
 
 ### Get a dataset item
 
