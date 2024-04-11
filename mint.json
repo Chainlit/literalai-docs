@@ -35,6 +35,10 @@
       "url": "typescript-client"
     },
     {
+      "name": "GraphQL API Reference",
+      "url": "graphql-api-reference"
+    },
+    {
       "name": "Blog",
       "url": "blog"
     }
@@ -126,6 +130,12 @@
       "group": "Blog",
       "pages": [
         "blog/guide-tag-scores-metadata"
+      ]
+    },
+    {
+      "group": "GraphQL API Reference",
+      "pages": [
+        "graphql-api-reference/introduction"
       ]
     }
   ],
