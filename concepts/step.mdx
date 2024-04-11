@@ -209,11 +209,14 @@ An attachement is a file that has been generated or processed by a Step.
 
 <CodeGroup>
 ```python Python
-attachment = await client.api.create_attachment(
-    thread_id="<THREAD_UUID>",
-    step_id="<STEP_UUID>"
+import os
+from literalai import LiteralClient
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+client.api.create_attachment(
+    thread_id="<THREAD_ID>", # thread.id
+    step_id="<STEP_ID>", # step.id
     name="my_attachment",
-    content_type="text/plain",
     content="Hello world",
 )
 ```

@@ -21,23 +21,27 @@ It's important to note that the concept of User only exists at the Thread level,
 ```python Python
 import os
 from literalai import LiteralClient
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-@literal_client.step()
+@client.step()
 def my_step(input_message):
     # some code, llm call, tool call, etc.
     answer = "answer"
     return answer
 
 def run(input_message):
-    with literal_client.thread() as thread:
-        literal_client.message(content=input_message, type="user_message", name="User")
-        user = literal_client.api.create_user(identifier="John Doe")
+    with client.thread() as thread:
+        client.message(content=input_message, type="user_message", name="User")
+        user = client.api.create_user(identifier="John Doe")
         # user = await literal_client.api.get_user(identifier="John Doe")
         thread.user = user
         answer = my_step(input_message)
-        literal_client.message(content=answer, type="assistant_message", name="Assistant")
+        client.message(content=answer, type="assistant_message", name="Assistant")
     return answer
+
+run("Hello")
+
+client.flush_and_stop()
 ```
 
 ```typescript TypeScript

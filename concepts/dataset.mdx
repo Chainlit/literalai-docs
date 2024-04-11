@@ -119,21 +119,22 @@ client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 # option 1: add local items
 dataset_item = client.api.create_dataset_item(
-  dataset_id = dataset.id,
+  dataset_id = "<DATASET_ID>", # dataset.id
   input = { "content": "What is literal?" },
   expected_output = { "content": "Literal is an observability solution." }
 )
 
 # option 2: add existing steps, runs, generations
 dataset_item = client.api.add_step_to_dataset(
-  dataset_id = dataset.id,
+  dataset_id = "<DATASET_ID>", # dataset.id
   step_id = "step_id" # reference to a step, run or generation
 )
 dataset_item = client.api.add_generation_to_dataset(
-  dataset_id = dataset.id,
+  dataset_id = "<DATASET_ID>", # dataset.id
   generation_id = "generation_id" # reference to a step, run or generation
 )
 ```
+
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
 
@@ -141,7 +142,7 @@ const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // option 1: add local items
 const datasetItem = await client.api.createDatasetItem({
-  datasetID: dataset.id,
+  datasetID: "<DATASET_ID", // dataset.id
   datasetItem: {
     input: { content: "What is literal?" },
     expectedOutput: { content: "Literal is an observability solution." },
@@ -150,7 +151,7 @@ const datasetItem = await client.api.createDatasetItem({
 
 // option 2: add existing steps, runs, generations
 const datasetItem = await client.api.addStepToDataset(
-  datasetId: dataset.id, 
+  datasetId: "<DATASET_ID", // dataset.id
   stepId: "stepId" // reference to a step, run or generation
 );
 ```
@@ -165,7 +166,7 @@ import os
 
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-dataset = sdk.api.get_dataset(id="dataset_id")
+dataset = sdk.api.get_dataset(id="<DATASET_ID>")
 
 for item in dataset.items:
   pass
@@ -175,7 +176,7 @@ import { LiteralClient, Thread } from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const dataset = await client.api.getDataset("dataset_id");
+const dataset = await client.api.getDataset("<DATASET_ID>");
 
 dataset.items.forEach((item) => {
   // ...

@@ -76,6 +76,11 @@ to a Step or a Generation object.
 
 <CodeGroup>
 ```python Python
+import os
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
 score = client.api.create_score(
             step_id="<STEP_UUID>",
             generation_id="<GENERATION_UUID>"
@@ -102,23 +107,25 @@ The example below highlights how you can receive human feedback on a
 FastAPI server by calling the `create_score` API in Python.
 
 ```python server.py
+import os
 from fastapi import FastAPI
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 app = FastAPI()
 
-class HumanFeedback():
-    step_id: str
-    value: float
-
-
 @app.post("/feedback/")
-async def receive_human_feedback(feedback: HumanFeedback):
+def receive_human_feedback():
 
     # Create a score on the `Step` the user gave feedback for.
     return client.api.create_score(
-            type=ScoreType.HUMAN,
+            type="HUMAN",
             name="user-feedback",
-            value=feedback.value,
-            step_id=feedback.step_id,
+            value=0.9,
+            comment="This was good",
+            step_id="309a6a10-345b-4fd3-bbba-1dd1b435656c",
         )
+
+receive_human_feedback()
 ```

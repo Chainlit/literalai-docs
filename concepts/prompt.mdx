@@ -101,6 +101,7 @@ import os
 from literalai import LiteralClient
 
 client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
 # This will fetch the champion version, you can also pass a specific version
 prompt = client.api.get_prompt(name="RAG prompt")
 ```
@@ -128,17 +129,16 @@ You format messages like this:
 <CodeGroup>
 ```python Python
 import os
-import asyncio
 from literalai import LiteralClient
-from openai import AsyncOpenAI
+from openai import OpenAI
 
-openai_client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 # Optionally instrument the openai client to log generations
 literal_client.instrument_openai()
 
-async def main():
+def main():
     prompt = literal_client.api.get_prompt(name="RAG prompt")
 
     # Optionally pass variables to the prompt
@@ -147,22 +147,19 @@ async def main():
     messages = prompt.format(variables)
 
     # Optionally pass settings
-    settings = {"temperature": 0, "stream": True, "model": "gpt-4-turbo-preview"}
+    settings = {"temperature": 0, "model": "gpt-4-turbo-preview"}
 
-    stream = await openai_client.chat.completions.create(
+    response = openai_client.chat.completions.create(
         messages=messages,
         # Optionally pass the tools defined in the prompt
         tools=prompt.tools,
         # Pass the settings defined in the prompt
-        **settings,
-        stream=True
+        **settings
     )
 
-    async for chunk in stream:
-        print(chunk)
+    print(response.choices[0].message.content)
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+main()
 ```
 
 ```typescript TypeScript
