@@ -2,5 +2,54 @@
 title: "Evaluation"
 ---
 
-Contact Us [here](https://cal.com/dan-constantini/15min) to know more about how we evaluate LLM apps.
+## Introduction
 
+Evaluation is key to enable continuous deployment of LLM-based applications and guarantee that newer
+versions perform better than previous ones, both in terms of **user experience** as well as from a **cost**
+perspective. From a user experience perspective, one must understand the logical blocks which compose the application. 
+
+For instance, the most atomic LLM-based application would be a text-to-text generation: input and output are texts. 
+A slightly more complex block would be an instruct-oriented generation where the input follows 
+[OpenAI's message-based](https://platform.openai.com/docs/api-reference/chat/create#chat-create-messages) format.
+
+As AI applications grow in complexity, they tend to chain multiple blocks. An example is the vanilla
+Retrieval Augmented Generation (RAG), which augments Large Language Models (LLMs) with domain-specific
+data.  
+
+Literal decorators let you catch the various blocks of an AI application and gather the inputs
+and outputs of each block: 
+
+<Frame caption="Vanilla RAG Thread">
+  <img src="/images/rag-thread.png" alt="A thread on a RAG application" />
+</Frame>
+
+With the inputs and outputs of each block, one may evaluate the performance of their application at any
+level, building the most relevant KPIs for end-users. 
+
+Literal offers a compelling user/developer interface to build and interact with datasets. Through `Dataset` objects,
+users can iterate on an application parameter and view the impact via Experiments. 
+
+For instance, a developer can iterate on their prompt template and check the impact of their
+modifications on production data. 
+
+Evaluations can either take place:
+- on a `Dataset` which contains a snapshot of blocks' inputs/outputs to score &mdash; these are **snapshot evaluations**
+- on live production data &mdash; those are **continuous evaluations**
+
+
+## Snapshot evaluations
+
+Our [Prompt Iteration with Promptfoo](https://github.com/Chainlit/literal-cookbook/tree/main/evaluation/typescript/prompt-iteration-promptfoo)
+TypeScript cookbook shows how a developer can leverage the `promptfoo` library to compute similarity scores
+and persist the results of their experiments directly on Literal. 
+
+The [Context Relevancy with Ragas](https://github.com/Chainlit/literal-cookbook/tree/main/evaluation/python)
+Python cookbook experiments on an example RAG application to score. 
+
+For more examples on evaluations, please browse our [Literal Cookbooks](https://github.com/Chainlit/literal-cookbook/tree/main/evaluation).
+
+
+## Continuous evaluations
+
+Contact Us [here](https://cal.com/dan-constantini/15min) to know more about how we perform continuous
+evaluations of LLM applications.
