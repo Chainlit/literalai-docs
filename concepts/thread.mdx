@@ -154,7 +154,21 @@ To add a tag to a Thread or Generation, open the specific item and add the tag o
 
 When you add a Tag that doesn't exist yet, a new Tag will be automatically created. 
 
-Note: When you update the Tags in using `update_thread()` (Python) or `upsertThread()` (TypeScript), you replace all previous assigned tags to this Thread.
+<CodeGroup>
+```python Python
+with client.thread(name="Thread Example") as thread:
+    thread.tags = ["to review"]
+```
+
+```typescript TypeScript
+  const thread = await client
+    .thread({ name: "Thread Example", tags:["to review"]})
+    .upsert();
+```
+</CodeGroup>
+
+
+Note: You can add tags a posteriori too. When you update the Tags in using `update_thread()` (Python) or `upsertThread()` (TypeScript), you replace all previous assigned tags to this Thread.
 
 <CodeGroup>
 ```python Python
