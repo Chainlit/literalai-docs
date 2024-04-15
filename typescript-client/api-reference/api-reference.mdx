@@ -1,0 +1,791 @@
+---
+title: API Reference
+---
+
+# Class: API
+
+## Table of contents
+
+### Constructors
+
+- [constructor](API.md#constructor)
+
+### Properties
+
+- [apiKey](API.md#apikey)
+- [url](API.md#url)
+- [graphqlEndpoint](API.md#graphqlendpoint)
+- [restEndpoint](API.md#restendpoint)
+- [disabled](API.md#disabled)
+
+### Accessors
+
+- [headers](API.md#headers)
+
+### Methods
+
+- [makeGqlCall](API.md#makegqlcall)
+- [makeApiCall](API.md#makeapicall)
+- [sendSteps](API.md#sendsteps)
+- [getStep](API.md#getstep)
+- [deleteStep](API.md#deletestep)
+- [uploadFile](API.md#uploadfile)
+- [getGenerations](API.md#getgenerations)
+- [createGeneration](API.md#creategeneration)
+- [upsertThread](API.md#upsertthread)
+- [getThreads](API.md#getthreads)
+- [getThread](API.md#getthread)
+- [deleteThread](API.md#deletethread)
+- [getUsers](API.md#getusers)
+- [createUser](API.md#createuser)
+- [updateUser](API.md#updateuser)
+- [getOrCreateUser](API.md#getorcreateuser)
+- [getUser](API.md#getuser)
+- [deleteUser](API.md#deleteuser)
+- [getScores](API.md#getscores)
+- [createScore](API.md#createscore)
+- [updateScore](API.md#updatescore)
+- [deleteScore](API.md#deletescore)
+- [createDataset](API.md#createdataset)
+- [getDataset](API.md#getdataset)
+- [updateDataset](API.md#updatedataset)
+- [deleteDataset](API.md#deletedataset)
+- [createDatasetItem](API.md#createdatasetitem)
+- [getDatasetItem](API.md#getdatasetitem)
+- [deleteDatasetItem](API.md#deletedatasetitem)
+- [addStepToDataset](API.md#addsteptodataset)
+- [addGenerationToDataset](API.md#addgenerationtodataset)
+- [createPromptLineage](API.md#createpromptlineage)
+- [createPrompt](API.md#createprompt)
+- [getPrompt](API.md#getprompt)
+
+## Constructors
+
+### constructor
+
+• **new API**(`apiKey`, `url`, `disabled?`): [`API`](API.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `apiKey` | `string` |
+| `url` | `string` |
+| `disabled?` | `boolean` |
+
+#### Returns
+
+[`API`](API.md)
+
+## Properties
+
+### apiKey
+
+• `Private` **apiKey**: `string`
+
+___
+
+### url
+
+• `Private` **url**: `string`
+
+___
+
+### graphqlEndpoint
+
+• `Private` **graphqlEndpoint**: `string`
+
+___
+
+### restEndpoint
+
+• `Private` **restEndpoint**: `string`
+
+___
+
+### disabled
+
+• **disabled**: `boolean`
+
+## Accessors
+
+### headers
+
+• `get` **headers**(): `Object`
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `Content-Type` | `string` |
+| `x-api-key` | `string` |
+| `x-client-name` | `string` |
+| `x-client-version` | `any` |
+
+## Methods
+
+### makeGqlCall
+
+▸ **makeGqlCall**(`query`, `variables`): `Promise`\<`any`\>
+
+Make a raw GraphQL call to Literal. This method is used by other methods to make API calls.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `query` | `string` |
+| `variables` | `any` |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+___
+
+### makeApiCall
+
+▸ **makeApiCall**(`subpath`, `body`): `Promise`\<`any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `subpath` | `string` |
+| `body` | `any` |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+___
+
+### sendSteps
+
+▸ **sendSteps**(`steps`): `Promise`\<`any`\>
+
+Send multiple Steps at the same time to the platform.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `steps` | `Step`[] |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+___
+
+### getStep
+
+▸ **getStep**(`id`): `Promise`\<`Maybe`\<`Step`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`Maybe`\<`Step`\>\>
+
+___
+
+### deleteStep
+
+▸ **deleteStep**(`id`): `Promise`\<`string`\>
+
+Delete a Step from the platform.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`string`\>
+
+___
+
+### uploadFile
+
+▸ **uploadFile**(`«destructured»`): `Promise`\<\{ `objectKey`: `any` ; `url`: `any` = signedUrl }\>
+
+Upload a file to a thread.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `content?` | `any` |
+| › `path?` | `Maybe`\<`string`\> |
+| › `id?` | `Maybe`\<`string`\> |
+| › `threadId` | `string` |
+| › `mime?` | `Maybe`\<`string`\> |
+
+#### Returns
+
+`Promise`\<\{ `objectKey`: `any` ; `url`: `any` = signedUrl }\>
+
+___
+
+### getGenerations
+
+▸ **getGenerations**(`variables`): `Promise`\<`PaginatedResponse`\<`Generation`\>\>
+
+Get all or filtered Generations.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variables` | `Object` |
+| `variables.first?` | `Maybe`\<`number`\> |
+| `variables.after?` | `Maybe`\<`string`\> |
+| `variables.before?` | `Maybe`\<`string`\> |
+| `variables.filters?` | `GenerationsFilter`[] |
+| `variables.orderBy?` | `GenerationsOrderBy` |
+
+#### Returns
+
+`Promise`\<`PaginatedResponse`\<`Generation`\>\>
+
+___
+
+### createGeneration
+
+▸ **createGeneration**(`generation`): `Promise`\<`Generation`\>
+
+Create a new generation and send to the platform.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generation` | `Generation` |
+
+#### Returns
+
+`Promise`\<`Generation`\>
+
+___
+
+### upsertThread
+
+▸ **upsertThread**(`threadId`, `name?`, `metadata?`, `participantId?`, `environment?`, `tags?`): `Promise`\<`any`\>
+
+Upsert a Thread with new information.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `threadId` | `string` |
+| `name?` | `Maybe`\<`string`\> |
+| `metadata?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+| `participantId?` | `Maybe`\<`string`\> |
+| `environment?` | `Maybe`\<`string`\> |
+| `tags?` | `Maybe`\<`string`[]\> |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+___
+
+### getThreads
+
+▸ **getThreads**(`variables`): `Promise`\<`PaginatedResponse`\<`CleanThreadFields`\>\>
+
+Get all the Threads (conversations) that have happened.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variables` | `Object` |
+| `variables.first?` | `Maybe`\<`number`\> |
+| `variables.after?` | `Maybe`\<`string`\> |
+| `variables.before?` | `Maybe`\<`string`\> |
+| `variables.filters?` | `ThreadsFilter`[] |
+| `variables.orderBy?` | `ThreadsOrderBy` |
+
+#### Returns
+
+`Promise`\<`PaginatedResponse`\<`CleanThreadFields`\>\>
+
+___
+
+### getThread
+
+▸ **getThread**(`id`): `Promise`\<`any`\>
+
+Get information from a single Thread.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+___
+
+### deleteThread
+
+▸ **deleteThread**(`id`): `Promise`\<`any`\>
+
+Delete a single Thread.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+___
+
+### getUsers
+
+▸ **getUsers**(`variables`): `Promise`\<`PaginatedResponse`\<`OmitUtils`\<`User`\>\>\>
+
+Get all users, can be filtered.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variables` | `Object` |
+| `variables.first?` | `Maybe`\<`number`\> |
+| `variables.after?` | `Maybe`\<`string`\> |
+| `variables.before?` | `Maybe`\<`string`\> |
+| `variables.filters?` | `ParticipantsFilter`[] |
+
+#### Returns
+
+`Promise`\<`PaginatedResponse`\<`OmitUtils`\<`User`\>\>\>
+
+___
+
+### createUser
+
+▸ **createUser**(`identifier`, `metadata?`): `Promise`\<`User`\>
+
+Create a new user and send to the platform.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `identifier` | `string` |
+| `metadata?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+
+#### Returns
+
+`Promise`\<`User`\>
+
+___
+
+### updateUser
+
+▸ **updateUser**(`id`, `identifier?`, `metadata?`): `Promise`\<`User`\>
+
+Update a user.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+| `identifier?` | `string` |
+| `metadata?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+
+#### Returns
+
+`Promise`\<`User`\>
+
+___
+
+### getOrCreateUser
+
+▸ **getOrCreateUser**(`identifier`, `metadata?`): `Promise`\<`string`\>
+
+Get a user if exists, or create a new one.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `identifier` | `string` |
+| `metadata?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+
+#### Returns
+
+`Promise`\<`string`\>
+
+___
+
+### getUser
+
+▸ **getUser**(`identifier`): `Promise`\<`Maybe`\<`User`\>\>
+
+Get a user by identifier.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `identifier` | `string` |
+
+#### Returns
+
+`Promise`\<`Maybe`\<`User`\>\>
+
+___
+
+### deleteUser
+
+▸ **deleteUser**(`id`): `Promise`\<`string`\>
+
+Delete a single user by identifier.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`string`\>
+
+___
+
+### getScores
+
+▸ **getScores**(`variables`): `Promise`\<`PaginatedResponse`\<`OmitUtils`\<`Score`\>\>\>
+
+Get all scores connected to the platform.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variables` | `Object` |
+| `variables.first?` | `Maybe`\<`number`\> |
+| `variables.after?` | `Maybe`\<`string`\> |
+| `variables.before?` | `Maybe`\<`string`\> |
+| `variables.filters?` | `ScoresFilter`[] |
+| `variables.orderBy?` | `ScoresOrderBy` |
+
+#### Returns
+
+`Promise`\<`PaginatedResponse`\<`OmitUtils`\<`Score`\>\>\>
+
+___
+
+### createScore
+
+▸ **createScore**(`variables`): `Promise`\<`Score`\>
+
+Create a new score.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `variables` | `OmitUtils`\<`Score`\> |
+
+#### Returns
+
+`Promise`\<`Score`\>
+
+___
+
+### updateScore
+
+▸ **updateScore**(`id`, `updateParams`): `Promise`\<`Score`\>
+
+Update a score.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+| `updateParams` | `Object` |
+| `updateParams.comment?` | `Maybe`\<`string`\> |
+| `updateParams.value` | `number` |
+
+#### Returns
+
+`Promise`\<`Score`\>
+
+___
+
+### deleteScore
+
+▸ **deleteScore**(`id`): `Promise`\<`any`\>
+
+Delete a single score.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+___
+
+### createDataset
+
+▸ **createDataset**(`dataset`): `Promise`\<`Dataset`\>
+
+Create a new dataset.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dataset` | `Object` |
+| `dataset.name` | `string` |
+| `dataset.description?` | `Maybe`\<`string`\> |
+| `dataset.metadata?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+| `dataset.type?` | `DatasetType` |
+
+#### Returns
+
+`Promise`\<`Dataset`\>
+
+___
+
+### getDataset
+
+▸ **getDataset**(`id`): `Promise`\<``null`` \| `Dataset`\>
+
+Get a dataset by id.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<``null`` \| `Dataset`\>
+
+___
+
+### updateDataset
+
+▸ **updateDataset**(`id`, `dataset`): `Promise`\<`Dataset`\>
+
+Update a dataset with new information.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+| `dataset` | `Object` |
+| `dataset.name?` | `Maybe`\<`string`\> |
+| `dataset.description?` | `Maybe`\<`string`\> |
+| `dataset.metadata?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+
+#### Returns
+
+`Promise`\<`Dataset`\>
+
+___
+
+### deleteDataset
+
+▸ **deleteDataset**(`id`): `Promise`\<`Dataset`\>
+
+Delete a single dataset by id.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`Dataset`\>
+
+___
+
+### createDatasetItem
+
+▸ **createDatasetItem**(`datasetId`, `datasetItem`): `Promise`\<`DatasetItem`\>
+
+Create a new item in a dataset.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `datasetId` | `string` |
+| `datasetItem` | `Object` |
+| `datasetItem.input` | `Record`\<`string`, `any`\> |
+| `datasetItem.expectedOutput?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+| `datasetItem.metadata?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+
+#### Returns
+
+`Promise`\<`DatasetItem`\>
+
+___
+
+### getDatasetItem
+
+▸ **getDatasetItem**(`id`): `Promise`\<`DatasetItem`\>
+
+Get a single item from a dataset.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`DatasetItem`\>
+
+___
+
+### deleteDatasetItem
+
+▸ **deleteDatasetItem**(`id`): `Promise`\<`DatasetItem`\>
+
+Delete a single item from a dataset.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`\<`DatasetItem`\>
+
+___
+
+### addStepToDataset
+
+▸ **addStepToDataset**(`datasetId`, `stepId`, `metadata?`): `Promise`\<`DatasetItem`\>
+
+Add a single step item to a dataset.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `datasetId` | `string` |
+| `stepId` | `string` |
+| `metadata?` | `Maybe`\<`Record`\<`string`, `unknown`\>\> |
+
+#### Returns
+
+`Promise`\<`DatasetItem`\>
+
+___
+
+### addGenerationToDataset
+
+▸ **addGenerationToDataset**(`datasetId`, `generationId`, `metadata?`): `Promise`\<`DatasetItem`\>
+
+Add a single step item to a dataset.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `datasetId` | `string` |
+| `generationId` | `string` |
+| `metadata?` | `Maybe`\<`Record`\<`string`, `unknown`\>\> |
+
+#### Returns
+
+`Promise`\<`DatasetItem`\>
+
+___
+
+### createPromptLineage
+
+▸ **createPromptLineage**(`name`, `description?`): `Promise`\<`any`\>
+
+Create a new prompt lineage.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `description?` | `string` |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+___
+
+### createPrompt
+
+▸ **createPrompt**(`name`, `templateMessages`, `settings?`): `Promise`\<`Prompt`\>
+
+Create a new prompt.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `templateMessages` | `IGenerationMessage`[] |
+| `settings?` | `Maybe`\<`Record`\<`string`, `any`\>\> |
+
+#### Returns
+
+`Promise`\<`Prompt`\>
+
+___
+
+### getPrompt
+
+▸ **getPrompt**(`name`, `version?`): `Promise`\<``null`` \| `Prompt`\>
+
+Get a prompt by name.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `version?` | `number` |
+
+#### Returns
+
+`Promise`\<``null`` \| `Prompt`\>
