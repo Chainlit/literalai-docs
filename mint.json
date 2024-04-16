@@ -1,152 +1,164 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
-  "name": "Literal Doc",
-  "logo": {
-    "dark": "/logo/logo-dark.svg",
-    "light": "/logo/logo-light.svg"
-  },
-  "modeToggle": {
-    "default": "light",
-    "isHidden": true
-  },
-  "favicon": "/favicon.svg",
-  "colors": {
-    "primary": "#F80061",
-    "light": "#FFE7EB",
-    "dark": "#980039"
-  },
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://cloud.getliteral.ai"
-  },
-  "feedback": {
-    "thumbsRating": true,
-    "suggestEdit": true,
-    "raiseIssue": true
-  },
-  "topbarLinks": [],
-  "tabs": [
-    {
-      "name": "Python Client",
-      "url": "python-client"
+    "$schema": "https://mintlify.com/schema.json",
+    "name": "Literal Doc",
+    "logo": {
+        "dark": "/logo/logo-dark.svg",
+        "light": "/logo/logo-light.svg"
     },
-    {
-      "name": "TypeScript Client",
-      "url": "typescript-client"
+    "modeToggle": {
+        "default": "light",
+        "isHidden": true
     },
-    {
-      "name": "GraphQL API Reference",
-      "url": "graphql-api-reference"
+    "favicon": "/favicon.svg",
+    "colors": {
+        "primary": "#F80061",
+        "light": "#FFE7EB",
+        "dark": "#980039"
     },
-    {
-      "name": "Blog",
-      "url": "blog"
-    }
-  ],
-  "anchors": [],
-  "navigation": [
-    {
-      "group": "Get Started",
-      "pages": [
-        "get-started/overview",
-        "get-started/installation",
-        "get-started/quick-start"
-      ]
+    "topbarCtaButton": {
+        "name": "Dashboard",
+        "url": "https://cloud.getliteral.ai"
     },
-    {
-      "group": "Concepts",
-      "pages": [
-        "concepts/prompt",
-        "concepts/dataset",
-        {
-          "group": "Observability",
-          "pages": [
-            "concepts/thread",
-            "concepts/step",
-            "concepts/run",
-            "concepts/generation",
-            "concepts/score",
-            "concepts/user"
-          ]
+    "feedback": {
+        "thumbsRating": true,
+        "suggestEdit": true,
+        "raiseIssue": true
+    },
+    "topbarLinks": [],
+    "tabs": [{
+            "name": "Guides",
+            "url": "guides"
         },
-        "concepts/evaluation",
-        "concepts/project-roles"
-
-      ]
+        {
+            "name": "Python Client",
+            "url": "python-client"
+        },
+        {
+            "name": "TypeScript Client",
+            "url": "typescript-client"
+        },
+        {
+            "name": "GraphQL API Reference",
+            "url": "graphql-api-reference"
+        }
+    ],
+    "anchors": [],
+    "navigation": [{
+            "group": "Get Started",
+            "pages": [
+                "get-started/overview",
+                "get-started/installation",
+                "get-started/quick-start"
+            ]
+        },
+        {
+            "group": "Concepts",
+            "pages": [
+                "concepts/prompt",
+                "concepts/dataset",
+                {
+                    "group": "Observability",
+                    "pages": [
+                        "concepts/thread",
+                        "concepts/step",
+                        "concepts/run",
+                        "concepts/generation",
+                        "concepts/score",
+                        "concepts/user"
+                    ]
+                },
+                "concepts/evaluation",
+                "concepts/project-roles"
+            ]
+        },
+        {
+            "group": "Integrations",
+            "pages": [
+                "integrations/openai",
+                "integrations/openai-assistant",
+                "integrations/chainlit",
+                "integrations/langchain",
+                "integrations/llm-providers",
+                "integrations/messages-server"
+            ]
+        },
+        {
+            "group": "Get Started",
+            "pages": [
+                "python-client/get-started/introduction"
+            ]
+        },
+        {
+            "group": "Abstractions",
+            "pages": [
+                "python-client/abstractions/thread",
+                "python-client/abstractions/step"
+            ]
+        },
+        {
+            "group": "API Reference",
+            "pages": [
+                "python-client/api-reference/entities",
+                "python-client/api-reference/user",
+                "python-client/api-reference/thread",
+                "python-client/api-reference/step",
+                "python-client/api-reference/attachment",
+                "python-client/api-reference/score",
+                "python-client/api-reference/generation",
+                "python-client/api-reference/dataset"
+            ]
+        },
+        {
+            "group": "Get Started",
+            "pages": [
+                "typescript-client/introduction"
+            ]
+        },
+        {
+            "group": "API Reference",
+            "pages": [
+                "typescript-client/api-reference/dataset"
+            ]
+        },
+        {
+            "group": "Self Hosting",
+            "pages": [
+                "self-hosting/deployment"
+            ]
+        },
+        {
+            "group": "Guides",
+            "pages": [
+                "guides/guide-tag-scores-metadata",
+                "guides/rag-example",
+                "guides/agent-run",
+                "guides/conversational-agent",
+                "guides/conversational-agent-fastapi",
+                "guides/distributed-tracing",
+                "guides/dataset"
+            ]
+        },
+        {
+            "group": "Github Cookbooks",
+            "pages": [
+                "guides/github-cookbook/evaluation"
+            ]
+        },
+        {
+            "group": "GraphQL API Reference",
+            "pages": [
+                "graphql-api-reference/introduction"
+            ]
+        }
+    ],
+    "footerSocials": {
+        "twitter": "https://twitter.com/chainlit_io",
+        "github": "https://github.com/Chainlit",
+        "linkedin": "https://www.linkedin.com/company/chainlit"
     },
-    {
-      "group": "Integrations",
-      "pages": [
-        "integrations/openai",
-        "integrations/openai-assistant",
-        "integrations/chainlit",
-        "integrations/langchain",
-        "integrations/llm-providers", 
-        "integrations/messages-server"
-      ]
-    },
-    {
-      "group": "Examples",
-      "pages": [
-        "examples/rag-example",
-        "examples/agent-run",
-        "examples/conversational-agent",
-        "examples/conversational-agent-fastapi",
-        "examples/distributed-tracing",
-        "examples/dataset"
-      ]
-    },
-    {
-      "group": "Get Started",
-      "pages": ["python-client/get-started/introduction"]
-    },
-    {
-      "group": "Abstractions",
-      "pages": [
-        "python-client/abstractions/thread",
-        "python-client/abstractions/step"
-      ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "python-client/api-reference/entities",
-        "python-client/api-reference/user",
-        "python-client/api-reference/thread",
-        "python-client/api-reference/step",
-        "python-client/api-reference/attachment",
-        "python-client/api-reference/score",
-        "python-client/api-reference/generation",
-        "python-client/api-reference/dataset"
-      ]
-    },
-    { "group": "Get Started", "pages": ["typescript-client/introduction"] },
-    {
-      "group": "API Reference",
-      "pages": ["typescript-client/api-reference/dataset"]
-    },
-    { "group": "Self Hosting", "pages": ["self-hosting/deployment"] },
-    {
-      "group": "Blog",
-      "pages": [
-        "blog/guide-tag-scores-metadata"
-      ]
-    },
-    {
-      "group": "GraphQL API Reference",
-      "pages": [
-        "graphql-api-reference/introduction"
-      ]
+    "analytics": {
+        "gtm": {
+            "tagId": "GTM-MTHNP8VZ"
+        }
     }
-  ],
-  "footerSocials": {
-    "twitter": "https://twitter.com/chainlit_io",
-    "github": "https://github.com/Chainlit",
-    "linkedin": "https://www.linkedin.com/company/chainlit"
-  },
-  "analytics": {
-    "gtm": {
-      "tagId": "GTM-MTHNP8VZ"
-    }
-  }
 }
