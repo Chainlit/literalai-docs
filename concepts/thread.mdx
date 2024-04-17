@@ -198,7 +198,7 @@ const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 const threadId = "<THREAD_ID>";
 const tags =  ["outlier", "to review"];
-const start = async function() {
+async function main() {
     const thread = await client.api.upsertThread(
         threadId,
         undefined,
@@ -208,7 +208,7 @@ const start = async function() {
         tags
     );
 }
-start();
+main();
 ```
 
 </CodeGroup>

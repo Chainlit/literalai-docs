@@ -97,7 +97,7 @@ import { LiteralClient, Thread } from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const start = async function() {
+async function main() {
     const dataset = await client.api.createDataset({
         name: 'Foo',
         description: 'A dataset to store samples.',
@@ -105,7 +105,7 @@ const start = async function() {
         type: 'key_value' // other option: 'Generation'
     });
 }
-start();
+main();
 ```
 </CodeGroup>
 

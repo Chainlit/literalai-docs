@@ -112,11 +112,11 @@ const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 const promptName = 'RAG prompt';
 // This will fetch the champion version, you can also pass a specific version
-const start = async function() {
+async function main() {
     const prompt = await client.api.getPrompt(promptName);
     console.log(prompt);
 }
-start();
+main();
 ```
 
 </CodeGroup>
