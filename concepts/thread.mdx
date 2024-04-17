@@ -129,7 +129,7 @@ main()
 
 Navigate to the `Threads` page on the platform to see Threads. There, you can click on single Threads (conversations). 
 
-On the left (1), you can see the conversation and the steps that the application has taken in order to produce an answer. Different kind of steps have different colors. You can click on each step to view more details on the right side of the screen. Here, you can view [Metadata](/concepts/metadata) (2) and add [Scores](/concept/score) (3).
+On the left (1), you can see the conversation and the steps that the application has taken in order to produce an answer. Different kind of steps have different colors. You can click on each step to view more details on the right side of the screen. Here, you can view [Metadata](/concepts/step#metadata) (2) and add [Scores](/concepts/score) (3).
 
 On the top (4), you can add tags to the Thread. You can also add Tags to a single step in this Thread, on the right (5).
 
@@ -154,7 +154,21 @@ To add a tag to a Thread or Generation, open the specific item and add the tag o
 
 When you add a Tag that doesn't exist yet, a new Tag will be automatically created. 
 
-Note: When you update the Tags in using `update_thread()` (Python) or `upsertThread()` (TypeScript), you replace all previous assigned tags to this Thread.
+<CodeGroup>
+```python Python
+with client.thread(name="Thread Example") as thread:
+    thread.tags = ["to review"]
+```
+
+```typescript TypeScript
+  const thread = await client
+    .thread({ name: "Thread Example", tags:["to review"]})
+    .upsert();
+```
+</CodeGroup>
+
+
+Note: You can add tags a posteriori too. When you update the Tags in using `update_thread()` (Python) or `upsertThread()` (TypeScript), you replace all previous assigned tags to this Thread.
 
 <CodeGroup>
 ```python Python
