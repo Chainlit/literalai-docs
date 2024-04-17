@@ -92,14 +92,21 @@ score = client.api.create_score(
 ```
 
 ```typescript TypeScript
-const score = await client.api.createScore({
-  stepId: '<STEP_UUID>',
-  generationId="<GENERATION_UUID>"
-  name: 'user-feedback',
-  type: 'HUMAN',
-  comment: 'Example score',
-  value: 1,
-});
+import { LiteralClient, ChatGeneration} from "@literalai/client";
+
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+async function main() {
+    const score = await client.api.createScore({
+        stepId: '05b217b4-5890-4434-b1a2-1749d842b2db',
+        name: 'user-feedback',
+        type: 'HUMAN',
+        comment: 'Example score',
+        value: 1,
+      });
+      
+};
+main();
 ```
 </CodeGroup>
 

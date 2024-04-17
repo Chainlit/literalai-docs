@@ -47,7 +47,11 @@ import { LiteralClient } from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const generations = await client.api.getGenerations();
+async function main() {
+    const generations = await client.api.getGenerations({});
+    console.log(generations);
+}
+main();
 ```
 
 </CodeGroup>
@@ -95,10 +99,13 @@ import { LiteralClient, ChatGeneration} from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-# Use ChatGeneration or CompletionGeneration to create a new generation
-const chatGeneration = new ChatGeneration(messages:[{content: "Hello, this is my answer", role: "system"}])
+// Use ChatGeneration or CompletionGeneration to create a new generation
+const chatGeneration = new ChatGeneration({messages:[{content: "Hello, this is my answer", role: "system"}]})
 
-const generation = await client.api.createGeneration(generation: chatGeneration);
+async function main() {
+    const generation = await client.api.createGeneration(chatGeneration);
+};
+main();
 ```
 
 </CodeGroup>

@@ -34,14 +34,17 @@ const openai = new OpenAI({
   apiKey: process.env['OPENAI_API_KEY'] // This is the default and can be omitted
 });
 
-const stream = await openai.chat.completions.create({
-  model: 'gpt-4',
-  stream: true,
-  messages: [{ role: 'user', content: 'Say this is a test' }]
-});
+async function main() {
+    const stream = await openai.chat.completions.create({
+        model: 'gpt-4',
+        stream: true,
+        messages: [{ role: 'user', content: 'Say this is a test' }]
+    });
 
-// Instrument the openai response
-await client.instrumentation.openai(stream);
+    // Instrument the openai response
+    await client.instrumentation.openai(stream);
+};
+main();
 ```
 </CodeGroup>
 

@@ -69,7 +69,7 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient, Step, Thread } from "@literalai/client";
 
-const client = new LiteralClient('your_api_key');
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // Tool example
 async function myTool(run: Step) {
@@ -165,7 +165,7 @@ literal_client.flush_and_stop()
 ```
 
 ```typescript TypeScript
-import { LiteralClient, Thread } from "@literalai/client";
+import { LiteralClient } from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
@@ -222,31 +222,40 @@ client.api.create_attachment(
 ```
 
 ```typescript TypeScript
-const thread = await client.thread().upsert();
+let fs = require('fs')
+import { LiteralClient, Attachment } from "@literalai/client";
 
-const fileStream = createReadStream('PATH_TO_FILE');
-const mime = 'image/png';
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const { objectKey } = await client.api.uploadFile({
-  threadId: thread.id,
-  content: fileStream,
-  mime
-});
+async function main() {
+    const thread = await client.thread().upsert();
 
-const attachment = new Attachment({
-  name: 'test',
-  objectKey,
-  mime
-});
+    const fileStream = fs.createReadStream('./aankomst.jpeg');
+    const mime = 'image/jpeg';
 
-const finalStep = await thread
-  .step({
-    name: 'Assistant',
-    type: 'assistant_message',
-    output: "Here is the generated image!",
-    attachments: [attachment]
-  })
-  .send();
+    const { objectKey } = await client.api.uploadFile({
+        threadId: thread.id,
+        content: fileStream,
+        mime
+    });
+
+    const attachment = new Attachment({
+        name: 'test',
+        objectKey,
+        mime
+    });
+
+    const finalStep = await thread
+    .step({
+        name: 'Assistant',
+        type: 'assistant_message',
+        output: {content: "Here is the generated image!"},
+        attachments: [attachment]
+    })
+    .send();
+};
+
+main();
 ```
 </CodeGroup>
 

@@ -178,14 +178,23 @@ client.flush_and_stop()
 ```
 
 ```typescript TypeScript
-import { LiteralClient, Thread } from "@literalai/client";
+import { LiteralClient } from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-
-const thread = await client.api.upsertThread({ 
-  threadId: "<THREAD_UUID>", 
-  tags: ["outlier", "to review"]});
+const threadId = "<THREAD_ID>";
+const tags =  ["outlier", "to review"];
+const start = async function() {
+    const thread = await client.api.upsertThread(
+        threadId,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        tags
+    );
+}
+start();
 ```
 
 </CodeGroup>
@@ -229,7 +238,7 @@ client.flush_and_stop()
 ```
 
 ```typescript TypeScript
-import { LiteralClient, Thread } from "@literalai/client";
+import { LiteralClient } from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 

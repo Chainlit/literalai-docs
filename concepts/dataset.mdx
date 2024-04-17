@@ -97,12 +97,15 @@ import { LiteralClient, Thread } from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const dataset = await client.api.createDataset({
-  name: 'Foo',
-  description: 'A dataset to store samples.',
-  metadata: { isDemo: true },
-  type: 'key_value' // other option: 'Generation'
-});
+const start = async function() {
+    const dataset = await client.api.createDataset({
+        name: 'Foo',
+        description: 'A dataset to store samples.',
+        metadata: { isDemo: true },
+        type: 'key_value' // other option: 'Generation'
+    });
+}
+start();
 ```
 </CodeGroup>
 
@@ -141,19 +144,29 @@ import { LiteralClient, Thread } from "@literalai/client";
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // option 1: add local items
-const datasetItem = await client.api.createDatasetItem({
-  datasetID: "<DATASET_ID", // dataset.id
-  datasetItem: {
+const datasetId = "<DATASET_ID>";
+const item = {
     input: { content: "What is literal?" },
     expectedOutput: { content: "Literal is an observability solution." },
-  }
-});
+};
+
+const start = async function() {
+    const datasetItem = await client.api.createDatasetItem(
+        datasetId, 
+        item
+    );
+}
+start();
 
 // option 2: add existing steps, runs, generations
-const datasetItem = await client.api.addStepToDataset(
-  datasetId: "<DATASET_ID", // dataset.id
-  stepId: "stepId" // reference to a step, run or generation
-);
+const stepId = "<STEP_ID>";  // reference to a step
+async function main() {
+    const datasetItem = await client.api.addStepToDataset(
+        datasetId,
+        stepId
+    );
+};
+main();
 ```
 </CodeGroup>
 
@@ -176,11 +189,15 @@ import { LiteralClient, Thread } from "@literalai/client";
 
 const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const dataset = await client.api.getDataset("<DATASET_ID>");
+async function main() {
+    const dataset = await client.api.getDataset({id: "<DATASET_ID>"});
 
-dataset.items.forEach((item) => {
-  // ...
-});
+    dataset?.items.forEach((item) => {
+        console.log(item.id)
+    });
+};
+
+main();
 ```
 </CodeGroup>
 

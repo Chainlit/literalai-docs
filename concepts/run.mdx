@@ -40,9 +40,9 @@ client.flush_and_stop()
 ```
 
 ```typescript TypeScript
-import { LiteralClient, Step, Thread } from "@literalai/client";
+import { LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient('your_api_key');
+const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // Run example
 // Run example
@@ -68,8 +68,6 @@ async function main() {
 main().catch((error) => {
   console.error("Error running main function:", error);
 });
-
-
 ```
 
 </CodeGroup>
