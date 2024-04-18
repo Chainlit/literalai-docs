@@ -9,7 +9,7 @@ Note that only the `get_thread` and `export_threads` methods return the thread s
 ## Creating a thread
 
 ```python
-thread = await client.api.create_thread(
+thread = literal_client.api.create_thread(
     participant_id="<PARTICIPANT_UUID>",
     environment="production",
     tags=["tag1", "tag2"],
@@ -38,7 +38,7 @@ thread = await client.api.create_thread(
 Use the thread id to get a thread. The returned thread contains the list of steps.
 
 ```python
-thread = await client.api.get_thread(id="<THREAD_UUID>")
+thread = literal_client.api.get_thread(id="<THREAD_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -52,7 +52,7 @@ You can list threads, with optional filters. It returns a paginated list of thre
 The returned thread list doesn't contain the thread steps. If you need the steps, you should use the `export_threads` method.
 
 ```python
-threads = await client.api.list_threads(first=None, after=None, filters=None)
+threads = literal_client.api.list_threads(first=None, after=None, filters=None)
 
 print(threads["pageInfo"])
 for thread in threads["data"]:
@@ -67,17 +67,18 @@ for thread in threads["data"]:
 <ParamField path="filter" type="dict">
   You can filter threads with the following parameters:
   <Expandable title="properties">
-    <ResponseField name="attachmentsName" type="string"></ResponseField>
-    <ResponseField name="attachmentsName" type="string"></ResponseField>
-    <ResponseField name="createdAt" type="string"></ResponseField>
-    <ResponseField name="afterCreatedAt" type="string"></ResponseField>
-    <ResponseField name="beforeCreatedAt" type="string"></ResponseField>
-    <ResponseField name="duration" type="numeric"></ResponseField>
-    <ResponseField name="environment" type="string"></ResponseField>
-    <ResponseField name="feedbacksValue" type="numeric"></ResponseField>
-    <ResponseField name="participantsIdentifier" type="string"></ResponseField>
-    <ResponseField name="search" type="string"></ResponseField>
+    <ResponseField name="id" type="string"></ResponseField>
+    <ResponseField name="createdAt" type="DateTime"></ResponseField>
+    <ResponseField name="stepType" type="StepType"></ResponseField>
+    <ResponseField name="stepName" type="string"></ResponseField>
+    <ResponseField name="stepOutput" type="Json"></ResponseField>
+    <ResponseField name="metadata" type="Json"></ResponseField>
     <ResponseField name="tokenCount" type="numeric"></ResponseField>
+    <ResponseField name="tags" type="string"></ResponseField>
+    <ResponseField name="participantId" type="string"></ResponseField>
+    <ResponseField name="participantsIdentifiers" type="string"></ResponseField>
+    <ResponseField name="scoreValue" type="numeric"></ResponseField>
+    <ResponseField name="duration" type="numeric"></ResponseField>
   </Expandable>
 </ParamField>
 
@@ -94,11 +95,11 @@ filters = ThreadFilter(
 )
 
 page = 1
-result = await client.api.export_threads(page=page, filters=filters)
+result = literal_client.api.export_threads(page=page, filters=filters)
 
 while result.hasNextPage:
     page += 1
-    result = await client.api.export_threads(page=page, filters=filters)
+    result = literal_client.api.export_threads(page=page, filters=filters)
 
     # Do something with the thread list in result.data
 ```
@@ -107,27 +108,10 @@ while result.hasNextPage:
   Pagination parameter, use the `pageInfo.endCursor` from the previous result.
 </ParamField>
 
-<ParamField path="filter" type="dict">
-  You can filter threads with the following parameters:
-  <Expandable title="properties">
-    <ResponseField name="attachmentsName" type="string"></ResponseField>
-    <ResponseField name="attachmentsName" type="string"></ResponseField>
-    <ResponseField name="createdAt" type="string"></ResponseField>
-    <ResponseField name="afterCreatedAt" type="string"></ResponseField>
-    <ResponseField name="beforeCreatedAt" type="string"></ResponseField>
-    <ResponseField name="duration" type="numeric"></ResponseField>
-    <ResponseField name="environment" type="string"></ResponseField>
-    <ResponseField name="feedbacksValue" type="numeric"></ResponseField>
-    <ResponseField name="participantsIdentifier" type="string"></ResponseField>
-    <ResponseField name="search" type="string"></ResponseField>
-    <ResponseField name="tokenCount" type="numeric"></ResponseField>
-  </Expandable>
-</ParamField>
-
 ## Update thread
 
 ```python
-updated_thread = await client.update_thread(
+updated_thread = literal_client.update_thread(
     id="<THREAD_UUID>",
     name=None,
     metadata=None,
@@ -163,11 +147,11 @@ updated_thread = await client.update_thread(
 
 ## Upsert thread
 
-It will either create a new thread if the `thread_id` does not exist or update the existing one.
+It will either create a new thread if the `id` does not exist or update the existing one.
 
 ```python
-thread = await client.upsert_thread(
-    thead_id="<THREAD_UUID>",
+thread = literal_client.upsert_thread(
+    id="<THREAD_UUID>",
     name=None,
     metadata=None,
     participant_id=None,
@@ -176,7 +160,7 @@ thread = await client.upsert_thread(
 )
 ```
 
-<ParamField path="thread_id" type="uuid" required>
+<ParamField path="id" type="uuid" required>
   The id of the thread
 </ParamField>
 
@@ -203,7 +187,7 @@ thread = await client.upsert_thread(
 ## Delete thread
 
 ```python
-await client.api.delete_thread(id="<THREAD_UUID>")
+client.api.delete_thread(id="<THREAD_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>

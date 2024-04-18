@@ -1,0 +1,111 @@
+---
+title: "Generation"
+---
+
+A `Generation` is the output or answer produced by an LLM. A generation can be part of a `Step`, and contains both the input sent to an LLM and its completion. 
+
+Generations can be viewed on their own page in Literal. In a single generation, you can see all the data that was sent to and retrieved from the LLM model, which follows the Prompt template, including System messages, User messages, Assistant messages, and Tool messages.
+
+You can add [Tags](/concepts/thread#tags) and [Scores](/concepts/score) to Generations. Additionally, you can add Generations to a [Dataset](/concepts/dataset), to use later on in for example Evaluation. 
+
+<Frame caption="An example of a Generation on Literal">     
+  <img
+    src="/images/generation-example.png"
+    alt="An example of a Generation"
+  />
+</Frame>
+
+Generations are available via the SDKs ([Python](/python-client/api-reference/generation), [TypeScript](/typescript-client/api-reference)).
+
+To get all generations of the application, you can use the following code:
+
+<CodeGroup>
+
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+def get_generations():
+    generations = literal_client.api.get_generations()
+    return generations
+
+generations = get_generations()
+
+for generation in generations.data:
+    print(generation.to_dict())
+
+# Network requests by the SDK are performed asynchronously.
+# Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
+# WARNING: If you run a continuous server, you should not use this method.
+client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient } from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+async function main() {
+    const generations = await literalClient.api.getGenerations({});
+    console.log(generations);
+}
+main();
+```
+
+</CodeGroup>
+
+To create a new Generation:
+
+<CodeGroup>
+
+```python Python
+import os
+import asyncio
+from literalai import LiteralClient, ChatGeneration
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+# Use ChatGeneration or CompletionGeneration to create a new generation
+
+# @dataclass
+# class ChatGeneration(BaseGeneration):
+#     messages: List[GenerationMessage] = Field(default_factory=list)
+#     type = GenerationType.CHAT
+
+def create_generation():
+
+    chat_generation = ChatGeneration(
+        messages=[{"content": "Hello, this is my answer", "role": "system"}],
+    )
+
+    generation = literal_client.api.create_generation(
+        generation = chat_generation
+    )
+
+    return generation
+
+generation = create_generation()
+
+# Network requests by the SDK are performed asynchronously.
+# Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
+# WARNING: If you run a continuous server, you should not use this method.
+client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient, ChatGeneration} from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+// Use ChatGeneration or CompletionGeneration to create a new generation
+const chatGeneration = new ChatGeneration({messages:[{content: "Hello, this is my answer", role: "system"}]})
+
+async function main() {
+    const generation = await literalClient.api.createGeneration(chatGeneration);
+};
+main();
+```
+
+</CodeGroup>

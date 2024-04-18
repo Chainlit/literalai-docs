@@ -14,7 +14,7 @@ There are several types of Steps, each serving a distinct purpose:
 
 ### Run
 
-A `run` step signifies the execution of an agent or a chain that takes multiple steps. Unlike other step types, it does not have to be part of a Thread.
+A [`run` step](/concepts/run) signifies the execution of an agent or a chain that takes multiple steps. Unlike other step types, it does not have to be part of a Thread.
 
 This is useful if you are monitoring non conversational use cases.
 
@@ -42,22 +42,22 @@ import os
 from literalai import LiteralClient
 
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-@client.step(type="tool")
+@literal_client.step(type="tool")
 def my_tool():
     # Implement your custom logic here
     return "Success"
 
 # You can change the step type
-@client.step(type="run")
+@literal_client.step(type="run")
 def my_run():
     # Implement your custom logic here
     my_tool()
     return "Success"
 
-with client.thread() as thread:
-    client.message(content="Hello World", type="assistant_message", name="My Assistant")
+with literal_client.thread() as thread:
+    literal_client.message(content="Hello World", type="assistant_message", name="My Assistant")
     my_run()
     
 # Network requests by the SDK are performed asynchronously.
@@ -69,7 +69,7 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient, Step, Thread } from "@literalai/client";
 
-const client = new LiteralClient('your_api_key');
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // Tool example
 async function myTool(run: Step) {
@@ -108,7 +108,7 @@ async function myRun(thread: Thread) {
 }
 
 async function main() {
-  const thread = client.thread();
+  const thread = literalClient.thread();
   // Message example
   await thread
     .step({
@@ -125,8 +125,140 @@ async function main() {
 
 </CodeGroup>
 
+
 ## Visualize the Steps on Literal
 
 <Frame caption="Output on the platform">
   <img src="/images/step-example.png" alt="A thread on the platform" />
 </Frame>
+
+## Metadata
+
+Metadata serves as a powerful tool for enriching objects with additional context, details, or configuration that can be instrumental in customizing and enhancing the functionality of each object. Specifically, the metadata field is available on Thread, Step, User, and Generation objects within the platform.
+
+**How to add metadata to a Run or a Step**
+
+<CodeGroup>
+
+```python Python
+import os, asyncio
+from literalai import LiteralClient
+
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
+from literalai import LiteralClient
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+@literal_client.step(type="run", name="my_step")
+def my_step(input_message=None):
+    current_step = literal_client.get_current_step()
+    # some code, llm call, tool call, etc.
+    current_step.metadata = {"region": "europe"}
+    answer = "answer"
+    return answer
+
+my_step("Hello")
+
+literal_client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient } from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+// The Assistant could have intermediary steps
+async function myFunction(question:string) {
+  const run = literalClient.run({
+    name: "My Assistant Run",
+    input: { content: question },
+    metadata: { region: "europe" },
+  });
+
+  // Implement your assistant logic here
+  await new Promise((r) => setTimeout(r, 1000));
+  const response = { content: "My assistant response" };
+
+  run.output = response;
+  await run.send();
+
+  return response;
+}
+
+myFunction("hello")
+  .then(() => process.exit(0))
+  .catch((error) => console.error(error));
+```
+
+</CodeGroup>
+
+## Attachment
+
+An attachement is a file that has been generated or processed by a Step.
+
+<Frame caption="Example of a PDF attachement">
+  <img
+    src="/images/attachment.png"
+    alt="An attachment on a step"
+  />
+</Frame>
+
+**Create an Attachment**
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+client.api.create_attachment(
+    thread_id="<THREAD_ID>", # thread.id
+    step_id="<STEP_ID>", # step.id
+    name="my_attachment",
+    content="Hello world",
+)
+```
+
+```typescript TypeScript
+let fs = require('fs')
+import { LiteralClient, Attachment } from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+async function main() {
+    const thread = await literalClient.thread().upsert();
+
+    const fileStream = fs.createReadStream('./aankomst.jpeg');
+    const mime = 'image/jpeg';
+
+    const { objectKey } = await literalClient.api.uploadFile({
+        threadId: thread.id,
+        content: fileStream,
+        mime
+    });
+
+    const attachment = new Attachment({
+        name: 'test',
+        objectKey,
+        mime
+    });
+
+    const finalStep = await thread
+    .step({
+        name: 'Assistant',
+        type: 'assistant_message',
+        output: {content: "Here is the generated image!"},
+        attachments: [attachment]
+    })
+    .send();
+};
+
+main();
+```
+</CodeGroup>
+
+## Tags
+
+Just like Threads, you can add Tags to single Steps. For more info, see [this section](/concepts/thread#tags)

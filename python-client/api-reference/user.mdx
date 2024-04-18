@@ -5,12 +5,29 @@ description: "Create Read Update and Delete methods for User"
 
 ## Create an User
 
+It's important to note that the concept of User only exists at the thread level, not at the Step level.
+
+
 ```python
 import os
 from literalai import LiteralClient
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-new_user = await client.api.create_user(identifier="John Doe")
+@literal_client.step()
+def my_step(input_message):
+    # some code, llm call, tool call, etc.
+    answer = "answer"
+    return answer
+
+def run(input_message):
+    with literal_client.thread() as thread:
+        literal_client.message(content=input_message, type="user_message", name="User")
+        user = literal_client.api.create_user(identifier="John Doe")
+        # user = await literal_client.api.get_user(identifier="John Doe")
+        thread.user = user
+        answer = my_step(input_message)
+        literal_client.message(content=answer, type="assistant_message", name="Assistant")
+    return answer
 ```
 
 <ParamField path="identifier" type="string" required>
@@ -26,7 +43,7 @@ new_user = await client.api.create_user(identifier="John Doe")
 ## Get an User
 
 ```python
-user = await client.api.get_user(id="<USER_UUID>")
+user = literal_client.api.get_user(id="<USER_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -42,7 +59,7 @@ user = await client.api.get_user(id="<USER_UUID>")
 ## Update an User
 
 ```python
-updated_user = await client.api.update_user(id="<USER_UUID>", identifier="Jane Doe")
+updated_user = literal_client.api.update_user(id="<USER_UUID>", identifier="Jane Doe")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -66,7 +83,7 @@ updated_user = await client.api.update_user(id="<USER_UUID>", identifier="Jane D
 ## Delete an User
 
 ```python
-user = await client.api.delete_user(id="<USER_UUID>")
+user = literal_client.api.delete_user(id="<USER_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>

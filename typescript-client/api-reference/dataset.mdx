@@ -12,6 +12,7 @@ type Dataset = {
   description?: Maybe<string>;
   metadata: Record<string, any>;
   items?: Maybe<DatasetItem[]>;
+  type?: Maybe<DatasetType>
 }
 ```
 
@@ -39,10 +40,14 @@ type Dataset = {
   An optional list of items contained within the dataset. Each item in the list is a dictionary representing a specific data entry in the dataset.
 </ParamField>
 
+<ParamField path="type" type="Maybe<DatasetType>">
+  An optional type of dataset. Defaults to "key_value", other option is "generation".
+</ParamField>
+
 ### Create a dataset
 
 ```typescript 
-const dataset = await client.api.createDataset({
+const dataset = await literalClient.api.createDataset({
     name: "Foo", 
     description: "A dataset to store samples.", 
     metadata: { isDemo: true },
@@ -76,7 +81,7 @@ const dataset = await client.api.createDataset({
 ### Update a dataset
 
 ```typescript 
-const dataset = await client.api.updateDataset("dataset_id", {
+const dataset = await literalClient.api.updateDataset("dataset_id", {
   name: "Baz",
 });
 ```
@@ -112,7 +117,7 @@ const dataset = await client.api.updateDataset("dataset_id", {
 ### Get a dataset
 
 ```typescript
-const dataset = await client.api.getDataset("dataset_id")
+const dataset = await literalClient.api.getDataset("dataset_id")
 ```
 
 #### Params
@@ -130,7 +135,7 @@ const dataset = await client.api.getDataset("dataset_id")
 ### Delete a dataset
 
 ```typescript
-await client.api.deleteDataset("dataset_id")
+await literalClient.api.deleteDataset("dataset_id")
 ```
 
 #### Params
@@ -191,7 +196,7 @@ type DatasetItem = {
 ### Create a dataset item
 
 ```typescript
-const datasetItem = await client.api.createDatasetItem("dataset_id", {
+const datasetItem = await literalClient.api.createDatasetItem("dataset_id", {
   input: { content: "What is Literal?" },
   expectedOutput: { content: "Literal is an observability solution." },
 });
@@ -234,10 +239,10 @@ const datasetItem = await dataset.createDatasetItem("dataset_id", {
 ### Add a step to a dataset
 
 ```typescript
-const datasetItem = await client.api.addStepToDataset("dataset_id", "step_id");
+const datasetItem = await literalClient.api.addStepToDataset("dataset_id", "step_id");
 
 # Or directly through a Dataset
-const datasetItem = await dataset.addStepToDataset("dataset_id", "step_id");
+const datasetItem = await dataset.addStep("step_id");
 ```
 
 #### Params
@@ -260,10 +265,40 @@ const datasetItem = await dataset.addStepToDataset("dataset_id", "step_id");
   Return a DatasetItem
 </ResponseField>
 
+### Add a generation to a dataset
+
+```typescript
+const datasetItem = await literalClient.api.addGeneationToDataset("dataset_id", "generation_id");
+
+# Or directly through a Dataset
+const datasetItem = await dataset.addGeneration("generation_id");
+```
+
+#### Params
+
+<ParamField path="datasetId" type="string">
+  The identifier of the dataset to which this item belongs. 
+</ParamField>
+
+<ParamField path="generationId" type="string">
+  The identifier of the generation created beforehand. 
+</ParamField>
+
+<ParamField path="metadata" type="Maybe<Record<string, any>>">
+  A dictionary containing additional data associated with this dataset item. This can include specific details relevant to the item.
+</ParamField>
+
+#### Response
+
+<ResponseField name="datasetItem" type="DatasetItem">
+  Return a DatasetItem
+</ResponseField>
+
+
 ### Get a dataset item
 
 ```typescript
-const datasetItem = await client.api.getDatasetItem("dataset_item_id");
+const datasetItem = await literalClient.api.getDatasetItem("dataset_item_id");
 ```
 
 #### Params
@@ -281,7 +316,7 @@ const datasetItem = await client.api.getDatasetItem("dataset_item_id");
 ### Delete a dataset item
 
 ```typescript
-await client.api.deleteDatasetItem("dataset_item_id");
+await literalClient.api.deleteDatasetItem("dataset_item_id");
 
 # Or directly through a Dataset
 await dataset.deleteDatasetItem("dataset_item_id");

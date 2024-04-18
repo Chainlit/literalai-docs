@@ -8,7 +8,7 @@ Checkout the documentation about [steps](/concepts/step) for more information.
 ## Create a step
 
 ```python
-step = await client.api.create_step(
+step = literal_client.api.create_step(
     thread_id="<THREAD_UUID>",
     type="undefined",
 )
@@ -74,7 +74,7 @@ step = await client.api.create_step(
 ## Update a step
 
 ```python
-step = await client.api.update_step(
+step = literal_client.api.update_step(
   id="<STEP_UUID>",
   type="user_message",
 )
@@ -129,7 +129,7 @@ step = await client.api.update_step(
 ## Get a step
 
 ```python
-step = await client.api.get_step(
+step = literal_client.api.get_step(
   id="<STEP_UUID>",
 )
 ```
@@ -147,7 +147,7 @@ step = await client.api.get_step(
 ## Delete a step
 
 ```python
-step = await client.api.delete_step(
+step = literal_client.api.delete_step(
   id="<STEP_UUID>",
 )
 ```

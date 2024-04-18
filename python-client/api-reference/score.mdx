@@ -1,0 +1,78 @@
+---
+title: Score
+description: "Create and Update methods for Score"
+---
+
+## Create a score
+
+```python
+score = literal_client.api.create_score(
+            step_id="<STEP_UUID>", 
+            generation_id="<GENERATION_UUID>"
+            type="HUMAN",
+            name="user-feedback",
+            value=1,
+            comment="Hello world",
+        )
+```
+
+A score is tied to either a Step or a Generation. Exactly one of the two IDs
+below is required.
+
+<ParamField path="step_id" type="uuid" required>
+  Step id in string format
+</ParamField>
+
+<ParamField path="generation_id" type="uuid" required>
+  Generation id in string format
+</ParamField>
+
+<ParamField path="type" type="ScoreType" required>
+  Type of score: AI or HUMAN
+</ParamField>
+
+<ParamField path="name" type="str">
+  Name in string format
+</ParamField>
+
+<ParamField path="value" type="float">
+  Value as float
+</ParamField>
+
+<ParamField path="comment" type="str">
+  Comment in string format
+</ParamField>
+
+
+### Return type
+
+<ResponseField name="score" type="Score">
+  Return a Score
+</ResponseField>
+
+## Update a score
+
+```python
+
+score = literal_client.api.update_score(
+    id="<SCORE_UUID>",
+    update_params={
+        "comment": "Hi world",
+    },
+)
+
+```
+
+<ParamField path="id" type="uuid" required>
+  Id in string format
+</ParamField>
+
+<ParamField path="update_params" type="dict">
+  Dict containing same parameters as create_score
+</ParamField>
+
+### Return type
+
+<ResponseField name="score" type="Score">
+  Return a Score
+</ResponseField>

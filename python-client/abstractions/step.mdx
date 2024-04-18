@@ -5,7 +5,7 @@ title: "Step"
 
 ## Using the decorator on a function
 
-If you want to create a step from a function, you should use the `@client.step` decorator.
+If you want to create a step from a function, you should use the `@literal_client.step` decorator.
 
 The step is automatically ended and sent to the platform when the function returns.
 
@@ -18,7 +18,7 @@ Another advantage of using the decorator is that you get several variables autom
 Here is how to use the decorator:
 
 ```python
-@client.step
+@literal_client.step
 def my_step():
     # do something
 ```
@@ -26,7 +26,7 @@ def my_step():
 If you want to override the default step parameters, you can pass them to the decorator:
 
 ```python
-@client.step(id="my-step-id", name="My step", type="run")
+@literal_client.step(id="my-step-id", name="My step", type="run")
 def my_step():
     # do something
 ```
@@ -34,9 +34,9 @@ def my_step():
 You can access the step object with the `get_current_step` method:
 
 ```python
-@client.step
+@literal_client.step
 def my_step():
-    step = client.get_current_step()
+    step = literal_client.get_current_step()
     # do something
 ```
 
@@ -47,14 +47,14 @@ If you want to create a step from a block of code, you should use the `with` sta
 The step is automatically ended and sent to the platform when the code exits the `with` block.
 
 ```python
-with client.step() as step:
+with literal_client.step() as step:
     # do something
 ```
 
 If you want to override the default step parameters, you can pass them to the `step` method:
 
 ```python
-with client.step(id="my-step-id", name="My step", type="run") as step:
+with literal_client.step(id="my-step-id", name="My step", type="run") as step:
     # do something
 ```
 
@@ -65,7 +65,7 @@ This method should be used as a last resort because it doesn't automatically end
 You must call the `end` method on the step object to end the step and send it to the platform.
 
 ```python
-step = client.start_step()
+step = literal_client.start_step()
 # do something
 step.end()
 ```
@@ -73,7 +73,7 @@ step.end()
 You can either pass the step parameters to the `start_step` method, or set them directly on the step object:
 
 ```python
-step = client.start_step(id="my-step-id", name="My step", type="run")
+step = literal_client.start_step(id="my-step-id", name="My step", type="run")
 step.input = "test input"
 # do something
 step.output = "Hello world"
@@ -150,8 +150,8 @@ step.end()
   The generation object associated with the step.
 </ParamField>
 
-<ParamField path="feedback" type="Feedback">
-  The feedback object associated with the step.
+<ParamField path="scores" type="List[Score]" default="[]">
+  The score objects associated with the step.
 </ParamField>
 
 <ParamField path="attachments" type="List[Attachment]" default="[]">
