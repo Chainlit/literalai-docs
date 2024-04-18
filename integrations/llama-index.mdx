@@ -22,6 +22,9 @@ service_context = ServiceContext.from_defaults(callback_manager=CallbackManager(
 # Assuming you have an index object
 query_engine = index.as_query_engine(streaming=False, similarity_top_k=2, service_context=service_context)
 
+# Optional: Reset the context for each request to avoid mixing up the context
+literal_client.reset_context()
+
 ```
 </CodeGroup>
 
@@ -39,6 +42,9 @@ from llama_index.core.callbacks import CallbackManager
 
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+# Optional: Reset the context for each request to avoid mixing up the context
+literal_client.reset_context()
 
 with literal_client.thread(name="Llama Index example") as thread:
     service_context = ServiceContext.from_defaults(callback_manager=CallbackManager([literal_client.llama_index_callback()]))
