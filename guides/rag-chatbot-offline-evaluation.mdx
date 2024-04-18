@@ -1,5 +1,5 @@
 ---
-title: RAG Chatbot Offline Evaluation
+title: Build and evaluate a RAG Chatbot
 ---
 
 In this guide you'll learn how to build, improve and monitor a conversational application. We'll use [Chainlit](https://docs.chainlit.io/get-started/overview) in combination with Literal, to show the development flow of building, evaluating and improving the chatbot. The chatbot uses RAG to retrieve contexts for answer generation. 
@@ -19,10 +19,19 @@ PINECONE_REGION=
 ```bash requirements.txt
 openai>=1.9.0
 pinecone-client>=3.0.2
-chainlit>=1.0.400
+chainlit>=1.0.502
+literalai>=0.0.501
+ragas>=0.1.7
 ``` 
 
-The Python code for this chatbot looks as follows. First, a Pinecone vector index is created. Then, note how the different steps of the RAG pipeline are using Literal step decorators: `@cl.step(name="", type="")`. This is done in order to follow the steps in a thread in Literal. 
+The Python code for this chatbot looks as follows. 
+1. First, a Pinecone vector index is created. This vector database is used to store the documents and its embeddings of the data that you want your chatbot to use. For example, you can embed and store pages of a technical product documentation. 
+2. This vector store is populated with some sample items. 
+3. When a user query comes in, the query will be embedded.
+4. The relevant documents from the vector store are retrieved and used as context to answer the user query. 
+5. The LLM is used to generate an answer to the user query, using the retrieved documents.
+
+Note how the different steps of the RAG pipeline are using Literal step decorators: `@cl.step(name="", type="")`. This is done in order to follow the steps in a thread in Literal. 
 
 <CodeGroup>
 ```python Python
@@ -32,11 +41,12 @@ from dotenv import load_dotenv
 from openai import AsyncOpenAI
 from pinecone import Pinecone, ServerlessSpec
 from literalai import LiteralClient
+import asyncio
 
 load_dotenv()
 
 # Initiate the clients
-client = LiteralClient()
+literal_client = LiteralClient()
 openai_client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 pinecone_client = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
@@ -46,7 +56,7 @@ pinecone_spec = ServerlessSpec(
 
 cl.instrument_openai()
 
-
+# Create Pinecone vector index
 def create_pinecone_index(name, client, spec):
     if name not in client.list_indexes().names():
         client.create_index(name, dimension=1536, metric="cosine", spec=spec)
@@ -57,6 +67,19 @@ pinecone_index = create_pinecone_index(
     "literal-rag-index", pinecone_client, pinecone_spec
 )
 
+# Populate Pinecone index with documents
+async def embed_and_store_documents(model="text-embedding-ada-002"):
+    doc_1 = "Literal is a LLM observability, evaluation and prompt collaboration platform."
+    doc_2 = "Literal has a UI and a Python and Typescript client."
+    doc_1_embedding = await openai_client.embeddings.create(input=doc_1, model=model)
+    doc_2_embedding = await openai_client.embeddings.create(input=doc_2, model=model)
+
+    pinecone_index.upsert([
+        (doc_1, doc_1_embedding.data[0].embedding),
+        (doc_2, doc_2_embedding.data[0].embedding)
+    ])
+
+asyncio.run(embed_and_store_documents())
 
 # Embedding the user query using a model from OpenAI
 @cl.step(name="Embed", type="embedding")
@@ -64,7 +87,6 @@ async def embed(query, model="text-embedding-ada-002"):
     embedding = await openai_client.embeddings.create(input=query, model=model)
 
     return embedding.data[0].embedding
-
 
 # Search and retrieve data items that are relevant to the user query from the Pinecone index, to create a context
 @cl.step(name="Retrieve", type="retrieval")
@@ -74,7 +96,6 @@ async def retrieve(embedding):
     response = pinecone_index.query(vector=embedding, top_k=5, include_metadata=True)
 
     return response
-
 
 # query the LLM with the query and the context
 @cl.step(name="LLM", type="llm")
@@ -104,12 +125,12 @@ async def run(query):
     embedding = await embed(query)
     stored_embeddings = await retrieve(embedding)
     contexts = []
-    prompt = await client.api.get_prompt(name="RAG prompt")
+    prompt = literal_client.api.get_prompt(name="RAG prompt")
 
     if not prompt:
         raise Exception("Prompt not found")
     for match in stored_embeddings["matches"]:
-        contexts.append(match["metadata"]["text"])
+        contexts.append(match["id"])
 
     completion = await llm(prompt.format({"context": contexts, "question": query})[-1])
 
@@ -118,7 +139,7 @@ async def run(query):
 
 @cl.on_chat_start
 async def on_chat_start():
-    prompt = await client.api.get_prompt(name="RAG prompt")
+    prompt = literal_client.api.get_prompt(name="RAG prompt")
 
     if not prompt:
         raise Exception("Prompt not found")
@@ -137,7 +158,7 @@ async def main(message: cl.Message):
 
 ## 2. Log the chat conversations
 
-If you are using Chainlit, logging of threads is automatically done. If you prefer using another method, like FastAPI, Flask or TypeScript, you can use the Literal SDK. For [Python](https://docs.getliteral.ai/python-client/abstractions/thread), use
+If you are using Chainlit (as in the example above), logging of threads is automatically done. If you prefer using another method, like FastAPI, Flask or TypeScript, you can use the Literal SDK. For [Python](https://docs.getliteral.ai/python-client/abstractions/thread), use
 
 <CodeGroup>
 ```python Python
@@ -156,78 +177,65 @@ Users can give feedback in the chatbot application to indicate how happy they ar
 
 As administrator, you can also give feedback on the chatbot's answers in the threads that already happened. 
 
-## 4. Create an evaluation dataset
+## 4. Create a dataset and evaluate using RAGAS
 
-In order to test the chatbot's model, you need to create a dataset. First, decide on the evaluation criteria that you want to test. [RAGAS](https://docs.ragas.io/en/stable/concepts/metrics/index.h) defines various metrics that can be tested in isolation, such as faithfulness, answer relevancy, context recall and answer correctness. In this tutorial, we are going to calculate **faithfulness**, which measures the factual consistency of the answer given the context. Faithfullness is measured by dividing *number of truthful claims that can be inferred from the given context* by the *total number of claims in the chatbot's generated answer*.
+In order to test the chatbot's model, you need to create a dataset. First, decide on the evaluation criteria that you want to test. [RAGAS](https://docs.ragas.io/en/stable/concepts/metrics/index.html) defines various metrics that can be tested in isolation, such as faithfulness, answer relevancy, context recall and answer correctness. In this tutorial, we are going to calculate **faithfulness** ans **answer correctness**. Faithfullness measures the factual consistency of the answer given the context. Faithfullness is measured by dividing *number of truthful claims that can be inferred from the given context* by the *total number of claims in the chatbot's generated answer*. Answer Correctness measures the accuracy of the generated answer compared to the ground truth. 
 
-Create a dataset: 
+The example code shows how to create a dataset and data items in this dataset. The examples should match the evaluation criteria that we will test on: faithfulness and answer correctness. Thus, the facts in the answer should be correct given the context from the retriever, and the answer should be similar to the given ground truth. 
 
-<CodeGroup>
-```python Python
-from literalai import LiteralClient
+We will create a dataset with data that comes from the chatbot's conversations. The dataset will contain the user query, the chatbot's answer, and the relevant documents from the vector store that were used to generate the answer. The dataset will be used to evaluate the chatbot's model on faithfulness and answer correctness.
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+For the sake of this demo, we will write out the chatbot's answers here in code. In a production environment, for online evaluation, you can add the chatbot's answers to a created dataset via `dataset.add_step(step_id="<STEP_ID>")`. You can create a dataset via `dataset = sdk.api.create_dataset(name="Foo", description="A dataset to store samples.", metadata={ "isDemo": True })`
 
-dataset = await client.api.create_dataset(
-  name="EvaluationDataset", description="A dataset to store samples for model evaluation.", metadata={"isDemo": True}
-)
-```
-</CodeGroup>
-
-Then, create data items in this dataset. The examples should match the evaluation criteria that we will test on: faithfulness. Thus, the facts in the answer should be correct given the context from the retriever. 
+For evaluation, we use [RAGAS](https://docs.ragas.io/en/stable/index.html), a Python framework to evaluation RAG pipelines. Note that this evaluation is done *outside* of Literal.
 
 <CodeGroup>
 ```python Python
-# add inputs, questions that a user might ask to the chatbot. Add more if desired.
-inputs = [
-    "What is Literal?",
-    "What are the key features of Literal?",
-    "What is a thread?",
-    "What is a step?"
+from ragas import evaluate
+from ragas.metrics import faithfulness, answer_correctness
+from datasets import Dataset
+
+items = [
+  {
+    "input": "What is Literal?", 
+    "expected_output": "Literal is a platform for LLM observability, evaluation and prompt collaboration.",
+    "answer": "Literal is an observabilty solution",
+    "context": ["Literal is a LLM observability, evaluation and prompt collaboration platform.", "Literal has a UI and a Python and Typescript client."]
+  }, {
+    "input": "What does Literal offer?", 
+    "expected_output": "The platform has a UI and a Python and TypeScript client.",
+    "answer": "Literal is an observabilty solution",
+    "context": ["Literal is a LLM observability, evaluation and prompt collaboration platform.", "Literal has a UI and a Python and Typescript client."]
+  }
 ]
 
-# add outputs that are the desired answers from the chatbot to the users' questions
-outputs = [
-    "Literal is an observability solution.",
-    "The key features of literal are observability, creating datasets, doing online evaluation and perform prompt collaboration.",
-    "In Literal, a thread represents a group of interactions between a user and an AI app.",
-    "In Literal, a step is a fundamental building block within a thread that represents a single unit of interaction or operation."
-]
-
-# add these inputs and outputs to the previously created dataset
-dataset_items = await dataset.create_dataset_items(
-  dataset_id = dataset.id,
-  inputs = [{"content": i} for i in inputs],
-  expected_outputs = [{"content": o} for o in outputs]
-)
-
-# ???????????? TO DO 
-step_item = await dataset.add_step_to_dataset(dataset.id, step.id)
-```
-</CodeGroup>
-
-Note that for a serious evaluation you would want more than four examples to evaluate.
-
-## 5. Predict and evaluate
-
-The next step is to run the evaluation. We configure the metric here to "faithfulness".
-
-<CodeGroup>
-```python Python
-# configure the evaluation
-evaluation_config = {
-    "metrics": ["faithfulness"]
+test_dataset = {
+    'question': [item["input"] for item in items],
+    'answer': [item["answer"] for item in items],
+    'contexts': [item["context"] for item in items],
+    'ground_truth': [item["expected_output"] for item in items]
 }
 
-# do the evaluation
-await client.evaluate(
-  dataset_id = dataset.id,
-  config = evaluation_config
+result = evaluate(
+    Dataset.from_dict(test_dataset),
+    metrics=[
+        faithfulness, 
+        answer_correctness],
 )
+
+df = result.to_pandas()
+print(df.head())
 ```
 </CodeGroup>
 
+Note that for a serious evaluation you would want more than two examples to evaluate.
 
-## 6. Analyze results
+## 5. Analyze results
 
-[TO DO: add screenshots of evaluation results in Literal]
+Finally, you can analyze the results of the evaluation. The results will be shown in the terminal.
+
+<Frame caption="Evaluation result using RAGAS">
+  <img src="/images/ragas-result.png" alt="Evaluation result using RAGAS"/>
+</Frame>
+
+You can see that both answers have the highest score for faithfulness, meaning that the chatbot's answers are factually consistent given the context. The answer correctness is also high for the first results, but low for the second result. This corresponds to human evaluation if we look at the examples we created. Based on this result, you can decide to improve the chatbot's model or prompt. 

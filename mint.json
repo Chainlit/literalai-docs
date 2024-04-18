@@ -136,7 +136,8 @@
                 "guides/conversational-agent",
                 "guides/conversational-agent-fastapi",
                 "guides/distributed-tracing",
-                "guides/dataset"
+                "guides/dataset",
+                "guides/rag-chatbot-offline-evaluation"
             ]
         },
         {
