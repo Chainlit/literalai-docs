@@ -54,15 +54,18 @@ const outputParser = new StringOutputParser();
 
 const chain = prompt.pipe(model).pipe(outputParser);
 
-const response = await chain.invoke(
-{
-    topic: 'ice cream'
-},
-{
-    runName: 'joke',
-    callbacks: [cb]
+async function main() {
+    const response = await chain.invoke(
+    {
+        topic: 'ice cream'
+    },
+    {
+        runName: 'joke',
+        callbacks: [cb]
+    }
+    );
 }
-);
+main();
 ```
 </CodeGroup>
 

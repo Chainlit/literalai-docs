@@ -94,7 +94,7 @@ async def run(message_history):
             if "tool_calls" in message and message["tool_calls"] is None:
                 del message["tool_calls"]
         
-        response: ChatCompletion = await client.chat.completions.create(
+        response: ChatCompletion = await literalClient.chat.completions.create(
             messages=message_history, **settings
         )
 

@@ -77,7 +77,7 @@ async def run(message_history):
             "tools": tools,
             "tool_choice": "auto",
         }
-        response: ChatCompletion = await client.chat.completions.create(
+        response: ChatCompletion = await literalClient.chat.completions.create(
             messages=message_history, **settings
         )
 

@@ -100,19 +100,23 @@ Getting a prompt is the first step to use it in your code. You can get a prompt 
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 # This will fetch the champion version, you can also pass a specific version
-prompt = client.api.get_prompt(name="RAG prompt")
+prompt = literal_client.api.get_prompt(name="RAG prompt")
 ```
 
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 const promptName = 'RAG prompt';
 // This will fetch the champion version, you can also pass a specific version
-const prompt = await client.api.getPrompt(promptName);
+async function main() {
+    const prompt = await literalClient.api.getPrompt(promptName);
+    console.log(prompt);
+}
+main();
 ```
 
 </CodeGroup>
@@ -177,6 +181,7 @@ const openai = new OpenAI({
 
 async function main() {
   const prompt = await literalClient.api.getPrompt('RAG prompt');
+  if (!prompt) return;
 
   // Optionally pass variables to the prompt
   const variables = { query: 'What is the difference between apples and pears?' };
@@ -190,7 +195,7 @@ async function main() {
     stream: true
   });
 
-  await client.instrumentation.openai(result);
+  await literalClient.instrumentation.openai(result);
 }
 
 main();
@@ -245,6 +250,7 @@ const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 async function main() {
   const prompt = await literalClient.api.getPrompt('RAG prompt');
+  if (!prompt) return;
 
   const chatPrompt = prompt.toLangchainChatPromptTemplate();
 
@@ -265,7 +271,6 @@ async function main() {
 }
 
 main();
-
 ```
 
 </CodeGroup>

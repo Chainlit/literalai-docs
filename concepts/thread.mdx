@@ -18,27 +18,27 @@ import os
 import time
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-@client.step(type="run")
+@literal_client.step(type="run")
 def my_assistant(input: str):
     # Implement your assistant logic here
     time.sleep(1)
     response = "My assistant response"
-    client.message(content=response, type="assistant_message", name="Assistant")
+    literal_client.message(content=response, type="assistant_message", name="Assistant")
     return response
 
 def main():
     # You can also continue a thread by passing the thread id
-    with client.thread(name="Thread Example") as thread:
+    with literal_client.thread(name="Thread Example") as thread:
       print(thread.id)
       user_query = "Hello World"
-      client.message(content=user_query, type="user_message", name="User")
+      literal_client.message(content=user_query, type="user_message", name="User")
       my_assistant(user_query)
 
       # Let's say the user has a follow up question
       follow_up_query = "Follow up!"
-      client.message(content=follow_up_query, type="user_message", name="User")
+      literal_client.message(content=follow_up_query, type="user_message", name="User")
       my_assistant(user_query)
 
 main()
@@ -51,7 +51,7 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // The Assistant could have intermediary steps
 async function myAssistant(thread: Thread, query: string) {
@@ -72,10 +72,10 @@ async function myAssistant(thread: Thread, query: string) {
 }
 
 async function main() {
-  const participantId = await client.api.getOrCreateUser("John Doe");
+  const participantId = await literalClient.api.getOrCreateUser("John Doe");
 
   // You can also continue a thread by passing the thread id
-  const thread = await client
+  const thread = await literalClient
     .thread({ name: "Thread Example", participantId: participantId })
     .upsert();
 
@@ -156,12 +156,12 @@ When you add a Tag that doesn't exist yet, a new Tag will be automatically creat
 
 <CodeGroup>
 ```python Python
-with client.thread(name="Thread Example") as thread:
+with literal_client.thread(name="Thread Example") as thread:
     thread.tags = ["to review"]
 ```
 
 ```typescript TypeScript
-  const thread = await client
+  const thread = await literalClient
     .thread({ name: "Thread Example", tags:["to review"]})
     .upsert();
 ```
@@ -175,10 +175,10 @@ Note: You can add tags a posteriori too. When you update the Tags in using `upda
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 def add_tags():
-  updated_thread = client.api.update_thread(
+  updated_thread = literal_client.api.update_thread(
     id="<THREAD_UUID>",
     tags=["outlier", "to review"], # add tags here
 )
@@ -192,14 +192,23 @@ client.flush_and_stop()
 ```
 
 ```typescript TypeScript
-import { LiteralClient, Thread } from "@literalai/client";
+import { LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-
-const thread = await client.api.upsertThread({ 
-  threadId: "<THREAD_UUID>", 
-  tags: ["outlier", "to review"]});
+const threadId = "<THREAD_ID>";
+const tags =  ["outlier", "to review"];
+async function main() {
+    const thread = await literalClient.api.upsertThread(
+        threadId,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        tags
+    );
+}
+main();
 ```
 
 </CodeGroup>
@@ -218,10 +227,10 @@ Using the SDKs:
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 def get_filtered_threads():
-    filtered_threads = client.api.list_threads(
+    filtered_threads = literal_client.api.list_threads(
         filters = [{
             "operator": "in",
             "field": "tags",
@@ -243,11 +252,11 @@ client.flush_and_stop()
 ```
 
 ```typescript TypeScript
-import { LiteralClient, Thread } from "@literalai/client";
+import { LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const filtered_threads = await client.api
+const filtered_threads = await literalClient.api
   .getThreads({ 
     filters: [{
       operator: "in",

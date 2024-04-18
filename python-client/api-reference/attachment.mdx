@@ -6,7 +6,7 @@ description: "Create Read Update and Delete methods for Attachment"
 ## Create attachment
 
 ```python
-attachment = client.api.create_attachment(
+attachment = literal_client.api.create_attachment(
     thread_id="<THREAD_UUID>",
     step_id="<STEP_UUID>"
     name="my_attachment",
@@ -64,7 +64,7 @@ attachment = client.api.create_attachment(
 ## Update attachment
 
 ```python
-attachment = client.api.update_attachment(
+attachment = literal_client.api.update_attachment(
     id="<ATTACHMENT_UUID>",
     update_params={
         "name": "my_attachment",
@@ -107,7 +107,7 @@ attachment = client.api.update_attachment(
 ## Get attachment
 
 ```python
-attachment = client.api.get_attachment(id="<ATTACHMENT_UUID>")
+attachment = literal_client.api.get_attachment(id="<ATTACHMENT_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -123,7 +123,7 @@ attachment = client.api.get_attachment(id="<ATTACHMENT_UUID>")
 ## Delete attachment
 
 ```python
-attachment = client.api.delete_attachment(id="<ATTACHMENT_UUID>")
+attachment = literal_client.api.delete_attachment(id="<ATTACHMENT_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>

@@ -23,13 +23,12 @@ To get all generations of the application, you can use the following code:
 
 ```python Python
 import os
-import asyncio
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 def get_generations():
-    generations = client.api.get_generations()
+    generations = literal_client.api.get_generations()
     return generations
 
 generations = get_generations()
@@ -46,9 +45,13 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const generations = await client.api.getGenerations();
+async function main() {
+    const generations = await literalClient.api.getGenerations({});
+    console.log(generations);
+}
+main();
 ```
 
 </CodeGroup>
@@ -62,7 +65,7 @@ import os
 import asyncio
 from literalai import LiteralClient, ChatGeneration
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 # Use ChatGeneration or CompletionGeneration to create a new generation
 
@@ -77,7 +80,7 @@ def create_generation():
         messages=[{"content": "Hello, this is my answer", "role": "system"}],
     )
 
-    generation = client.api.create_generation(
+    generation = literal_client.api.create_generation(
         generation = chat_generation
     )
 
@@ -94,12 +97,15 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient, ChatGeneration} from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-# Use ChatGeneration or CompletionGeneration to create a new generation
-const chatGeneration = new ChatGeneration(messages:[{content: "Hello, this is my answer", role: "system"}])
+// Use ChatGeneration or CompletionGeneration to create a new generation
+const chatGeneration = new ChatGeneration({messages:[{content: "Hello, this is my answer", role: "system"}]})
 
-const generation = await client.api.createGeneration(generation: chatGeneration);
+async function main() {
+    const generation = await literalClient.api.createGeneration(chatGeneration);
+};
+main();
 ```
 
 </CodeGroup>
