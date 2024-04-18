@@ -16,7 +16,7 @@ npm i @literalai/client@latest
 ```ts
 import { LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 ```
 
 #### Disable Thread and Step Ingestion APIs
@@ -26,5 +26,5 @@ When instantiating the client, you have the option to disable the Thread and Ste
 ```ts
 import { LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"], disabled: true);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"], disabled: true);
 ```

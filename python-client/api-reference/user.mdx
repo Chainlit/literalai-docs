@@ -43,7 +43,7 @@ def run(input_message):
 ## Get an User
 
 ```python
-user = client.api.get_user(id="<USER_UUID>")
+user = literal_client.api.get_user(id="<USER_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -59,7 +59,7 @@ user = client.api.get_user(id="<USER_UUID>")
 ## Update an User
 
 ```python
-updated_user = client.api.update_user(id="<USER_UUID>", identifier="Jane Doe")
+updated_user = literal_client.api.update_user(id="<USER_UUID>", identifier="Jane Doe")
 ```
 
 <ParamField path="id" type="uuid" required>
@@ -83,7 +83,7 @@ updated_user = client.api.update_user(id="<USER_UUID>", identifier="Jane Doe")
 ## Delete an User
 
 ```python
-user = client.api.delete_user(id="<USER_UUID>")
+user = literal_client.api.delete_user(id="<USER_UUID>")
 ```
 
 <ParamField path="id" type="uuid" required>

@@ -7,7 +7,7 @@ title: "Thread"
 You can create a thread and execute code within it using the `with` statement:
 
 ```python
-with client.thread() as thread:
+with literal_client.thread() as thread:
     # do something
 ```
 
@@ -17,7 +17,7 @@ You can also continue a thread by passing the thread id to the `thread` method:
 
 previous_thread_id = "UUID"
 
-with client.thread(thread_id=previous_thread_id) as thread:
+with literal_client.thread(thread_id=previous_thread_id) as thread:
     # do something
 ```
 

@@ -100,20 +100,20 @@ Getting a prompt is the first step to use it in your code. You can get a prompt 
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 # This will fetch the champion version, you can also pass a specific version
-prompt = client.api.get_prompt(name="RAG prompt")
+prompt = literal_client.api.get_prompt(name="RAG prompt")
 ```
 
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 const promptName = 'RAG prompt';
 // This will fetch the champion version, you can also pass a specific version
 async function main() {
-    const prompt = await client.api.getPrompt(promptName);
+    const prompt = await literalClient.api.getPrompt(promptName);
     console.log(prompt);
 }
 main();
@@ -173,14 +173,14 @@ loop.run_until_complete(main())
 import { LiteralClient } from '@literalai/client';
 import OpenAI from 'openai';
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 const openai = new OpenAI({
   apiKey: process.env['OPENAI_API_KEY'],
 });
 
 async function main() {
-  const prompt = await client.api.getPrompt('RAG prompt');
+  const prompt = await literalClient.api.getPrompt('RAG prompt');
   if (!prompt) return;
 
   // Optionally pass variables to the prompt
@@ -195,7 +195,7 @@ async function main() {
     stream: true
   });
 
-  await client.instrumentation.openai(result);
+  await literalClient.instrumentation.openai(result);
 }
 
 main();
@@ -246,10 +246,10 @@ import { LiteralClient } from '@literalai/client';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatOpenAI } from '@langchain/openai';
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 async function main() {
-  const prompt = await client.api.getPrompt('RAG prompt');
+  const prompt = await literalClient.api.getPrompt('RAG prompt');
   if (!prompt) return;
 
   const chatPrompt = prompt.toLangchainChatPromptTemplate();

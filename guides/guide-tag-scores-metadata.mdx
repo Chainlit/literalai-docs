@@ -32,19 +32,19 @@ import os
 import time
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 def main():
     # You can also continue a thread by passing the thread id
-    with client.thread(name="Thread Example") as thread:
+    with literal_client.thread(name="Thread Example") as thread:
 
       # add user query step to the thread, with metadata
       user_query = "Hello, can I ask you a question?"
-      client.message(content=user_query, type="user_message", name="User", metadata={"location":"France"})
+      literal_client.message(content=user_query, type="user_message", name="User", metadata={"location":"France"})
 
       # send assistant message to the thread, without metadata
       response = "Yes, how can I help you?"
-      client.message(content=response, type="assistant_message", name="Assistant")
+      literal_client.message(content=response, type="assistant_message", name="Assistant")
 
 main()
 # Network requests by the SDK are performed asynchronously.
@@ -56,11 +56,11 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 async function main() {
 
-  const thread = await client
+  const thread = await literalClient
     .thread({ name: "Thread Example" })
     .upsert();
 
@@ -118,15 +118,15 @@ import os
 import asyncio
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-async def add_tags():
-    updated_thread = await client.api.update_thread(
+def add_tags():
+    updated_thread = literal_client.api.update_thread(
         id="e39b9a4c-ec8f-4ddb-8c0d-acbd2274d476", # thread uuid
         tags=["example"], # add tags here
     )
 
-asyncio.run(add_tags())
+add_tags()
 
 # Network requests by the SDK are performed asynchronously.
 # Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
@@ -137,9 +137,9 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const thread = await client.api.upsertThread({ 
+const thread = await literalClient.api.upsertThread({ 
   threadId: "e39b9a4c-ec8f-4ddb-8c0d-acbd2274d476", // thread uuid
   tags: ["example"]}); // add tags here
 ```
@@ -161,10 +161,10 @@ import os
 import asyncio
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-async def add_score():
-    score = await client.api.create_score(
+def add_score():
+    score = literal_client.api.create_score(
         step_id="4271d21b-efb3-41bd-b8fc-7e060a6461de", # step uuid
         name="accurate", # name of the score
         type="HUMAN", # Human or AI generated
@@ -172,7 +172,7 @@ async def add_score():
         value=1, # the numerical score
     )
 
-asyncio.run(add_score())
+add_score()
 
 # Network requests by the SDK are performed asynchronously.
 # Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
@@ -183,9 +183,9 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const score = await client.api.createScore({ 
+const score = await literalClient.api.createScore({ 
   stepId: "4271d21b-efb3-41bd-b8fc-7e060a6461de", // step uuid
   name: 'accurate', // name of the score
   type: 'HUMAN', // Human or AI generated

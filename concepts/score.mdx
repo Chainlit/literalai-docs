@@ -79,9 +79,9 @@ to a Step or a Generation object.
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-score = client.api.create_score(
+score = literal_client.api.create_score(
             step_id="<STEP_UUID>",
             generation_id="<GENERATION_UUID>"
             name="user-feedback",
@@ -94,10 +94,10 @@ score = client.api.create_score(
 ```typescript TypeScript
 import { LiteralClient, ChatGeneration} from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 async function main() {
-    const score = await client.api.createScore({
+    const score = await literalClient.api.createScore({
         stepId: '05b217b4-5890-4434-b1a2-1749d842b2db',
         name: 'user-feedback',
         type: 'HUMAN',
@@ -118,7 +118,7 @@ import os
 from fastapi import FastAPI
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 app = FastAPI()
 
@@ -126,7 +126,7 @@ app = FastAPI()
 def receive_human_feedback():
 
     # Create a score on the `Step` the user gave feedback for.
-    return client.api.create_score(
+    return literal_client.api.create_score(
             type="HUMAN",
             name="user-feedback",
             value=0.9,

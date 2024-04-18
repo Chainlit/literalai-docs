@@ -12,8 +12,8 @@ import { LiteralClient, User } from '@literalai/client';
 
 const openai = new OpenAI();
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
-const syncer = client.openai(openai).assistant.syncer;
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
+const syncer = literalClient.openai(openai).assistant.syncer;
 
 async function main() {
   // You can sync a thread at any moment. We recommend to sync it once you get a `completed` run status.

@@ -42,22 +42,22 @@ import os
 from literalai import LiteralClient
 
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-@client.step(type="tool")
+@literal_client.step(type="tool")
 def my_tool():
     # Implement your custom logic here
     return "Success"
 
 # You can change the step type
-@client.step(type="run")
+@literal_client.step(type="run")
 def my_run():
     # Implement your custom logic here
     my_tool()
     return "Success"
 
-with client.thread() as thread:
-    client.message(content="Hello World", type="assistant_message", name="My Assistant")
+with literal_client.thread() as thread:
+    literal_client.message(content="Hello World", type="assistant_message", name="My Assistant")
     my_run()
     
 # Network requests by the SDK are performed asynchronously.
@@ -69,7 +69,7 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient, Step, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // Tool example
 async function myTool(run: Step) {
@@ -108,7 +108,7 @@ async function myRun(thread: Thread) {
 }
 
 async function main() {
-  const thread = client.thread();
+  const thread = literalClient.thread();
   // Message example
   await thread
     .step({
@@ -167,11 +167,11 @@ literal_client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // The Assistant could have intermediary steps
 async function myFunction(question:string) {
-  const run = client.run({
+  const run = literalClient.run({
     name: "My Assistant Run",
     input: { content: question },
     metadata: { region: "europe" },
@@ -211,7 +211,7 @@ An attachement is a file that has been generated or processed by a Step.
 ```python Python
 import os
 from literalai import LiteralClient
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 client.api.create_attachment(
     thread_id="<THREAD_ID>", # thread.id
@@ -225,15 +225,15 @@ client.api.create_attachment(
 let fs = require('fs')
 import { LiteralClient, Attachment } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 async function main() {
-    const thread = await client.thread().upsert();
+    const thread = await literalClient.thread().upsert();
 
     const fileStream = fs.createReadStream('./aankomst.jpeg');
     const mime = 'image/jpeg';
 
-    const { objectKey } = await client.api.uploadFile({
+    const { objectKey } = await literalClient.api.uploadFile({
         threadId: thread.id,
         content: fileStream,
         mime
