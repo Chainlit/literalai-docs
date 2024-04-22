@@ -118,7 +118,8 @@
         {
             "group": "API Reference",
             "pages": [
-                "typescript-client/api-reference/dataset"
+                "typescript-client/api-reference/dataset", 
+                "typescript-client/api-reference/api-reference"
             ]
         },
         {
