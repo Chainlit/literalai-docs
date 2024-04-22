@@ -16,7 +16,7 @@ To instantiate the synchronous client:
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
 ```
 
 or, async:
@@ -25,7 +25,7 @@ or, async:
 import os
 from literalai import AsyncLiteralClient
 
-async_client = AsyncLiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
+async_literal_client = AsyncLiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
 ```
 
 #### Disable Decorators
@@ -36,5 +36,5 @@ When instantiating the client, you have the option to disable the decorators tha
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True) 
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True) 
 ```

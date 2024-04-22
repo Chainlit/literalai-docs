@@ -1,5 +1,5 @@
 ---
-title: Conversational Agent Monitoring - FastAPI 
+title: Conversational Agent Monitoring
 ---
 
 This code integrates an asynchronous OpenAI client with a LiteralAI client to create a conversational agent. 
@@ -13,23 +13,16 @@ LITERAL_API_KEY=
 OPENAI_API_KEY=
 ```
 
-
-```bash
-pip install uvicorn
-```
-
 <CodeGroup>
-```python server.py
+```python Python
 import json
+import asyncio
 from openai import AsyncOpenAI
 from openai.types.chat import *
 from literalai import LiteralClient
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 
 from dotenv import load_dotenv
 load_dotenv()
-
 
 client = AsyncOpenAI()
 lc = LiteralClient()
@@ -87,14 +80,7 @@ async def run(message_history):
             "tools": tools,
             "tool_choice": "auto",
         }
-        # https://github.com/openai/openai-python/issues/777
-        for message in message_history:
-            if "function_call" in message and message["function_call"] is None:
-                del message["function_call"]
-            if "tool_calls" in message and message["tool_calls"] is None:
-                del message["tool_calls"]
-        
-        response: ChatCompletion = await client.chat.completions.create(
+        response: ChatCompletion = await literalClient.chat.completions.create(
             messages=message_history, **settings
         )
 
@@ -121,62 +107,27 @@ async def run(message_history):
     return message_history
 
 
-# --------------------------------------------------------------
-# --------------------------- SERVER ---------------------------
-# --------------------------------------------------------------
 
-app = FastAPI()
+if __name__ == "__main__":
+    with lc.thread(name="Thread Example") as thread:
+        message_history = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "what's the weather in sf"}
+        ]
 
-class ProcessInput(BaseModel):
-    message_history: list
-    thread_id: str
-
-@app.post("/process/")
-async def process_conversation(input: ProcessInput):
-
-    with lc.thread(thread_id=input.thread_id, name="demo_thread") as thread:
-        message_history = input.message_history
         lc.message(content=message_history[-1]["content"], name="user", type="user_message")
-        message_history = await run(message_history)
+        message_history = asyncio.run(run(message_history))
         lc.message(content=message_history[-1].content, name="assistant", type="assistant_message")
-        
-    return {"message_history": message_history}
 
+        new_message = [{"role": "user", "content": "what's the weather in paris"}]
+        message_history += new_message
+
+        lc.message(content=message_history[-1]["content"], name="user", type="user_message")
+        message_history = asyncio.run(run(message_history))
+        lc.message(content=message_history[-1].content, name="assistant", type="assistant_message")
+
+    lc.flush_and_stop()
 ```
 </CodeGroup>
 
-```bash
-uvicorn thread-fastapi:app --reload
-```
-
-Then, you can send requests from a client:
-
-```python client.py
-import requests
-
-url = 'http://127.0.0.1:8000/process/'
-
-import uuid
-
-thread_id = str(uuid.uuid4())
-
-# First query
-data1 = {
-  "message_history": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "what's the weather in sf"}],
-  "thread_id": thread_id
-}
-
-response1 = requests.post(url, json=data1)
-
-# Second query
-data2 = {
-  "message_history": response1.json()["message_history"] + [{"role": "user", "content": "what's the weather in paris"}],
-  "thread_id": thread_id
-}
-
-response2 = requests.post(url, json=data2)
-if response2.status_code == 200:
-    print(response2.json())
-else:
-    print(f"Error: {response2.status_code}, {response2.text}")
-```
+With the integration of Literal AI, you can now visualize threads, runs and LLM calls directly on the Literal AI platform, enhancing transparency and debuggability of your AI-driven applications.

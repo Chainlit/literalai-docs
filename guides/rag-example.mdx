@@ -42,7 +42,7 @@ First, we initialize the Literal client.
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 ```
 </CodeGroup>
 
@@ -52,11 +52,11 @@ In this example we have 2 steps: `semantic_search` and `generate_response`. We c
 
 <CodeGroup>
 ```python Python
-@client.step(type="retrieval")
+@literal_client.step(type="retrieval")
 async def semantic_search(question: str):
   ...
 
-@client.step(type="llm")
+@literal_client.step(type="llm")
 async def generate_response(question: str, search_results: list):
   ...
 ```
@@ -66,7 +66,7 @@ async def generate_response(question: str, search_results: list):
 
 <CodeGroup>
 ```python Python
-@client.step(type="run")
+@literal_client.step(type="run")
 async def run_rag(question: str):
   results = await semantic_search(question)
   answer = await generate_response(question, results)
@@ -81,7 +81,7 @@ To create a thread, we use the `thread` decorator.
 
 <CodeGroup>
 ```python Python
-@client.thread
+@literal_client.thread
 async def main():
   ...
 ```
@@ -93,12 +93,12 @@ Finally, we can log the user question and the final answer using `client.message
 
 <CodeGroup>
 ```python Python
-@client.thread
+@literal_client.thread
 async def main():
   question = input("What is your question?")
-  client.message(content=question, type="user_message", name="User")
+  literal_client.message(content=question, type="user_message", name="User")
   answer = await run_rag(question)
-  client.message(content=answer, type="assistant_message", name="Assistant")
+  literal_client.message(content=answer, type="assistant_message", name="Assistant")
   print(answer)
 ```
 </CodeGroup>
@@ -111,30 +111,30 @@ import asyncio
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-@client.step(type="retrieval")
+@literal_client.step(type="retrieval")
 async def semantic_search(question: str):
   await asyncio.sleep(1)
   return ["chunk 1", "chunk 2", "chunk 3"]
 
-@client.step(type="llm")
+@literal_client.step(type="llm")
 async def generate_response(question: str, search_results: list):
   await asyncio.sleep(2)
   return "Fake answer"
 
-@client.step(type="run")
+@literal_client.step(type="run")
 async def run_rag(question: str):
   results = await semantic_search(question)
   answer = await generate_response(question, results)
   return answer
 
-@client.thread
+@literal_client.thread
 async def main():
   question = input("What is your question?")
-  client.message(content=question, type="user_message", name="User")
+  literal_client.message(content=question, type="user_message", name="User")
   answer = await run_rag(question)
-  client.message(content=answer, type="assistant_message", name="Assistant")
+  literal_client.message(content=answer, type="assistant_message", name="Assistant")
   print(answer)
 
 if __name__ == "__main__":

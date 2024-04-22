@@ -16,7 +16,7 @@ export LITERAL_API_KEY=
 import * as http from "http";
 import { Step, LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient();
+const literalClient = new LiteralClient();
 
 const server = http.createServer(async (req, res) => {
   if (req.method === "POST" && req.url === "/get-weather") {
@@ -29,7 +29,7 @@ const server = http.createServer(async (req, res) => {
       console.log(location, unit, parent_step_id);
 
       // Log the step with the received parent_step_id
-      const step = client.step({
+      const step = literal_client.step({
         type: "tool",
         name: "get_weather",
         input: { location, unit },
@@ -115,7 +115,7 @@ def run():
             },
         }
     ]
-    response = client.chat.completions.create(
+    response = literal_client.chat.completions.create(
         model="gpt-3.5-turbo-0125",
         messages=messages,
         tools=tools,
@@ -154,7 +154,7 @@ def run():
                 }
             )  # extend conversation with function response
         print(messages)
-        second_response = client.chat.completions.create(
+        second_response = literal_client.chat.completions.create(
             model="gpt-3.5-turbo-0125",
             messages=messages,
         )  # get a new response from the model where it can see the function response

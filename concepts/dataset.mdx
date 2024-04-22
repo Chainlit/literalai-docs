@@ -82,10 +82,10 @@ Our SDK facilitates dataset management, enabling both manual handling and the tr
 from literalai import LiteralClient
 import os
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 # create a new dataset
-dataset = client.api.create_dataset(
+dataset = literal_client.api.create_dataset(
   name="Foo", 
   description="A dataset to store samples.", 
   metadata={"isDemo": True},
@@ -95,14 +95,17 @@ dataset = client.api.create_dataset(
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const dataset = await client.api.createDataset({
-  name: 'Foo',
-  description: 'A dataset to store samples.',
-  metadata: { isDemo: true },
-  type: 'key_value' // other option: 'Generation'
-});
+async function main() {
+    const dataset = await literalClient.api.createDataset({
+        name: 'Foo',
+        description: 'A dataset to store samples.',
+        metadata: { isDemo: true },
+        type: 'key_value' // other option: 'generation'
+    });
+}
+main();
 ```
 </CodeGroup>
 
@@ -115,44 +118,55 @@ Now that we have a dataset, we can create dataset items. There are two ways to a
 from literalai import LiteralClient
 import os
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 # option 1: add local items
-dataset_item = client.api.create_dataset_item(
-  dataset_id = dataset.id,
+dataset_item = literal_client.api.create_dataset_item(
+  dataset_id = "<DATASET_ID>", # dataset.id
   input = { "content": "What is literal?" },
   expected_output = { "content": "Literal is an observability solution." }
 )
 
 # option 2: add existing steps, runs, generations
-dataset_item = client.api.add_step_to_dataset(
-  dataset_id = dataset.id,
+dataset_item = literal_client.api.add_step_to_dataset(
+  dataset_id = "<DATASET_ID>", # dataset.id
   step_id = "step_id" # reference to a step, run or generation
 )
-dataset_item = client.api.add_generation_to_dataset(
-  dataset_id = dataset.id,
+dataset_item = literal_client.api.add_generation_to_dataset(
+  dataset_id = "<DATASET_ID>", # dataset.id
   generation_id = "generation_id" # reference to a step, run or generation
 )
 ```
+
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // option 1: add local items
-const datasetItem = await client.api.createDatasetItem({
-  datasetID: dataset.id,
-  datasetItem: {
+const datasetId = "<DATASET_ID>";
+const item = {
     input: { content: "What is literal?" },
     expectedOutput: { content: "Literal is an observability solution." },
-  }
-});
+};
+
+const start = async function() {
+    const datasetItem = await literalClient.api.createDatasetItem(
+        datasetId, 
+        item
+    );
+}
+start();
 
 // option 2: add existing steps, runs, generations
-const datasetItem = await client.api.addStepToDataset(
-  datasetId: dataset.id, 
-  stepId: "stepId" // reference to a step, run or generation
-);
+const stepId = "<STEP_ID>";  // reference to a step
+async function main() {
+    const datasetItem = await literalClient.api.addStepToDataset(
+        datasetId,
+        stepId
+    );
+};
+main();
 ```
 </CodeGroup>
 
@@ -163,9 +177,9 @@ const datasetItem = await client.api.addStepToDataset(
 from literalai import LiteralClient
 import os
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-dataset = sdk.api.get_dataset(id="dataset_id")
+dataset = sdk.api.get_dataset(id="<DATASET_ID>")
 
 for item in dataset.items:
   pass
@@ -173,13 +187,17 @@ for item in dataset.items:
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
 
-const client = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const dataset = await client.api.getDataset("dataset_id");
+async function main() {
+    const dataset = await literalClient.api.getDataset({id: "<DATASET_ID>"});
 
-dataset.items.forEach((item) => {
-  // ...
-});
+    dataset?.items.forEach((item) => {
+        console.log(item.id)
+    });
+};
+
+main();
 ```
 </CodeGroup>
 

@@ -6,7 +6,7 @@ description: "Create and Update methods for Score"
 ## Create a score
 
 ```python
-score = client.api.create_score(
+score = literal_client.api.create_score(
             step_id="<STEP_UUID>", 
             generation_id="<GENERATION_UUID>"
             type="HUMAN",
@@ -54,7 +54,7 @@ below is required.
 
 ```python
 
-score = client.api.update_score(
+score = literal_client.api.update_score(
     id="<SCORE_UUID>",
     update_params={
         "comment": "Hi world",

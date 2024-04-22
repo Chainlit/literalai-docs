@@ -15,7 +15,7 @@ The example in the following image shows a Run called `Query` of a RAG chatbot a
   />
 </Frame>
 
-In the following code example you can see that you can tag steps with the type `"Run"`, by writing `@client.step(type="run")` in Python or `@client.step(type="run")` in TypeScript:
+In the following code example you can see that you can tag steps with the type `"Run"`, by writing `@literal_client.step(type="run")` in Python or `@literal_client.step(type="run")` in TypeScript:
 
 <CodeGroup>
 
@@ -23,14 +23,16 @@ In the following code example you can see that you can tag steps with the type `
 import os
 from literalai import LiteralClient
 
-client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 # Here you can define the type of the step as run
-@client.step(type="run")
+@literal_client.step(type="run")
 def my_run():
     # Implement your custom logic here
     return "Success"
     
+my_run()
+
 # Network requests by the SDK are performed asynchronously.
 # Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
 # WARNING: If you run a continuous server, you should not use this method.
@@ -38,14 +40,13 @@ client.flush_and_stop()
 ```
 
 ```typescript TypeScript
-import { LiteralClient, Step, Thread } from "@literalai/client";
+import { LiteralClient } from "@literalai/client";
 
-const client = new LiteralClient('your_api_key');
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-// Run example
 // Run example
 async function myRun() {
-  const run = client.step({
+  const run = literalClient.step({
     name: "My Run",
     type: "run",
     input: { content: "My run Input" },
@@ -66,8 +67,6 @@ async function main() {
 main().catch((error) => {
   console.error("Error running main function:", error);
 });
-
-
 ```
 
 </CodeGroup>

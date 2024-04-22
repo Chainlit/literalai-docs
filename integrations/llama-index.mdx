@@ -1,0 +1,54 @@
+---
+title: "Llama Index"
+---
+
+The Llama Index integration enables to monitor your RAG pipelines with a single line of code.
+
+<Note>You should create a new instance of the callback handler for each invocation.</Note>
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+from llama_index.core.service_context import ServiceContext
+from llama_index.core.callbacks import CallbackManager
+
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+service_context = ServiceContext.from_defaults(callback_manager=CallbackManager([literal_client.llama_index_callback()]))
+
+# Assuming you have an index object
+query_engine = index.as_query_engine(streaming=False, similarity_top_k=2, service_context=service_context)
+
+# Optional: Reset the context for each request to avoid mixing up the context
+literal_client.reset_context()
+
+```
+</CodeGroup>
+
+## Multiple calls in a single thread
+
+You can combine the Llama Index callback handler with the concept of [Thread](/concepts/thread) to monitor multiple calls in a single thread.
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+from llama_index.core.service_context import ServiceContext
+from llama_index.core.callbacks import CallbackManager
+
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+# Optional: Reset the context for each request to avoid mixing up the context
+literal_client.reset_context()
+
+with literal_client.thread(name="Llama Index example") as thread:
+    service_context = ServiceContext.from_defaults(callback_manager=CallbackManager([literal_client.llama_index_callback()]))
+    # Call here
+```
+
+</CodeGroup>
