@@ -33,6 +33,8 @@ The Python code for this chatbot looks as follows.
 
 Note how the different steps of the RAG pipeline are using Literal step decorators: `@cl.step(name="", type="")`. This is done in order to follow the steps in a thread in Literal. 
 
+Run the following code, named `chatbot.py`, with `chainlit run chatbot.py`.
+
 <CodeGroup>
 ```python Python
 import chainlit as cl
@@ -171,43 +173,93 @@ The threads or conversations will become visible in the Literal UI.
 
 ## 3. Run a few manual sample iterations and feedback
 
-For initial testing purposes, you can manually run around 10 questions to your chatbot, in order to get familiar with the process and results. The results and steps that the chatbot took in order to come to an answer are visible in the Literal UI, under "Threads". In production, you want an extensive test, but it can be useful to get a first glance of the model.
+For initial testing purposes, you can manually run a few questions to your chatbot, in order to get familiar with the process and results. The results and steps that the chatbot took in order to come to an answer are visible in the Literal UI, under "Threads". For a real application, you want an extensive test, but it can be useful to get a first glance of the model.
 
 Users can give feedback in the chatbot application to indicate how happy they are with the result. This gives you an indication on how well the model behaves.
 
 As administrator, you can also give feedback on the chatbot's answers in the threads that already happened. 
 
-## 4. Create a dataset and evaluate using RAGAS
+## 4. Create a Dataset
 
 In order to test the chatbot's model, you need to create a dataset. First, decide on the evaluation criteria that you want to test. [RAGAS](https://docs.ragas.io/en/stable/concepts/metrics/index.html) defines various metrics that can be tested in isolation, such as faithfulness, answer relevancy, context recall and answer correctness. In this tutorial, we are going to calculate **faithfulness** ans **answer correctness**. Faithfullness measures the factual consistency of the answer given the context. Faithfullness is measured by dividing *number of truthful claims that can be inferred from the given context* by the *total number of claims in the chatbot's generated answer*. Answer Correctness measures the accuracy of the generated answer compared to the ground truth. 
 
-The example code shows how to create a dataset and data items in this dataset. The examples should match the evaluation criteria that we will test on: faithfulness and answer correctness. Thus, the facts in the answer should be correct given the context from the retriever, and the answer should be similar to the given ground truth. 
+The dataset for this experiment will consist of examples that we add by hand. The examples have an `input` and an `expected_output`. The `input` is the user query, and the `expected_output` is the expected answer from the chatbot. 
 
-We will create a dataset with data that comes from the chatbot's conversations. The dataset will contain the user query, the chatbot's answer, and the relevant documents from the vector store that were used to generate the answer. The dataset will be used to evaluate the chatbot's model on faithfulness and answer correctness.
+<CodeGroup>
+```python Python
+# Create Dataset in Literal
+dataset = literal_client.api.create_dataset(
+    name="TestDataset", description="A dataset to store samples.", metadata={ "isDemo": True }
+)
 
-For the sake of this demo, we will write out the chatbot's answers here in code. In a production environment, for online evaluation, you can add the chatbot's answers to a created dataset via `dataset.add_step(step_id="<STEP_ID>")`. You can create a dataset via `dataset = sdk.api.create_dataset(name="Foo", description="A dataset to store samples.", metadata={ "isDemo": True })`
+# The items with ground truth to add to the dataset
+items = [
+  {
+    "input": "What is Literal?", 
+    "expected_output": "Literal is a platform for LLM observability, evaluation and prompt collaboration.",
+  }, {
+    "input": "What does Literal offer?", 
+    "expected_output": "The platform has a UI and a Python and TypeScript client.",
+  }
+]
 
-For evaluation, we use [RAGAS](https://docs.ragas.io/en/stable/index.html), a Python framework to evaluation RAG pipelines. Note that this evaluation is done *outside* of Literal.
+# Add items to Dataset in Literal
+for item in items:
+    dataset.create_item(
+      input={ "content": item["input"] },
+      expected_output={ "content": item["expected_output"] }
+    )
+```
+</CodeGroup>
+
+Note that for a serious evaluation you would want more than two examples to evaluate.
+
+## 5. Run chatbot on dataset items
+
+In order to evaluate the chatbot, we need to run the test cases that we saved in the dataset using the LLM model of the chatbot. We will add the chatbot's answers and contexts to the item list. Run the input questions that you put in the test dataset on the chatbot. In this example, Chainlit is used. You can open the Chainlit chatbot and ask your questions there, in two separate chats. These threads will be visible in the Literal UI, under "Threads". 
+
+<Frame caption="Test Threads">
+  <img src="/images/rag-chatbot-threads.png" alt="Test Threads"/>
+</Frame>
+
+<Frame caption="Test Thread">
+  <img src="/images/rag-chatbot-thread.png" alt="Test Thread"/>
+</Frame>
+
+Next, you want to add the chatbot's answers and contexts to the list of test items that we created in the previous step. In the next step we can use this list to evaluate using RAGAS. Make sure to use the `Step ID` from the `LLM` step in the Thread, and `Step ID` from the `Retrieve` step in the Thread.
+
+
+<CodeGroup>
+```python Python
+import ast 
+# Replace with your step IDs
+llm_steps = ["b5f69f7e-a9d2-4a6f-8b1a-61e8a2c0a374", "b165f8c2-ee08-44ab-9b3a-ae05a669ccaa"]
+context_steps = ["3c848131-bb52-4f38-85c1-afdc1422e748", "2d96877d-4beb-4337-978b-f8c19daf3527"]
+
+# Add answers to the item list
+for idx, llm_step in enumerate(llm_steps):
+    llm_step_data = literal_client.api.get_step(llm_step)
+    items[idx]["answer"] = llm_step_data.output["content"]
+
+    contexts = []
+    contexts_data = literal_client.api.get_step(context_steps[idx])
+    contexts_data_json = ast.literal_eval(contexts_data.output["content"])["matches"]
+    for context in contexts_data_json:
+        contexts.append(context["id"])
+    items[idx]["context"] = contexts
+```
+</CodeGroup>
+
+## 6. Evaluate items 
+
+Next, we can evaluate the two generated answers on faithfulness and answer correctness. For evaluation, we use [RAGAS](https://docs.ragas.io/en/stable/index.html), a Python framework to evaluation RAG pipelines. Note that this evaluation is done *outside* of Literal.
+
 
 <CodeGroup>
 ```python Python
 from ragas import evaluate
 from ragas.metrics import faithfulness, answer_correctness
 from datasets import Dataset
-
-items = [
-  {
-    "input": "What is Literal?", 
-    "expected_output": "Literal is a platform for LLM observability, evaluation and prompt collaboration.",
-    "answer": "Literal is an observabilty solution",
-    "context": ["Literal is a LLM observability, evaluation and prompt collaboration platform.", "Literal has a UI and a Python and Typescript client."]
-  }, {
-    "input": "What does Literal offer?", 
-    "expected_output": "The platform has a UI and a Python and TypeScript client.",
-    "answer": "Literal is an observabilty solution",
-    "context": ["Literal is a LLM observability, evaluation and prompt collaboration platform.", "Literal has a UI and a Python and Typescript client."]
-  }
-]
 
 test_dataset = {
     'question': [item["input"] for item in items],
@@ -228,8 +280,6 @@ print(df.head())
 ```
 </CodeGroup>
 
-Note that for a serious evaluation you would want more than two examples to evaluate.
-
 ## 5. Analyze results
 
 Finally, you can analyze the results of the evaluation. The results will be shown in the terminal.
@@ -239,3 +289,40 @@ Finally, you can analyze the results of the evaluation. The results will be show
 </Frame>
 
 You can see that both answers have the highest score for faithfulness, meaning that the chatbot's answers are factually consistent given the context. The answer correctness is also high for the first results, but low for the second result. This corresponds to human evaluation if we look at the examples we created. Based on this result, you can decide to improve the chatbot's model or prompt. 
+
+You can also see the experiment results in Literal, if you upload the experiment. 
+
+<CodeGroup>
+```python Python
+experiment = dataset.create_experiment(
+    name="Test Experiment",
+    prompt_id= literal_client.api.get_prompt(name="RAG prompt").id,
+    params=[{ "type": faithfulness.name, "top_k": 1 }, { "type": answer_correctness.name, "top_k": 1 }]
+)
+
+# Log each experiment result.
+for index, row in df.iterrows():
+    scores = [{ 
+        "name": faithfulness.name,
+        "type": "AI",
+        "value": row[faithfulness.name]
+    }, { 
+        "name": answer_correctness.name,
+        "type": "AI",
+        "value": row[answer_correctness.name]
+    }]
+
+    experiment_item = {
+        "datasetItemId": dataset.items[index].id,
+        "scores": scores,
+        "input": { "question": row["question"] },
+        "output": { "contexts": row["contexts"].tolist() }
+    }
+    
+    experiment.log(experiment_item)
+```
+</CodeGroup>
+
+<Frame caption="Evaluation result using RAGAS in Literal">
+  <img src="/images/rag-chatbot-experiment.png" alt="Evaluation result using RAGAS in Literal"/>
+</Frame>
