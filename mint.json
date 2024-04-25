@@ -55,19 +55,26 @@
             "group": "Concepts",
             "pages": [
                 "concepts/prompt",
-                "concepts/dataset",
                 {
                     "group": "Observability",
                     "pages": [
+                        "concepts/analytics",
                         "concepts/thread",
                         "concepts/step",
                         "concepts/run",
                         "concepts/generation",
+                        "concepts/tags",
                         "concepts/score",
                         "concepts/user"
                     ]
                 },
-                "concepts/evaluation",
+                {
+                    "group": "Evaluation",
+                    "pages": [
+                        "concepts/dataset",
+                        "concepts/experiment"
+                    ]
+                },
                 "concepts/project-roles"
             ]
         },
@@ -129,15 +136,30 @@
             ]
         },
         {
-            "group": "Guides",
+            "group": "How-To Guides",
             "pages": [
-                "guides/guide-tag-scores-metadata",
-                "guides/rag-example",
-                "guides/agent-run",
-                "guides/conversational-agent",
-                "guides/conversational-agent-fastapi",
-                "guides/distributed-tracing",
-                "guides/dataset"
+                {
+                    "group": "Observability",
+                    "pages": [
+                        "guides/guide-tag-scores-metadata",
+                        "guides/agent-run",
+                        "guides/conversational-agent",
+                        "guides/conversational-agent-fastapi",
+                        "guides/distributed-tracing"
+                    ]
+                },
+                {
+                    "group": "Evaluation",
+                    "pages": [
+                        "guides/dataset"
+                    ]
+                },
+                {
+                    "group": "End-to-End",
+                    "pages": [
+                        "guides/rag-example"
+                    ]
+                }
             ]
         },
         {
