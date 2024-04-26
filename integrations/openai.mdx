@@ -166,9 +166,9 @@ Which will produce the following logs in the `Threads` page:
   <img src="/images/openai-example.png" alt="A thread on the platform" />
 </Frame>
 
-## Adding Metadata and Tags
+## Adding Tags
 
-You can add [Metadata](/guides/guide-tag-scores-metadata#metadata) and [Tags](/guides/guide-tag-scores-metadata#tags) to the steps generated via the instrumentation.
+You can add [Tags](/guides/guide-tag-scores-metadata#tags) to the Generations in Steps created via the instrumentation.
 
 <CodeGroup>
 ```python Python
@@ -186,8 +186,7 @@ completion = openai_client.chat.completions.create(
     messages=[
         # ...
     ],
-    # Add metadata and tags
-    literal_metadata={"key": "value"},
+    # Add tags
     literal_tags=["tag1", "tag2"],
 )
 ```
@@ -212,8 +211,7 @@ const completion = await openai.chat.completions.create({
 });
 
 await literalClient.instrumentation.openai(completion, run, {
-  // Add metadata and tags
-  metadata: { key: "value" },
+  // Add tags
   tags: ["tag1", "tag2"],
 });
 ```
