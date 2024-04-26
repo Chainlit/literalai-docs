@@ -124,9 +124,7 @@
         },
         {
             "group": "Self Hosting",
-            "pages": [
-                "self-hosting/deployment"
-            ]
+            "pages": ["self-hosting/get-started", "self-hosting/deployment"]
         },
         {
             "group": "Guides",
