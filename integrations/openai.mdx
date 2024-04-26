@@ -165,3 +165,56 @@ Which will produce the following logs in the `Threads` page:
 <Frame caption="OpenAI thread">
   <img src="/images/openai-example.png" alt="A thread on the platform" />
 </Frame>
+
+## Adding Metadata and Tags
+
+You can add [Metadata](/guides/guide-tag-scores-metadata#metadata) and [Tags](/guides/guide-tag-scores-metadata#tags) to the steps generated via the instrumentation.
+
+<CodeGroup>
+```python Python
+import os
+from openai import OpenAI
+from literalai import LiteralClient
+
+openai_client = OpenAI()
+
+literal_client = LiteralClient()
+literal_client.instrument_openai()
+
+completion = openai_client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        # ...
+    ],
+    # Add metadata and tags
+    literal_metadata={"key": "value"},
+    literal_tags=["tag1", "tag2"],
+)
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+import OpenAI from 'openai';
+
+const literalClient = new LiteralClient();
+
+const openai = new OpenAI();
+
+const thread = await literalClient.thread({ /* ... */ }).upsert();
+
+const run = thread.step({ /* ... */ });
+
+const completion = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    // ...
+  ],
+});
+
+await literalClient.instrumentation.openai(completion, run, {
+  // Add metadata and tags
+  metadata: { key: "value" },
+  tags: ["tag1", "tag2"],
+});
+```
+</CodeGroup>
