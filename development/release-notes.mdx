@@ -1,0 +1,42 @@
+---
+title: Release Notes
+---
+
+All changes and improvements to Literal are listed here. For changes in the SDKs, go to the [Python SDK](/python-client/development/changelog) or [TypeScript SDK](/typescript-client/development/changelog).
+
+
+# 0.0.603-beta (April 29, 2024)
+
+### Breaking Changes
+
+* None
+
+
+### New Features
+
+* **Credentials**: You are now able to share your llm credentials to better collaborate through the prompt playground.
+  <img
+    src="/images/changelog-credentials-04-29-2024.png"
+    alt="Shared credentials settings"
+  />
+
+
+### Improvements 
+
+* **Dashboard**: New comparison badge in dashboard to display the data evolution.
+  <img
+    src="/images/changelog-evolution-04-29-2024.png"
+    alt="Dashboard evolution badge"
+  />
+* **UI of Thread and Dataset**: On the top of a `Thread` or `Dataset` page there, the location is now shown as breadcrumb. This prevents getting lost in sheets and improves navigation. 
+* **Settings UI**: Split `Settings` menu in the UI into sub-menus for `General`, `LLM` and `Team`. 
+* **Prompts**: New `Created by` column on Prompt Version table, which improves the table display.
+
+
+### Fixes
+
+* **Prompt Playground**: Fix model select overflow (This is minimal change in the prompt playground. The long model name in the select is now ellipsed when size is reduced)
+* **Experiments**: In `comparison` mode, parameters are made more explicit. In addition, the charts inversed, which is now fixed.
+* **Filters**: `is null` and `not in` filters on tags edge cases are added. This fixes the tags filters in the table, as they were not working as intended before.
+* **Tags**: Newly created `Tags` are now visible in the UI when a `Thread`, `Step` or `Generation` page is refreshed. Tags are now refetched on page refresh.
+* **Tags**: `Tags` can now be added on generations being created.
