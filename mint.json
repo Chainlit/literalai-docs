@@ -55,19 +55,26 @@
             "group": "Concepts",
             "pages": [
                 "concepts/prompt",
-                "concepts/dataset",
                 {
                     "group": "Observability",
                     "pages": [
+                        "concepts/monitoring",
                         "concepts/thread",
                         "concepts/step",
                         "concepts/run",
                         "concepts/generation",
+                        "concepts/tags",
                         "concepts/score",
                         "concepts/user"
                     ]
                 },
-                "concepts/evaluation",
+                {
+                    "group": "Evaluation",
+                    "pages": [
+                        "concepts/dataset",
+                        "concepts/experiment"
+                    ]
+                },
                 "concepts/project-roles"
             ]
         },
@@ -127,15 +134,25 @@
             "pages": ["self-hosting/get-started", "self-hosting/deployment"]
         },
         {
-            "group": "Guides",
+            "group": "Observability",
             "pages": [
-                "guides/guide-tag-scores-metadata",
-                "guides/rag-example",
                 "guides/agent-run",
                 "guides/conversational-agent",
                 "guides/conversational-agent-fastapi",
                 "guides/distributed-tracing",
+                "guides/guide-tag-scores-metadata"
+            ]
+        },
+        {
+            "group": "Evaluation",
+            "pages": [
                 "guides/dataset"
+            ]
+        },
+        {
+            "group": "End-to-End",
+            "pages": [
+                "guides/rag-example"
             ]
         },
         {
