@@ -58,7 +58,7 @@
                 {
                     "group": "Observability",
                     "pages": [
-                        "concepts/analytics",
+                        "concepts/monitoring",
                         "concepts/thread",
                         "concepts/step",
                         "concepts/run",
@@ -136,30 +136,25 @@
             ]
         },
         {
-            "group": "How-To Guides",
+            "group": "Observability",
             "pages": [
-                {
-                    "group": "Observability",
-                    "pages": [
-                        "guides/guide-tag-scores-metadata",
-                        "guides/agent-run",
-                        "guides/conversational-agent",
-                        "guides/conversational-agent-fastapi",
-                        "guides/distributed-tracing"
-                    ]
-                },
-                {
-                    "group": "Evaluation",
-                    "pages": [
-                        "guides/dataset"
-                    ]
-                },
-                {
-                    "group": "End-to-End",
-                    "pages": [
-                        "guides/rag-example"
-                    ]
-                }
+                "guides/agent-run",
+                "guides/conversational-agent",
+                "guides/conversational-agent-fastapi",
+                "guides/distributed-tracing",
+                "guides/guide-tag-scores-metadata"
+            ]
+        },
+        {
+            "group": "Evaluation",
+            "pages": [
+                "guides/dataset"
+            ]
+        },
+        {
+            "group": "End-to-End",
+            "pages": [
+                "guides/rag-example"
             ]
         },
         {
