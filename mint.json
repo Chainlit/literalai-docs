@@ -40,6 +40,10 @@
         {
             "name": "GraphQL API Reference",
             "url": "graphql-api-reference"
+        },
+        {
+            "name": "Changelog",
+            "url": "changelog"
         }
     ],
     "anchors": [],
@@ -149,7 +153,13 @@
             "pages": [
                 "graphql-api-reference/introduction"
             ]
-        }
+        },
+        {
+            "group": "Changelog",
+            "pages": [
+                "changelog/overview"
+            ]
+        } 
     ],
     "footerSocials": {
         "twitter": "https://twitter.com/chainlit_io",
