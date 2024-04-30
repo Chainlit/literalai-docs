@@ -1,0 +1,26 @@
+---
+title: Changelog
+---
+
+# `0.0.503`
+
+### Deprecations
+
+* `createPrompt()` is deprecated. `getOrCreatePrompt()` should now be used.
+
+
+### New Features 
+
+* `getOrCreatePrompt()`. For creating a new Prompt, use `getOrCreatePrompt()`. 
+
+    ```
+        A Prompt is fully defined by its name, template_messages, settings
+        and tools.
+        If a prompt already exists for the given arguments, it is returned.
+        Otherwise, a new prompt is created.
+    
+        @param name The name of the prompt to retrieve or create.
+        @param templateMessages A list of template messages for the prompt.
+        @param settings Optional settings for the prompt.
+        @returns The prompt that was retrieved or created.
+    ```
