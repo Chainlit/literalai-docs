@@ -8,7 +8,7 @@ To install the Python client, run the following command:
 pip install literalai
 ```
 
-You can use the Literal Python client synchronous or asynchonous. For trying it out on small scale, you can use the synchronous version. If you move to production, you'll want to use asynchronous functions. All functions can be used both sync or async, except for functions on `Dataset`, which are always sync. All examples in the documentation are, for simplicity, using the synchronous client. If you want to use the async functions, make sure to `await` the functions.
+You can use the Literal Python client synchronous or asynchonous. For trying it out on small scale, you can use the synchronous version. If you move to production, you'll want to use asynchronous functions. All functions can be used both sync or async, except for functions on `Dataset`, which are always sync. All examples in the documentation are, for simplicity, using the synchronous client. If you want to use the async functions, make sure to `await` the functions.  
 
 To instantiate the synchronous client:
 
@@ -28,6 +28,8 @@ from literalai import AsyncLiteralClient
 async_literal_client = AsyncLiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
 ```
 
+Additionally, you can pass the optional `batch_size` argument to batch multiple events - handled simultaneously by Literal. Defaults to 10.
+
 #### Disable Decorators
 
 When instantiating the client, you have the option to disable the decorators that comes with the SDK. This can be useful when you want to disable the decorators without changing the code. 
@@ -36,5 +38,5 @@ When instantiating the client, you have the option to disable the decorators tha
 import os
 from literalai import LiteralClient
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True) 
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True)
 ```
