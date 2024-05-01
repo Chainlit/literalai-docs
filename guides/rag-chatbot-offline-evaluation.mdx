@@ -1,13 +1,19 @@
 ---
-title: Build and evaluate a RAG Chatbot with Chainlit, OpenAI, Pinecone and Literal
+title: Build and evaluate a RAG chatbot with Chainlit, OpenAI, Pinecone and Literal
 ---
 
-In this guide you'll learn how to build, improve and monitor a conversational application. We'll use [Chainlit](https://docs.chainlit.io/get-started/overview) in combination with Literal, to show the development flow of building, evaluating and improving the chatbot. The chatbot uses RAG to retrieve contexts for answer generation. 
+In this guide you will learn how to build, monitor, evaluate and improve a conversational application.
+We will use [Chainlit](https://docs.chainlit.io/get-started/overview) in combination with Literal, 
+to show the development flow of building, evaluating and improving the chatbot. The chatbot uses Retrieval
+Augmented Generation (RAG) to retrieve contexts for answer generation. 
 
-## 1. Build a chatbot with Chainlit, using RAG
+## 1. Build a RAG chatbot with Chainlit
 
-First, build a chatbot with Chainlit, using a RAG pipeline. Pinecone is used as vector database, but another vector store could also be used. Make sure to store your API keys of Literal, OpenAI and Pinecone in a `.env` file. Make sure you have data documents stored in this vector database.
+First, we pick Pinecone as vector database within our RAG. Another vector store could also be used.
+Make sure to store your API keys of Literal, OpenAI and Pinecone in a `.env` file as follows.
+Make sure you have data documents stored in this vector database.
 
+<CodeGroup>
 ```bash .env
 LITERAL_API_KEY=
 OPENAI_API_KEY=
@@ -23,12 +29,17 @@ chainlit>=1.0.502
 literalai>=0.0.501
 ragas>=0.1.7
 ``` 
+</CodeGroup>
 
-You can browse the full code for this chatbot at [Documentation - RAG application](https://github.com/Chainlit/Documentation-RAG-application).
+The whole code for the chatbot lives in a single file `app.py`, which you can browse
+at [Documentation - RAG application](https://github.com/Chainlit/Documentation-RAG-application).
 
-Beyond the necessary imports, here is how the Python code for this chatbot is structured. 
-1. First, a Pinecone vector index is created. This vector database is used to store the documents and its embeddings of the data that you want your chatbot to use. For example, you can embed and store pages of a technical product documentation.  
-Check out the "Embed the documentation" section to populate your own Pinecone index with your own documents.
+Beyond the initial imports, here is how the Python code for this chatbot is structured. 
+1. First, we create a Pinecone vector index. This vector database is used to store the documents and the
+embeddings of the data that you want your chatbot to use. For example, you can embed and store pages
+of a technical product documentation.  <br/><br/>
+Check out the [Embed the documentation](https://github.com/Chainlit/Documentation-RAG-application#embed-the-documentation) 
+section to populate your own Pinecone index with your own documents.
 
 <CodeGroup>
 ```python Set up Pinecone
@@ -53,12 +64,25 @@ pinecone_index = create_pinecone_index(
 </CodeGroup>
 
 
-2. When a user question comes in, we use a prompt defined in file - or fetched from Literal,
-and we trigger our RAG agent logic.
+2. We then use a prompt defined from a file - or fetched from Literal, and initialize
+a user session with it. When a user question comes in, we trigger our RAG agent logic. 
+Let's now dive into its steps.
 
 <CodeGroup>
 ```python Setup chat prompt template
-prompt_path = os.path.join(os.getcwd(), "./app/prompts/rag.json")
+prompt_path = os.path.join(os.getcwd(), "app/prompts/rag.json")
+
+# We load the RAG prompt in Literal to track prompt iteration and
+# enable LLM replays from Literal AI.
+with open(prompt_path, "r") as f:
+    rag_prompt = json.load(f)
+
+    prompt = client.api.get_or_create_prompt(
+        name=rag_prompt["name"],
+        template_messages=rag_prompt["template_messages"],
+        settings=rag_prompt["settings"],
+        tools=rag_prompt["tools"],
+    )
 
 @cl.on_chat_start
 async def on_chat_start():
@@ -66,43 +90,26 @@ async def on_chat_start():
     Send a welcome message and set up the initial user session on chat start.
     """
     await cl.Message(
-        content="Welcome, please ask me anything about the Literal documentation !"
+        content="Welcome, please ask me anything about the Literal documentation!",
+        disable_feedback=True
     ).send()
-
-    # We load the RAG prompt in Literal to track prompt iteration and
-    # enable LLM replays from Literal AI.
-    with open(prompt_path, "r") as f:
-        rag_prompt = json.load(f)
-
-        prompt = await client.api.get_or_create_prompt(
-            name=rag_prompt["name"],
-            template_messages=rag_prompt["template_messages"],
-            settings=rag_prompt["settings"],
-            tools=rag_prompt["tools"],
-        )
 
     cl.user_session.set("messages", prompt.format_messages())
     cl.user_session.set("settings", prompt.settings)
     cl.user_session.set("tools", prompt.tools)
-
 
 @cl.on_message
 async def main(message: cl.Message):
     """
     Main message handler for incoming user messages.
     """
-    # Hack to have agent logic part of Chatbot answer.
-    answer_message = cl.Message(content="")
-    await answer_message.send()
-    cl.user_session.set("answer_message", answer_message)
-
     await rag_agent(message.content)
 
-
-@cl.step(name="RAG Agent", type="run")
+@cl.step(name="RAG Agent", type="run", root=True)
 async def rag_agent(question) -> str:
     """
-    Coordinate the RAG agent flow to generate a response based on the user's question.
+    Coordinate the RAG agent flow to generate a response based on 
+    the user's question.
     """
     # Step 1 - Call LLM with tool: plan to use tool or give message.
     message = await llm_tool(question)
@@ -116,11 +123,17 @@ async def rag_agent(question) -> str:
 
     # Step 3 - Call LLM to answer based on contexts (streamed).
     return await llm_answer(tool_results)
+
 ```
 </CodeGroup>
 
 
-3. Perform the LLM call with mention of the Pinecone tool.
+3. Vanilla RAG pipelines usually take in a user's query and immediately
+use it to retrieve the relevant contexts from their vector database.  <br/><br/>
+To highlight the typical flow of a more general LLM-based application (agent), 
+we chose to instead perform a first LLM call with mention of the Pinecone tool.
+We thus let the "planner" decide whether to make use of the retrieval: if the
+question is a general purpose, we don't need to query the vector database.
 
 <CodeGroup>
 
@@ -147,11 +160,11 @@ async def llm_tool(question):
 ```
 </CodeGroup>
 
-4. The relevant documents from the vector store are retrieved and used as context to answer the user query. 
+4. The relevant documents from the vector store are then retrieved and used
+as context to answer the user query. 
 
 <CodeGroup>
 ```python Run tool calls
-
 @cl.step(name="Embed", type="embedding")
 async def embed(question, model="text-embedding-ada-002"):
     """
@@ -184,9 +197,7 @@ async def get_relevant_documentation_chunks(question, top_k=5):
 
     retrieved_chunks = await retrieve(embedding, top_k)
 
-    contexts = [match["metadata"]["text"] for match in retrieved_chunks["matches"]]
-
-    return "\n".join(contexts)
+    return [match["metadata"]["text"] for match in retrieved_chunks["matches"]]
 
 async def run_multiple(tool_calls):
     """
@@ -201,7 +212,6 @@ async def run_multiple(tool_calls):
         function_to_call = available_tools[function_name]
         function_args = json.loads(tool_call.function.arguments)
 
-        # TODO: Parametrize the arguments depending on tool.
         function_response = await function_to_call(
             question=function_args.get("question"),
             top_k=function_args.get("top_k"),
@@ -210,7 +220,7 @@ async def run_multiple(tool_calls):
             "tool_call_id": tool_call.id,
             "role": "tool",
             "name": function_name,
-            "content": function_response,
+            "content": "\n".join(function_response),
         }
 
     # Run tool calls in parallel.
@@ -219,10 +229,10 @@ async def run_multiple(tool_calls):
     )
     return tool_results
 ```
-
 </CodeGroup>
 
-5. The LLM is used to generate an answer to the user query, using the retrieved documents.
+5. Based on the tool results - the relevant contexts retrieved from Pinecone -
+we let an LLM generate an answer to the user query.
 
 <CodeGroup>
 ```python Generate answer
@@ -241,24 +251,29 @@ async def llm_answer(tool_results):
         **settings,
     )
 
-    answer_message = cl.user_session.get("answer_message")
+    curr_step = cl.context.current_step
+    if not curr_step:
+        return ""
 
     async for part in stream:
         if token := part.choices[0].delta.content or "":
-            await answer_message.stream_token(token)
-    await answer_message.update()
+            await curr_step.stream_token(token)
+    await curr_step.update()
 
-    messages.append({"role": "assistant", "content": answer_message.content})
-    return answer_message.content
+    messages.append({"role": "assistant", "content": curr_step.output})
+    return curr_step.output
 ```
 </CodeGroup>
 
-Note how the different steps of the RAG pipeline are using Literal step decorators: `@cl.step(name="", type="")`. This is done in order to follow the steps in a thread in Literal. 
+Note how the different steps of the RAG pipeline are using Literal step
+decorators: `@cl.step(name="", type="")`. This is done in order to follow the steps in a thread in Literal. 
 
 
 ## 2. Log the chat conversations
 
-If you are using Chainlit (as in the example above), logging of threads is automatically done. If you prefer using another method, like FastAPI, Flask or TypeScript, you can use the Literal SDK. For [Python](https://docs.getliteral.ai/python-client/abstractions/thread), use
+If you are using Chainlit (as in the example above), logging of threads is automatically done.
+If you prefer using another method, like FastAPI, Flask or TypeScript, you can use the Literal SDK.
+For [Python](https://docs.getliteral.ai/python-client/abstractions/thread), use:
 
 <CodeGroup>
 ```python Python
