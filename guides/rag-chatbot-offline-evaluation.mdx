@@ -131,7 +131,7 @@ async def rag_agent(question) -> str:
 3. Vanilla RAG pipelines usually take in a user's query and immediately
 use it to retrieve the relevant contexts from their vector database.  <br/><br/>
 To highlight the typical flow of a more general LLM-based application (agent), 
-we chose to instead perform a first LLM call with mention of the Pinecone tool.
+we chose to instead perform a first LLM call with mention of the retrieval tool.
 We thus let the "planner" decide whether to make use of the retrieval: if the
 question is a general purpose, we don't need to query the vector database.
 
