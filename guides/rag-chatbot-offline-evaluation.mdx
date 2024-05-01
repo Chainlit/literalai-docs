@@ -198,36 +198,6 @@ async def get_relevant_documentation_chunks(question, top_k=5):
     retrieved_chunks = await retrieve(embedding, top_k)
 
     return [match["metadata"]["text"] for match in retrieved_chunks["matches"]]
-
-async def run_multiple(tool_calls):
-    """
-    Execute multiple tool calls asynchronously.
-    """
-    available_tools = {
-        "get_relevant_documentation_chunks": get_relevant_documentation_chunks
-    }
-
-    async def run_single(tool_call):
-        function_name = tool_call.function.name
-        function_to_call = available_tools[function_name]
-        function_args = json.loads(tool_call.function.arguments)
-
-        function_response = await function_to_call(
-            question=function_args.get("question"),
-            top_k=function_args.get("top_k"),
-        )
-        return {
-            "tool_call_id": tool_call.id,
-            "role": "tool",
-            "name": function_name,
-            "content": "\n".join(function_response),
-        }
-
-    # Run tool calls in parallel.
-    tool_results = await asyncio.gather(
-        *(run_single(tool_call) for tool_call in tool_calls)
-    )
-    return tool_results
 ```
 </CodeGroup>
 
