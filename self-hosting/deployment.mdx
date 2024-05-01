@@ -1,204 +1,119 @@
 ---
-title: Self-Hosted Deployment
+title: Manual Deployment
 ---
 
-<Note>
-  Contact us here for enterprise support https://forms.gle/uyKyZmmpVET95Wbx8
-</Note>
+<Note> This guide assumes you have a Docker Personal Access Token (PAT) to authenticate with the Docker registry. If you do not have a Docker PAT, please contact us [here](https://forms.gle/uyKyZmmpVET95Wbx8).</Note>
 
-## Get the image
+You can deploy the LiteralAI platform anywhere by provisioning the infrastructure, setting up the environment variables and run the Docker image.
 
-1. After getting an issued Docker PAT
 
-2. Authenticate with your token:
+## Get the Image
 
-```shell
-docker login --username literalai
-# When prompted for a password, use the token
-```
+1. Authenticate using your token:
+   ```shell
+   docker login --username literalai
+   # When prompted for a password, use the token
+   ```
+2. Pull the image:
+   ```shell
+   docker pull literalai/platform:latest
+   ```
 
-3. Pull the image
+## Provision the Infrastructure
 
-```shell
-docker pull literalai/platform:latest
-```
+To run the LiteralAI platform, you need to set up the following services:
+1. PostgreSQL database >= 15
+2. [Optional] File storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
+3. [Optional] Redis cache
+4. [Optional] SMTP server
 
-## Host the image
+## Configure Environment Variables
 
-### Google Artifactory Registry
+Before running the container, you need to set up the environment variables.
 
-1. Tag the image:
+### 1. Database Configuration
 
-```shell
-docker tag literalai/platform:latest <region>-docker.pkg.dev/<project_id>/<artifactory_name>/platform:latest
-```
+<Warning>The [pgcrypto](https://www.postgresql.org/docs/current/pgcrypto.html) module is required for PostgreSQL. When using Azure, you will need to manually [add the extension](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions).</Warning>
+#### Required 
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `DATABASE_URL` | URL for database communication (PostgreSQL supported). | `postgresql://username:password@host:port/db_name` |
 
-2. Push the image
+#### Optional 
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `DATABASE_DIRECT_URL` | Direct URL for database migrations (cannot use pg-bouncer). | `postgresql://username:password@host:port/db_name` |
+| `DATABASE_SSL` | Set to 'true' if using a secure network. | `false` |
 
-```shell
-docker push <region>-docker.pkg.dev/<project_id>/<artifactory_name>/platform:latest
-```
+### 2. Authentication Configuration
+#### Provider Agnostic
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `NEXTAUTH_SECRET` | Secret for encrypting JWT and hashing tokens. | `your secret` |
+| `NEXTAUTH_URL` | URL for your domain. | `https://yourdomain.com` |
+| `ENABLE_CREDENTIALS_AUTH` | Enable credentials (email password) authentication. | `false` |
 
-### Google Container Registry
+#### Provider Specific
+<Note>Remember you will have to allow the OAuth redirect URL in your provider's settings.</Note>
 
-1. Tag the image:
+| Variable | Description | OAuth Redirect URL |
+|----------|-------------|---------|
+| [Azure](https://next-auth.js.org/providers/azure-ad) | `AZURE_AD_CLIENT_ID` `AZURE_AD_CLIENT_SECRET` `AZURE_AD_TENANT_ID` | `/api/auth/callback/azure-ad` |
+| [Google](https://next-auth.js.org/providers/google) | `GOOGLE_CLIENT_ID` `GOOGLE_CLIENT_SECRET` | `/api/auth/callback/google` |
+| [Okta](https://next-auth.js.org/providers/okta) | `OKTA_CLIENT_ID` `OKTA_CLIENT_SECRET` `OKTA_ISSUER` | `/api/auth/callback/okta` |
+| [GitHub](https://next-auth.js.org/providers/github) | `GITHUB_ID` `GITHUB_SECRET` | `/api/auth/callback/github` |
 
-```shell
-docker tag literalai/platform:latest gcr.io/<project_id>/platform:latest
-```
+### 3. File Storage Configuration [Optional]
 
-2. Push the image:
+<Note>Setting up a cache is optional, but recommended to support multi modal use cases. The file upload APIs won't work without a file storage.</Note>
 
-```shell
-docker push gcr.io/<project_id>/platform:latest
-```
+#### Provider Agnostic
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `BUCKET_NAME` | Name of the bucket  | `my_bucket` |
 
-### Amazon ECR
+#### Provider Specific
+| Provider | Variables | Comment |
+|----------|-----------|---------|
+| AWS S3 | `APP_AWS_ACCESS_KEY` `APP_AWS_SECRET_KEY` `APP_AWS_REGION` | |
+| Google Cloud Storage | `APP_GCS_PROJECT_ID` `APP_GCS_CLIENT_EMAIL` `APP_GCS_PRIVATE_KEY` | Private key should be base64 encoded. |
+| Azure Blob Storage | `APP_AZURE_STORAGE_ACCOUNT` `APP_AZURE_STORAGE_ACCESS_KEY` | |
 
-1. Tag the image:
+#### Configure CORS for your storage solution:
 
-```shell
-docker tag literalai/platform:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/literalai/platform:latest
-```
+- [AWS S3](https://repost.aws/knowledge-center/s3-configure-cors)
+- [Google Cloud Storage](https://cloud.google.com/storage/docs/using-cors?hl=fr#command-line)
+- [Azure Blob Storage](https://learn.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services)
 
-2. Push the image
 
-```shell
-docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/literalai/platform:latest
-```
+### 4. Cache Configuration [Optional]
 
-## Run the application
+<Note>Setting up a cache is optional, but recommended to decrease latency.</Note>
 
-1. Once your image is accessible you can then host the application using the service of your choice.
+Either `REDIS_URL` or `REDISHOST` and `REDISPORT` can be used.
 
-Here is a non exhaustive list:
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `REDIS_URL` | Full Redis URL. | `redis://127.0.0.1:6379/0` |
+| `REDISHOST` | Redis host (useful with Google Cloud Run). | `127.0.0.1` |
+| `REDISPORT` | Redis port. | `6379` |
 
-- [Google Cloud Run](https://cloud.google.com/run/docs/quickstarts/deploy-container)
-- [AWS](https://aws.amazon.com/getting-started/hands-on/deploy-docker-containers/)
+### 5. SMTP Configuration [Optional]
+<Note>Setting up SMTP is optional. It enables Literal to send emails for password resets and project invitations.</Note>
 
-2. To configure the application you will be required to pass your own environment variables.
-   Let's go over the required values:
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `EMAIL_SERVER_HOST` | Mail server host. | `"servicehost"` |
+| `EMAIL_SERVER_PORT` | Mail server port. | `"4000"` |
+| `EMAIL_SERVICE` | Email service provider. | `"gmail"` |
+| `EMAIL_USER` | Email username. | `"username"` |
+| `EMAIL_PASS` | Email password. | `"password"` |
+| `EMAIL_FROM` | Sender email address. | `"noreply@service.com"` |
 
-```shell
-# The url used to communicate with your database.
-# Note: we currently only support postgresql.
-DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<db_name><?pgbouncer=true if using pg-bouncer>
-# The url used to handle migrations to your database.
-# Note: We can not perform migration through pg-bouncer, we need a direct url to your database.
-DATABASE_DIRECT_URL=postgresql://<username>:<password>@<host>:<port>/<db_name>
-# Optionally, set DATABASE_SSL to 'true' if you need to communicate with the database over a secure network.
-# DATABASE_SSL=true
+### Configure the Port and Start the Container
 
-# Used to encrypt the NextAuth.js JWT, and to hash email verification tokens.
-NEXTAUTH_SECRET="your secret"
-NEXTAUTH_URL="https://yourdomain.com"
+The server within the Docker image runs on port `3000`. Ensure this port is exposed.
 
-# Currently we support AWS S3, Google Cloud Storage and Azure Blob Storage for file storage.
-BUCKET_NAME=""
-# For AWS S3
-# https://docs.aws.amazon.com/AmazonS3/latest/userguide/AuthUsingAcctOrUserCredentials.html
-APP_AWS_ACCESS_KEY="access key"
-APP_AWS_SECRET_KEY="secret key"
-APP_AWS_REGION="region"
-# Or for GCS https://developers.google.com/workspace/guides/create-credentials
-APP_GCS_PROJECT_ID="project id"
-APP_GCS_CLIENT_EMAIL="client email"
-# note: the private key needs to be encoded in base64
-APP_GCS_PRIVATE_KEY="private key"
-# Or for Azure storage https://learn.microsoft.com/en-us/azure/storage/blobs/quickstart-storage-explorer
-APP_AZURE_STORAGE_ACCOUNT="azure storage account"
-APP_AZURE_STORAGE_ACCESS_KEY="azure storage key"
-```
+### Start the Container
 
-<Warning>The [pgcrypto](https://www.postgresql.org/docs/current/pgcrypto.html) module is required. When using Azure you will need to manually [add the extension](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions).</Warning>
-
-3. [OPTIONAL] Setup Redis to reduce latency:
-
-```shell
-# Either set the full redis URL
-REDIS_URL="redis://127.0.0.1:6379/0"
-
-# Or pass the host and port (typically useful with google cloud run)
-REDISHOST=
-REDISPORT=
-```
-
-4. [OPTIONAL] Configure authentication methods:
-
-```shell
-# To support credentials authentication
-ENABLE_CREDENTIALS_AUTH=true
-# On top of it you will need to provide the mailer credentials
-EMAIL_SERVER_HOST="servicehost"
-EMAIL_SERVER_PORT="4000"
-EMAIL_SERVICE="gmail"
-EMAIL_USER="username"
-EMAIL_PASS="password"
-EMAIL_FROM="noreply@service.com"
-
-# We support the following OAuth providers
-## Google
-## https://support.google.com/cloud/answer/6158849
-GOOGLE_CLIENT_ID="your id"
-GOOGLE_CLIENT_SECRET="your secret"
-## Github
-## https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app
-GITHUB_ID="your id"
-GITHUB_SECRET="your secret"
-## Azure Active Directory
-## https://support.smartbear.com/readyapi/docs/requests/auth/types/oauth2/tutorial-azure.html
-AZURE_AD_CLIENT_ID="your id"
-AZURE_AD_CLIENT_SECRET="your secret"
-AZURE_AD_TENANT_ID="your tenant id"
-## Okta
-## https://developer.okta.com/docs/guides/implement-oauth-for-okta/main/
-OKTA_CLIENT_ID="your id"
-OKTA_CLIENT_SECRET="your secret"
-OKTA_ISSUER="the issuer"
-```
-
-5. [OPTIONAL] Add monitoring
-
-```shell
-# If you want to use Vercel Analytics (only for hosting with Vercel)
-ENABLE_VERCEL_ANALYTICS=true
-
-# If you want to monitor your application using Sentry
-SENTRY_ORG="org"
-SENTRY_PROJECT="project"
-# https://docs.sentry.io/product/sentry-basics/concepts/dsn-explainer/
-NEXT_PUBLIC_SENTRY_DSN="sentry-dsn"
-# https://docs.sentry.io/product/accounts/auth-tokens/
-SENTRY_AUTH_TOKEN="sentry-auth-token"
-```
-
-## Configuring storage
-
-In order to be able to use the storage solution of your choice, you will need to configure CORS for it.
-
-- For [AWS S3](https://repost.aws/knowledge-center/s3-configure-cors)
-- For [Google Cloud Storage](https://github.com/lrakai/google-cloud-storage-signed-urls/blob/master/README.md)
-- For [Azure Blob Storage](https://learn.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services)
-
-## Configure OAuth providers
-
-If you enabled OAuth authentication in the environment variables, don't forget to allow the callback url for each of the providers. The callback url is in the form:
-
-```shell
-<protocol>://<domain>/api/auth/callback/<provider>
-# Example https://my-literal.com/api/auth/callback/google
-```
-
-## Configure the port and start the container
-
-The server within the docker image will run on port `3000`. Don't forget to expose it.
-You should now be ready to start the container.
-
-## Configure your Chainlit app
-
-Once you successfully deployed the Literal Platform, don't forget to set the following environment variables in your Chainlit App.
-
-```bash
-LITERAL_API_URL=https://my-literal.com
-LITERAL_API_KEY=my project api key
-```
+You should now be able to start the container and access the Literal Platform.
