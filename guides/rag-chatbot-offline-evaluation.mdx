@@ -39,7 +39,7 @@ Beyond the initial imports, here is how the Python code for this chatbot is stru
 embeddings of the data that you want your chatbot to use. For example, you can embed and store pages
 of a technical product documentation.  <br/><br/>
 Check out the [Embed the documentation](https://github.com/Chainlit/Documentation-RAG-application#embed-the-documentation) 
-section to populate your own Pinecone index with your own documents.
+section to populate your Pinecone index with your own documents.
 
 <CodeGroup>
 ```python Set up Pinecone
@@ -65,8 +65,8 @@ pinecone_index = create_pinecone_index(
 
 
 2. We then use a prompt defined from a file - or fetched from Literal, and initialize
-a user session with it. When a user question comes in, we trigger our RAG agent logic. 
-Let's now dive into its steps.
+a user session with it. When a user question comes in, we trigger our RAG agent logic, 
+which we will study in the next step.
 
 <CodeGroup>
 ```python Setup chat prompt template
@@ -104,26 +104,6 @@ async def main(message: cl.Message):
     Main message handler for incoming user messages.
     """
     await rag_agent(message.content)
-
-@cl.step(name="RAG Agent", type="run", root=True)
-async def rag_agent(question) -> str:
-    """
-    Coordinate the RAG agent flow to generate a response based on 
-    the user's question.
-    """
-    # Step 1 - Call LLM with tool: plan to use tool or give message.
-    message = await llm_tool(question)
-
-    # Potentially several calls to retrieve context.
-    if not message.tool_calls:
-        return message.content
-
-    # Step 2 - Run the tool calls.
-    tool_results = await run_multiple(message.tool_calls)
-
-    # Step 3 - Call LLM to answer based on contexts (streamed).
-    return await llm_answer(tool_results)
-
 ```
 </CodeGroup>
 
