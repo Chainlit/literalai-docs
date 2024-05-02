@@ -146,8 +146,8 @@
             "pages": ["self-hosting/get-started", "self-hosting/deployment"]
         },
         {
-            "group": "Development",
-            "pages": ["development/release-notes"]
+          "group": "More",
+          "pages": ["more/security", "more/release-notes"]
         },
         {
             "group": "Prompt",

@@ -27,6 +27,14 @@ To run the LiteralAI platform, you need to set up the following services:
 3. [Optional] Redis cache
 4. [Optional] SMTP server
 
+### Disclaimer
+
+It is your responsibility to ensure that the infrastructure is secure and compliant with your company standards. Here are some recommendations:
+- Run the database and redis cache in a private network so that only the container running the LiteralAI platform can access them.
+- Disallow public access to the file storage.
+- Disable credential authentication and use OAuth providers for authentication.
+
+
 ## Configure Environment Variables
 
 Before running the container, you need to set up the environment variables.
