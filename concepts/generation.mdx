@@ -15,6 +15,8 @@ You can add [Tags](/concepts/tags) and [Scores](/concepts/score) to Generations.
   />
 </Frame>
 
+## Get Generations
+
 Generations are available via the SDKs ([Python](/python-client/api-reference/generation), [TypeScript](/typescript-client/api-reference)).
 
 To get all generations of the application, you can use the following code:
@@ -27,11 +29,7 @@ from literalai import LiteralClient
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-def get_generations():
-    generations = literal_client.api.get_generations()
-    return generations
-
-generations = get_generations()
+generations = literal_client.api.get_generations()
 
 for generation in generations.data:
     print(generation.to_dict())
@@ -56,13 +54,13 @@ main();
 
 </CodeGroup>
 
+## Create new Generation
+
 To create a new Generation:
 
 <CodeGroup>
-
 ```python Python
 import os
-import asyncio
 from literalai import LiteralClient, ChatGeneration
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
@@ -107,5 +105,4 @@ async function main() {
 };
 main();
 ```
-
 </CodeGroup>

@@ -26,21 +26,22 @@ An example is the vanilla Retrieval Augmented Generation (RAG), which augments L
 </Frame>
 
 Literal offers a compelling user/developer interface to build and interact with datasets.
-Through `Dataset` objects, users can iterate on a parameter of the LLM system - such as prompt template, LLM provider, temperature, etc - and view its impact via Experiments. 
+Through [`Dataset`](/concepts/dataset) objects, users can iterate on a parameter of the LLM system - such as prompt template, LLM provider, temperature, etc - and view its impact via Experiments. 
 
 A developer can also iterate on their prompt template and check the impact of their
 modifications on production data. 
 
 Evaluations can either take place:
-- on a `Dataset` which contains a number of steps' inputs/outputs to score &mdash; these are **offline evaluations**
+- on a [`Dataset`](/concepts/dataset) which contains a number of steps' inputs/outputs to score &mdash; these are **offline evaluations**
 - on live production data &mdash; those are **continuous or online evaluations**
 
 
 ## Offline evaluations
 
-With offline evaluations, developers can leverage their favorite framework, such as
+Offline Evaluations test LLMs against specific datasets. With offline evaluations, developers can leverage their favorite framework, such as
 promptfoo, Ragas, OpenAI Evals, LangChain Evaluators, etc.
 
+Two examples on Offline Evaluations with Literal AI: 
 - [Prompt Iteration with **Promptfoo**](https://github.com/Chainlit/literal-cookbook/tree/main/evaluation/typescript/prompt-iteration-promptfoo):
 Our cookbook shows how a developer can leverage the `promptfoo` library in TypeScript to
 compute similarity scores and persist the results of their experiments directly on Literal. 
@@ -53,7 +54,80 @@ For more examples on evaluations, please browse our [Literal Cookbooks](https://
 Explore additional evaluation concepts and frameworks.
 </Card>
 
-## Continuous (Online) evaluations
+### Experiment API
+
+To log the results of an Experiment, you can use the Literal AI clients. First, create an Experiment. An Experiment is always tied to a Dataset. 
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient, ChatGeneration
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+experiment = literal_client.api.create_experiment(
+    name="Foo",
+    dataset_id="<DATASET_ID>",
+    prompt_id="<PROMPT_ID>", # optional, prompt to link the experiment to
+    params=[{ "foo": "bar" }]) # optional
+```
+
+```typescript TypeScript
+import { LiteralClient} from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+async function main() {
+    const experiment = await literalClient.api.createExperiment({
+        name: 'Foo',
+        datasetId: '<DATASET_ID>',
+        promptId: '<PROMPT_ID>', // optional
+        params: { foo: "bar" } // optional
+    });
+}
+main();
+```
+</CodeGroup>
+
+Then, use this `experiment` to add items to.
+
+<CodeGroup>
+```python Python
+scores = [{ 
+    "name": "context_relevancy",
+    "type": "AI",
+    "value": 0.6
+    }]
+
+experiment_item = {
+    "datasetItemId": "<DATASET_ITEM_ID>", # ID of the dataset item that is being scored
+    "scores": scores, # scores in the format above
+    "input": { "question": "question" },
+    "output": { "content": "answer" } # output according to the LLM model, to be compared to the expected output stored in the dataset
+}
+
+experiment.log(experiment_item)
+```
+
+```typescript TypeScript
+const scores = [{ 
+    name: "context_relevancy",
+    type: "AI",
+    value: 0.6
+    }]
+
+const experimentItem = {
+    datasetItemId: "<DATASET_ITEM_ID>", // ID of the dataset item that is being scored
+    scores: scores, // scores in the format above
+    input: { question: "question" },
+    output: { content: "answer" } // output according to the LLM model, to be compared to the expected output stored in the dataset
+}
+
+await experiment.log(experimentItem)
+```
+</CodeGroup>
+
+## Online (Continuous) evaluations
 
 Contact Us [here](https://cal.com/dan-constantini/15min) to know more about how we perform continuous
 evaluations of LLM applications.

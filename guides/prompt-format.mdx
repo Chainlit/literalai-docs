@@ -65,11 +65,11 @@ messages = prompt.format_messages(variables)
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 async function main() {
     // pull the prompt from Literal AI
-    const prompt = await client.api.getPrompt('RAG prompt');
+    const prompt = await literalClient.api.getPrompt('RAG prompt');
 
     // format the prompt with a variable
     const variables = { query: 'What are the features of Literal AI?' };
@@ -126,14 +126,14 @@ loop.run_until_complete(main())
 import { LiteralClient } from '@literalai/client';
 import OpenAI from 'openai';
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 const openai = new OpenAI({
   apiKey: process.env['OPENAI_API_KEY'],
 });
 
 async function main() {
-  const prompt = await client.api.getPrompt('RAG prompt');
+  const prompt = await literalClient.api.getPrompt('RAG prompt');
   if (!prompt) return;
 
   // Optionally pass variables to the prompt
@@ -148,7 +148,7 @@ async function main() {
     stream: true
   });
 
-  await client.instrumentation.openai(result);
+  await literalClient.instrumentation.openai(result);
 }
 
 main();

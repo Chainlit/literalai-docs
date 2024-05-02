@@ -12,6 +12,35 @@ A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an 
 
 ## Log a Thread
 
+There are multiple ways to log Threads in your application. If you are using Python, the simplest way to log a Thread is to use the `@literal_client.thread` decorator before a function. 
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+@literal_client.step(type="run")
+def my_assistant(input: str):
+    response = "My assistant response"
+    literal_client.message(content=response, type="assistant_message", name="Assistant")
+    return response
+
+@literal_client.thread
+def main():
+    user_query = "Hello World"
+    literal_client.message(content=user_query, type="user_message", name="User")
+    my_assistant(user_query)
+
+main()
+```
+</CodeGroup>
+
+A more flexible option is to use the Python context manager `with` statement. More information about ways of logging Threads in Python applications, visit [this page](/python-client/abstractions/thread).
+
+In TypeScript, you can initiate a Thread using `literalClient.thread().upsert()`.
+
 <CodeGroup>
 ```python Python
 import os
@@ -31,14 +60,8 @@ def my_assistant(input: str):
 def main():
     # You can also continue a thread by passing the thread id
     with literal_client.thread(name="Thread Example") as thread:
-      print(thread.id)
       user_query = "Hello World"
       literal_client.message(content=user_query, type="user_message", name="User")
-      my_assistant(user_query)
-
-      # Let's say the user has a follow up question
-      follow_up_query = "Follow up!"
-      literal_client.message(content=follow_up_query, type="user_message", name="User")
       my_assistant(user_query)
 
 main()
@@ -124,6 +147,36 @@ main()
 ```
 
 </CodeGroup>
+
+
+## List Threads
+
+You can get all the threads from LiteralAI to your program:
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+threads = literal_client.api.list_threads(first=None, after=None, filters=None)
+
+print(threads.pageInfo)
+for thread in threads.data:
+    print(thread.to_dict())
+```
+
+```typescript TypeScript
+import { LiteralClient } from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+const threads = await literalClient.api.getThreads();
+```
+
+</CodeGroup>
+
 
 ## Visualize Threads on Literal
 

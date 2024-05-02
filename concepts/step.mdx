@@ -39,25 +39,20 @@ An `llm` step is used to document interactions with large language models (LLMs)
 
 ## Implementing Steps
 
+Possible `"type"`s are: `"run"`, `"tool"`, `"llm"`, `"embedding"`, `"retrieval"`, `"rerank"`, `"undefined"`, `"user_message"`, `"assistant_message"`, `"system_message"`.
+
 <CodeGroup>
 
 ```python Python
 import os
 from literalai import LiteralClient
 
-
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-@literal_client.step(type="tool")
-def my_tool():
-    # Implement your custom logic here
-    return "Success"
 
 # You can change the step type
 @literal_client.step(type="run")
 def my_run():
     # Implement your custom logic here
-    my_tool()
     return "Success"
 
 with literal_client.thread() as thread:
@@ -75,23 +70,6 @@ import { LiteralClient, Step, Thread } from "@literalai/client";
 
 const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-// Tool example
-async function myTool(run: Step) {
-  const tool = run.step({
-    name: "My Tool",
-    type: "tool",
-    input: { content: "My Tool Input" },
-  });
-
-  // Implement your custom logic here
-  const response = { content: "Success" };
-
-  tool.output = response;
-  await tool.send();
-
-  return response;
-}
-
 // Run example
 async function myRun(thread: Thread) {
   const run = thread.step({
@@ -99,8 +77,6 @@ async function myRun(thread: Thread) {
     type: "run",
     input: { content: "My run Input" },
   });
-
-  await myTool(run);
 
   // Implement your custom logic here
   const response = { content: "Success" };
@@ -145,14 +121,12 @@ Metadata serves as a powerful tool for enriching objects with additional context
 <CodeGroup>
 
 ```python Python
-import os, asyncio
+import os
 from literalai import LiteralClient
 
 from dotenv import load_dotenv
 load_dotenv()
 
-import os
-from literalai import LiteralClient
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 @literal_client.step(type="run", name="my_step")
