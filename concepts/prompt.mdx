@@ -132,76 +132,35 @@ You format messages like this:
 <CodeGroup>
 ```python Python
 import os
-import asyncio
 from literalai import LiteralClient
-from openai import AsyncOpenAI
-
-openai_client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-# Optionally instrument the openai client to log generations
-literal_client.instrument_openai()
 
-async def main():
-    prompt = literal_client.api.get_prompt(name="RAG prompt")
+# pull the prompt from Literal AI
+prompt = literal_client.api.get_prompt(name="RAG prompt")
 
-    # Optionally pass variables to the prompt
-    query = "What is the difference between apples and pears?"
-    variables = {"question": query}
-    messages = prompt.format(variables)
-
-    # Optionally pass settings
-    settings = {"temperature": 0, "stream": True, "model": "gpt-4-turbo-preview"}
-
-    stream = await openai_client.chat.completions.create(
-        messages=messages,
-        # Optionally pass the tools defined in the prompt
-        tools=prompt.tools,
-        # Pass the settings defined in the prompt
-        **settings,
-        stream=True
-    )
-
-    async for chunk in stream:
-        print(chunk)
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+# format the prompt with a variable
+query = "What are the features of Literal AI?"
+variables = {"question": query}
+messages = prompt.format_messages(variables)
 ```
 
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
-import OpenAI from 'openai';
 
 const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
-const openai = new OpenAI({
-  apiKey: process.env['OPENAI_API_KEY'],
-});
-
 async function main() {
-  const prompt = await client.api.getPrompt('RAG prompt');
-  if (!prompt) return;
+    // pull the prompt from Literal AI
+    const prompt = await client.api.getPrompt('RAG prompt');
 
-  // Optionally pass variables to the prompt
-  const variables = { query: 'What is the difference between apples and pears?' };
-
-  const messages = prompt.format(variables);
-
-  const result = await openai.chat.completions.create({
-    ...prompt.settings,
-    tools: prompt.tools,
-    messages: messages,
-    stream: true
-  });
-
-  await client.instrumentation.openai(result);
+    // format the prompt with a variable
+    const variables = { query: 'What are the features of Literal AI?' };
+    const messages = prompt.formatMessages(variables);
 }
 
 main();
-
 ```
-
 </CodeGroup>
 
 ### Langchain Chat Template
@@ -210,67 +169,32 @@ Since Langchain has a different format for prompts, you can convert a Literal pr
 
 You can combine the prompt with the [Langchain integration](/integrations/langchain) to log the generations and to track which prompt versions were used to generate them.
 
+More explanation and example code can be found in [this guide](/guides/prompt-langchain).
+
 <CodeGroup>
 ```python Python
 import os
-import asyncio
 from literalai import LiteralClient
-
-from langchain_openai import ChatOpenAI
-from langchain.schema.runnable.config import RunnableConfig
-from langchain.schema import StrOutputParser
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-def main():
-    prompt = literal_client.api.get_prompt(name="RAG prompt")
-    lc_prompt = prompt.to_langchain_chat_prompt_template()
+# pull the prompt from Literal AI
+prompt = literal_client.api.get_prompt(name="RAG prompt")
 
-    model = ChatOpenAI(streaming=True)
-    runnable = lc_prompt | model | StrOutputParser()
-    
-    cb = literal_client.langchain_callback()
-    variables = {"foo": "bar"}
-
-    res = runnable.invoke(
-        variables, 
-        config=RunnableConfig(callbacks=[cb], run_name="Test run")
-        )
-
-main()
+# convert to LangChain prompt
+langchain_prompt = prompt.to_langchain_chat_prompt_template()
 ```
 
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-import { StringOutputParser } from '@langchain/core/output_parsers';
-import { ChatOpenAI } from '@langchain/openai';
-
 const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
-async function main() {
-  const prompt = await client.api.getPrompt('RAG prompt');
-  if (!prompt) return;
+// pull the prompt from Literal AI
+const prompt = await client.api.getPrompt('RAG prompt');
 
-  const chatPrompt = prompt.toLangchainChatPromptTemplate();
+// convert to LangChain prompt
+const chatPrompt = prompt.toLangchainChatPromptTemplate();
 
-  const model = new ChatOpenAI({});
-  const outputParser = new StringOutputParser();
-
-  const chain = chatPrompt.pipe(model).pipe(outputParser);
-
-  const variables = { foo: 'bar' };
-
-  const response = await chain.invoke(
-    variables,
-    {
-      runName: 'Test run',
-      callbacks: [client.instrumentation.langchain.literalCallback()]
-    }
-  );
-}
-
-main();
 ```
-
 </CodeGroup>
