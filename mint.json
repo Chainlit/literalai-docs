@@ -169,7 +169,8 @@
         {
             "group": "Evaluation",
             "pages": [
-                "guides/dataset"
+                "guides/dataset",
+                "guides/rag-chatbot-offline-evaluation"
             ]
         },
         {
