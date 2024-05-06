@@ -163,6 +163,12 @@ main();
 ```
 </CodeGroup>
 
+<Warning>
+Make sure to always prepare your messages with `Prompt.format_messages` &ndash; or its
+TypeScript equivalent, even if you do not have variables to resolve. This ensures
+messages are logged properly when using our OpenAI instrumentation.
+</Warning>
+
 ### Langchain Chat Template
 
 Since Langchain has a different format for prompts, you can convert a Literal prompt to a Langchain Chat Template.
