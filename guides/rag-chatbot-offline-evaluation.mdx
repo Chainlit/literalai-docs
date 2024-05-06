@@ -3,14 +3,14 @@ title: Build and evaluate a RAG chatbot with Chainlit, OpenAI, Pinecone and Lite
 ---
 
 In this guide you will learn how to build, monitor, evaluate and improve a conversational application.
-We will use [Chainlit](https://docs.chainlit.io/get-started/overview) in combination with Literal, 
+We will use [Chainlit](https://docs.chainlit.io/get-started/overview) in combination with Literal AI, 
 to show the development flow of building, evaluating and improving the chatbot. The chatbot uses Retrieval
 Augmented Generation (RAG) to retrieve contexts for answer generation. 
 
 ## 1. Build a RAG chatbot with Chainlit
 
 First, we pick Pinecone as vector database within our RAG. Another vector store could also be used.
-Make sure to store your API keys of Literal, OpenAI and Pinecone in a `.env` file as follows.
+Make sure to store your API keys of Literal AI, OpenAI and Pinecone in a `.env` file as follows.
 Make sure you have data documents stored in this vector database.
 
 <CodeGroup>
@@ -64,7 +64,7 @@ pinecone_index = create_pinecone_index(
 </CodeGroup>
 
 
-2. We then use a prompt defined from a file - or fetched from Literal. The prompt definition
+2. We then use a prompt defined from a file - or fetched from Literal AI. The prompt definition
 includes the `name`, `template_messages`, `tools` and `settings`. Here is what
 the prompt definition looks like:
 
@@ -75,7 +75,7 @@ the prompt definition looks like:
   "template_messages": [
     {
       "role": "system",
-      "content": "You are a helpful assistant identifying questions related to Literal documentation. Common concepts in the Literal doc include: Observability, Prompt, Monitoring, Thread, Step, Run, Generation, Tag, Score, User, Evaluation, Dataset, Experiment, Projects and Roles. Keep it short, and if available prefer responding with code."
+      "content": "You are a helpful assistant identifying questions related to Literal AI documentation. Common concepts in the Literal AI doc include: Observability, Prompt, Monitoring, Thread, Step, Run, Generation, Tag, Score, User, Evaluation, Dataset, Experiment, Projects and Roles. Keep it short, and if available prefer responding with code."
     }
   ],
   "tools": [
@@ -122,7 +122,7 @@ which we will study in the next step.
 ```python Setup chat prompt template
 prompt_path = os.path.join(os.getcwd(), "app/prompts/rag.json")
 
-# We load the RAG prompt in Literal to track prompt iteration and
+# We load the RAG prompt in Literal AI to track prompt iteration and
 # enable LLM replays from Literal AI.
 with open(prompt_path, "r") as f:
     rag_prompt = json.load(f)
@@ -140,7 +140,7 @@ async def on_chat_start():
     Send a welcome message and set up the initial user session on chat start.
     """
     await cl.Message(
-        content="Welcome, please ask me anything about the Literal documentation!",
+        content="Welcome, please ask me anything about the Literal AI documentation!",
         disable_feedback=True
     ).send()
 
@@ -265,14 +265,14 @@ async def llm_answer(tool_results):
 ```
 </CodeGroup>
 
-Note how the different steps of the RAG pipeline are using Literal step
-decorators: `@cl.step(name="", type="")`. This is done in order to follow the steps in a thread in Literal. 
+Note how the different steps of the RAG pipeline are using Literal AI step
+decorators: `@cl.step(name="", type="")`. This is done in order to follow the steps in a thread in Literal AI. 
 
 
 ## 2. Log the chat conversations
 
 If you are using Chainlit (as in the example above), logging of threads is automatically done.
-If you prefer using another method, like FastAPI, Flask or TypeScript, you can use the Literal SDK.
+If you prefer using another method, like FastAPI, Flask or TypeScript, you can use the Literal AI SDK.
 For [Python](https://docs.getliteral.ai/python-client/abstractions/thread), use:
 
 <CodeGroup>
@@ -282,11 +282,11 @@ with client.thread() as thread:
 ```
 </CodeGroup>
 
-The threads or conversations will become visible in the Literal UI.
+The threads or conversations will become visible in the Literal AI UI.
 
 ## 3. Run a few manual sample iterations and feedback
 
-For initial testing purposes, you can manually run a few questions to your chatbot, in order to get familiar with the process and results. The results and steps that the chatbot took in order to come to an answer are visible in the Literal UI, under "Threads". For a real application, you want an extensive test, but it can be useful to get a first glance of the model.
+For initial testing purposes, you can manually run a few questions to your chatbot, in order to get familiar with the process and results. The results and steps that the chatbot took in order to come to an answer are visible in the Literal AI UI, under "Threads". For a real application, you want an extensive test, but it can be useful to get a first glance of the model.
 
 Users can give feedback in the chatbot application to indicate how happy they are with the result. This gives you an indication on how well the model behaves.
 
@@ -300,7 +300,7 @@ The dataset for this experiment will consist of examples that we add by hand. Th
 
 <CodeGroup>
 ```python Python
-# Create Dataset in Literal
+# Create Dataset in Literal AI
 dataset = literal_client.api.create_dataset(
     name="TestDataset", description="A dataset to store samples.", metadata={ "isDemo": True }
 )
@@ -308,15 +308,15 @@ dataset = literal_client.api.create_dataset(
 # The items with ground truth to add to the dataset
 items = [
   {
-    "input": "What is Literal?", 
-    "expected_output": "Literal is a platform for LLM observability, evaluation and prompt collaboration.",
+    "input": "What is Literal AI?", 
+    "expected_output": "Literal AI is a platform for LLM observability, evaluation and prompt collaboration.",
   }, {
-    "input": "What does Literal offer?", 
+    "input": "What does Literal AI offer?", 
     "expected_output": "The platform has a UI and a Python and TypeScript client.",
   }
 ]
 
-# Add items to Dataset in Literal
+# Add items to Dataset in Literal AI
 for item in items:
     dataset.create_item(
       input={ "content": item["input"] },
@@ -329,7 +329,7 @@ Note that for a serious evaluation you would want more than two examples to eval
 
 ## 5. Run chatbot on dataset items
 
-In order to evaluate the chatbot, we need to run the test cases that we saved in the dataset using the LLM model of the chatbot. We will add the chatbot's answers and contexts to the item list. Run the input questions that you put in the test dataset on the chatbot. In this example, Chainlit is used. You can open the Chainlit chatbot and ask your questions there, in two separate chats. These threads will be visible in the Literal UI, under "Threads". 
+In order to evaluate the chatbot, we need to run the test cases that we saved in the dataset using the LLM model of the chatbot. We will add the chatbot's answers and contexts to the item list. Run the input questions that you put in the test dataset on the chatbot. In this example, Chainlit is used. You can open the Chainlit chatbot and ask your questions there, in two separate chats. These threads will be visible in the Literal AI UI, under "Threads". 
 
 <Frame caption="Test Threads">
   <img src="/images/rag-chatbot-threads.png" alt="Test Threads"/>
@@ -365,7 +365,7 @@ for idx, llm_step in enumerate(llm_steps):
 
 ## 6. Evaluate items 
 
-Next, we can evaluate the two generated answers on faithfulness and answer correctness. For evaluation, we use [Ragas](https://docs.ragas.io/en/stable/index.html), a Python framework to evaluation RAG pipelines. Note that this evaluation is done *outside* of Literal (offline).
+Next, we can evaluate the two generated answers on faithfulness and answer correctness. For evaluation, we use [Ragas](https://docs.ragas.io/en/stable/index.html), a Python framework to evaluation RAG pipelines. Note that this evaluation is done *outside* of Literal AI (offline).
 
 
 <CodeGroup>
@@ -403,7 +403,7 @@ Finally, you can analyze the results of the evaluation. The results will be show
 
 You can see that both answers have the highest score for faithfulness, meaning that the chatbot's answers are factually consistent given the context. The answer correctness is also high for the first results, but low for the second result. This corresponds to human evaluation if we look at the examples we created. Based on this result, you can decide to improve the chatbot's model or prompt. 
 
-You can also see the experiment results in Literal, if you upload the experiment. 
+You can also see the experiment results in Literal AI, if you upload the experiment. 
 
 <CodeGroup>
 ```python Python
@@ -436,6 +436,6 @@ for index, row in df.iterrows():
 ```
 </CodeGroup>
 
-<Frame caption="Evaluation result using RAGAS in Literal">
-  <img src="/images/rag-chatbot-experiment.png" alt="Evaluation result using RAGAS in Literal"/>
+<Frame caption="Evaluation result using RAGAS in Literal AI">
+  <img src="/images/rag-chatbot-experiment.png" alt="Evaluation result using RAGAS in Literal AI"/>
 </Frame>
