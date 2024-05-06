@@ -28,7 +28,8 @@ from literalai import AsyncLiteralClient
 async_literal_client = AsyncLiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
 ```
 
-Additionally, you can pass the optional `batch_size` argument to batch multiple events - handled simultaneously by Literal. Defaults to 10.
+Additionally, you can pass the optional `batch_size` argument to batch multiple events - handled simultaneously by Literal. 
+Events are batched up to `batch_size`. Defaults to 5.
 
 #### Disable Decorators
 
@@ -38,5 +39,7 @@ When instantiating the client, you have the option to disable the decorators tha
 import os
 from literalai import LiteralClient
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True)
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True) # Disable decorators
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), batch_size=5) # Batch events
 ```
