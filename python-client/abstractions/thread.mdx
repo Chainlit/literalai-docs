@@ -2,17 +2,49 @@
 title: "Thread"
 ---
 
+There are multiple ways to log Threads in your Python applications. 
+
+## Using the `@literal_client.thread` decorator
+
+Use this decorator before a function to initiate a Thread. This method is a simple and straighforward way of logging Threads. 
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+@literal_client.step(type="run")
+def my_assistant(input: str):
+    response = "My assistant response"
+    literal_client.message(content=response, type="assistant_message", name="Assistant")
+    return response
+
+@literal_client.thread
+def main():
+    user_query = "Hello World"
+    literal_client.message(content=user_query, type="user_message", name="User")
+    my_assistant(user_query)
+
+main()
+```
+</CodeGroup>
+
 ## Using the `with` statement
 
-You can create a thread and execute code within it using the `with` statement:
+If you prefer to have more flexibility in logging Threads, you can use the `with` statement. You can create a thread and execute code within it using the `with` statement:
 
+<CodeGroup>
 ```python
 with literal_client.thread() as thread:
     # do something
 ```
+</CodeGroup>
 
 You can also continue a thread by passing the thread id to the `thread` method:
 
+<CodeGroup>
 ```python
 
 previous_thread_id = "UUID"
@@ -20,6 +52,26 @@ previous_thread_id = "UUID"
 with literal_client.thread(thread_id=previous_thread_id) as thread:
     # do something
 ```
+</CodeGroup>
+
+## Using the Literal AI API client
+
+You can also create Threads using the `literal_client.api.create_thread()` method.
+
+<CodeGroup>
+```python
+thread = literal_client.api.create_thread(
+    participant_id="<PARTICIPANT_UUID>",
+    environment="production",
+    tags=["tag1", "tag2"],
+    metadata={"key": "value"},
+)
+```
+</CodeGroup>
+
+## Using Chainlit
+
+If you built your LLM application with Chainlit, you don't need to specify Threads in your code. Chainlit logs Threads for you by default.
 
 
 ## Thread API

@@ -150,6 +150,13 @@
           "pages": ["more/security", "more/release-notes"]
         },
         {
+            "group": "Prompt",
+            "pages": [
+                "guides/prompt-format",
+                "guides/prompt-langchain"
+            ]
+        },
+        {
             "group": "Observability",
             "pages": [
                 "guides/agent-run",
