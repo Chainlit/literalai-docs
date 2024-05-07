@@ -197,14 +197,14 @@ type DatasetItem = {
 
 ```typescript
 const datasetItem = await literalClient.api.createDatasetItem("dataset_id", {
-  input: { content: "What is Literal?" },
-  expectedOutput: { content: "Literal is an observability solution." },
+  input: { content: "What is Literal AI?" },
+  expectedOutput: { content: "Literal AI is an observability solution." },
 });
 
 # Or directly through a Dataset
 const datasetItem = await dataset.createDatasetItem("dataset_id", {
-  input: { content: "What is Literal?" },
-  expectedOutput: { content: "Literal is an observability solution." },
+  input: { content: "What is Literal AI?" },
+  expectedOutput: { content: "Literal AI is an observability solution." },
 });
 ```
 

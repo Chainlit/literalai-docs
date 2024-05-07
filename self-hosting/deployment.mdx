@@ -4,7 +4,7 @@ title: Manual Deployment
 
 <Note> This guide assumes you have a Docker Personal Access Token (PAT) to authenticate with the Docker registry. If you do not have a Docker PAT, please contact us [here](https://forms.gle/uyKyZmmpVET95Wbx8).</Note>
 
-You can deploy the LiteralAI platform anywhere by provisioning the infrastructure, setting up the environment variables and run the Docker image.
+You can deploy the Literal AI platform anywhere by provisioning the infrastructure, setting up the environment variables and run the Docker image.
 
 
 ## Get the Image
@@ -21,7 +21,7 @@ You can deploy the LiteralAI platform anywhere by provisioning the infrastructur
 
 ## Provision the Infrastructure
 
-To run the LiteralAI platform, you need to set up the following services:
+To run the Literal AI platform, you need to set up the following services:
 1. PostgreSQL database >= 15
 2. [Optional] File storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
 3. [Optional] Redis cache
@@ -99,7 +99,7 @@ Either `REDIS_URL` or `REDISHOST` and `REDISPORT` can be used.
 | `REDISPORT` | Redis port. | `6379` |
 
 ### 5. SMTP Configuration [Optional]
-<Note>Setting up SMTP is optional. It enables Literal to send emails for password resets and project invitations.</Note>
+<Note>Setting up SMTP is optional. It enables Literal AI to send emails for password resets and project invitations.</Note>
 
 | Variable | Description | Example |
 |----------|-------------|---------|
@@ -116,4 +116,4 @@ The server within the Docker image runs on port `3000`. Ensure this port is expo
 
 ### Start the Container
 
-You should now be able to start the container and access the Literal Platform.
+You should now be able to start the container and access the Literal AI Platform.
