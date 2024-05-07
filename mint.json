@@ -148,7 +148,7 @@
         },
         {
           "group": "More",
-          "pages": ["more/security", "more/release-notes"]
+          "pages": ["more/security", "more/export-data", "more/release-notes"]
         },
         {
             "group": "Prompt",
