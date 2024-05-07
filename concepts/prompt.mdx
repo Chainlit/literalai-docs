@@ -4,7 +4,7 @@ title: "Prompt"
 
 You can view your prompts in the Prompt Management page. This overview shows the prompts that you have created, manage different versions of these prompts and lets you create and test prompt templates in collaboration with your teammates. In the [Literal Prompt Playground](#prompt-playground), which is connected to prompts and threads, you can debug prompts in-context, draft and iterates on prompts. Once you are happy with your prompt, you can save it and use it in your code.
 
-Prompts are managed in the Literal platform, which has several benefits:
+Prompt can be stored in either Literal AI or in your application code. Prompts that are managed in the Literal AI platform has several benefits:
 - Non technical people can draft and iterate on prompts.
 - You can deploy a new version of your prompt without deploying your code.
 - You can track which prompt version for a specific generation.
@@ -13,8 +13,17 @@ Prompts are managed in the Literal platform, which has several benefits:
 - You can collaborate with the team.
 - You can do online evaluation [coming soon].
 
+Prompts that are stored in Literal AI can be pulled to your application code via the SDK. 
 
-## Versioning
+It is also possible to store the prompts in your application code. Then, you can still manage template versioning and provider tracking in Literal AI.
+
+The following figure illustrates saving the prompt in Literal AI (option 1) versus in your application code (option 2).
+
+<Frame caption="Prompt stored in Literal AI vs in application code">
+  <img src="/images/prompt-flow.svg" alt="Prompt stored in Literal AI vs in application code." />
+</Frame>
+
+## Prompt Versioning
 On the `Prompts` dashboard, you can see which prompts are present and running (`Champion Version`). By clicking on a prompt, you get to a page where you can see which versions of that prompt are saved. By clicking on a version number, you enter the [`Playground`](#prompt-playground), where you can change this prompt, or promote this prompt template to the `Champion Version`.
 
 
