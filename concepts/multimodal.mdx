@@ -1,0 +1,76 @@
+---
+title: Attachment (Multimodal)
+---
+
+LLM applications that can handle multimodal input as well as output can be logged with Literal AI. For example:
+
+* Images: Vision and Generation
+* Video: Vision and Generation
+* Audio: Speech-to-Text and Text-to-Speech
+* Other file types, like PDF files, are also supported.
+
+Image, videos, audio and other files are shown as `Attachment` in the Literal AI platform, which can be accessed and downloaded via a `Step`. 
+
+<Frame caption="Example of an image attachment">
+  <img
+    src="/images/attachment.png"
+    alt="An attachment on a step"
+  />
+</Frame>
+
+
+## Attachments API
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+client.api.create_attachment(
+    thread_id="<THREAD_ID>", # thread.id
+    step_id="<STEP_ID>", # step.id
+    name="my_attachment",
+    content="Hello world",
+)
+```
+
+```typescript TypeScript
+let fs = require('fs')
+import { LiteralClient, Attachment } from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+async function main() {
+    const thread = await literalClient.thread().upsert();
+
+    const fileStream = fs.createReadStream('./image.jpeg');
+    const mime = 'image/jpeg';
+
+    const { objectKey } = await literalClient.api.uploadFile({
+        threadId: thread.id,
+        content: fileStream,
+        mime
+    });
+
+    const attachment = new Attachment({
+        name: 'test',
+        objectKey,
+        mime
+    });
+
+    const finalStep = await thread
+    .step({
+        name: 'Assistant',
+        type: 'assistant_message',
+        output: {content: "Here is the generated image!"},
+        attachments: [attachment]
+    })
+    .send();
+};
+
+main();
+```
+</CodeGroup>
+
+Check [this guide](/guides/image-attachment) for an example of multimodal conversation logging in Python with OpenAI and Literal AI. 
