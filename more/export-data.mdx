@@ -1,0 +1,74 @@
+---
+title: Export Data
+---
+
+Data in Literal AI can be exported at any time, as the data is always yours. Exporting data can be useful to train or fine-tune LLM models on production threads. You can export the data via the SDKs. There is also an export button on Literal AI, which shows you how to export the data via the SDKs. 
+
+Here's an example of how to export all Threads:
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+has_next_page = True
+after = None
+
+filters = [
+    {
+        "field": "createdAt",
+        "operator": "gte",
+        "value": "2024-04-30T13:24:38.994Z"
+    }
+]
+
+order_by = {
+    "column": "createdAt",
+    "direction": "DESC"
+}
+    
+while has_next_page:
+    response = client.api.get_threads(
+        filters=filters,
+        order_by=order_by,
+        after=after
+    )
+    print(response.to_dict())
+    has_next_page = response.pageInfo.hasNextPage
+    after = response.pageInfo.endCursor
+
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+let hasNextPage = true;
+let after = null;
+
+while (hasNextPage) {
+  const response = await client.api.getThreads({
+    first: 20,
+    after,
+    filters: [
+  {
+    "field": "createdAt",
+    "operator": "gte",
+    "value": "2024-04-30T13:24:38.994Z"
+  }
+],
+    orderBy: {
+  "column": "createdAt",
+  "direction": "DESC"
+}
+  });
+
+  console.log(response);
+  hasNextPage = response.pageInfo.hasNextPage;
+  after = response.pageInfo.endCursor;
+}
+```
+</CodeGroup>
