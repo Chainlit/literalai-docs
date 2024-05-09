@@ -3,7 +3,7 @@ title: "OpenAI"
 ---
 
 
-You can use the Literal platform to instrument OpenAI API calls. This allows you to track and monitor the usage of the OpenAI API in your application and replay them in the Prompt Playground.
+You can use the Literal AI platform to instrument OpenAI API calls. This allows you to track and monitor the usage of the OpenAI API in your application and replay them in the Prompt Playground.
 
 <Check>The OpenAI instrumentation supports sync, async, streamed and regular responses!</Check>
 
@@ -15,7 +15,7 @@ import os
 from literalai import LiteralClient
 
 """
-You need to call the `instrument_openai` method from the Literal client to
+You need to call the `instrument_openai` method from the Literal AI client to
 enable the integration. Call it before any OpenAI API call.
 """
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))

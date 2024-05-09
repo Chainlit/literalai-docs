@@ -1,6 +1,6 @@
 {
     "$schema": "https://mintlify.com/schema.json",
-    "name": "Literal Doc",
+    "name": "Literal AI Documentation",
     "logo": {
         "dark": "/logo/logo-dark.svg",
         "light": "/logo/logo-light.svg"
@@ -81,14 +81,14 @@
         {
             "group": "Integrations",
             "pages": [
-              "integrations/openai",
-              "integrations/openai-assistant",
-              "integrations/chainlit",
-              "integrations/langchain",
-              "integrations/llama-index",
-              "integrations/llm-providers",
-              "integrations/messages-server",
-              "integrations/vercel-ai-sdk"
+                "integrations/openai",
+                "integrations/openai-assistant",
+                "integrations/chainlit",
+                "integrations/langchain",
+                "integrations/llama-index",
+                "integrations/llm-providers",
+                "integrations/messages-server",
+                "integrations/vercel-ai-sdk"
             ]
         },
         {
@@ -132,7 +132,7 @@
         {
             "group": "API Reference",
             "pages": [
-                "typescript-client/api-reference/dataset", 
+                "typescript-client/api-reference/dataset",
                 "typescript-client/api-reference/api-reference"
             ]
         },
@@ -147,8 +147,8 @@
             "pages": ["self-hosting/get-started", "self-hosting/deployment"]
         },
         {
-          "group": "More",
-          "pages": ["more/security", "more/export-data", "more/release-notes"]
+            "group": "More",
+            "pages": ["more/security", "more/export-data", "more/release-notes"]
         },
         {
             "group": "Prompt",
