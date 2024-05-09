@@ -1,0 +1,78 @@
+---
+title: "Vercel AI SDK"
+---
+
+
+The Vercel AI SDK integration enables you to monitor your generations and streams with a single line of code.
+
+
+<CodeGroup>
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+import {
+  generateText as baseGenerateText,
+  streamText as baseStreamText,
+} from 'ai';
+import { openai } from '@ai-sdk/openai';
+
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+
+// Generate Response
+
+const generateText = literalClient.instrumentation.vercel.instrument(baseGenerateText);
+
+export async function getAnswer(question: string) {
+  const { text } = await generateText({
+    model: openai('gpt-3.5-turbo'),
+    prompt: question
+  });
+
+  return { text };
+}
+
+// Stream Response
+
+const streamText = literalClient.instrumentation.vercel.instrument(baseStreamText);
+
+export async function streamAnswer(question: string) {
+  const { textStream } = await streamText({
+    model: openai('gpt-3.5-turbo'),
+    system: question,
+    messages: history
+  });
+
+  return textStream;
+}
+```
+</CodeGroup>
+
+
+## With Threads and Steps
+
+You can pass a [Threads](/concepts/thread) or a [Steps](/concepts/step) as an option of your generations to keep your logs organized.
+
+<CodeGroup>
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+import { generateText as baseGenerateText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+
+const generateText = literalClient.instrumentation.vercel.instrument(baseGenerateText);
+
+export async function getAnswer(question: string) {
+  const thread = await literalClient.thread({ name: "Example" }).upsert();
+
+  const { text } = await generateText({
+    model: openai('gpt-3.5-turbo'),
+    prompt: question,
+    literalAiParent: thread,
+  });
+
+  return { text };
+}
+```
+</CodeGroup>

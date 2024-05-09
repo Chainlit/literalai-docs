@@ -6,7 +6,7 @@ A Step is a fundamental building block within a [Thread](/concepts/thread) that 
 
 Steps are versatile and can encompass various types of activities, such as sending a message, making a call to a large language model (LLM), or executing a custom function.
 
-By organizing interactions into Steps, the Literal platform enables users to structure, visualize, and analyze the flow of conversations or processes in a granular and meaningful way.
+By organizing interactions into Steps, the Literal AI platform enables users to structure, visualize, and analyze the flow of conversations or processes in a granular and meaningful way.
 
 ## Types of Steps
 
@@ -39,25 +39,20 @@ An `llm` step is used to document interactions with large language models (LLMs)
 
 ## Implementing Steps
 
+Possible `"type"`s are: `"run"`, `"tool"`, `"llm"`, `"embedding"`, `"retrieval"`, `"rerank"`, `"undefined"`, `"user_message"`, `"assistant_message"`, `"system_message"`.
+
 <CodeGroup>
 
 ```python Python
 import os
 from literalai import LiteralClient
 
-
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-@literal_client.step(type="tool")
-def my_tool():
-    # Implement your custom logic here
-    return "Success"
 
 # You can change the step type
 @literal_client.step(type="run")
 def my_run():
     # Implement your custom logic here
-    my_tool()
     return "Success"
 
 with literal_client.thread() as thread:
@@ -75,23 +70,6 @@ import { LiteralClient, Step, Thread } from "@literalai/client";
 
 const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-// Tool example
-async function myTool(run: Step) {
-  const tool = run.step({
-    name: "My Tool",
-    type: "tool",
-    input: { content: "My Tool Input" },
-  });
-
-  // Implement your custom logic here
-  const response = { content: "Success" };
-
-  tool.output = response;
-  await tool.send();
-
-  return response;
-}
-
 // Run example
 async function myRun(thread: Thread) {
   const run = thread.step({
@@ -99,8 +77,6 @@ async function myRun(thread: Thread) {
     type: "run",
     input: { content: "My run Input" },
   });
-
-  await myTool(run);
 
   // Implement your custom logic here
   const response = { content: "Success" };
@@ -130,7 +106,7 @@ async function main() {
 </CodeGroup>
 
 
-## Visualize the Steps on Literal
+## Visualize the Steps on Literal AI
 
 <Frame caption="Output on the platform">
   <img src="/images/step-example.png" alt="A thread on the platform" />
@@ -145,14 +121,12 @@ Metadata serves as a powerful tool for enriching objects with additional context
 <CodeGroup>
 
 ```python Python
-import os, asyncio
+import os
 from literalai import LiteralClient
 
 from dotenv import load_dotenv
 load_dotenv()
 
-import os
-from literalai import LiteralClient
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 @literal_client.step(type="run", name="my_step")
@@ -200,69 +174,8 @@ myFunction("hello")
 
 ## Attachment
 
-An attachement is a file that has been generated or processed by a Step.
-
-<Frame caption="Example of a PDF attachement">
-  <img
-    src="/images/attachment.png"
-    alt="An attachment on a step"
-  />
-</Frame>
-
-**Create an Attachment**
-
-<CodeGroup>
-```python Python
-import os
-from literalai import LiteralClient
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-client.api.create_attachment(
-    thread_id="<THREAD_ID>", # thread.id
-    step_id="<STEP_ID>", # step.id
-    name="my_attachment",
-    content="Hello world",
-)
-```
-
-```typescript TypeScript
-let fs = require('fs')
-import { LiteralClient, Attachment } from "@literalai/client";
-
-const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
-
-async function main() {
-    const thread = await literalClient.thread().upsert();
-
-    const fileStream = fs.createReadStream('./aankomst.jpeg');
-    const mime = 'image/jpeg';
-
-    const { objectKey } = await literalClient.api.uploadFile({
-        threadId: thread.id,
-        content: fileStream,
-        mime
-    });
-
-    const attachment = new Attachment({
-        name: 'test',
-        objectKey,
-        mime
-    });
-
-    const finalStep = await thread
-    .step({
-        name: 'Assistant',
-        type: 'assistant_message',
-        output: {content: "Here is the generated image!"},
-        attachments: [attachment]
-    })
-    .send();
-};
-
-main();
-```
-</CodeGroup>
+An attachment is a file that has been generated or processed by a Step. Learn more about attachments and multimodality [here](/concepts/multimodal).
 
 ## Tags
 
-Just like Threads, you can add Tags to single Steps. For more info, see [this section](/concepts/tags)
+Just like Threads, you can add Tags to single Steps. For more info, see [this section](/concepts/tags).

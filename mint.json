@@ -1,6 +1,6 @@
 {
     "$schema": "https://mintlify.com/schema.json",
-    "name": "Literal Doc",
+    "name": "Literal AI Documentation",
     "logo": {
         "dark": "/logo/logo-dark.svg",
         "light": "/logo/logo-light.svg"
@@ -64,6 +64,7 @@
                         "concepts/run",
                         "concepts/generation",
                         "concepts/tags",
+                        "concepts/multimodal",
                         "concepts/score",
                         "concepts/user"
                     ]
@@ -81,13 +82,14 @@
         {
             "group": "Integrations",
             "pages": [
-              "integrations/openai",
-              "integrations/openai-assistant",
-              "integrations/chainlit",
-              "integrations/langchain",
-              "integrations/llama-index",
-              "integrations/llm-providers",
-              "integrations/messages-server"
+                "integrations/openai",
+                "integrations/openai-assistant",
+                "integrations/chainlit",
+                "integrations/langchain",
+                "integrations/llama-index",
+                "integrations/llm-providers",
+                "integrations/messages-server",
+                "integrations/vercel-ai-sdk"
             ]
         },
         {
@@ -131,7 +133,7 @@
         {
             "group": "API Reference",
             "pages": [
-                "typescript-client/api-reference/dataset", 
+                "typescript-client/api-reference/dataset",
                 "typescript-client/api-reference/api-reference"
             ]
         },
@@ -146,8 +148,15 @@
             "pages": ["self-hosting/get-started", "self-hosting/deployment"]
         },
         {
-            "group": "Development",
-            "pages": ["development/release-notes"]
+            "group": "More",
+            "pages": ["more/security", "more/export-data", "more/release-notes"]
+        },
+        {
+            "group": "Prompt",
+            "pages": [
+                "guides/prompt-format",
+                "guides/prompt-langchain"
+            ]
         },
         {
             "group": "Observability",
@@ -156,13 +165,15 @@
                 "guides/conversational-agent",
                 "guides/conversational-agent-fastapi",
                 "guides/distributed-tracing",
+                "guides/image-attachment",
                 "guides/guide-tag-scores-metadata"
             ]
         },
         {
             "group": "Evaluation",
             "pages": [
-                "guides/dataset"
+                "guides/dataset",
+                "guides/rag-chatbot-offline-evaluation"
             ]
         },
         {

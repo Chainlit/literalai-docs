@@ -3,7 +3,7 @@ title: "OpenAI"
 ---
 
 
-You can use the Literal platform to instrument OpenAI API calls. This allows you to track and monitor the usage of the OpenAI API in your application and replay them in the Prompt Playground.
+You can use the Literal AI platform to instrument OpenAI API calls. This allows you to track and monitor the usage of the OpenAI API in your application and replay them in the Prompt Playground.
 
 <Check>The OpenAI instrumentation supports sync, async, streamed and regular responses!</Check>
 
@@ -15,7 +15,7 @@ import os
 from literalai import LiteralClient
 
 """
-You need to call the `instrument_openai` method from the Literal client to
+You need to call the `instrument_openai` method from the Literal AI client to
 enable the integration. Call it before any OpenAI API call.
 """
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
@@ -165,3 +165,54 @@ Which will produce the following logs in the `Threads` page:
 <Frame caption="OpenAI thread">
   <img src="/images/openai-example.png" alt="A thread on the platform" />
 </Frame>
+
+## Adding Tags
+
+You can add [Tags](/guides/guide-tag-scores-metadata#tags) to the Generations in Steps created via the instrumentation.
+
+<CodeGroup>
+```python Python
+import os
+from openai import OpenAI
+from literalai import LiteralClient
+
+openai_client = OpenAI()
+
+literal_client = LiteralClient()
+literal_client.instrument_openai()
+
+completion = openai_client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        # ...
+    ],
+    # Add tags
+    literalai_tags=["tag1", "tag2"],
+)
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+import OpenAI from 'openai';
+
+const literalClient = new LiteralClient();
+
+const openai = new OpenAI();
+
+const thread = await literalClient.thread({ /* ... */ }).upsert();
+
+const run = thread.step({ /* ... */ });
+
+const completion = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    // ...
+  ],
+});
+
+await literalClient.instrumentation.openai(completion, run, {
+  // Add tags
+  tags: ["tag1", "tag2"],
+});
+```
+</CodeGroup>

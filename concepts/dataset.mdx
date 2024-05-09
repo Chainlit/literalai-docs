@@ -8,7 +8,7 @@ A dataset consists of `Dataset Items`. A Dataset Item has an `input`, `expected 
 
 
 ## Dataset Types
-There are two types of datasets in Literal: Key Value and Generation. 
+There are two types of datasets in Literal AI: Key Value and Generation. 
 
 **Key Value** datasets can have any key-value pairs for input and expected output. This type of dataset can be used to for example store [Runs](/concepts/run) of agents, with an input (user query) and an expected output (LLM answer). An example of a Key Value dataset:
 
@@ -46,14 +46,14 @@ expected_output = {
 
 ## Creating Datasets and Dataset Items
 
-### Via Literal UI
+### Via Literal AI UI
 
 There are two ways you can create a new Dataset in the UI. 
 
 1. Go to the Dataset tab, and create a new Dataset from there. You need to provide the Dataset Type, and give it a name. 
 2. Go to an individual Run, Step or Generation that you want to add to a new dataset. You can create a new Dataset from here. 
 
-To add items to your dataset, go to indivual Runs, Steps or Generations and click on `"Add to Dataset"`, and choose your preferred Dataset.
+To add items to your dataset, go to indivual Runs, Steps or Generations and click on `"Add to Dataset"`, and choose your preferred Dataset. You can edit the expected output of the chatbot, so that the ground truth is saved.
 
 <Frame caption="Adding a Step to a Dataset">
   <img
@@ -123,8 +123,8 @@ literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 # option 1: add local items
 dataset_item = literal_client.api.create_dataset_item(
   dataset_id = "<DATASET_ID>", # dataset.id
-  input = { "content": "What is literal?" },
-  expected_output = { "content": "Literal is an observability solution." }
+  input = { "content": "What is Literal AI ?" },
+  expected_output = { "content": "Literal AI is an observability solution." }
 )
 
 # option 2: add existing steps, runs, generations
@@ -146,8 +146,8 @@ const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 // option 1: add local items
 const datasetId = "<DATASET_ID>";
 const item = {
-    input: { content: "What is literal?" },
-    expectedOutput: { content: "Literal is an observability solution." },
+    input: { content: "What is Literal AI?" },
+    expectedOutput: { content: "Literal AI is an observability solution." },
 };
 
 const start = async function() {
