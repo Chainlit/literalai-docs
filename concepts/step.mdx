@@ -174,69 +174,8 @@ myFunction("hello")
 
 ## Attachment
 
-An attachement is a file that has been generated or processed by a Step.
-
-<Frame caption="Example of a PDF attachement">
-  <img
-    src="/images/attachment.png"
-    alt="An attachment on a step"
-  />
-</Frame>
-
-**Create an Attachment**
-
-<CodeGroup>
-```python Python
-import os
-from literalai import LiteralClient
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-client.api.create_attachment(
-    thread_id="<THREAD_ID>", # thread.id
-    step_id="<STEP_ID>", # step.id
-    name="my_attachment",
-    content="Hello world",
-)
-```
-
-```typescript TypeScript
-let fs = require('fs')
-import { LiteralClient, Attachment } from "@literalai/client";
-
-const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
-
-async function main() {
-    const thread = await literalClient.thread().upsert();
-
-    const fileStream = fs.createReadStream('./aankomst.jpeg');
-    const mime = 'image/jpeg';
-
-    const { objectKey } = await literalClient.api.uploadFile({
-        threadId: thread.id,
-        content: fileStream,
-        mime
-    });
-
-    const attachment = new Attachment({
-        name: 'test',
-        objectKey,
-        mime
-    });
-
-    const finalStep = await thread
-    .step({
-        name: 'Assistant',
-        type: 'assistant_message',
-        output: {content: "Here is the generated image!"},
-        attachments: [attachment]
-    })
-    .send();
-};
-
-main();
-```
-</CodeGroup>
+An attachment is a file that has been generated or processed by a Step. Learn more about attachments and multimodality [here](/concepts/multimodal).
 
 ## Tags
 
-Just like Threads, you can add Tags to single Steps. For more info, see [this section](/concepts/tags)
+Just like Threads, you can add Tags to single Steps. For more info, see [this section](/concepts/tags).

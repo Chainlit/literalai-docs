@@ -64,6 +64,7 @@
                         "concepts/run",
                         "concepts/generation",
                         "concepts/tags",
+                        "concepts/multimodal",
                         "concepts/score",
                         "concepts/user"
                     ]
@@ -164,6 +165,7 @@
                 "guides/conversational-agent",
                 "guides/conversational-agent-fastapi",
                 "guides/distributed-tracing",
+                "guides/image-attachment",
                 "guides/guide-tag-scores-metadata"
             ]
         },
