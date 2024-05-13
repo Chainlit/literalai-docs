@@ -65,7 +65,6 @@
                         "concepts/generation",
                         "concepts/tags",
                         "concepts/multimodal",
-                        "concepts/score",
                         "concepts/user"
                     ]
                 },
@@ -73,6 +72,7 @@
                     "group": "Evaluation",
                     "pages": [
                         "concepts/dataset",
+                        "concepts/score",
                         "concepts/experiment"
                     ]
                 },
