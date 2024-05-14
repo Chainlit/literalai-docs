@@ -4,7 +4,7 @@ title: "Thread"
 
 A Thread represents a group of interactions between a user and an AI app. It can be, for example, a conversation between a human and one or several assistants, or an agent generating a document piece by piece from a user input.
 
-A Thread is composed of [Steps](/concepts/step). A Step can be a message, or an intermediate AI step like an LLM call.
+A Thread is composed of [Steps](/concepts/observability/step). A Step can be a message, or an intermediate AI step like an LLM call.
 
 <Frame caption="An example thread on the platform.">
   <img src="/images/thread-example.png" alt="A thread on the platform" />
@@ -182,7 +182,7 @@ const threads = await literalClient.api.getThreads();
 
 Navigate to the `Threads` page on the platform to see Threads. There, you can click on single Threads (conversations). 
 
-On the left (1), you can see the conversation and the steps that the application has taken in order to produce an answer. Different kind of steps have different colors. You can click on each step to view more details on the right side of the screen. Here, you can view [Metadata](/concepts/step#metadata) (2) and add [Scores](/concepts/score) (3).
+On the left (1), you can see the conversation and the steps that the application has taken in order to produce an answer. Different kind of steps have different colors. You can click on each step to view more details on the right side of the screen. Here, you can view [Metadata](/concepts/observability/step#metadata) (2) and add [Scores](/concepts/evaluation/score) (3).
 
 On the top (4), you can add tags to the Thread. You can also add Tags to a single step in this Thread, on the right (5).
 
@@ -195,4 +195,4 @@ Finally, you can add a Step to a Dataset (6), for example for evaluation purpose
 
 ## Tags
 
-You can add Tags to Threads, Steps and Generations. Visit [this page](/concepts/tags) for information on how to use Tags.
+You can add Tags to Threads, Steps and Generations. Visit [this page](/concepts/observability/tags) for information on how to use Tags.
