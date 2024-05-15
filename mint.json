@@ -86,7 +86,8 @@
                 {
                     "group": "Monitoring",
                     "pages": [
-                        "concepts/monitoring/overview"
+                        "concepts/monitoring/overview",
+                        "concepts/monitoring/automated-rules"
                     ]
                 },
                 "concepts/project-roles"
