@@ -166,34 +166,42 @@
             "pages": ["more/security", "more/export-data", "more/release-notes"]
         },
         {
+            "group": "Overview",
+            "pages": [
+                "guides/overview"
+            ]
+        },
+        {
             "group": "Prompt",
             "pages": [
-                "guides/prompt-format",
-                "guides/prompt-langchain"
+                "guides/prompt/prompt-format",
+                "guides/prompt/prompt-langchain"
             ]
         },
         {
             "group": "Observability",
             "pages": [
-                "guides/agent-run",
-                "guides/conversational-agent",
-                "guides/conversational-agent-fastapi",
-                "guides/distributed-tracing",
-                "guides/image-attachment",
-                "guides/guide-tag-scores-metadata"
+                "guides/observability/agent-run",
+                "guides/observability/conversational-agent",
+                "guides/observability/conversational-agent-fastapi",
+                "guides/observability/distributed-tracing",
+                "guides/observability/image-attachment",
+                "guides/observability/guide-tag-scores-metadata"
             ]
         },
         {
             "group": "Evaluation",
             "pages": [
-                "guides/dataset",
-                "guides/rag-chatbot-offline-evaluation"
+                "guides/evaluation/dataset"
             ]
         },
         {
-            "group": "End-to-End",
+            "group": "Tutorials",
             "pages": [
-                "guides/rag-example"
+                "guides/tutorials/rag-example",
+                "guides/tutorials/rag-chatbot-offline-evaluation",
+                "guides/tutorials/evaluating-context-relevancy",
+                "guides/tutorials/evaluating-user-satisfaction"
             ]
         },
         {
