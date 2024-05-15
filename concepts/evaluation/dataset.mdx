@@ -10,7 +10,7 @@ A dataset consists of `Dataset Items`. A Dataset Item has an `input`, `expected 
 ## Dataset Types
 There are two types of datasets in Literal AI: Key Value and Generation. 
 
-**Key Value** datasets can have any key-value pairs for input and expected output. This type of dataset can be used to for example store [Runs](/concepts/run) of agents, with an input (user query) and an expected output (LLM answer). An example of a Key Value dataset:
+**Key Value** datasets can have any key-value pairs for input and expected output. This type of dataset can be used to for example store [Runs](/concepts/observability/run) of agents, with an input (user query) and an expected output (LLM answer). An example of a Key Value dataset:
 
 ``` json
 
@@ -24,7 +24,7 @@ expected_output = {
 ```
 
 
-**Generation** datasets are a type of dataset that can store [Generation](/concepts/generation) items. Generation items have a chat history with `messages` from different `role`s and `content`. The expected output consists of a `role` and `content`. An example of a Generation Dataset Item:
+**Generation** datasets are a type of dataset that can store [Generation](/concepts/observability/generation) items. Generation items have a chat history with `messages` from different `role`s and `content`. The expected output consists of a `role` and `content`. An example of a Generation Dataset Item:
 
 ``` json
 
@@ -204,4 +204,4 @@ main();
 
 ## Run experiments
 
-Once you have created a populated Dataset, you can start running [evaluations](/concepts/experiment).
+Once you have created a populated Dataset, you can start running [evaluations](/concepts/evaluation/experiment).

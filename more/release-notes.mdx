@@ -4,6 +4,41 @@ title: Release Notes
 
 All changes and improvements to Literal AI are listed here. For changes in the SDKs, go to the [Python SDK](/python-client/development/changelog) or [TypeScript SDK](/typescript-client/development/changelog).
 
+# 0.0.605-beta (May 13, 2024)
+
+This version is compatible with:
+* [Chainlit](https://docs.chainlit.io/get-started/overview) version `1.0.504` and above.
+* [Python SDK](/python-client) version `0.0.506` and above.
+* [TypeScript SDK](/typescript-client) version `0.0.503` and above.
+
+### Breaking Changes
+
+* None
+
+### New Features
+
+* Support GPT-4o as LLM model provider
+* We now display a diff of the prompt settings when saving a prompt version
+* Steps are now supporting tags
+
+### Improvements 
+
+* We now populate the dataset item `intermediarySteps` when adding a step with children steps
+* The API credentials in the prompt playground are moved
+* Generation details view now has a link to prompt
+* Support higher than 1 temperature setting for compatible LLMs
+
+### Fixes
+
+* Fix display bugs in prompt playground
+* Fix a bug where we allow for very large json inputs
+  * Now metadataare limited to 1mb
+  * Step input and expectedOutput limited to 3mb
+* Fix a bug where full-text searching threads would lead to a spike in cpu usage
+* Fix a rare bug that could occur when ingesting multiple steps with a new tag
+
+
+
 # 0.0.604-beta (May 6, 2024)
 
 This version is compatible with:
