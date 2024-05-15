@@ -1,0 +1,44 @@
+---
+title: Prompt Management & Prompt Engineering
+sidebarTitle: Overview
+---
+
+## Overview
+You can view your prompts in the Prompt Management page. This overview shows the prompts that you have created, manage [different versions](/concepts/prompt/prompt-versioning) of these prompts and lets you create and test prompt templates in collaboration with your teammates. In the [Prompt Playground](/concepts/prompt/prompt-playground), which is connected to prompts and threads, you can debug prompts in-context, draft and iterates on prompts. Once you are happy with your prompt, you can save it and use it in your code.
+
+Prompt can be stored in either Literal AI or in your application code. Prompts that are managed in the Literal AI platform has several benefits:
+- Non technical people can draft and iterate on prompts.
+- You can deploy a new version of your prompt without deploying your code.
+- You can track which prompt version for a specific generation.
+- You can compare prompt versions to see which one performs better.
+- You can compare and test multiple LLM providers.
+- You can collaborate with the team.
+- You can do online evaluation [coming soon].
+
+Prompts that are stored in Literal AI can be pulled to your application code via the SDK. 
+
+It is also possible to store the prompts in your application code. Then, you can still manage template versioning and provider tracking in Literal AI.
+
+The following figure illustrates saving the prompt in Literal AI (option 1) versus in your application code (option 2).
+
+<Frame caption="Prompt stored in Literal AI vs in application code">
+  <img src="/images/prompt-flow.svg" alt="Prompt stored in Literal AI vs in application code." />
+</Frame>
+
+## Credentials
+
+### Local credentials
+
+In order to interact with various providers using the prompt playground you will need to use your own credentials.
+You can directly setup the credentials for the current provider when using the prompt playground.
+Additionally you can access the credentials you defined in the "Settings > LLMs" page.
+
+<Note>The local credentials are stored in the local storage of your browser.</Note>
+
+### Shared credentials
+
+<Warning>Shared credentials are restricted to the admins of a project.</Warning>
+
+To favor collaboration, you can create credentials in the "Settings > LLMs" page. Once created any admin users of a project will be able to use it in the prompt playground. It is important that we are not exposing shared credentials' keys to the client.
+
+<Note>The shared credentials are stored online, and the key is encrypted.</Note>

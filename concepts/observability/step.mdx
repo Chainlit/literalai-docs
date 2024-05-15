@@ -2,7 +2,7 @@
 title: "Step"
 ---
 
-A Step is a fundamental building block within a [Thread](/concepts/thread) that represents a single unit of interaction or operation.
+A Step is a fundamental building block within a [Thread](/concepts/observability/thread) that represents a single unit of interaction or operation.
 
 Steps are versatile and can encompass various types of activities, such as sending a message, making a call to a large language model (LLM), or executing a custom function.
 
@@ -18,7 +18,7 @@ There are several types of Steps, each serving a distinct purpose.
 
 ### Run
 
-A [`run` step](/concepts/run) signifies the execution of an agent or a chain that takes multiple steps. Unlike other step types, it does not have to be part of a Thread.
+A [`run` step](/concepts/observability/run) signifies the execution of an agent or a chain that takes multiple steps. Unlike other step types, it does not have to be part of a Thread.
 
 This is useful if you are monitoring non conversational use cases.
 
@@ -174,8 +174,8 @@ myFunction("hello")
 
 ## Attachment
 
-An attachment is a file that has been generated or processed by a Step. Learn more about attachments and multimodality [here](/concepts/multimodal).
+An attachment is a file that has been generated or processed by a Step. Learn more about attachments and multimodality [here](/concepts/observability/multimodal).
 
 ## Tags
 
-Just like Threads, you can add Tags to single Steps. For more info, see [this section](/concepts/tags).
+Just like Threads, you can add Tags to single Steps. For more info, see [this section](/concepts/observability/tags).

@@ -54,26 +54,40 @@
         {
             "group": "Concepts",
             "pages": [
-                "concepts/prompt",
+                {
+                    "group": "Prompt",
+                    "pages": [
+                        "concepts/prompt/overview",
+                        "concepts/prompt/prompt-versioning",
+                        "concepts/prompt/prompt-api",
+                        "concepts/prompt/prompt-playground"
+                    ]
+                },
                 {
                     "group": "Observability",
                     "pages": [
-                        "concepts/monitoring",
-                        "concepts/thread",
-                        "concepts/step",
-                        "concepts/run",
-                        "concepts/generation",
-                        "concepts/tags",
-                        "concepts/multimodal",
-                        "concepts/user"
+                        "concepts/observability/thread",
+                        "concepts/observability/step",
+                        "concepts/observability/run",
+                        "concepts/observability/generation",
+                        "concepts/observability/tags",
+                        "concepts/observability/multimodal",
+                        "concepts/observability/user"
                     ]
                 },
                 {
                     "group": "Evaluation",
                     "pages": [
-                        "concepts/dataset",
-                        "concepts/score",
-                        "concepts/experiment"
+                        "concepts/evaluation/dataset",
+                        "concepts/evaluation/score",
+                        "concepts/evaluation/experiment"
+                    ]
+                },
+                {
+                    "group": "Monitoring",
+                    "pages": [
+                        "concepts/monitoring/overview",
+                        "concepts/monitoring/automated-rules"
                     ]
                 },
                 "concepts/project-roles"

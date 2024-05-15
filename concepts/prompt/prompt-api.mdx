@@ -1,0 +1,119 @@
+---
+title: Prompt API
+---
+
+Via the Python and TypeScript SDK, you can acces the prompt API. With the API you can get the prompt to use in your code and add variable values in a conversation flow. You cannot draft and save prompt templates via the API, this should be done via the Literal AI Prompt Playground.
+
+### Get a Prompt
+
+Getting a prompt is the first step to use it in your code. You can get a prompt by its name.
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+# This will fetch the champion version, you can also pass a specific version
+prompt = client.api.get_prompt(name="RAG prompt")
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+const promptName = 'RAG prompt';
+// This will fetch the champion version, you can also pass a specific version
+async function main() {
+    const prompt = await client.api.getPrompt(promptName);
+    console.log(prompt);
+}
+main();
+```
+
+</CodeGroup>
+
+### Format a Prompt
+
+Once you got your prompt, you can format it to get messages in the OpenAI format.
+
+Combining prompts with integrations (like the [OpenAI integration](/integrations/openai)) allows you to log the generations and to track which prompt versions were used to generate them.
+
+You format messages like this:
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+# pull the prompt from Literal AI
+prompt = literal_client.api.get_prompt(name="RAG prompt")
+
+# format the prompt with a variable
+query = "What are the features of Literal AI?"
+variables = {"question": query}
+messages = prompt.format_messages(variables)
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+async function main() {
+    // pull the prompt from Literal AI
+    const prompt = await client.api.getPrompt('RAG prompt');
+
+    // format the prompt with a variable
+    const variables = { query: 'What are the features of Literal AI?' };
+    const messages = prompt.formatMessages(variables);
+}
+
+main();
+```
+</CodeGroup>
+
+<Warning>
+Make sure to always prepare your messages with `Prompt.format_messages` &ndash; or its
+TypeScript equivalent, even if you do not have variables to resolve. This ensures
+messages are logged properly when using our OpenAI instrumentation.
+</Warning>
+
+### Langchain Chat Template
+
+Since Langchain has a different format for prompts, you can convert a Literal AI prompt to a Langchain Chat Template.
+
+You can combine the prompt with the [Langchain integration](/integrations/langchain) to log the generations and to track which prompt versions were used to generate them.
+
+More explanation and example code can be found in [this guide](/guides/prompt-langchain).
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+# pull the prompt from Literal AI
+prompt = literal_client.api.get_prompt(name="RAG prompt")
+
+# convert to LangChain prompt
+langchain_prompt = prompt.to_langchain_chat_prompt_template()
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+// pull the prompt from Literal AI
+const prompt = await client.api.getPrompt('RAG prompt');
+
+// convert to LangChain prompt
+const chatPrompt = prompt.toLangchainChatPromptTemplate();
+
+```
+</CodeGroup>
