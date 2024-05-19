@@ -80,7 +80,8 @@
                     "pages": [
                         "concepts/evaluation/dataset",
                         "concepts/evaluation/score",
-                        "concepts/evaluation/experiment"
+                        "concepts/evaluation/experiment",
+                        "concepts/evaluation/ab-testing"
                     ]
                 },
                 {
@@ -201,7 +202,8 @@
                 "guides/tutorials/rag-example",
                 "guides/tutorials/rag-chatbot-offline-evaluation",
                 "guides/tutorials/evaluating-context-relevancy",
-                "guides/tutorials/evaluating-user-satisfaction"
+                "guides/tutorials/evaluating-user-satisfaction",
+                "guides/tutorials/ab-testing-client-side"
             ]
         },
         {

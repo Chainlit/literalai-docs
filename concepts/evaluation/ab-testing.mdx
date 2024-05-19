@@ -1,0 +1,119 @@
+---
+title: A/B Testing
+---
+
+With Literal AI, you can test different prompt, model and LLM application versions in a A/B tests. 
+
+We are currently working on a full A/B Testing feature for Literal AI. In the near future you can use Literal AI to: 
+
+* Create A/B tests with different prompt, model or application versions. You can define populations with either Tags or Metadata.
+* Monitor A/B tests charts in a dashboard, grouped by population in a time range.
+
+For now, you can run A/B tests in your code (1), or by human evaluation (2).
+
+First, make two different [prompts](/concepts/prompt/overview). For example, you can create different prompt system messages, or change the LLM settings. Then, randomly assign a prompt version to a new conversation. Make sure to attach a tag per group to this Thread, for later reference.
+
+<CodeGroup>
+```python Python
+import os
+import random
+from literalai import LiteralClient
+
+client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+# pull the prompts from Literal AI
+prompt_A = literal_client.api.get_prompt(name="Prompt A")
+prompt_B = literal_client.api.get_prompt(name="Prompt B")
+
+@literal_client.step(type="run", name="Agent Run")
+def answer(user_query: str, group: str):
+    # assign prompt A or B
+    if group == "A":
+        return "answer to question with prompt A" # e.g. llm call with prompt A
+    else:
+        return "answer to question with prompt B" # e.g. llm call with prompt B
+
+with literal_client.thread() as thread:
+
+    question = "What are the features of Literal AI?"
+
+    # assign prompt A or B
+    if random.random() < 0.5:
+        group = "A"
+    else:
+        group = "B"
+        
+    # add tag to thread for later reference
+    thread.tags=[group]
+
+    literal_client.message(content=question, type="user_message", name="User")
+    answer = answer(question, group)
+    literal_client.message(content=answer, type="assistant_message", name="My Assistant")
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+import * as random from 'random';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+const promptNameA = 'Prompt A';
+const promptNameB = 'Prompt B';
+const promptA = await client.api.getPrompt(promptNameA);
+const promptB = await client.api.getPrompt(promptNameB);
+
+async function answer(thread: Thread, group: string,) {
+  const run = thread.step({
+    name: "My Run",
+    type: "run",
+    input: { content: question },
+  });
+
+  if (group === "A") {
+    const response = { content: "answer to question with prompt A" }; // e.g., LLM call with prompt A
+  } else {
+    const response = { content: "answer to question with prompt B" }; // e.g., LLM call with prompt A
+  }
+
+  run.output = response;
+  await run.send();
+
+  return response;
+}
+
+async function main() {
+    const thread = await literalClient
+      .thread({ name: "Thread Example", participantId: participantId })
+      .upsert();
+
+    const group = random.float() < 0.5 ? "A" : "B";
+    
+    const userQuery = "What are the features of Literal AI?";
+    await thread
+      .step({
+        type: "user_message",
+        name: "User",
+        output: { content: userQuery },
+      })
+      .send();
+ 
+    const assistantResponse = await answer(thread, userQuery, group);
+    await thread
+      .step({
+        type: "assistant_message",
+        name: "Assistant",
+        output: assistantResponse,
+      })
+      .send();
+}
+
+main();
+```
+</CodeGroup>
+
+Now, you can 
+
+1. Pull the Threads from Literal AI to your code, filtered by Tags ([example](/concepts/observability/tags#filter-by-tags)), run your evaluation on both groups, and compare the results.
+2. Or, you pull the Threads from Literal AI to your code filtered by Tags. Then, you view the scores given by human feedback (by users), and compare the two groups. 
+
+An example of option 1 is available in [this tutorial](/guides/tutorials/ab-testing-client-side).
