@@ -4,6 +4,38 @@ title: Release Notes
 
 All changes and improvements to Literal AI are listed here. For changes in the SDKs, go to the [Python SDK](/python-client/development/changelog) or [TypeScript SDK](/typescript-client/development/changelog).
 
+# 0.0.606-beta (May 20, 2024)
+
+This version is compatible with:
+* [Chainlit](https://docs.chainlit.io/get-started/overview) version `1.0.504` and above.
+* [Python SDK](/python-client) version `0.0.506` and above.
+* [TypeScript SDK](/typescript-client) version `0.0.503` and above.
+
+### Breaking Changes
+
+* Dataset: Renamed intermediary steps `expectedOutput` to `output`. In a Dataset, in the field `Indermediary Steps`, the field `expectedOutput` is renamed to just `output`, because this is the actual output of the LLM. This breaks backward compatibility for users relying on `DatasetItem.intermediarySteps.expectedOutput`, `DatasetItem.expectedOutput` remains unchanged.
+
+### New Features
+
+* Attachments now come with preview widgets (multi-modality)
+
+### Improvements 
+
+* A page change on tables now scrolls back to top of table
+* We removed name fallback to ID for threads, now shown as N/A
+* We reduced the indent of navigation sub-menus
+* The prompt playground now persists the credentials for your session
+* Improved user feedback options from the UI
+* JSONs in tables now display on multiple lines with syntax highlighting
+* Improved dashboard performance with data fetch in separate requests
+
+### Fixes
+
+* Fixed creation of attachments and scores when step doesn't exist
+* Fixed thread duplication when filtering on errors
+* Fixed the upserts of step input/output to prevent going past size limit
+
+
 # 0.0.605-beta (May 13, 2024)
 
 This version is compatible with:
