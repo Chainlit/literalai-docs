@@ -86,7 +86,7 @@ def rag(user_query: str):
         results = collection.query(query_texts=[user_query], n_results=2)
         step.output = results
 
-    messages = prompt.format({"context": results["documents"][0], "question": user_query})
+    messages = prompt.format_messages(context=results["documents"][0], question=user_query)
     
     completion = openai_client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -155,7 +155,7 @@ items = dataset.items
 contexts = []
 for item in items:
     retrieve_step = next(step for step in item.intermediary_steps if step["name"] == "Retrieve")
-    contexts.append(retrieve_step["expectedOutput"]["documents"][0])
+    contexts.append(retrieve_step["output"]["documents"][0])
 
 # Data samples, in the format expected by Ragas. No ground truth needed since we will evaluate context relevancy.
 data_samples = {
