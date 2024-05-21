@@ -164,7 +164,7 @@
         },
         {
             "group": "More",
-            "pages": ["more/security", "more/export-data", "more/release-notes"]
+            "pages": ["more/security", "more/export-data", "more/release-notes", "more/roadmap"]
         },
         {
             "group": "Overview",
