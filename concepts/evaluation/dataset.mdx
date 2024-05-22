@@ -179,7 +179,7 @@ import os
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-dataset = sdk.api.get_dataset(id="<DATASET_ID>")
+dataset = literal_client.api.get_dataset(id="<DATASET_ID>")
 
 for item in dataset.items:
   pass
