@@ -21,8 +21,15 @@ An example is the vanilla Retrieval Augmented Generation (RAG), which augments L
 - answer relevancy
 - etc.
 
-<Frame caption="Vanilla RAG Thread">
-  <img src="/images/rag-thread.png" alt="A thread on a RAG application" />
+### Compare Experiments
+
+If you have run two Experiments (for example with a different prompt or LLM settings) on the same dataset, you can compare the results on the Literal AI platform. You can view the scores in charts and go over each data item to see the difference. 
+
+<Frame caption="Comparison of Experiments">
+  <img
+    src="/images/context-relevancy.png"
+    alt="Comparison of Experiments"
+  />
 </Frame>
 
 Literal AI offers a compelling user/developer interface to build and interact with datasets.
@@ -126,6 +133,7 @@ const experimentItem = {
 await experiment.log(experimentItem)
 ```
 </CodeGroup>
+
 
 ## Online (Continuous) evaluations
 
