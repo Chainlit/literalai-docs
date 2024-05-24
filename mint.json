@@ -199,11 +199,12 @@
         {
             "group": "Tutorials",
             "pages": [
-                "guides/tutorials/rag-example",
-                "guides/tutorials/rag-chatbot-offline-evaluation",
-                "guides/tutorials/evaluating-context-relevancy",
-                "guides/tutorials/evaluating-user-satisfaction",
-                "guides/tutorials/ab-testing-client-side"
+              "guides/tutorials/nextjs-openai-chatbot",
+              "guides/tutorials/rag-example",
+              "guides/tutorials/rag-chatbot-offline-evaluation",
+              "guides/tutorials/evaluating-context-relevancy",
+              "guides/tutorials/evaluating-user-satisfaction",
+              "guides/tutorials/ab-testing-client-side"
             ]
         },
         {
