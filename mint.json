@@ -110,7 +110,8 @@
         {
             "group": "Get Started",
             "pages": [
-                "python-client/get-started/introduction"
+                "python-client/get-started/introduction",
+                "python-client/updated-reference"
             ]
         },
         {

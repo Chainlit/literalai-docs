@@ -1,0 +1,2166 @@
+# Table of Contents
+
+* [thread](#literalai.thread)
+  * [Thread](#literalai.thread.Thread)
+    * [created\_at](#literalai.thread.Thread.created_at)
+* [dataset](#literalai.dataset)
+  * [Dataset](#literalai.dataset.Dataset)
+    * [create\_item](#literalai.dataset.Dataset.create_item)
+    * [create\_experiment](#literalai.dataset.Dataset.create_experiment)
+    * [delete\_item](#literalai.dataset.Dataset.delete_item)
+    * [add\_step](#literalai.dataset.Dataset.add_step)
+    * [add\_generation](#literalai.dataset.Dataset.add_generation)
+* [wrappers](#literalai.wrappers)
+  * [remove\_literalai\_args](#literalai.wrappers.remove_literalai_args)
+  * [restore\_literalai\_args](#literalai.wrappers.restore_literalai_args)
+* [helper](#literalai.helper)
+  * [ensure\_values\_serializable](#literalai.helper.ensure_values_serializable)
+* [api](#literalai.api)
+  * [LiteralAPI](#literalai.api.LiteralAPI)
+    * [make\_gql\_call](#literalai.api.LiteralAPI.make_gql_call)
+    * [make\_rest\_call](#literalai.api.LiteralAPI.make_rest_call)
+    * [gql\_helper](#literalai.api.LiteralAPI.gql_helper)
+    * [get\_users](#literalai.api.LiteralAPI.get_users)
+    * [get\_user](#literalai.api.LiteralAPI.get_user)
+    * [create\_user](#literalai.api.LiteralAPI.create_user)
+    * [update\_user](#literalai.api.LiteralAPI.update_user)
+    * [delete\_user](#literalai.api.LiteralAPI.delete_user)
+    * [get\_or\_create\_user](#literalai.api.LiteralAPI.get_or_create_user)
+    * [get\_threads](#literalai.api.LiteralAPI.get_threads)
+    * [list\_threads](#literalai.api.LiteralAPI.list_threads)
+    * [get\_thread](#literalai.api.LiteralAPI.get_thread)
+    * [create\_thread](#literalai.api.LiteralAPI.create_thread)
+    * [upsert\_thread](#literalai.api.LiteralAPI.upsert_thread)
+    * [update\_thread](#literalai.api.LiteralAPI.update_thread)
+    * [delete\_thread](#literalai.api.LiteralAPI.delete_thread)
+    * [create\_score](#literalai.api.LiteralAPI.create_score)
+    * [update\_score](#literalai.api.LiteralAPI.update_score)
+    * [delete\_score](#literalai.api.LiteralAPI.delete_score)
+    * [upload\_file](#literalai.api.LiteralAPI.upload_file)
+    * [create\_attachment](#literalai.api.LiteralAPI.create_attachment)
+    * [update\_attachment](#literalai.api.LiteralAPI.update_attachment)
+    * [get\_attachment](#literalai.api.LiteralAPI.get_attachment)
+    * [delete\_attachment](#literalai.api.LiteralAPI.delete_attachment)
+    * [create\_step](#literalai.api.LiteralAPI.create_step)
+    * [update\_step](#literalai.api.LiteralAPI.update_step)
+    * [get\_steps](#literalai.api.LiteralAPI.get_steps)
+    * [get\_step](#literalai.api.LiteralAPI.get_step)
+    * [delete\_step](#literalai.api.LiteralAPI.delete_step)
+    * [send\_steps](#literalai.api.LiteralAPI.send_steps)
+    * [get\_generations](#literalai.api.LiteralAPI.get_generations)
+    * [create\_generation](#literalai.api.LiteralAPI.create_generation)
+    * [create\_dataset](#literalai.api.LiteralAPI.create_dataset)
+    * [get\_dataset](#literalai.api.LiteralAPI.get_dataset)
+    * [update\_dataset](#literalai.api.LiteralAPI.update_dataset)
+    * [delete\_dataset](#literalai.api.LiteralAPI.delete_dataset)
+    * [create\_experiment](#literalai.api.LiteralAPI.create_experiment)
+    * [create\_experiment\_item](#literalai.api.LiteralAPI.create_experiment_item)
+    * [create\_dataset\_item](#literalai.api.LiteralAPI.create_dataset_item)
+    * [get\_dataset\_item](#literalai.api.LiteralAPI.get_dataset_item)
+    * [delete\_dataset\_item](#literalai.api.LiteralAPI.delete_dataset_item)
+    * [add\_step\_to\_dataset](#literalai.api.LiteralAPI.add_step_to_dataset)
+    * [add\_generation\_to\_dataset](#literalai.api.LiteralAPI.add_generation_to_dataset)
+    * [create\_prompt\_lineage](#literalai.api.LiteralAPI.create_prompt_lineage)
+    * [get\_or\_create\_prompt](#literalai.api.LiteralAPI.get_or_create_prompt)
+    * [get\_prompt](#literalai.api.LiteralAPI.get_prompt)
+    * [get\_my\_project\_id](#literalai.api.LiteralAPI.get_my_project_id)
+  * [AsyncLiteralAPI](#literalai.api.AsyncLiteralAPI)
+    * [make\_gql\_call](#literalai.api.AsyncLiteralAPI.make_gql_call)
+    * [make\_rest\_call](#literalai.api.AsyncLiteralAPI.make_rest_call)
+    * [gql\_helper](#literalai.api.AsyncLiteralAPI.gql_helper)
+    * [get\_users](#literalai.api.AsyncLiteralAPI.get_users)
+    * [get\_user](#literalai.api.AsyncLiteralAPI.get_user)
+    * [create\_user](#literalai.api.AsyncLiteralAPI.create_user)
+    * [update\_user](#literalai.api.AsyncLiteralAPI.update_user)
+    * [delete\_user](#literalai.api.AsyncLiteralAPI.delete_user)
+    * [get\_or\_create\_user](#literalai.api.AsyncLiteralAPI.get_or_create_user)
+    * [get\_threads](#literalai.api.AsyncLiteralAPI.get_threads)
+    * [list\_threads](#literalai.api.AsyncLiteralAPI.list_threads)
+    * [get\_thread](#literalai.api.AsyncLiteralAPI.get_thread)
+    * [create\_thread](#literalai.api.AsyncLiteralAPI.create_thread)
+    * [upsert\_thread](#literalai.api.AsyncLiteralAPI.upsert_thread)
+    * [update\_thread](#literalai.api.AsyncLiteralAPI.update_thread)
+    * [delete\_thread](#literalai.api.AsyncLiteralAPI.delete_thread)
+    * [get\_scores](#literalai.api.AsyncLiteralAPI.get_scores)
+    * [create\_scores](#literalai.api.AsyncLiteralAPI.create_scores)
+    * [create\_score](#literalai.api.AsyncLiteralAPI.create_score)
+    * [update\_score](#literalai.api.AsyncLiteralAPI.update_score)
+    * [delete\_score](#literalai.api.AsyncLiteralAPI.delete_score)
+    * [upload\_file](#literalai.api.AsyncLiteralAPI.upload_file)
+    * [create\_attachment](#literalai.api.AsyncLiteralAPI.create_attachment)
+    * [update\_attachment](#literalai.api.AsyncLiteralAPI.update_attachment)
+    * [get\_attachment](#literalai.api.AsyncLiteralAPI.get_attachment)
+    * [delete\_attachment](#literalai.api.AsyncLiteralAPI.delete_attachment)
+    * [create\_step](#literalai.api.AsyncLiteralAPI.create_step)
+    * [update\_step](#literalai.api.AsyncLiteralAPI.update_step)
+    * [get\_step](#literalai.api.AsyncLiteralAPI.get_step)
+    * [delete\_step](#literalai.api.AsyncLiteralAPI.delete_step)
+    * [send\_steps](#literalai.api.AsyncLiteralAPI.send_steps)
+    * [get\_generations](#literalai.api.AsyncLiteralAPI.get_generations)
+    * [create\_generation](#literalai.api.AsyncLiteralAPI.create_generation)
+    * [create\_dataset](#literalai.api.AsyncLiteralAPI.create_dataset)
+    * [get\_dataset](#literalai.api.AsyncLiteralAPI.get_dataset)
+    * [update\_dataset](#literalai.api.AsyncLiteralAPI.update_dataset)
+    * [delete\_dataset](#literalai.api.AsyncLiteralAPI.delete_dataset)
+    * [create\_experiment\_item](#literalai.api.AsyncLiteralAPI.create_experiment_item)
+    * [create\_dataset\_item](#literalai.api.AsyncLiteralAPI.create_dataset_item)
+    * [get\_dataset\_item](#literalai.api.AsyncLiteralAPI.get_dataset_item)
+    * [delete\_dataset\_item](#literalai.api.AsyncLiteralAPI.delete_dataset_item)
+    * [add\_step\_to\_dataset](#literalai.api.AsyncLiteralAPI.add_step_to_dataset)
+    * [add\_generation\_to\_dataset](#literalai.api.AsyncLiteralAPI.add_generation_to_dataset)
+    * [create\_prompt\_lineage](#literalai.api.AsyncLiteralAPI.create_prompt_lineage)
+* [prompt](#literalai.prompt)
+  * [Prompt](#literalai.prompt.Prompt)
+    * [format\_messages](#literalai.prompt.Prompt.format_messages)
+
+<a id="literalai.thread"></a>
+
+# thread
+
+<a id="literalai.thread.Thread"></a>
+
+## Thread
+
+```python
+class Thread(Utils)
+```
+
+<a id="literalai.thread.Thread.created_at"></a>
+
+#### created\_at
+
+read-only, set by server
+
+<a id="literalai.dataset"></a>
+
+# dataset
+
+<a id="literalai.dataset.Dataset"></a>
+
+## Dataset
+
+```python
+@dataclass(repr=False)
+class Dataset(Utils)
+```
+
+<a id="literalai.dataset.Dataset.create_item"></a>
+
+#### create\_item
+
+```python
+def create_item(input: Dict,
+                expected_output: Optional[Dict] = None,
+                metadata: Optional[Dict] = None) -> DatasetItem
+```
+
+Create a new dataset item and add it to this dataset.
+:param input: The input data for the dataset item.
+:param expected_output: The output data for the dataset item (optional).
+:param metadata: Metadata for the dataset item (optional).
+:return: The created DatasetItem instance.
+
+<a id="literalai.dataset.Dataset.create_experiment"></a>
+
+#### create\_experiment
+
+```python
+def create_experiment(name: str,
+                      prompt_id: Optional[str] = None,
+                      params: Optional[Dict] = None) -> DatasetExperiment
+```
+
+Creates a new dataset experiment based on this dataset.
+:param name: The name of the experiment .
+:param prompt_id: The Prompt ID used on LLM calls (optional).
+:param params: The params used on the experiment.
+:return: The created DatasetExperiment instance as a dictionary.
+
+<a id="literalai.dataset.Dataset.delete_item"></a>
+
+#### delete\_item
+
+```python
+def delete_item(item_id: str)
+```
+
+Delete a dataset item from this dataset.
+:param api: An instance of the DatasetAPI to make the call.
+:param item_id: The ID of the dataset item to delete.
+
+<a id="literalai.dataset.Dataset.add_step"></a>
+
+#### add\_step
+
+```python
+def add_step(step_id: str, metadata: Optional[Dict] = None) -> DatasetItem
+```
+
+Create a new dataset item based on a step and add it to this dataset.
+:param step_id: The id of the step to add to the dataset.
+:param metadata: Metadata for the dataset item (optional).
+:return: The created DatasetItem instance.
+
+<a id="literalai.dataset.Dataset.add_generation"></a>
+
+#### add\_generation
+
+```python
+def add_generation(generation_id: str,
+                   metadata: Optional[Dict] = None) -> DatasetItem
+```
+
+Create a new dataset item based on a generation and add it to this dataset.
+:param generation_id: The id of the generation to add to the dataset.
+:param metadata: Metadata for the dataset item (optional).
+:return: The created DatasetItem instance.
+
+<a id="literalai.wrappers"></a>
+
+# wrappers
+
+<a id="literalai.wrappers.remove_literalai_args"></a>
+
+#### remove\_literalai\_args
+
+```python
+def remove_literalai_args(kargs)
+```
+
+Remove argument prefixed with "literalai_" from kwargs and return them in a separate dict
+
+<a id="literalai.wrappers.restore_literalai_args"></a>
+
+#### restore\_literalai\_args
+
+```python
+def restore_literalai_args(kargs, largs)
+```
+
+Reverse the effect of remove_literalai_args by merging the literal arguments into kwargs
+
+<a id="literalai.helper"></a>
+
+# helper
+
+<a id="literalai.helper.ensure_values_serializable"></a>
+
+#### ensure\_values\_serializable
+
+```python
+def ensure_values_serializable(data)
+```
+
+Recursively ensures that all values in the input (dict or list) are JSON serializable.
+
+<a id="literalai.api"></a>
+
+# api
+
+<a id="literalai.api.LiteralAPI"></a>
+
+## LiteralAPI
+
+```python
+class LiteralAPI(BaseLiteralAPI)
+```
+
+<a id="literalai.api.LiteralAPI.make_gql_call"></a>
+
+#### make\_gql\_call
+
+```python
+def make_gql_call(description: str, query: str, variables: Dict[str,
+                                                                Any]) -> Dict
+```
+
+Executes a GraphQL call with the provided query and variables.
+
+Args:
+    description (str): Description of the GraphQL operation for logging purposes.
+    query (str): The GraphQL query to be executed.
+    variables (Dict[str, Any]): Variables required for the GraphQL query.
+
+Returns:
+    Dict: The JSON response from the GraphQL endpoint.
+
+Raises:
+    Exception: If the GraphQL call fails or returns errors.
+
+<a id="literalai.api.LiteralAPI.make_rest_call"></a>
+
+#### make\_rest\_call
+
+```python
+def make_rest_call(subpath: str, body: Dict[str, Any]) -> Dict
+```
+
+Executes a REST API call to the specified subpath with the given body.
+
+Args:
+    subpath (str): The subpath of the REST API endpoint.
+    body (Dict[str, Any]): The JSON body to send with the POST request.
+
+Returns:
+    Dict: The JSON response from the REST API endpoint.
+
+<a id="literalai.api.LiteralAPI.gql_helper"></a>
+
+#### gql\_helper
+
+```python
+def gql_helper(query: str, description: str, variables: Dict,
+               process_response: Callable[..., R]) -> R
+```
+
+Helper function to make a GraphQL call and process the response.
+
+Args:
+    query (str): The GraphQL query to execute.
+    description (str): Description of the GraphQL operation for logging purposes.
+    variables (Dict): Variables required for the GraphQL query.
+    process_response (Callable[..., R]): A function to process the response.
+
+Returns:
+    R: The result of processing the response.
+
+<a id="literalai.api.LiteralAPI.get_users"></a>
+
+#### get\_users
+
+```python
+def get_users(first: Optional[int] = None,
+              after: Optional[str] = None,
+              before: Optional[str] = None,
+              filters: Optional[users_filters] = None)
+```
+
+Retrieves a list of users based on pagination and optional filters.
+
+Args:
+    first (Optional[int]): The number of users to retrieve.
+    after (Optional[str]): A cursor for use in pagination, fetching records after this cursor.
+    before (Optional[str]): A cursor for use in pagination, fetching records before this cursor.
+    filters (Optional[users_filters]): Filters to apply to the user query.
+
+Returns:
+    Dict: A dictionary containing the queried user data.
+
+<a id="literalai.api.LiteralAPI.get_user"></a>
+
+#### get\_user
+
+```python
+def get_user(id: Optional[str] = None, identifier: Optional[str] = None)
+```
+
+Retrieves a user based on the provided ID or identifier.
+
+Args:
+    id (Optional[str]): The unique ID of the user.
+    identifier (Optional[str]): A unique identifier for the user, such as a username or email.
+
+Returns:
+    The user data as returned by the GraphQL helper function.
+
+<a id="literalai.api.LiteralAPI.create_user"></a>
+
+#### create\_user
+
+```python
+def create_user(identifier: str, metadata: Optional[Dict] = None)
+```
+
+Creates a new user with the specified identifier and optional metadata.
+
+Args:
+    identifier (str): A unique identifier for the user, such as a username or email.
+    metadata (Optional[Dict]): Additional data associated with the user.
+
+Returns:
+    The result of the GraphQL call to create a user.
+
+<a id="literalai.api.LiteralAPI.update_user"></a>
+
+#### update\_user
+
+```python
+def update_user(id: str,
+                identifier: Optional[str] = None,
+                metadata: Optional[Dict] = None)
+```
+
+Updates an existing user identified by the given ID, with optional new identifier and metadata.
+
+Args:
+    id (str): The unique ID of the user to update.
+    identifier (Optional[str]): A new identifier for the user, such as a username or email.
+    metadata (Optional[Dict]): New or updated metadata for the user.
+
+Returns:
+    The result of the GraphQL call to update the user.
+
+<a id="literalai.api.LiteralAPI.delete_user"></a>
+
+#### delete\_user
+
+```python
+def delete_user(id: str)
+```
+
+Deletes a user identified by the given ID.
+
+Args:
+    id (str): The unique ID of the user to delete.
+
+Returns:
+    The result of the GraphQL call to delete the user.
+
+<a id="literalai.api.LiteralAPI.get_or_create_user"></a>
+
+#### get\_or\_create\_user
+
+```python
+def get_or_create_user(identifier: str, metadata: Optional[Dict] = None)
+```
+
+Retrieves a user by their identifier, or creates a new user if they do not exist.
+
+Args:
+    identifier (str): The identifier of the user to retrieve or create.
+    metadata (Optional[Dict]): Metadata to associate with the user if they are created.
+
+Returns:
+    The existing or newly created user data.
+
+<a id="literalai.api.LiteralAPI.get_threads"></a>
+
+#### get\_threads
+
+```python
+def get_threads(first: Optional[int] = None,
+                after: Optional[str] = None,
+                before: Optional[str] = None,
+                filters: Optional[threads_filters] = None,
+                order_by: Optional[threads_order_by] = None,
+                step_types_to_keep: Optional[List[StepType]] = None)
+```
+
+Fetches a list of threads based on pagination and optional filters.
+
+Args:
+    first (Optional[int]): Number of threads to fetch.
+    after (Optional[str]): Cursor for pagination, fetch threads after this cursor.
+    before (Optional[str]): Cursor for pagination, fetch threads before this cursor.
+    filters (Optional[threads_filters]): Filters to apply on the threads query.
+    order_by (Optional[threads_order_by]): Order by clause for threads.
+
+Returns:
+    A list of threads that match the criteria.
+
+<a id="literalai.api.LiteralAPI.list_threads"></a>
+
+#### list\_threads
+
+```python
+def list_threads(first: Optional[int] = None,
+                 after: Optional[str] = None,
+                 before: Optional[str] = None,
+                 filters: Optional[threads_filters] = None,
+                 order_by: Optional[threads_order_by] = None)
+```
+
+Lists threads based on pagination and optional filters, similar to get_threads but may include additional processing.
+
+Args:
+    first (Optional[int]): Number of threads to list.
+    after (Optional[str]): Cursor for pagination, list threads after this cursor.
+    before (Optional[str]): Cursor for pagination, list threads before this cursor.
+    filters (Optional[threads_filters]): Filters to apply on the threads listing.
+    order_by (Optional[threads_order_by]): Order by clause for threads.
+
+Returns:
+    A list of threads that match the criteria.
+
+<a id="literalai.api.LiteralAPI.get_thread"></a>
+
+#### get\_thread
+
+```python
+def get_thread(id: str)
+```
+
+Retrieves a single thread by its ID.
+
+Args:
+    id (str): The unique identifier of the thread.
+
+Returns:
+    The thread corresponding to the provided ID.
+
+<a id="literalai.api.LiteralAPI.create_thread"></a>
+
+#### create\_thread
+
+```python
+def create_thread(name: Optional[str] = None,
+                  metadata: Optional[Dict] = None,
+                  participant_id: Optional[str] = None,
+                  environment: Optional[str] = None,
+                  tags: Optional[List[str]] = None)
+```
+
+Creates a new thread with the specified details.
+
+Args:
+    name (Optional[str]): Name of the thread.
+    metadata (Optional[Dict]): Metadata associated with the thread.
+    participant_id (Optional[str]): Identifier for the participant.
+    environment (Optional[str]): Environment in which the thread operates.
+    tags (Optional[List[str]]): List of tags associated with the thread.
+
+Returns:
+    The newly created thread.
+
+<a id="literalai.api.LiteralAPI.upsert_thread"></a>
+
+#### upsert\_thread
+
+```python
+def upsert_thread(id: str,
+                  name: Optional[str] = None,
+                  metadata: Optional[Dict] = None,
+                  participant_id: Optional[str] = None,
+                  environment: Optional[str] = None,
+                  tags: Optional[List[str]] = None)
+```
+
+Updates an existing thread or creates a new one if it does not exist.
+
+Args:
+    id (str): The unique identifier of the thread.
+    name (Optional[str]): Name of the thread.
+    metadata (Optional[Dict]): Metadata associated with the thread.
+    participant_id (Optional[str]): Identifier for the participant.
+    environment (Optional[str]): Environment in which the thread operates.
+    tags (Optional[List[str]]): List of tags associated with the thread.
+
+Returns:
+    The updated or newly created thread.
+
+<a id="literalai.api.LiteralAPI.update_thread"></a>
+
+#### update\_thread
+
+```python
+def update_thread(id: str,
+                  name: Optional[str] = None,
+                  metadata: Optional[Dict] = None,
+                  participant_id: Optional[str] = None,
+                  environment: Optional[str] = None,
+                  tags: Optional[List[str]] = None)
+```
+
+Updates the specified details of an existing thread.
+
+Args:
+    id (str): The unique identifier of the thread to update.
+    name (Optional[str]): New name of the thread.
+    metadata (Optional[Dict]): New metadata for the thread.
+    participant_id (Optional[str]): New identifier for the participant.
+    environment (Optional[str]): New environment for the thread.
+    tags (Optional[List[str]]): New list of tags for the thread.
+
+Returns:
+    The updated thread.
+
+<a id="literalai.api.LiteralAPI.delete_thread"></a>
+
+#### delete\_thread
+
+```python
+def delete_thread(id: str)
+```
+
+Deletes a thread identified by its ID.
+
+Args:
+    id (str): The unique identifier of the thread to delete.
+
+Returns:
+    The result of the deletion operation.
+
+<a id="literalai.api.LiteralAPI.create_score"></a>
+
+#### create\_score
+
+```python
+def create_score(name: str,
+                 value: float,
+                 type: ScoreType,
+                 step_id: Optional[str] = None,
+                 generation_id: Optional[str] = None,
+                 dataset_experiment_item_id: Optional[str] = None,
+                 comment: Optional[str] = None,
+                 tags: Optional[List[str]] = None)
+```
+
+Creates a single score in the database.
+
+Args:
+    name (str): The name of the score.
+    value (float): The numerical value of the score.
+    type (ScoreType): The type of the score.
+    step_id (Optional[str]): The ID of the step associated with the score.
+    generation_id (Optional[str]): The ID of the generation associated with the score.
+    dataset_experiment_item_id (Optional[str]): The ID of the dataset experiment item associated with the score.
+    comment (Optional[str]): An optional comment about the score.
+    tags (Optional[List[str]]): Optional tags associated with the score.
+
+Returns:
+    The created Score object.
+
+<a id="literalai.api.LiteralAPI.update_score"></a>
+
+#### update\_score
+
+```python
+def update_score(id: str, update_params: ScoreUpdate)
+```
+
+Updates a score identified by its ID with new parameters.
+
+Args:
+    id (str): The unique identifier of the score to update.
+    update_params (ScoreUpdate): A dictionary of parameters to update in the score.
+
+Returns:
+    The result of the update operation.
+
+<a id="literalai.api.LiteralAPI.delete_score"></a>
+
+#### delete\_score
+
+```python
+def delete_score(id: str)
+```
+
+Deletes a score identified by its ID.
+
+Args:
+    id (str): The unique identifier of the score to delete.
+
+Returns:
+    The result of the deletion operation.
+
+<a id="literalai.api.LiteralAPI.upload_file"></a>
+
+#### upload\_file
+
+```python
+def upload_file(content: Union[bytes, str],
+                thread_id: Optional[str] = None,
+                mime: Optional[str] = "application/octet-stream") -> Dict
+```
+
+Uploads a file to the server.
+
+Args:
+    content (Union[bytes, str]): The content of the file to upload.
+    thread_id (Optional[str]): The ID of the thread associated with the file.
+    mime (Optional[str]): The MIME type of the file. Defaults to 'application/octet-stream'.
+
+Returns:
+    Dict: A dictionary containing the object key and URL of the uploaded file, or None values if the upload fails.
+
+<a id="literalai.api.LiteralAPI.create_attachment"></a>
+
+#### create\_attachment
+
+```python
+def create_attachment(thread_id: str,
+                      step_id: str,
+                      id: Optional[str] = None,
+                      metadata: Optional[Dict] = None,
+                      mime: Optional[str] = None,
+                      name: Optional[str] = None,
+                      object_key: Optional[str] = None,
+                      url: Optional[str] = None,
+                      content: Optional[Union[bytes, str]] = None,
+                      path: Optional[str] = None) -> "Attachment"
+```
+
+Creates an attachment associated with a thread and step, potentially uploading file content.
+
+Args:
+    thread_id (str): The ID of the thread to which the attachment is linked.
+    step_id (str): The ID of the step to which the attachment is linked.
+    id (Optional[str]): The ID of the attachment, if updating an existing one.
+    metadata (Optional[Dict]): Metadata associated with the attachment.
+    mime (Optional[str]): MIME type of the file, if content is provided.
+    name (Optional[str]): Name of the attachment.
+    object_key (Optional[str]): Object key of the uploaded file, if already known.
+    url (Optional[str]): URL of the uploaded file, if already known.
+    content (Optional[Union[bytes, str]]): File content to upload.
+    path (Optional[str]): Path where the file should be stored.
+
+Returns:
+    Attachment: The created or updated attachment object.
+
+<a id="literalai.api.LiteralAPI.update_attachment"></a>
+
+#### update\_attachment
+
+```python
+def update_attachment(id: str, update_params: AttachmentUpload)
+```
+
+Updates an existing attachment with new parameters.
+
+Args:
+    id (str): The unique identifier of the attachment to update.
+    update_params (AttachmentUpload): The parameters to update in the attachment.
+
+Returns:
+    The result of the update operation.
+
+<a id="literalai.api.LiteralAPI.get_attachment"></a>
+
+#### get\_attachment
+
+```python
+def get_attachment(id: str)
+```
+
+Retrieves an attachment by its ID.
+
+Args:
+    id (str): The unique identifier of the attachment to retrieve.
+
+Returns:
+    The attachment data as returned by the GraphQL helper function.
+
+<a id="literalai.api.LiteralAPI.delete_attachment"></a>
+
+#### delete\_attachment
+
+```python
+def delete_attachment(id: str)
+```
+
+Deletes an attachment identified by its ID.
+
+Args:
+    id (str): The unique identifier of the attachment to delete.
+
+Returns:
+    The result of the deletion operation.
+
+<a id="literalai.api.LiteralAPI.create_step"></a>
+
+#### create\_step
+
+```python
+def create_step(thread_id: Optional[str] = None,
+                type: Optional[StepType] = "undefined",
+                start_time: Optional[str] = None,
+                end_time: Optional[str] = None,
+                input: Optional[Dict] = None,
+                output: Optional[Dict] = None,
+                metadata: Optional[Dict] = None,
+                parent_id: Optional[str] = None,
+                name: Optional[str] = None,
+                tags: Optional[List[str]] = None)
+```
+
+Creates a new step with the specified parameters.
+
+Args:
+    thread_id (Optional[str]): The ID of the thread this step is associated with.
+    type (Optional[StepType]): The type of the step, defaults to "undefined".
+    start_time (Optional[str]): The start time of the step.
+    end_time (Optional[str]): The end time of the step.
+    input (Optional[Dict]): Input data for the step.
+    output (Optional[Dict]): Output data from the step.
+    metadata (Optional[Dict]): Metadata associated with the step.
+    parent_id (Optional[str]): The ID of the parent step, if any.
+    name (Optional[str]): The name of the step.
+    tags (Optional[List[str]]): Tags associated with the step.
+
+Returns:
+    The result of the GraphQL helper function for creating a step.
+
+<a id="literalai.api.LiteralAPI.update_step"></a>
+
+#### update\_step
+
+```python
+def update_step(id: str,
+                type: Optional[StepType] = None,
+                input: Optional[str] = None,
+                output: Optional[str] = None,
+                metadata: Optional[Dict] = None,
+                name: Optional[str] = None,
+                tags: Optional[List[str]] = None,
+                start_time: Optional[str] = None,
+                end_time: Optional[str] = None,
+                parent_id: Optional[str] = None)
+```
+
+Updates an existing step identified by its ID with new parameters.
+
+Args:
+    id (str): The unique identifier of the step to update.
+    type (Optional[StepType]): The type of the step.
+    input (Optional[str]): Input data for the step.
+    output (Optional[str]): Output data from the step.
+    metadata (Optional[Dict]): Metadata associated with the step.
+    name (Optional[str]): The name of the step.
+    tags (Optional[List[str]]): Tags associated with the step.
+    start_time (Optional[str]): The start time of the step.
+    end_time (Optional[str]): The end time of the step.
+    parent_id (Optional[str]): The ID of the parent step, if any.
+
+Returns:
+    The result of the GraphQL helper function for updating a step.
+
+<a id="literalai.api.LiteralAPI.get_steps"></a>
+
+#### get\_steps
+
+```python
+def get_steps(
+        first: Optional[int] = None,
+        after: Optional[str] = None,
+        before: Optional[str] = None,
+        filters: Optional[steps_filters] = None,
+        order_by: Optional[steps_order_by] = None) -> PaginatedResponse[Step]
+```
+
+Fetches a list of steps based on pagination and optional filters.
+
+Args:
+    first (Optional[int]): Number of steps to fetch.
+    after (Optional[str]): Cursor for pagination, fetch steps after this cursor.
+    before (Optional[str]): Cursor for pagination, fetch steps before this cursor.
+    filters (Optional[steps_filters]): Filters to apply on the steps query.
+    order_by (Optional[steps_order_by]): Order by clause for steps.
+
+Returns:
+    A list of steps that match the criteria.
+
+<a id="literalai.api.LiteralAPI.get_step"></a>
+
+#### get\_step
+
+```python
+def get_step(id: str)
+```
+
+Retrieves a step by its ID.
+
+Args:
+    id (str): The unique identifier of the step to retrieve.
+
+Returns:
+    The step data as returned by the GraphQL helper function.
+
+<a id="literalai.api.LiteralAPI.delete_step"></a>
+
+#### delete\_step
+
+```python
+def delete_step(id: str)
+```
+
+Deletes a step identified by its ID.
+
+Args:
+    id (str): The unique identifier of the step to delete.
+
+Returns:
+    The result of the deletion operation.
+
+<a id="literalai.api.LiteralAPI.send_steps"></a>
+
+#### send\_steps
+
+```python
+def send_steps(steps: List[Union[StepDict, "Step"]])
+```
+
+Sends a list of steps to be processed.
+
+Args:
+    steps (List[Union[StepDict, "Step"]]): A list of steps or step dictionaries to send.
+
+Returns:
+    The result of the GraphQL helper function for sending steps.
+
+<a id="literalai.api.LiteralAPI.get_generations"></a>
+
+#### get\_generations
+
+```python
+def get_generations(first: Optional[int] = None,
+                    after: Optional[str] = None,
+                    before: Optional[str] = None,
+                    filters: Optional[generations_filters] = None,
+                    order_by: Optional[generations_order_by] = None)
+```
+
+Fetches a list of generations based on pagination and optional filters.
+
+Args:
+    first (Optional[int]): The number of generations to retrieve.
+    after (Optional[str]): A cursor for use in pagination, fetching records after this cursor.
+    before (Optional[str]): A cursor for use in pagination, fetching records before this cursor.
+    filters (Optional[generations_filters]): Filters to apply to the generations query.
+    order_by (Optional[generations_order_by]): Order by clause for generations.
+
+Returns:
+    A list of generations that match the criteria.
+
+<a id="literalai.api.LiteralAPI.create_generation"></a>
+
+#### create\_generation
+
+```python
+def create_generation(generation: Union[ChatGeneration, CompletionGeneration])
+```
+
+Creates a new generation, either a chat or completion type.
+
+Args:
+    generation (Union[ChatGeneration, CompletionGeneration]): The generation data to create.
+
+Returns:
+    The result of the creation operation.
+
+<a id="literalai.api.LiteralAPI.create_dataset"></a>
+
+#### create\_dataset
+
+```python
+def create_dataset(name: str,
+                   description: Optional[str] = None,
+                   metadata: Optional[Dict] = None,
+                   type: DatasetType = "key_value")
+```
+
+Creates a new dataset with the specified properties.
+
+Args:
+    name (str): The name of the dataset.
+    description (Optional[str]): A description of the dataset.
+    metadata (Optional[Dict]): Additional metadata for the dataset.
+    type (DatasetType): The type of the dataset, defaults to "key_value".
+
+Returns:
+    The result of the dataset creation operation.
+
+<a id="literalai.api.LiteralAPI.get_dataset"></a>
+
+#### get\_dataset
+
+```python
+def get_dataset(id: Optional[str] = None, name: Optional[str] = None)
+```
+
+Retrieves a dataset by its ID or name.
+
+Args:
+    id (Optional[str]): The unique identifier of the dataset.
+    name (Optional[str]): The name of the dataset.
+
+Returns:
+    The dataset data as returned by the REST helper function.
+
+<a id="literalai.api.LiteralAPI.update_dataset"></a>
+
+#### update\_dataset
+
+```python
+def update_dataset(id: str,
+                   name: Optional[str] = None,
+                   description: Optional[str] = None,
+                   metadata: Optional[Dict] = None)
+```
+
+Updates an existing dataset identified by its ID with new properties.
+
+Args:
+    id (str): The unique identifier of the dataset to update.
+    name (Optional[str]): A new name for the dataset.
+    description (Optional[str]): A new description for the dataset.
+    metadata (Optional[Dict]): New or updated metadata for the dataset.
+
+Returns:
+    The result of the dataset update operation.
+
+<a id="literalai.api.LiteralAPI.delete_dataset"></a>
+
+#### delete\_dataset
+
+```python
+def delete_dataset(id: str)
+```
+
+Deletes a dataset identified by its ID.
+
+Args:
+    id (str): The unique identifier of the dataset to delete.
+
+Returns:
+    The result of the deletion operation.
+
+<a id="literalai.api.LiteralAPI.create_experiment"></a>
+
+#### create\_experiment
+
+```python
+def create_experiment(dataset_id: str,
+                      name: str,
+                      prompt_id: Optional[str] = None,
+                      params: Optional[Dict] = None) -> "DatasetExperiment"
+```
+
+Creates a new experiment associated with a specific dataset.
+
+Args:
+    dataset_id (str): The unique identifier of the dataset.
+    name (str): The name of the experiment.
+    prompt_id (Optional[str]): The identifier of the prompt associated with the experiment.
+    params (Optional[Dict]): Additional parameters for the experiment.
+
+Returns:
+    DatasetExperiment: The newly created experiment object.
+
+<a id="literalai.api.LiteralAPI.create_experiment_item"></a>
+
+#### create\_experiment\_item
+
+```python
+def create_experiment_item(
+        experiment_item: DatasetExperimentItem) -> DatasetExperimentItem
+```
+
+Creates an experiment item within an existing experiment.
+
+Args:
+    experiment_item (DatasetExperimentItem): The experiment item to be created, containing all necessary data.
+
+Returns:
+    DatasetExperimentItem: The newly created experiment item with scores attached.
+
+<a id="literalai.api.LiteralAPI.create_dataset_item"></a>
+
+#### create\_dataset\_item
+
+```python
+def create_dataset_item(dataset_id: str,
+                        input: Dict,
+                        expected_output: Optional[Dict] = None,
+                        metadata: Optional[Dict] = None)
+```
+
+Creates a new dataset item with the specified properties.
+
+Args:
+    dataset_id (str): The unique identifier of the dataset.
+    input (Dict): The input data for the dataset item.
+    expected_output (Optional[Dict]): The expected output data for the dataset item.
+    metadata (Optional[Dict]): Additional metadata for the dataset item.
+
+Returns:
+    Dict: The result of the dataset item creation operation.
+
+<a id="literalai.api.LiteralAPI.get_dataset_item"></a>
+
+#### get\_dataset\_item
+
+```python
+def get_dataset_item(id: str)
+```
+
+Retrieves a dataset item by its unique identifier.
+
+Args:
+    id (str): The unique identifier of the dataset item to retrieve.
+
+Returns:
+    Dict: The dataset item data.
+
+<a id="literalai.api.LiteralAPI.delete_dataset_item"></a>
+
+#### delete\_dataset\_item
+
+```python
+def delete_dataset_item(id: str)
+```
+
+Deletes a dataset item by its unique identifier.
+
+Args:
+    id (str): The unique identifier of the dataset item to delete.
+
+Returns:
+    Dict: The result of the dataset item deletion operation.
+
+<a id="literalai.api.LiteralAPI.add_step_to_dataset"></a>
+
+#### add\_step\_to\_dataset
+
+```python
+def add_step_to_dataset(dataset_id: str,
+                        step_id: str,
+                        metadata: Optional[Dict] = None)
+```
+
+Adds a step to a dataset.
+
+Args:
+    dataset_id (str): The unique identifier of the dataset.
+    step_id (str): The unique identifier of the step to add.
+    metadata (Optional[Dict]): Additional metadata for the step being added.
+
+Returns:
+    Dict: The result of adding the step to the dataset.
+
+<a id="literalai.api.LiteralAPI.add_generation_to_dataset"></a>
+
+#### add\_generation\_to\_dataset
+
+```python
+def add_generation_to_dataset(dataset_id: str,
+                              generation_id: str,
+                              metadata: Optional[Dict] = None)
+```
+
+Adds a generation to a dataset.
+
+Args:
+    dataset_id (str): The unique identifier of the dataset.
+    generation_id (str): The unique identifier of the generation to add.
+    metadata (Optional[Dict]): Additional metadata for the generation being added.
+
+Returns:
+    Dict: The result of adding the generation to the dataset.
+
+<a id="literalai.api.LiteralAPI.create_prompt_lineage"></a>
+
+#### create\_prompt\_lineage
+
+```python
+def create_prompt_lineage(name: str, description: Optional[str] = None)
+```
+
+Creates a prompt lineage with the specified name and optional description.
+
+Args:
+    name (str): The name of the prompt lineage.
+    description (Optional[str]): An optional description of the prompt lineage.
+
+Returns:
+    Dict: The result of the prompt lineage creation operation.
+
+<a id="literalai.api.LiteralAPI.get_or_create_prompt"></a>
+
+#### get\_or\_create\_prompt
+
+```python
+def get_or_create_prompt(name: str,
+                         template_messages: List[GenerationMessage],
+                         settings: Optional[ProviderSettings] = None,
+                         tools: Optional[List[Dict]] = None) -> Prompt
+```
+
+Get or create a prompt on Literal AI.
+
+A `Prompt` is fully defined by its `name`, `template_messages`, `settings` and tools.
+If a prompt already exists for the given arguments, it is returned.
+Otherwise, a new prompt is created.
+
+Args:
+    name (str): The name of the prompt to retrieve or create.
+    template_messages (List[GenerationMessage]): A list of template messages for the prompt.
+    settings (Optional[Dict]): Optional settings for the prompt.
+
+Returns:
+    Prompt: The prompt that was retrieved or created.
+
+<a id="literalai.api.LiteralAPI.get_prompt"></a>
+
+#### get\_prompt
+
+```python
+def get_prompt(id: Optional[str] = None,
+               name: Optional[str] = None,
+               version: Optional[int] = 0) -> Prompt
+```
+
+Gets a prompt either by `id` or `name` and (optional) `version`.
+
+Either the `id` or the `name` must be provided.
+If both are provided, the `id` is used.
+
+Args:
+    id (str): The unique identifier of the prompt to retrieve.
+    name (str): The name of the prompt to retrieve.
+    version (Optional[int]): The version number of the prompt to retrieve.
+
+Returns:
+    Prompt: The prompt with the given identifier or name.
+
+<a id="literalai.api.LiteralAPI.get_my_project_id"></a>
+
+#### get\_my\_project\_id
+
+```python
+def get_my_project_id()
+```
+
+Retrieves the projectId associated to the API key.
+
+Returns:
+    The projectId associated to the API key.
+
+<a id="literalai.api.AsyncLiteralAPI"></a>
+
+## AsyncLiteralAPI
+
+```python
+class AsyncLiteralAPI(BaseLiteralAPI)
+```
+
+<a id="literalai.api.AsyncLiteralAPI.make_gql_call"></a>
+
+#### make\_gql\_call
+
+```python
+async def make_gql_call(description: str, query: str,
+                        variables: Dict[str, Any]) -> Dict
+```
+
+Asynchronously makes a GraphQL call using the provided query and variables.
+
+Args:
+    description (str): Description of the GraphQL operation for logging purposes.
+    query (str): The GraphQL query to be executed.
+    variables (Dict[str, Any]): Variables required for the GraphQL query.
+
+Returns:
+    Dict: The JSON response from the GraphQL endpoint.
+
+Raises:
+    Exception: If the GraphQL call fails or returns errors.
+
+<a id="literalai.api.AsyncLiteralAPI.make_rest_call"></a>
+
+#### make\_rest\_call
+
+```python
+async def make_rest_call(subpath: str, body: Dict[str, Any]) -> Dict
+```
+
+Asynchronously makes a REST API call to a specified subpath with the provided body.
+
+Args:
+    subpath (str): The endpoint subpath to which the POST request is made.
+    body (Dict[str, Any]): The JSON body of the POST request.
+
+Returns:
+    Dict: The JSON response from the REST API endpoint.
+
+<a id="literalai.api.AsyncLiteralAPI.gql_helper"></a>
+
+#### gql\_helper
+
+```python
+async def gql_helper(query: str, description: str, variables: Dict,
+                     process_response: Callable[..., R]) -> R
+```
+
+Helper function to process a GraphQL query by making an asynchronous call and processing the response.
+
+Args:
+    query (str): The GraphQL query to be executed.
+    description (str): Description of the GraphQL operation for logging purposes.
+    variables (Dict): Variables required for the GraphQL query.
+    process_response (Callable[..., R]): The function to process the response.
+
+Returns:
+    R: The result of processing the response.
+
+<a id="literalai.api.AsyncLiteralAPI.get_users"></a>
+
+#### get\_users
+
+```python
+async def get_users(first: Optional[int] = None,
+                    after: Optional[str] = None,
+                    before: Optional[str] = None,
+                    filters: Optional[users_filters] = None)
+```
+
+Asynchronously fetches a list of users based on pagination and optional filters.
+
+Args:
+    first (Optional[int]): The number of users to retrieve.
+    after (Optional[str]): A cursor for use in pagination, fetching records after this cursor.
+    before (Optional[str]): A cursor for use in pagination, fetching records before this cursor.
+    filters (Optional[users_filters]): Filters to apply to the user query.
+
+Returns:
+    The result of the GraphQL helper function for fetching users.
+
+<a id="literalai.api.AsyncLiteralAPI.get_user"></a>
+
+#### get\_user
+
+```python
+async def get_user(id: Optional[str] = None, identifier: Optional[str] = None)
+```
+
+Asynchronously retrieves a user by ID or identifier.
+
+Args:
+    id (Optional[str]): The unique identifier of the user to retrieve.
+    identifier (Optional[str]): An alternative identifier for the user.
+
+Returns:
+    The result of the GraphQL helper function for fetching a user.
+
+<a id="literalai.api.AsyncLiteralAPI.create_user"></a>
+
+#### create\_user
+
+```python
+async def create_user(identifier: str, metadata: Optional[Dict] = None)
+```
+
+Asynchronously creates a new user with the specified identifier and optional metadata.
+
+Args:
+    identifier (str): The identifier for the new user.
+    metadata (Optional[Dict]): Additional metadata for the user.
+
+Returns:
+    The result of the GraphQL helper function for creating a user.
+
+<a id="literalai.api.AsyncLiteralAPI.update_user"></a>
+
+#### update\_user
+
+```python
+async def update_user(id: str,
+                      identifier: Optional[str] = None,
+                      metadata: Optional[Dict] = None)
+```
+
+Asynchronously updates an existing user identified by ID with new identifier and/or metadata.
+
+Args:
+    id (str): The unique identifier of the user to update.
+    identifier (Optional[str]): New identifier for the user.
+    metadata (Optional[Dict]): New metadata for the user.
+
+Returns:
+    The result of the GraphQL helper function for updating a user.
+
+<a id="literalai.api.AsyncLiteralAPI.delete_user"></a>
+
+#### delete\_user
+
+```python
+async def delete_user(id: str)
+```
+
+Asynchronously deletes a user identified by ID.
+
+Args:
+    id (str): The unique identifier of the user to delete.
+
+Returns:
+    The result of the GraphQL helper function for deleting a user.
+
+<a id="literalai.api.AsyncLiteralAPI.get_or_create_user"></a>
+
+#### get\_or\_create\_user
+
+```python
+async def get_or_create_user(identifier: str, metadata: Optional[Dict] = None)
+```
+
+Asynchronously retrieves a user by identifier or creates a new one if it does not exist.
+
+Args:
+    identifier (str): The identifier of the user to retrieve or create.
+    metadata (Optional[Dict]): Metadata for the user if creation is necessary.
+
+Returns:
+    The existing or newly created user.
+
+<a id="literalai.api.AsyncLiteralAPI.get_threads"></a>
+
+#### get\_threads
+
+```python
+async def get_threads(first: Optional[int] = None,
+                      after: Optional[str] = None,
+                      before: Optional[str] = None,
+                      filters: Optional[threads_filters] = None,
+                      order_by: Optional[threads_order_by] = None,
+                      step_types_to_keep: Optional[List[StepType]] = None)
+```
+
+Asynchronously fetches a list of threads based on pagination and optional filters and ordering.
+
+Args:
+    first (Optional[int]): The number of threads to retrieve.
+    after (Optional[str]): A cursor for use in pagination, fetching records after this cursor.
+    before (Optional[str]): A cursor for use in pagination, fetching records before this cursor.
+    filters (Optional[threads_filters]): Filters to apply to the thread query.
+    order_by (Optional[threads_order_by]): Ordering criteria for the threads.
+
+Returns:
+    The result of the GraphQL helper function for fetching threads.
+
+<a id="literalai.api.AsyncLiteralAPI.list_threads"></a>
+
+#### list\_threads
+
+```python
+async def list_threads(first: Optional[int] = None,
+                       after: Optional[str] = None,
+                       before: Optional[str] = None,
+                       filters: Optional[threads_filters] = None,
+                       order_by: Optional[threads_order_by] = None)
+```
+
+Asynchronously lists threads based on pagination and optional filters and ordering, similar to `get_threads`.
+
+Args:
+    first (Optional[int]): The number of threads to list.
+    after (Optional[str]): A cursor for use in pagination, fetching records after this cursor.
+    before (Optional[str]): A cursor for use in pagination, fetching records before this cursor.
+    filters (Optional[threads_filters]): Filters to apply to the thread query.
+    order_by (Optional[threads_order_by]): Ordering criteria for the threads.
+
+Returns:
+    The result of the GraphQL helper function for listing threads.
+
+<a id="literalai.api.AsyncLiteralAPI.get_thread"></a>
+
+#### get\_thread
+
+```python
+async def get_thread(id: str)
+```
+
+Asynchronously retrieves a thread by its ID.
+
+Args:
+    id (str): The unique identifier of the thread to retrieve.
+
+Returns:
+    The result of the GraphQL helper function for fetching a thread.
+
+<a id="literalai.api.AsyncLiteralAPI.create_thread"></a>
+
+#### create\_thread
+
+```python
+async def create_thread(name: Optional[str] = None,
+                        metadata: Optional[Dict] = None,
+                        participant_id: Optional[str] = None,
+                        environment: Optional[str] = None,
+                        tags: Optional[List[str]] = None)
+```
+
+Asynchronously creates a new thread with specified details.
+
+Args:
+    name (Optional[str]): The name of the thread.
+    metadata (Optional[Dict]): Metadata associated with the thread.
+    participant_id (Optional[str]): Identifier for the participant associated with the thread.
+    environment (Optional[str]): The environment in which the thread operates.
+    tags (Optional[List[str]]): Tags associated with the thread.
+
+Returns:
+    The result of the GraphQL helper function for creating a thread.
+
+<a id="literalai.api.AsyncLiteralAPI.upsert_thread"></a>
+
+#### upsert\_thread
+
+```python
+async def upsert_thread(id: str,
+                        name: Optional[str] = None,
+                        metadata: Optional[Dict] = None,
+                        participant_id: Optional[str] = None,
+                        environment: Optional[str] = None,
+                        tags: Optional[List[str]] = None)
+```
+
+Asynchronously updates or inserts a thread based on the provided ID.
+
+Args:
+    id (str): The unique identifier of the thread to upsert.
+    name (Optional[str]): The name of the thread.
+    metadata (Optional[Dict]): Metadata associated with the thread.
+    participant_id (Optional[str]): Identifier for the participant associated with the thread.
+    environment (Optional[str]): The environment in which the thread operates.
+    tags (Optional[List[str]]): Tags associated with the thread.
+
+Returns:
+    The result of the GraphQL helper function for upserting a thread.
+
+<a id="literalai.api.AsyncLiteralAPI.update_thread"></a>
+
+#### update\_thread
+
+```python
+async def update_thread(id: str,
+                        name: Optional[str] = None,
+                        metadata: Optional[Dict] = None,
+                        participant_id: Optional[str] = None,
+                        environment: Optional[str] = None,
+                        tags: Optional[List[str]] = None)
+```
+
+Asynchronously updates an existing thread identified by ID with new details.
+
+Args:
+    id (str): The unique identifier of the thread to update.
+    name (Optional[str]): New name of the thread.
+    metadata (Optional[Dict]): New metadata for the thread.
+    participant_id (Optional[str]): New identifier for the participant.
+    environment (Optional[str]): New environment for the thread.
+    tags (Optional[List[str]]): New list of tags for the thread.
+
+Returns:
+    The result of the GraphQL helper function for updating a thread.
+
+<a id="literalai.api.AsyncLiteralAPI.delete_thread"></a>
+
+#### delete\_thread
+
+```python
+async def delete_thread(id: str)
+```
+
+Asynchronously deletes a thread identified by its ID.
+
+Args:
+    id (str): The unique identifier of the thread to delete.
+
+Returns:
+    The result of the GraphQL helper function for deleting a thread.
+
+<a id="literalai.api.AsyncLiteralAPI.get_scores"></a>
+
+#### get\_scores
+
+```python
+async def get_scores(first: Optional[int] = None,
+                     after: Optional[str] = None,
+                     before: Optional[str] = None,
+                     filters: Optional[scores_filters] = None,
+                     order_by: Optional[scores_order_by] = None)
+```
+
+Asynchronously fetches scores based on pagination and optional filters.
+
+Args:
+    first (Optional[int]): The number of scores to retrieve.
+    after (Optional[str]): A cursor for use in pagination, fetching records after this cursor.
+    before (Optional[str]): A cursor for use in pagination, fetching records before this cursor.
+    filters (Optional[scores_filters]): Filters to apply to the scores query.
+    order_by (Optional[scores_order_by]): Ordering options for the scores.
+
+Returns:
+    The result of the GraphQL helper function for fetching scores.
+
+<a id="literalai.api.AsyncLiteralAPI.create_scores"></a>
+
+#### create\_scores
+
+```python
+async def create_scores(scores: List[ScoreDict])
+```
+
+Asynchronously creates multiple scores.
+
+Args:
+    scores (List[ScoreDict]): A list of dictionaries representing the scores to be created.
+
+Returns:
+    The result of the GraphQL helper function for creating scores.
+
+<a id="literalai.api.AsyncLiteralAPI.create_score"></a>
+
+#### create\_score
+
+```python
+async def create_score(name: str,
+                       value: float,
+                       type: ScoreType,
+                       step_id: Optional[str] = None,
+                       generation_id: Optional[str] = None,
+                       dataset_experiment_item_id: Optional[str] = None,
+                       comment: Optional[str] = None,
+                       tags: Optional[List[str]] = None)
+```
+
+Asynchronously creates a single score.
+
+Args:
+    name (str): The name of the score.
+    value (float): The numerical value of the score.
+    type (ScoreType): The type of the score.
+    step_id (Optional[str]): The ID of the step associated with the score.
+    generation_id (Optional[str]): The ID of the generation associated with the score.
+    dataset_experiment_item_id (Optional[str]): The ID of the dataset experiment item associated with the score.
+    comment (Optional[str]): A comment associated with the score.
+    tags (Optional[List[str]]): A list of tags associated with the score.
+
+Returns:
+    The result of the GraphQL helper function for creating a score.
+
+<a id="literalai.api.AsyncLiteralAPI.update_score"></a>
+
+#### update\_score
+
+```python
+async def update_score(id: str, update_params: ScoreUpdate)
+```
+
+Asynchronously updates a score identified by its ID.
+
+Args:
+    id (str): The unique identifier of the score to update.
+    update_params (ScoreUpdate): A dictionary of parameters to update.
+
+Returns:
+    The result of the GraphQL helper function for updating a score.
+
+<a id="literalai.api.AsyncLiteralAPI.delete_score"></a>
+
+#### delete\_score
+
+```python
+async def delete_score(id: str)
+```
+
+Asynchronously deletes a score identified by its ID.
+
+Args:
+    id (str): The unique identifier of the score to delete.
+
+Returns:
+    The result of the GraphQL helper function for deleting a score.
+
+<a id="literalai.api.AsyncLiteralAPI.upload_file"></a>
+
+#### upload\_file
+
+```python
+async def upload_file(
+        content: Union[bytes, str],
+        thread_id: str,
+        mime: Optional[str] = "application/octet-stream") -> Dict
+```
+
+Asynchronously uploads a file to the server.
+
+Args:
+    content (Union[bytes, str]): The content of the file to upload.
+    thread_id (str): The ID of the thread associated with the file.
+    mime (Optional[str]): The MIME type of the file.
+
+Returns:
+    A dictionary containing the object key and URL of the uploaded file.
+
+<a id="literalai.api.AsyncLiteralAPI.create_attachment"></a>
+
+#### create\_attachment
+
+```python
+async def create_attachment(thread_id: str,
+                            step_id: str,
+                            id: Optional[str] = None,
+                            metadata: Optional[Dict] = None,
+                            mime: Optional[str] = None,
+                            name: Optional[str] = None,
+                            object_key: Optional[str] = None,
+                            url: Optional[str] = None,
+                            content: Optional[Union[bytes, str]] = None,
+                            path: Optional[str] = None) -> "Attachment"
+```
+
+Asynchronously creates an attachment and uploads it if content is provided.
+
+Args:
+    thread_id (str): The ID of the thread associated with the attachment.
+    step_id (str): The ID of the step associated with the attachment.
+    id (Optional[str]): An optional unique identifier for the attachment.
+    metadata (Optional[Dict]): Optional metadata for the attachment.
+    mime (Optional[str]): The MIME type of the attachment.
+    name (Optional[str]): The name of the attachment.
+    object_key (Optional[str]): The object key for the attachment if already uploaded.
+    url (Optional[str]): The URL of the attachment if already uploaded.
+    content (Optional[Union[bytes, str]]): The content of the attachment to upload.
+    path (Optional[str]): The file path of the attachment if it is to be uploaded from a local file.
+
+Returns:
+    The attachment object created after the upload and creation process.
+
+<a id="literalai.api.AsyncLiteralAPI.update_attachment"></a>
+
+#### update\_attachment
+
+```python
+async def update_attachment(id: str, update_params: AttachmentUpload)
+```
+
+Asynchronously updates an attachment identified by its ID.
+
+Args:
+    id (str): The unique identifier of the attachment to update.
+    update_params (AttachmentUpload): A dictionary of parameters to update the attachment.
+
+Returns:
+    The result of the GraphQL helper function for updating an attachment.
+
+<a id="literalai.api.AsyncLiteralAPI.get_attachment"></a>
+
+#### get\_attachment
+
+```python
+async def get_attachment(id: str)
+```
+
+Asynchronously retrieves an attachment by its ID.
+
+Args:
+    id (str): The unique identifier of the attachment to retrieve.
+
+Returns:
+    The result of the GraphQL helper function for fetching an attachment.
+
+<a id="literalai.api.AsyncLiteralAPI.delete_attachment"></a>
+
+#### delete\_attachment
+
+```python
+async def delete_attachment(id: str)
+```
+
+Asynchronously deletes an attachment identified by its ID.
+
+Args:
+    id (str): The unique identifier of the attachment to delete.
+
+Returns:
+    The result of the GraphQL helper function for deleting an attachment.
+
+<a id="literalai.api.AsyncLiteralAPI.create_step"></a>
+
+#### create\_step
+
+```python
+async def create_step(thread_id: Optional[str] = None,
+                      type: Optional[StepType] = "undefined",
+                      start_time: Optional[str] = None,
+                      end_time: Optional[str] = None,
+                      input: Optional[Dict] = None,
+                      output: Optional[Dict] = None,
+                      metadata: Optional[Dict] = None,
+                      parent_id: Optional[str] = None,
+                      name: Optional[str] = None,
+                      tags: Optional[List[str]] = None)
+```
+
+Asynchronously creates a new step with the specified parameters.
+
+Args:
+    thread_id (Optional[str]): The ID of the thread associated with the step.
+    type (Optional[StepType]): The type of the step, defaults to "undefined".
+    start_time (Optional[str]): The start time of the step.
+    end_time (Optional[str]): The end time of the step.
+    input (Optional[Dict]): Input data for the step.
+    output (Optional[Dict]): Output data from the step.
+    metadata (Optional[Dict]): Metadata associated with the step.
+    parent_id (Optional[str]): The ID of the parent step, if any.
+    name (Optional[str]): The name of the step.
+    tags (Optional[List[str]]): Tags associated with the step.
+
+Returns:
+    The result of the GraphQL helper function for creating a step.
+
+<a id="literalai.api.AsyncLiteralAPI.update_step"></a>
+
+#### update\_step
+
+```python
+async def update_step(id: str,
+                      type: Optional[StepType] = None,
+                      input: Optional[str] = None,
+                      output: Optional[str] = None,
+                      metadata: Optional[Dict] = None,
+                      name: Optional[str] = None,
+                      tags: Optional[List[str]] = None,
+                      start_time: Optional[str] = None,
+                      end_time: Optional[str] = None,
+                      parent_id: Optional[str] = None)
+```
+
+Asynchronously updates an existing step identified by its ID with new parameters.
+
+Args:
+    id (str): The unique identifier of the step to update.
+    type (Optional[StepType]): The type of the step.
+    input (Optional[str]): Input data for the step.
+    output (Optional[str]): Output data from the step.
+    metadata (Optional[Dict]): Metadata associated with the step.
+    name (Optional[str]): The name of the step.
+    tags (Optional[List[str]]): Tags associated with the step.
+    start_time (Optional[str]): The start time of the step.
+    end_time (Optional[str]): The end time of the step.
+    parent_id (Optional[str]): The ID of the parent step, if any.
+
+Returns:
+    The result of the GraphQL helper function for updating a step.
+
+<a id="literalai.api.AsyncLiteralAPI.get_step"></a>
+
+#### get\_step
+
+```python
+async def get_step(id: str)
+```
+
+Asynchronously retrieves a step by its ID.
+
+Args:
+    id (str): The unique identifier of the step to retrieve.
+
+Returns:
+    The result of the GraphQL helper function for fetching a step.
+
+<a id="literalai.api.AsyncLiteralAPI.delete_step"></a>
+
+#### delete\_step
+
+```python
+async def delete_step(id: str)
+```
+
+Asynchronously deletes a step identified by its ID.
+
+Args:
+    id (str): The unique identifier of the step to delete.
+
+Returns:
+    The result of the GraphQL helper function for deleting a step.
+
+<a id="literalai.api.AsyncLiteralAPI.send_steps"></a>
+
+#### send\_steps
+
+```python
+async def send_steps(steps: List[Union[StepDict, "Step"]])
+```
+
+Asynchronously sends a list of steps to be processed.
+
+Args:
+    steps (List[Union[StepDict, "Step"]]): A list of steps or step dictionaries to send.
+
+Returns:
+    The result of the GraphQL helper function for sending steps.
+
+<a id="literalai.api.AsyncLiteralAPI.get_generations"></a>
+
+#### get\_generations
+
+```python
+async def get_generations(first: Optional[int] = None,
+                          after: Optional[str] = None,
+                          before: Optional[str] = None,
+                          filters: Optional[generations_filters] = None,
+                          order_by: Optional[generations_order_by] = None)
+```
+
+Asynchronously fetches a list of generations based on pagination and optional filters.
+
+Args:
+    first (Optional[int]): The number of generations to retrieve.
+    after (Optional[str]): A cursor for use in pagination, fetching records after this cursor.
+    before (Optional[str]): A cursor for use in pagination, fetching records before this cursor.
+    filters (Optional[generations_filters]): Filters to apply to the generations query.
+    order_by (Optional[generations_order_by]): Ordering options for the generations.
+
+Returns:
+    The result of the GraphQL helper function for fetching generations.
+
+<a id="literalai.api.AsyncLiteralAPI.create_generation"></a>
+
+#### create\_generation
+
+```python
+async def create_generation(generation: Union[ChatGeneration,
+                                              CompletionGeneration])
+```
+
+Asynchronously creates a new generation with the specified details.
+
+Args:
+    generation (Union[ChatGeneration, CompletionGeneration]): The generation data to create.
+
+Returns:
+    The result of the GraphQL helper function for creating a generation.
+
+<a id="literalai.api.AsyncLiteralAPI.create_dataset"></a>
+
+#### create\_dataset
+
+```python
+async def create_dataset(name: str,
+                         description: Optional[str] = None,
+                         metadata: Optional[Dict] = None,
+                         type: DatasetType = "key_value")
+```
+
+Asynchronously creates a new dataset with the specified details.
+
+Args:
+    name (str): The name of the dataset.
+    description (Optional[str]): A description of the dataset.
+    metadata (Optional[Dict]): Metadata associated with the dataset.
+    type (DatasetType): The type of the dataset, defaults to "key_value".
+
+Returns:
+    The result of the GraphQL helper function for creating a dataset.
+
+<a id="literalai.api.AsyncLiteralAPI.get_dataset"></a>
+
+#### get\_dataset
+
+```python
+async def get_dataset(id: Optional[str] = None, name: Optional[str] = None)
+```
+
+Asynchronously retrieves a dataset by its ID or name.
+
+Args:
+    id (Optional[str]): The unique identifier of the dataset to retrieve.
+    name (Optional[str]): The name of the dataset to retrieve.
+
+Returns:
+    The processed response from the REST API call.
+
+<a id="literalai.api.AsyncLiteralAPI.update_dataset"></a>
+
+#### update\_dataset
+
+```python
+async def update_dataset(id: str,
+                         name: Optional[str] = None,
+                         description: Optional[str] = None,
+                         metadata: Optional[Dict] = None)
+```
+
+Asynchronously updates an existing dataset identified by its ID with new details.
+
+Args:
+    id (str): The unique identifier of the dataset to update.
+    name (Optional[str]): The new name of the dataset.
+    description (Optional[str]): A new description for the dataset.
+    metadata (Optional[Dict]): New metadata for the dataset.
+
+Returns:
+    The result of the GraphQL helper function for updating a dataset.
+
+<a id="literalai.api.AsyncLiteralAPI.delete_dataset"></a>
+
+#### delete\_dataset
+
+```python
+async def delete_dataset(id: str)
+```
+
+Asynchronously deletes a dataset identified by its ID.
+
+Args:
+    id (str): The unique identifier of the dataset to delete.
+
+Returns:
+    The result of the GraphQL helper function for deleting a dataset.
+
+<a id="literalai.api.AsyncLiteralAPI.create_experiment_item"></a>
+
+#### create\_experiment\_item
+
+```python
+async def create_experiment_item(
+        experiment_item: DatasetExperimentItem) -> DatasetExperimentItem
+```
+
+Asynchronously creates an item within an experiment.
+
+Args:
+    experiment_item (DatasetExperimentItem): The experiment item to be created.
+
+Returns:
+    DatasetExperimentItem: The created experiment item with updated scores.
+
+<a id="literalai.api.AsyncLiteralAPI.create_dataset_item"></a>
+
+#### create\_dataset\_item
+
+```python
+async def create_dataset_item(dataset_id: str,
+                              input: Dict,
+                              expected_output: Optional[Dict] = None,
+                              metadata: Optional[Dict] = None)
+```
+
+Asynchronously creates a dataset item.
+
+Args:
+    dataset_id (str): The unique identifier of the dataset.
+    input (Dict): The input data for the dataset item.
+    expected_output (Optional[Dict]): The expected output data for the dataset item.
+    metadata (Optional[Dict]): Additional metadata for the dataset item.
+
+Returns:
+    The result of the GraphQL helper function for creating a dataset item.
+
+<a id="literalai.api.AsyncLiteralAPI.get_dataset_item"></a>
+
+#### get\_dataset\_item
+
+```python
+async def get_dataset_item(id: str)
+```
+
+Asynchronously retrieves a dataset item by its ID.
+
+Args:
+    id (str): The unique identifier of the dataset item.
+
+Returns:
+    The result of the GraphQL helper function for fetching a dataset item.
+
+<a id="literalai.api.AsyncLiteralAPI.delete_dataset_item"></a>
+
+#### delete\_dataset\_item
+
+```python
+async def delete_dataset_item(id: str)
+```
+
+Asynchronously deletes a dataset item by its ID.
+
+Args:
+    id (str): The unique identifier of the dataset item to delete.
+
+Returns:
+    The result of the GraphQL helper function for deleting a dataset item.
+
+<a id="literalai.api.AsyncLiteralAPI.add_step_to_dataset"></a>
+
+#### add\_step\_to\_dataset
+
+```python
+async def add_step_to_dataset(dataset_id: str,
+                              step_id: str,
+                              metadata: Optional[Dict] = None)
+```
+
+Asynchronously adds a step to a dataset.
+
+Args:
+    dataset_id (str): The unique identifier of the dataset.
+    step_id (str): The unique identifier of the step to add.
+    metadata (Optional[Dict]): Additional metadata for the step being added.
+
+Returns:
+    The result of the GraphQL helper function for adding a step to a dataset.
+
+<a id="literalai.api.AsyncLiteralAPI.add_generation_to_dataset"></a>
+
+#### add\_generation\_to\_dataset
+
+```python
+async def add_generation_to_dataset(dataset_id: str,
+                                    generation_id: str,
+                                    metadata: Optional[Dict] = None)
+```
+
+Asynchronously adds a generation to a dataset.
+
+Args:
+    dataset_id (str): The unique identifier of the dataset.
+    generation_id (str): The unique identifier of the generation to add.
+    metadata (Optional[Dict]): Additional metadata for the generation being added.
+
+Returns:
+    The result of the GraphQL helper function for adding a generation to a dataset.
+
+<a id="literalai.api.AsyncLiteralAPI.create_prompt_lineage"></a>
+
+#### create\_prompt\_lineage
+
+```python
+async def create_prompt_lineage(name: str, description: Optional[str] = None)
+```
+
+Asynchronously creates a prompt lineage.
+
+Args:
+    name (str): The name of the prompt lineage.
+    description (Optional[str]): An optional description of the prompt lineage.
+
+Returns:
+    The result of the GraphQL helper function for creating a prompt lineage.
+
+<a id="literalai.prompt"></a>
+
+# prompt
+
+<a id="literalai.prompt.Prompt"></a>
+
+## Prompt
+
+```python
+@dataclass(repr=False)
+class Prompt(Utils)
+```
+
+<a id="literalai.prompt.Prompt.format_messages"></a>
+
+#### format\_messages
+
+```python
+def format_messages(**kwargs: Any) -> List[Any]
+```
+
+Formats the prompt's template messages with the given variables.
+Variables may be passed as a dictionary or as keyword arguments.
+Keyword arguments take precedence over variables passed as a dictionary.
+
+```py
+prompt = client.get
+prompt.format(hey)
+```
+
+Args:
+    variables (Optional[Dict[str, Any]]): Optional variables to resolve in the template messages.
+
+
+Returns:
+    List[Any]: List of formatted chat completion messages.
+
