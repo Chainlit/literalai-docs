@@ -53,8 +53,7 @@
         },
         {
             "group": "Concepts",
-            "pages": [
-                {
+            "pages": [{
                     "group": "Prompt",
                     "pages": [
                         "concepts/prompt/overview",
@@ -110,8 +109,7 @@
         {
             "group": "Get Started",
             "pages": [
-                "python-client/get-started/introduction",
-                "python-client/updated-reference"
+                "python-client/get-started/introduction"
             ]
         },
         {
@@ -124,14 +122,8 @@
         {
             "group": "API Reference",
             "pages": [
-                "python-client/api-reference/entities",
-                "python-client/api-reference/user",
-                "python-client/api-reference/thread",
-                "python-client/api-reference/step",
-                "python-client/api-reference/attachment",
-                "python-client/api-reference/score",
-                "python-client/api-reference/generation",
-                "python-client/api-reference/dataset"
+                "python-client/api-reference/client",
+                "python-client/api-reference/api"
             ]
         },
         {
@@ -200,12 +192,12 @@
         {
             "group": "Tutorials",
             "pages": [
-              "guides/tutorials/nextjs-openai-chatbot",
-              "guides/tutorials/rag-example",
-              "guides/tutorials/rag-chatbot-offline-evaluation",
-              "guides/tutorials/evaluating-context-relevancy",
-              "guides/tutorials/evaluating-user-satisfaction",
-              "guides/tutorials/ab-testing-client-side"
+                "guides/tutorials/nextjs-openai-chatbot",
+                "guides/tutorials/rag-example",
+                "guides/tutorials/rag-chatbot-offline-evaluation",
+                "guides/tutorials/evaluating-context-relevancy",
+                "guides/tutorials/evaluating-user-satisfaction",
+                "guides/tutorials/ab-testing-client-side"
             ]
         },
         {

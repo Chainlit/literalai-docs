@@ -1,0 +1,361 @@
+<a id="literalai.client"></a>
+
+# literalai.client
+
+<a id="literalai.client.BaseLiteralClient"></a>
+
+## BaseLiteralClient Objects
+
+```python
+class BaseLiteralClient()
+```
+
+Base class for clients interacting with the Literal AI API.
+
+**Attributes**:
+
+- `api` _Union[LiteralAPI, AsyncLiteralAPI]_ - Instance of the Literal API.
+- `disabled` _bool_ - Flag indicating if the client is disabled.
+- `event_processor` _EventProcessor_ - Processor for handling events.
+  
+
+**Arguments**:
+
+- `batch_size` _int, optional_ - Batch size for event processing. Defaults to 5.
+- `is_async` _bool, optional_ - Flag indicating if the API should be asynchronous. Defaults to False.
+- `api_key` _Optional[str], optional_ - API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.
+- `url` _Optional[str], optional_ - URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.
+- `disabled` _bool, optional_ - Flag to disable the client. Defaults to False.
+  
+
+**Raises**:
+
+- `Exception` - If 'LITERAL_API_KEY' is not provided and not found in environment variables.
+
+<a id="literalai.client.BaseLiteralClient.to_sync"></a>
+
+#### to\_sync
+
+```python
+def to_sync() -> "LiteralClient"
+```
+
+Convert the client to synchronous mode.
+
+**Returns**:
+
+- `LiteralClient` - Synchronous LiteralClient instance.
+
+<a id="literalai.client.BaseLiteralClient.instrument_openai"></a>
+
+#### instrument\_openai
+
+```python
+def instrument_openai()
+```
+
+Instruments the OpenAI API calls with the current client.
+
+<a id="literalai.client.BaseLiteralClient.langchain_callback"></a>
+
+#### langchain\_callback
+
+```python
+def langchain_callback(to_ignore: Optional[List[str]] = None,
+                       to_keep: Optional[List[str]] = None,
+                       **kwargs: Any)
+```
+
+Get a Langchain callback tracer configured with the client.
+
+**Arguments**:
+
+- `to_ignore` _Optional[List[str]], optional_ - List of event types to ignore. Defaults to None.
+- `to_keep` _Optional[List[str]], optional_ - List of event types to keep. Defaults to None.
+- `**kwargs` - Additional arguments for the tracer.
+  
+
+**Returns**:
+
+- `LangchainTracer` - Configured Langchain tracer.
+
+<a id="literalai.client.BaseLiteralClient.llama_index_callback"></a>
+
+#### llama\_index\_callback
+
+```python
+def llama_index_callback(**kwargs: Any)
+```
+
+Get a Llama Index callback tracer configured with the client.
+
+**Arguments**:
+
+- `**kwargs` - Additional arguments for the tracer.
+  
+
+**Returns**:
+
+- `LlamaIndexTracer` - Configured Llama Index tracer.
+
+<a id="literalai.client.BaseLiteralClient.thread"></a>
+
+#### thread
+
+```python
+def thread(original_function=None,
+           *,
+           thread_id: Optional[str] = None,
+           name: Optional[str] = None,
+           **kwargs)
+```
+
+Decorator or context manager for thread-level event grouping.
+
+**Arguments**:
+
+- `original_function` _callable, optional_ - Function to decorate. Defaults to None.
+- `thread_id` _Optional[str], optional_ - ID of the thread. Defaults to None.
+- `name` _Optional[str], optional_ - Name of the thread. Defaults to None.
+- `**kwargs` - Additional arguments for the thread context manager or decorator.
+  
+
+**Returns**:
+
+  Union[ThreadContextManager, callable]: Thread context manager or decorated function.
+
+<a id="literalai.client.BaseLiteralClient.step"></a>
+
+#### step
+
+```python
+def step(original_function=None,
+         *,
+         name: str = "",
+         type: TrueStepType = "undefined",
+         id: Optional[str] = None,
+         parent_id: Optional[str] = None,
+         thread_id: Optional[str] = None,
+         **kwargs)
+```
+
+Decorator or context manager for step-level event grouping.
+
+**Arguments**:
+
+- `original_function` _callable, optional_ - Function to decorate. Defaults to None.
+- `name` _str, optional_ - Name of the step. Defaults to "".
+- `type` _TrueStepType, optional_ - Type of the step. Defaults to "undefined".
+- `id` _Optional[str], optional_ - ID of the step. Defaults to None.
+- `parent_id` _Optional[str], optional_ - Parent ID of the step. Defaults to None.
+- `thread_id` _Optional[str], optional_ - Thread ID of the step. Defaults to None.
+- `**kwargs` - Additional arguments for the step context manager or decorator.
+  
+
+**Returns**:
+
+  Union[StepContextManager, callable]: Step context manager or decorated function.
+
+<a id="literalai.client.BaseLiteralClient.run"></a>
+
+#### run
+
+```python
+def run(original_function=None,
+        *,
+        name: str = "",
+        id: Optional[str] = None,
+        parent_id: Optional[str] = None,
+        thread_id: Optional[str] = None)
+```
+
+Decorator or context manager for run-level event grouping.
+
+**Arguments**:
+
+- `original_function` _callable, optional_ - Function to decorate. Defaults to None.
+- `name` _str, optional_ - Name of the run. Defaults to "".
+- `id` _Optional[str], optional_ - ID of the run. Defaults to None.
+- `parent_id` _Optional[str], optional_ - Parent ID of the run. Defaults to None.
+- `thread_id` _Optional[str], optional_ - Thread ID of the run. Defaults to None.
+  
+
+**Returns**:
+
+  Union[StepContextManager, callable]: Run context manager or decorated function.
+
+<a id="literalai.client.BaseLiteralClient.message"></a>
+
+#### message
+
+```python
+def message(content: str = "",
+            id: Optional[str] = None,
+            parent_id: Optional[str] = None,
+            type: Optional[MessageStepType] = None,
+            name: Optional[str] = None,
+            thread_id: Optional[str] = None,
+            attachments: List[Attachment] = [],
+            tags: Optional[List[str]] = None,
+            metadata: Dict = {})
+```
+
+Creates and ends a message step.
+
+**Arguments**:
+
+- `content` _str, optional_ - Content of the message. Defaults to "".
+- `id` _Optional[str], optional_ - ID of the message. Defaults to None.
+- `parent_id` _Optional[str], optional_ - Parent ID of the message. Defaults to None.
+- `type` _Optional[MessageStepType], optional_ - Type of the message. Defaults to None.
+- `name` _Optional[str], optional_ - Name of the message. Defaults to None.
+- `thread_id` _Optional[str], optional_ - Thread ID of the message. Defaults to None.
+- `attachments` _List[Attachment], optional_ - List of attachments. Defaults to [].
+- `tags` _Optional[List[str]], optional_ - List of tags. Defaults to None.
+- `metadata` _Dict, optional_ - Metadata for the message. Defaults to {}.
+  
+
+**Returns**:
+
+- `Message` - Created message step.
+
+<a id="literalai.client.BaseLiteralClient.start_step"></a>
+
+#### start\_step
+
+```python
+def start_step(name: str = "",
+               type: Optional[TrueStepType] = None,
+               id: Optional[str] = None,
+               parent_id: Optional[str] = None,
+               thread_id: Optional[str] = None,
+               **kwargs)
+```
+
+Starts a new step.
+
+**Arguments**:
+
+- `name` _str, optional_ - Name of the step. Defaults to "".
+- `type` _Optional[TrueStepType], optional_ - Type of the step. Defaults to None.
+- `id` _Optional[str], optional_ - ID of the step. Defaults to None.
+- `parent_id` _Optional[str], optional_ - Parent ID of the step. Defaults to None.
+- `thread_id` _Optional[str], optional_ - Thread ID of the step. Defaults to None.
+- `**kwargs` - Additional arguments for the step.
+  
+
+**Returns**:
+
+- `Step` - Started step.
+
+<a id="literalai.client.BaseLiteralClient.get_current_step"></a>
+
+#### get\_current\_step
+
+```python
+def get_current_step()
+```
+
+Retrieves the current active step.
+
+**Returns**:
+
+- `Optional[Step]` - The current active step or None if no steps are active.
+
+<a id="literalai.client.BaseLiteralClient.get_current_thread"></a>
+
+#### get\_current\_thread
+
+```python
+def get_current_thread()
+```
+
+Retrieves the current active thread.
+
+**Returns**:
+
+- `Optional[ThreadContextManager]` - The current active thread or None if no threads are active.
+
+<a id="literalai.client.BaseLiteralClient.reset_context"></a>
+
+#### reset\_context
+
+```python
+def reset_context()
+```
+
+Resets the active steps and thread context.
+
+<a id="literalai.client.BaseLiteralClient.flush_and_stop"></a>
+
+#### flush\_and\_stop
+
+```python
+def flush_and_stop()
+```
+
+Flushes the event processor and stops it.
+
+<a id="literalai.client.LiteralClient"></a>
+
+## LiteralClient Objects
+
+```python
+class LiteralClient(BaseLiteralClient)
+```
+
+Synchronous LiteralClient for interacting with the Literal API.
+
+**Arguments**:
+
+- `batch_size` _int, optional_ - Batch size for event processing. Defaults to 5.
+- `api_key` _Optional[str], optional_ - API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.
+- `url` _Optional[str], optional_ - URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.
+- `disabled` _bool, optional_ - Flag to disable the client. Defaults to False.
+
+<a id="literalai.client.LiteralClient.flush"></a>
+
+#### flush
+
+```python
+def flush()
+```
+
+Flushes the event processor.
+
+<a id="literalai.client.AsyncLiteralClient"></a>
+
+## AsyncLiteralClient Objects
+
+```python
+class AsyncLiteralClient(BaseLiteralClient)
+```
+
+Asynchronous LiteralClient for interacting with the Literal API.
+
+**Attributes**:
+
+- `api` _AsyncLiteralAPI_ - Instance of the asynchronous Literal API.
+  
+
+**Arguments**:
+
+- `batch_size` _int, optional_ - Batch size for event processing. Defaults to 5.
+- `api_key` _Optional[str], optional_ - API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.
+- `url` _Optional[str], optional_ - URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.
+- `disabled` _bool, optional_ - Flag to disable the client. Defaults to False.
+
+<a id="literalai.client.AsyncLiteralClient.flush"></a>
+
+#### flush
+
+```python
+async def flush()
+```
+
+Asynchronously flushes the event processor.
+
+**Returns**:
+
+  None
+
