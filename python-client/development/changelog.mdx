@@ -2,14 +2,63 @@
 title: Changelog
 ---
 
+# `0.0.603`
+
+**Fixes**
+
+* Default prompt version to `None`
+
+# `0.0.602`
+
+**Fixes**
+
+* Flush doesn't wait for the internal batch to be empty
+* Add `repr` to classes
+* Error with participant identifier
+
+# `0.0.601`
+
+**Improvements**
+
+* Strip bytes from steps
+
+**New Features**
+
+* Add `get_steps` api
+
+# `0.0.600`
+
+**Improvements**
+
+* Change default batch size from 1 to 5
+
+**New Features**
+
+* Rename `literal_` to `literalai_`
+
+**Fixes**
+
+* Make params optional
+
+# `0.0.509`
+
+**Deprecations**
+
+* `format()` is deprecated. `format_messages()` should now be used.
+
+**New Features**
+
+* Add support for tags with OpenAI Instrumentation
+
+
 # `0.0.508`
 
-### Deprecations
+**Deprecations**
 
 * `create_prompt()` is deprecated. `get_or_create_prompt()` should now be used.
 
 
-### New Features 
+**New Features** 
 
 * `get_or_create_prompt()`. For creating a new Prompt, use `get_or_create_prompt()`. 
 
