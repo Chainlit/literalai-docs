@@ -4,6 +4,41 @@ title: Release Notes
 
 All changes and improvements to Literal AI are listed here. For changes in the SDKs, go to the [Python SDK](/python-client/development/changelog) or [TypeScript SDK](/typescript-client/development/changelog).
 
+# 0.0.607-beta (May 27, 2024)
+
+This version is compatible with:
+* [Chainlit](https://docs.chainlit.io/get-started/overview) version `1.0.504` and above.
+* [Python SDK](/python-client) version `0.0.509` and above.
+* [TypeScript SDK](/typescript-client) version `0.0.503` and above.
+
+### Breaking changes
+
+None
+
+### New features
+
+* Added online evaluations to score LLM generations on the fly.
+* Created the endpoint /api/my-project to quickly access a project ID with an API key
+* Brushed up the Dashboard page with:
+  * Browser-level customizable layouts of charts
+  * Filters on each chart to select relevant data - also saved at the browser level
+* Specific to token usage, we offer multiple visualizations
+
+### Improvements
+
+* Improved the look of Step badges, specifically colors.
+* Sharing threads requires additional privilege
+* Improved UX on text, audio, image and video attachments in Step details
+* Prompt versions show a visual "Open" button to jump to the Prompt Playground
+* Revamped the UI look of the side navigation
+* Stop sequences on Prompt Playground now show visual cues
+* Removed UUID columns across tables to improve readability
+* JSON & Text previews come with full screen & copy/paste options
+
+### Fixes
+
+* Newly created API keys do not contain special characters
+
 # 0.0.606-beta (May 20, 2024)
 
 This version is compatible with:
