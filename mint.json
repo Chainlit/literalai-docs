@@ -81,7 +81,8 @@
                         "concepts/evaluation/dataset",
                         "concepts/evaluation/score",
                         "concepts/evaluation/experiment",
-                        "concepts/evaluation/ab-testing"
+                        "concepts/evaluation/ab-testing",
+                        "concepts/evaluation/online-evaluation"
                     ]
                 },
                 {
