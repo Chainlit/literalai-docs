@@ -4,14 +4,14 @@ title: Chatbot example with OpenAI, Next.js and Literal AI
 
 The goal of this tutorial is to set up a simple chatbot and give it superpowers using Literal AI.
 
-We will explore the following functionalities of the Literal AI platform :
+We will explore the following functionalities of the Literal AI platform:
 
 - customizing the experience with a [System Prompt](https://docs.getliteral.ai/concepts/prompt/overview) that can be managed separately from the code
 - logging user conversations as [Threads](https://docs.getliteral.ai/concepts/observability/thread)
 - allowing our users to [Score](https://docs.getliteral.ai/concepts/evaluation/score) the chatbot’s responses
 
 <Warning>
-For this tutorial, you will need the following :
+For this tutorial, you will need the following:
 - An OpenAI API key (which you can get [on their website](https://platform.openai.com/))
 - A Literal AI api key (which you can get in [your project’s **General** settings](https://cloud.getliteral.ai/))
 
@@ -37,7 +37,7 @@ npm i -S openai ai @literalai/client
 - `ai` is the Next.js framework with helpers to integrate OpenAI to our app
 - `@literalai/client` is a tool that will help us customize and monitor our app
 
-And that’s it ! You can now create a `.env` file at the root of the Next.js app, and copy your API keys inside :
+And that’s it! You can now create a `.env` file at the root of the Next.js app, and copy your API keys inside:
 
 ```bash .env
 OPENAI_API_KEY=sk-...
@@ -48,7 +48,7 @@ LITERAL_API_KEY=lsk_...
 
 Our first task is to create a simple Chat page that takes messages from the user, sends them to `gpt-3` and then streams `gpt-3`'s response to the user.
 
-For this we will need a server route at `/api/chat` to communicate with OpenAI :
+For this we will need a server route at `/api/chat` to communicate with OpenAI:
 
 ```tsx src/app/api/chat/route.ts
 import { OpenAI } from "openai";
@@ -132,7 +132,7 @@ export default function Home() {
 
 ```
 
-Now you can launch the app :
+Now you can launch the app:
 
 ```bash
 npm run dev
@@ -178,13 +178,13 @@ For this example we will use a simple prompt to specialize our chatbot on Wildli
 
 ![Create message](images/guides/nextjs-openai-chatbot/03-create-message.png)
 
-- Enter the following as your System Prompt :
+- Enter the following as your System Prompt:
 
 > You are a helpful assistant who answers in a succinct and direct way the user's questions without too many technical words. You specialize in wildlife facts.
 > 
-- Save it and give it the following name : “Simple Chatbot”. Be sure to give it that exact name as it will be used later to fetch the prompt from our application.
+- Save it and give it the following name: “Simple Chatbot”. Be sure to give it that exact name as it will be used later to fetch the prompt from our application.
 
-Once this is done, edit your API route to insert the prompt & settings with our user’s messages :
+Once this is done, edit your API route to insert the prompt & settings with our user’s messages:
 
 ```tsx src/app/api/chat/route.ts
 // ...
@@ -228,7 +228,7 @@ With that simple operation, all the settings and content of OpenAI calls will be
 
 ![A Generation, logged on Literal AI](images/guides/nextjs-openai-chatbot/05-logged-generation.png)
 
-Storing all your Generations as one-shots is impractical though. Wouldn’t it be more convenient if we could group all the messages from a single conversation into one Thread ?
+Storing all your Generations as one-shots is impractical though. Wouldn’t it be more convenient if we could group all the messages from a single conversation into one Thread?
 
 First, we need to create a unique ID for the conversation. We will use `crypto.randomUUID` for this as it will generate an ID that is suitable to use on Literal.
 
@@ -254,7 +254,7 @@ export default function Home() {
 }
 ```
 
-Then retrieve the threadId in the API route :
+Then retrieve the threadId in the API route:
 
 ```tsx src/app/api/chat/route.ts
 // ...
@@ -332,7 +332,7 @@ export async function POST(req: Request) {
 
 ```
 
-Now the following exchange in our chat application :
+Now the following exchange in our chat application:
 
 ![Monitored chatbot](images/guides/nextjs-openai-chatbot/06-monitored-chatbot.png)
 
@@ -353,11 +353,11 @@ To accomplish this, we will first need to create a Score Template on Literal AI.
 
 ![Create score template](images/guides/nextjs-openai-chatbot/09-create-score-template.png)
 
-- Name your score template `simple-chatbot-score` and give it the following settings :
+- Name your score template `simple-chatbot-score` and give it the following settings:
 
 ![Simple slackbot score](images/guides/nextjs-openai-chatbot/10-simple-chatbot-score.png)
 
-Now let us think about the plumbing we will need to assemble this feature : to be able to vote on a chatbot’s message, we will need to know its Step ID on Literal AI. Fortunately, `ai` has a helper that allows us to inject arbitrary data to the `useChat` response, without losing its streaming behaviour.
+Now let us think about the plumbing we will need to assemble this feature: to be able to vote on a chatbot’s message, we will need to know its Step ID on Literal AI. Fortunately, `ai` has a helper that allows us to inject arbitrary data to the `useChat` response, without losing its streaming behaviour.
 
 ```tsx src/app/api/chat/route.ts
 
@@ -391,7 +391,7 @@ export async function POST(req: Request) {
 }
 ```
 
-On the frontend side, we will now retrieve this stepId, and map it to the corresponding message’s ID :
+On the frontend side, we will now retrieve this stepId, and map it to the corresponding message’s ID:
 
 ```tsx src/app/page.tsx
 "use client";
@@ -415,7 +415,7 @@ const isValidDataFrame = (                         // <-
 export default function Home() {
   // When creating IDs for use in Literal, use crypto.randomUUID
   const [threadId] = useState(crypto.randomUUID());
-  // We will map Message IDs to Step IDs in the following format :
+  // We will map Message IDs to Step IDs in the following format:
   // { [messageId]: stepId }
   const [messageIdMapping, setMessageIdMapping] = useState<{ // <-
     [messageId: string]: string;                             // <-
@@ -453,7 +453,7 @@ export default function Home() {
 }
 ```
 
-On its own this doesn’t accomplish much, so let us add a 👍 button next to all the messages from the assistant for which we have Step IDs :
+On its own this doesn’t accomplish much, so let us add a 👍 button next to all the messages from the assistant for which we have Step IDs:
 
 ```tsx
 // Edit src/app/page.tsx
@@ -492,7 +492,7 @@ export default function Home() {
 }
 ```
 
-Here’s what our application looks like now :
+Here’s what our application looks like now:
 
 ![Chatbot with thumb](images/guides/nextjs-openai-chatbot/11-chatbot-with-thumb.png)
 
@@ -518,7 +518,7 @@ export async function POST(req: Request) {
 
 ```
 
-Now we just need to plug the 👍 button to our new API route :
+Now we just need to plug the 👍 button to our new API route:
 
 ```tsx src/app/page.tsx
 // ...
@@ -577,16 +577,16 @@ export default function Home() {
 }
 ```
 
-Now you can upvote messages in your conversation, and if you navigate to the corresponding thread in Literal AI you can see that the Assistant Run has been scored :
+Now you can upvote messages in your conversation, and if you navigate to the corresponding thread in Literal AI you can see that the Assistant Run has been scored:
 
 ![Step with score](images/guides/nextjs-openai-chatbot/12-literal-step-with-score.png)
 
 # Conclusion
 
-Congratulations on building your own monitored chatbot! As you can see, one of the priorities of Literal AI is to make it easy to integrate with your existing codebase, while providing powerful tools to monitor and improve your AI applications. Here is a rundown of the features we have implemented in this tutorial, and how they will affect the lifecycle of your chatbot :
+Congratulations on building your own monitored chatbot! As you can see, one of the priorities of Literal AI is to make it easy to integrate with your existing codebase, while providing powerful tools to monitor and improve your AI applications. Here is a rundown of the features we have implemented in this tutorial, and how they will affect the lifecycle of your chatbot:
 
-- **System Prompt** : By decoupling the prompt from the code, you can iterate on system prompts and LLM settings, without leaving your web browser - and without having to redeploy your application !
-- **Monitoring** : By logging each conversation in a structured way, you can easily replay all the interactions between your users and your chatbot.
-- **Human Evaluation** : By allowing your users to score the chatbot’s responses, you can now passively gather a dataset of known good interactions. Because each of these interactions is linked to a specific Prompt version, you can easily evaluate the impact of prompt variations and LLM settings on the chatbot’s performance.
+- **System Prompt**: By decoupling the prompt from the code, you can iterate on system prompts and LLM settings, without leaving your web browser - and without having to redeploy your application!
+- **Monitoring**: By logging each conversation in a structured way, you can easily replay all the interactions between your users and your chatbot.
+- **Human Evaluation**: By allowing your users to score the chatbot’s responses, you can now passively gather a dataset of known good interactions. Because each of these interactions is linked to a specific Prompt version, you can easily evaluate the impact of prompt variations and LLM settings on the chatbot’s performance.
 
 To dive deeper into evaluation, check out [our other coobooks](/guides/github-cookbook/evaluation), or learn more about what Literal AI can do for you by visiting [our website](https://getliteral.ai).
