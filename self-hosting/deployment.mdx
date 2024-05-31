@@ -23,7 +23,7 @@ docker pull literalai/platform:latest
 
 To run the LiteralAI platform, you need to set up the following services:
 1. PostgreSQL database >= 15
-2. [Optional] File storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
+2. File storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
 3. [Optional] Redis cache
 4. [Optional] SMTP server
 
@@ -96,9 +96,7 @@ OR
 | [Okta](https://next-auth.js.org/providers/okta) | `OKTA_CLIENT_ID` `OKTA_CLIENT_SECRET` `OKTA_ISSUER` | `/api/auth/callback/okta` |
 | [GitHub](https://next-auth.js.org/providers/github) | `GITHUB_ID` `GITHUB_SECRET` | `/api/auth/callback/github` |
 
-## 4. File Storage Configuration [Optional]
-
-<Note>Setting up a cache is optional, but recommended to support multi modal use cases. The file upload APIs won't work without a file storage.</Note>
+## 4. File Storage Configuration
 
 ### Provider Agnostic
 | Variable | Description | Example |
