@@ -50,7 +50,7 @@ PROMPT_NAME = "RAG prompt"
 template_messages = [
     {
         "role": "system",
-        "content": "You are a helpful assistant that always answers questions. Keep it short, and if available prefer responding with code."
+        "content": "You are a helpful assistant that always answers questions. Keep it short, and if available prefer responding with code. You are talking with {{name}} who has the following interests: {{interests}}."
     },
     {
         "role": "user",
@@ -75,7 +75,7 @@ async function main() {
     const promptTemplate = [
         {
             "role": "system",
-            "content": "You are a helpful assistant that always answers questions. Keep it short, and if available prefer responding with code."
+            "content": "You are a helpful assistant that always answers questions. Keep it short, and if available prefer responding with code. You are talking with {{name}} who has the following interests: {{interests}}."
         },
         {
             "role": "user",
