@@ -4,6 +4,44 @@ title: Release Notes
 
 All changes and improvements to Literal AI are listed here. For changes in the SDKs, go to the [Python SDK](/python-client/development/changelog) or [TypeScript SDK](/typescript-client/development/changelog).
 
+# 0.0.608-beta (June 4, 2024)
+
+This version is compatible with:
+* [Chainlit](https://docs.chainlit.io/get-started/overview) version `1.0.504` and above.
+* [Python SDK](/python-client) version `0.0.509` and above.
+* [TypeScript SDK](/typescript-client) version `0.0.503` and above.
+
+### Breaking changes
+
+None
+
+### New features
+
+* We've adapted the Online Evaluation page for our on-premise clients who may not have a Queuing system installed
+* Interactions with filters and layouts on the dashboard are now tracked on PostHog
+* We'll be debuting in the coming week with self-service distribution of the Literal AI platform for self-hosting
+
+### Improvements
+
+* We're continuing our push towards a more consistent - and prettier - User Experience:
+  * We've switched to a more vibrant color scheme
+  * Made some visual tweaks on the Dashboard page
+  * Observability items such as Threads, Runs, and others will now display as full pages rather than side-panes
+  * And lots of other improvements across the platform
+* Some changes on the way the platform is deployed, both on our end and for our on-premise users :
+  * Improved and centralized environment management
+  * The Portkey AI Gateway is now handled directly inside the Node process
+  * The `BUCKET_NAME` environment variable is no longer variable. Trying to store objects will log errors but not disrupt the rest of the operations
+
+### Fixes
+
+* This week's release sees a big focus on performance, especially on the `Users` and individual `Thread` pages
+* We've also chased and squashed a few bugs related to :
+  * Signing Attachment URLs (for object storage like S3)
+  * Conflicts on unique `userId`
+  * A visual bug on initialization of “continuous” score templates
+
+
 # 0.0.607-beta (May 27, 2024)
 
 This version is compatible with:
