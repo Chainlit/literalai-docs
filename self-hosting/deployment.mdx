@@ -2,32 +2,32 @@
 title: Manual Deployment
 ---
 
-<Note> This guide assumes you have a Docker Personal Access Token (PAT) to authenticate with the Docker registry. If you do not have a Docker PAT, please contact us [here](https://forms.gle/uyKyZmmpVET95Wbx8).</Note>
-
-You can deploy the LiteralAI platform anywhere by provisioning the infrastructure, setting up the environment variables and run the Docker image.
+You can deploy the Literal AI platform anywhere by provisioning the infrastructure, setting up the environment variables and running the Docker image.
 
 
-## Get the Image
+# Get the Image
 
-1. Authenticate using your token:
-   ```shell
-   docker login --username literalai
-   # When prompted for a password, use the token
-   ```
-2. Pull the image:
-   ```shell
-   docker pull literalai/platform:latest
-   ```
+```shell
+##
+## If you are using the public Docker image
+docker pull literalai/platform-distrib:latest
 
-## Provision the Infrastructure
+##
+## If you are using the private Docker image
+docker login --username literalai
+# When prompted for a password, use the token you have been provided with
+docker pull literalai/platform:latest
+```
+
+# Provision the Infrastructure
 
 To run the LiteralAI platform, you need to set up the following services:
 1. PostgreSQL database >= 15
-2. [Optional] File storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
+2. File storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
 3. [Optional] Redis cache
 4. [Optional] SMTP server
 
-### Disclaimer
+## Disclaimer
 
 It is your responsibility to ensure that the infrastructure is secure and compliant with your company standards. Here are some recommendations:
 - Run the database and redis cache in a private network so that only the container running the LiteralAI platform can access them.
@@ -35,14 +35,26 @@ It is your responsibility to ensure that the infrastructure is secure and compli
 - Disable credential authentication and use OAuth providers for authentication.
 
 
-## Configure Environment Variables
+# Configure Environment Variables
 
 Before running the container, you need to set up the environment variables.
 
-### 1. Database Configuration
+## 1. Literal AI authorization
+
+<Info>You can ignore these variables if you are using the **private Docker image**.</Info>
+
+Once you have registered your self-hosted platform [here](https://distrib.literalai.com/register.html), you will receive these informations by email.
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `LITERAL_CLIENT_ID` | Your Literal Client ID | `your-company-name` |
+| `LITERAL_AUTH_TOKEN` | Your Literal Authorization Token | `75e0dca...` |
+
+
+## 2. Database Configuration
 
 <Warning>The [pgcrypto](https://www.postgresql.org/docs/current/pgcrypto.html) module is required for PostgreSQL. When using Azure, you will need to manually [add the extension](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions).</Warning>
-#### Required 
+### Required 
 
 You can either pass the full connection string or the individual components.
 
@@ -60,21 +72,21 @@ OR
 | `DATABASE_NAME` | Database name.
 
 
-#### Optional 
+### Optional 
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `DATABASE_DIRECT_URL` | Direct URL for database migrations (cannot use pg-bouncer). | `postgresql://username:password@host:port/db_name` |
 | `DATABASE_SSL` | Set to 'true' if using a secure network. | `false` |
 
-### 2. Authentication Configuration
-#### Provider Agnostic
+## 3. Authentication Configuration
+### Provider Agnostic
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `NEXTAUTH_SECRET` | Secret for encrypting JWT and hashing tokens. | `your secret` |
 | `NEXTAUTH_URL` | URL for your domain. | `https://yourdomain.com` |
 | `ENABLE_CREDENTIALS_AUTH` | Enable credentials (email password) authentication. | `false` |
 
-#### Provider Specific
+### Provider Specific
 <Note>Remember you will have to allow the OAuth redirect URL in your provider's settings.</Note>
 
 | Variable | Description | OAuth Redirect URL |
@@ -84,30 +96,28 @@ OR
 | [Okta](https://next-auth.js.org/providers/okta) | `OKTA_CLIENT_ID` `OKTA_CLIENT_SECRET` `OKTA_ISSUER` | `/api/auth/callback/okta` |
 | [GitHub](https://next-auth.js.org/providers/github) | `GITHUB_ID` `GITHUB_SECRET` | `/api/auth/callback/github` |
 
-### 3. File Storage Configuration [Optional]
+## 4. File Storage Configuration
 
-<Note>Setting up a cache is optional, but recommended to support multi modal use cases. The file upload APIs won't work without a file storage.</Note>
-
-#### Provider Agnostic
+### Provider Agnostic
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `BUCKET_NAME` | Name of the bucket  | `my_bucket` |
 
-#### Provider Specific
+### Provider Specific
 | Provider | Variables | Comment |
 |----------|-----------|---------|
 | AWS S3 | `APP_AWS_ACCESS_KEY` `APP_AWS_SECRET_KEY` `APP_AWS_REGION` | |
 | Google Cloud Storage | `APP_GCS_PROJECT_ID` `APP_GCS_CLIENT_EMAIL` `APP_GCS_PRIVATE_KEY` | Private key should be base64 encoded. |
 | Azure Blob Storage | `APP_AZURE_STORAGE_ACCOUNT` `APP_AZURE_STORAGE_ACCESS_KEY` | |
 
-#### Configure CORS for your storage solution:
+### Configure CORS for your storage solution:
 
 - [AWS S3](https://repost.aws/knowledge-center/s3-configure-cors)
 - [Google Cloud Storage](https://cloud.google.com/storage/docs/using-cors?hl=fr#command-line)
 - [Azure Blob Storage](https://learn.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services)
 
 
-### 4. Cache Configuration [Optional]
+## 5. Cache Configuration [Optional]
 
 <Note>Setting up a cache is optional, but recommended to decrease latency.</Note>
 
@@ -119,7 +129,7 @@ Either `REDIS_URL` or `REDISHOST` and `REDISPORT` can be used.
 | `REDISHOST` | Redis host (useful with Google Cloud Run). | `127.0.0.1` |
 | `REDISPORT` | Redis port. | `6379` |
 
-### 5. SMTP Configuration [Optional]
+## 6. SMTP Configuration [Optional]
 <Note>Setting up SMTP is optional. It enables Literal AI to send emails for password resets and project invitations.</Note>
 
 | Variable | Description | Example |
@@ -131,10 +141,10 @@ Either `REDIS_URL` or `REDISHOST` and `REDISPORT` can be used.
 | `EMAIL_PASS` | Email password. | `"password"` |
 | `EMAIL_FROM` | Sender email address. | `"noreply@service.com"` |
 
-### Configure the Port and Start the Container
+## Configure the Port and Start the Container
 
 The server within the Docker image runs on port `3000`. Ensure this port is exposed.
 
-### Start the Container
+## Start the Container
 
 You should now be able to start the container and access the Literal AI Platform.

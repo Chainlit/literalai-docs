@@ -2,14 +2,22 @@
 title: Get Started
 ---
 
-Self hosting the LiteralAI platform requires a Docker Personal Access Token (PAT) to authenticate with the Docker registry.
-This token is used to pull the LiteralAI image from the registry.
+The default option for self-hosting Literal AI is to use the public Docker image on the Docker registry. This image can be pulled and run on any machine with Docker installed.
 
-<Note>To get your Docker PAT, please contact us [here](https://forms.gle/uyKyZmmpVET95Wbx8).</Note>
+While this is the easiest way to get started, it does require the platform to authenticate with our servers. In the future it may have some light telemetry to help us improve the platform, but **this will never include the content of the conversations between your users and your LLM application**.
 
-## Deploying the Image
+<Tip>If you need to run the platform in an air-gapped environment, you can contact us [here](https://forms.gle/uyKyZmmpVET95Wbx8) to get access to the private Docker image. This version of the platform can be run without needing to authenticate with our servers.</Tip>
 
-Once you have your Docker PAT, you are ready to deploy the LiteralAI platform. There are several options for hosting the platform:
+# Registering your self-hosted platform
+
+To register your self-hosted platform, please fill the form [here](https://distrib.literalai.com/register.html). You will then receive an email containing the following :
+
+* Your Literal Client ID
+* Your Literal Authorization Token
+
+# Deploying the Image
+
+You have several options for hosting the platform:
 
 <CardGroup cols={2}>
 <Card
@@ -43,7 +51,7 @@ Once you have your Docker PAT, you are ready to deploy the LiteralAI platform. T
 </Card>
 </CardGroup>
 
-## Update the SDKs
+# Update the SDKs
 
 By default, the LiteralAI SDKs point to the cloud hosted version of the platform. To point the SDKs to your self-hosted platform you will have to update the `url` parameter in the SDK instantiation:
 
@@ -65,6 +73,6 @@ const literalClient = new LiteralClient(YOUR_API_KEY, MY_LITERAL_API_URL);
 ```
 </CodeGroup>
 
-## Update Chainlit
+# Update Chainlit
 
 If you are using Chainlit, you will need to update the `LITERAL_API_URL` environment variable to point to your self-hosted platform.
