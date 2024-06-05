@@ -6,6 +6,8 @@ A Thread represents a group of interactions between a user and an AI app. It can
 
 A Thread is composed of [Steps](/concepts/observability/step). A Step can be a message, or an intermediate AI step like an LLM call.
 
+You can interact with an example Thread in the platform [here](https://cloud.getliteral.ai/thread/b3b61ec8-0d8a-444d-9e70-d6929c1129d1). This Thread is an example of a user interacting with the chatbot on the [Chainlit documentation website](https://docs.chainlit.io/get-started/overview). It is a Retrieval Augmented Generation (RAG) application, where first a tool is called to retrieve relevant documentation and cookbook pages from the website. The GPT-4o model is then called to generate a response, using the retrieved context.
+
 <Frame caption="An example thread on the platform.">
   <img src="/images/thread-example.png" alt="A thread on the platform" />
 </Frame>
@@ -180,7 +182,7 @@ const threads = await literalClient.api.getThreads();
 
 ## Visualize Threads on Literal AI
 
-Navigate to the `Threads` page on the platform to see Threads. There, you can click on single Threads (conversations). 
+Navigate to the `Threads` page on the platform to see Threads. There, you can click on single Threads (conversations). Click [here](https://cloud.getliteral.ai/thread/b3b61ec8-0d8a-444d-9e70-d6929c1129d1) for an interactive example. 
 
 On the left (1), you can see the conversation and the steps that the application has taken in order to produce an answer. Different kind of steps have different colors. You can click on each step to view more details on the right side of the screen. Here, you can view [Metadata](/concepts/observability/step#metadata) (2) and add [Scores](/concepts/evaluation/score) (3).
 
