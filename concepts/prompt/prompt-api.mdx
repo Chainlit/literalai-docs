@@ -6,7 +6,7 @@ Via the Python and TypeScript SDK, you can acces the prompt API. With the API yo
 
 ### Get a Prompt
 
-Getting a prompt is the first step to use it in your code. You can get a prompt by its name.
+Getting a prompt is the first step to use it in your code. You can get a prompt by its name. Prompt names are their IDs (hence you cannot change the name).
 
 <CodeGroup>
 ```python Python
@@ -32,6 +32,65 @@ async function main() {
 main();
 ```
 
+</CodeGroup>
+
+### Create a prompt
+
+You can create a new prompt on the Literal AI platform using the [Prompt Playground](/concepts/prompt/prompt-playground), but you can also create one using the API. The name of the prompt is its ID, so you cannot change this afterwards.
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+# define prompt
+PROMPT_NAME = "RAG prompt"
+template_messages = [
+    {
+        "role": "system",
+        "content": "You are a helpful assistant that always answers questions. Keep it short, and if available prefer responding with code. You are talking with {{name}} who has the following interests: {{interests}}."
+    },
+    {
+        "role": "user",
+        "content": "Answer the question based on the context below.\nContext:\n{{#context}}\n{{.}}\n{{/context}}\nQuestion:\n{{question}}\nAnswer:"
+    }
+]
+
+# create the prompt, send to Literal AI
+prompt = literal_client.api.get_or_create_prompt(name=PROMPT_NAME, template_messages=template_messages)
+
+```
+
+```typescript TypeScript
+import { IGenerationMessage, LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+
+async function main() {
+    // define the prompt
+    const PROMPT_NAME = 'RAG prompt';
+
+    const promptTemplate = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant that always answers questions. Keep it short, and if available prefer responding with code. You are talking with {{name}} who has the following interests: {{interests}}."
+        },
+        {
+            "role": "user",
+            "content": "Answer the question based on the context below.\nContext:\n{{#context}}\n{{.}}\n{{/context}}\nQuestion:\n{{question}}\nAnswer:"
+        }
+    ]
+
+    const prompt = await client.api.getOrCreatePrompt(
+        PROMPT_NAME,
+        promptTemplate as IGenerationMessage[]
+    );
+}
+
+main();
+```
 </CodeGroup>
 
 ### Format a Prompt
