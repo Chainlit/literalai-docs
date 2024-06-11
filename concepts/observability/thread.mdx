@@ -153,7 +153,7 @@ main()
 
 ## List Threads
 
-You can get all the threads from LiteralAI to your program:
+You can get all the threads from Literal AI to your program:
 
 <CodeGroup>
 ```python Python
@@ -162,7 +162,7 @@ from literalai import LiteralClient
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-threads = literal_client.api.list_threads(first=None, after=None, filters=None)
+threads = literal_client.api.list_threads(first=None, after=None, before=None, order_by=None filters=None)
 
 print(threads.pageInfo)
 for thread in threads.data:
@@ -174,9 +174,46 @@ import { LiteralClient } from "@literalai/client";
 
 const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
-const threads = await literalClient.api.getThreads();
+const threads = await literalClient.api.getThreads({});
+```
+</CodeGroup>
+
+Here's an example to use this function with pagination and filters:
+
+<CodeGroup>
+```python Python
+from literalai import LiteralClient
+
+literal_client = LiteralClient()
+
+user_id = '9c3d9c77-77ec-4e7c-a05e-60c97e917b0a'
+
+threads = literal_client.api.list_threads(
+    first=5,
+    filters=[{"operator": "eq", "field": "participantId", "value": user_id}]
+)
+
+for d in threads.data:
+    print(d.to_dict())
+
+client.flush_and_stop()
 ```
 
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const api_key='lsk_qw5jkYpEKI2cx4CE6LCwbw1M9TxR1iWa-JIZOOBksWw';
+const client = new LiteralClient(api_key);
+
+async function main() {
+
+  const userId = '9c3d9c77-77ec-4e7c-a05e-60c97e917b0a'
+  const threads = await client.api.getThreads({first: 5, filters: [{"operator": "eq", "field": "participantId", "value": userId}]});
+  console.log(threads);
+}
+
+main()
+```
 </CodeGroup>
 
 

@@ -120,3 +120,42 @@ main()
 ```
 
 </CodeGroup>
+
+## Retrieve Threads of a User
+
+You can retrieve all Threads of a specific User with the SDKs. You do this by using the `participantId` filter.
+
+
+<CodeGroup>
+```python Python
+from literalai import LiteralClient
+
+literal_client = LiteralClient()
+
+user_id = '9c3d9c77-77ec-4e7c-a05e-60c97e917b0a'
+
+threads = literal_client.api.list_threads(
+    filters=[{"operator": "eq", "field": "participantId", "value": user_id}]
+)
+
+for d in threads.data:
+    print(d.to_dict())
+
+client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient();
+
+async function main() {
+  const userId = '9c3d9c77-77ec-4e7c-a05e-60c97e917b0a'
+  const threads = await client.api.getThreads({filters: [{"operator": "eq", "field": "participantId", "value": userId}] });
+  console.log(threads);
+}
+
+main()
+```
+
+</CodeGroup>

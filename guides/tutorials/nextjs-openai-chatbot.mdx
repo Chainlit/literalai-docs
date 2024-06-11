@@ -301,7 +301,7 @@ export async function POST(req: Request) {
     input: { content: [...promptMessages, ...chatMessages] },
   });
 
-  // Register the response with LiteralAI so we can track it
+  // Register the response with Literal AI so we can track it
   // Please not that we have added the run as a parameter, so that
   // every subsequent generation is nested inside this run
   literalClient.instrumentation.openai(result, run);
