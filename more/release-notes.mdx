@@ -17,10 +17,14 @@ None
 
 ### New features
 
-* We'll be debuting in the coming week with self-service distribution of the Literal AI platform for self-hosting
+* **Compare** feature is now available! This compare feature allows you to compare between generations.
+* We'll be debuting in the coming week with **self-service distribution** of the Literal AI platform for self-hosting
+* A new **user role** has been added: "Annotator", a user that can add tags and scores to the observability entities (e.g. thread, step...) and has no access outside of those.
+* Project administrator can now pick the role of a user when inviting.
 
 ### Improvements
 
+* Literal AI API keys are now shared in the project. Before, admins could create "personal" API keys. The behavior of restricting access to admins is kept.
 * We're continuing our push towards a more consistent - and prettier - User Experience:
   * We've switched to a more vibrant color scheme
   * Made some visual tweaks on the Dashboard page
@@ -38,7 +42,9 @@ None
   * Signing Attachment URLs (for object storage like S3)
   * Conflicts on unique `userId`
   * A visual bug on initialization of “continuous” score templates
-
+* Audio attachments are now resolved.
+* Links on prompt versions are now directed to the correct prompt.
+* Show the correct projects when accessing the prompt playground.
 
 # 0.0.607-beta (May 27, 2024)
 
