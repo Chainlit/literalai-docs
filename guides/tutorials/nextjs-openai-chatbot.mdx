@@ -140,7 +140,12 @@ npm run dev
 
 And you should see a working chatbot at [http://localhost:3000/](http://localhost:3000/).
 
-![Simple Chatbot](images/guides/nextjs-openai-chatbot/01-simple-chatbot.png)
+<Frame caption="A simple chatbot">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/01-simple-chatbot.png"
+    alt="A simple chatbot"
+  />
+</Frame>
 
 As such, this page just pipes your messages directly to ChatGPT. Let us customize the experience and make it observable thanks to Literal AI.
 
@@ -163,7 +168,12 @@ const literalClient = new LiteralClient(); // <-
 
 ## **2. Adding a system prompt**
 
-![Add a system prompt](images/guides/nextjs-openai-chatbot/02-add-system-prompt.png)
+<Frame caption="Adding a system prompt">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/02-add-system-prompt.png"
+    alt="Adding a system prompt"
+  />
+</Frame>
 
 <Note>
 ℹ️ Literal AI allows you to decouple your prompts for your application code. This has various benefits in terms of code readability, but also allows your AI experts to tweak prompts and settings without having to redeploy your application.
@@ -176,7 +186,12 @@ For this example we will use a simple prompt to specialize our chatbot on Wildli
 
 - Add a Message by clicking on the “+ Message” button
 
-![Create message](images/guides/nextjs-openai-chatbot/03-create-message.png)
+<Frame caption="Creating a message">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/03-create-message.png"
+    alt="Creating a message"
+  />
+</Frame>
 
 - Enter the following as your System Prompt:
 
@@ -207,7 +222,12 @@ const result = await openai.chat.completions.create({
 // ...
 ```
 
-![Wildlife chatbot](images/guides/nextjs-openai-chatbot/04-wildlife-chatbot.png)
+<Frame caption="A wildlife chatbot">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/04-wildlife-chatbot.png"
+    alt="A wildlife chatbot"
+  />
+</Frame>
 
 ## **3. Threads**
 
@@ -226,7 +246,12 @@ literalClient.instrumentation.openai(result); // <-
 
 With that simple operation, all the settings and content of OpenAI calls will be logged on Literal AI.
 
-![A Generation, logged on Literal AI](images/guides/nextjs-openai-chatbot/05-logged-generation.png)
+<Frame caption="A LLM response, logged on Literal AI">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/05-logged-generation.png"
+    alt="A LLM response, logged on Literal AI"
+  />
+</Frame>
 
 Storing all your Generations as one-shots is impractical though. Wouldn’t it be more convenient if we could group all the messages from a single conversation into one Thread?
 
@@ -334,13 +359,28 @@ export async function POST(req: Request) {
 
 Now the following exchange in our chat application:
 
-![Monitored chatbot](images/guides/nextjs-openai-chatbot/06-monitored-chatbot.png)
+<Frame caption="Monitored chatbot">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/06-monitored-chatbot.png"
+    alt="Monitored chatbot"
+  />
+</Frame>
 
 Will be traced like so on Literal AI. As you can see we can easily follow the flow of the conversation, and the “Run” and “Generation” steps allow us to deep dive into the technical aspects of each LLM call and response.
 
-![Conversation tree](images/guides/nextjs-openai-chatbot/07-conversation-tree.png)
+<Frame caption="Conversation tree">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/07-conversation-tree.png"
+    alt="Conversation tree"
+  />
+</Frame>
 
-![Untitled](images/guides/nextjs-openai-chatbot/08-generation-details.png)
+<Frame caption="Details of the LLM response">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/08-generation-details.png"
+    alt="Details of the LLM response"
+  />
+</Frame>
 
 ## 4. Human evaluation
 
@@ -351,11 +391,22 @@ To accomplish this, we will first need to create a Score Template on Literal AI.
 - Navigate to any of your existing threads on Literal
 - Click on any Step of your Thread, and on the right-hand panel click **Create Score** then **Create Template**
 
-![Create score template](images/guides/nextjs-openai-chatbot/09-create-score-template.png)
+
+<Frame caption="Creating a score template">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/09-create-score-template.png"
+    alt="Creating a score template"
+  />
+</Frame>
 
 - Name your score template `simple-chatbot-score` and give it the following settings:
 
-![Simple slackbot score](images/guides/nextjs-openai-chatbot/10-simple-chatbot-score.png)
+<Frame caption="Simple Chatbot Score">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/10-simple-chatbot-score.png"
+    alt="Simple Chatbot Score"
+  />
+</Frame>
 
 Now let us think about the plumbing we will need to assemble this feature: to be able to vote on a chatbot’s message, we will need to know its Step ID on Literal AI. Fortunately, `ai` has a helper that allows us to inject arbitrary data to the `useChat` response, without losing its streaming behaviour.
 
@@ -494,7 +545,12 @@ export default function Home() {
 
 Here’s what our application looks like now:
 
-![Chatbot with thumb](images/guides/nextjs-openai-chatbot/11-chatbot-with-thumb.png)
+<Frame caption="Our simple chatbot, now with thumbs up">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/11-chatbot-with-thumb.png"
+    alt="Our simple chatbot, now with thumbs up"
+  />
+</Frame>
 
 To gather the user’s feedback and send it to Literal, we have to create a simple API route that takes as its input a Step ID, and a vote value (1 for 👍, 0 for 👎).
 
@@ -579,7 +635,12 @@ export default function Home() {
 
 Now you can upvote messages in your conversation, and if you navigate to the corresponding thread in Literal AI you can see that the Assistant Run has been scored:
 
-![Step with score](images/guides/nextjs-openai-chatbot/12-literal-step-with-score.png)
+<Frame caption="Step with score">
+  <img
+    src="/images/guides/nextjs-openai-chatbot/12-literal-step-with-score.png"
+    alt="Step with score"
+  />
+</Frame>
 
 # Conclusion
 
