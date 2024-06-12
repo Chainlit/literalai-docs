@@ -1,227 +1,221 @@
 {
-    "$schema": "https://mintlify.com/schema.json",
-    "name": "Literal AI Documentation",
-    "logo": {
-        "dark": "/logo/logo-dark.svg",
-        "light": "/logo/logo-light.svg"
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Literal AI Documentation",
+  "logo": {
+    "dark": "/logo/logo-dark.svg",
+    "light": "/logo/logo-light.svg"
+  },
+  "modeToggle": {
+    "default": "light",
+    "isHidden": true
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#F80061",
+    "light": "#FFE7EB",
+    "dark": "#980039"
+  },
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://cloud.getliteral.ai"
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
+  "topbarLinks": [],
+  "tabs": [
+    {
+      "name": "Guides",
+      "url": "guides"
     },
-    "modeToggle": {
-        "default": "light",
-        "isHidden": true
+    {
+      "name": "Tutorials",
+      "url": "tutorials"
     },
-    "favicon": "/favicon.svg",
-    "colors": {
-        "primary": "#F80061",
-        "light": "#FFE7EB",
-        "dark": "#980039"
+    {
+      "name": "Python Client",
+      "url": "python-client"
     },
-    "topbarCtaButton": {
-        "name": "Dashboard",
-        "url": "https://cloud.getliteral.ai"
+    {
+      "name": "TypeScript Client",
+      "url": "typescript-client"
     },
-    "feedback": {
-        "thumbsRating": true,
-        "suggestEdit": true,
-        "raiseIssue": true
-    },
-    "topbarLinks": [],
-    "tabs": [{
-            "name": "Guides",
-            "url": "guides"
-        },
-        {
-            "name": "Python Client",
-            "url": "python-client"
-        },
-        {
-            "name": "TypeScript Client",
-            "url": "typescript-client"
-        },
-        {
-            "name": "GraphQL API Reference",
-            "url": "graphql-api-reference"
-        }
-    ],
-    "anchors": [],
-    "navigation": [{
-            "group": "Get Started",
-            "pages": [
-                "get-started/overview",
-                "get-started/installation",
-                "get-started/quick-start"
-            ]
-        },
-        {
-            "group": "Concepts",
-            "pages": [{
-                    "group": "Prompt",
-                    "pages": [
-                        "concepts/prompt/overview",
-                        "concepts/prompt/prompt-versioning",
-                        "concepts/prompt/prompt-api",
-                        "concepts/prompt/prompt-playground"
-                    ]
-                },
-                {
-                    "group": "Observability",
-                    "pages": [
-                        "concepts/observability/thread",
-                        "concepts/observability/step",
-                        "concepts/observability/run",
-                        "concepts/observability/generation",
-                        "concepts/observability/tags",
-                        "concepts/observability/multimodal",
-                        "concepts/observability/user"
-                    ]
-                },
-                {
-                    "group": "Evaluation",
-                    "pages": [
-                        "concepts/evaluation/dataset",
-                        "concepts/evaluation/score",
-                        "concepts/evaluation/experiment",
-                        "concepts/evaluation/ab-testing",
-                        "concepts/evaluation/online-evaluation"
-                    ]
-                },
-                {
-                    "group": "Monitoring",
-                    "pages": [
-                        "concepts/monitoring/overview",
-                        "concepts/monitoring/automated-rules"
-                    ]
-                },
-                "concepts/project-roles"
-            ]
-        },
-        {
-            "group": "Integrations",
-            "pages": [
-                "integrations/openai",
-                "integrations/openai-assistant",
-                "integrations/chainlit",
-                "integrations/langchain",
-                "integrations/llama-index",
-                "integrations/llm-providers",
-                "integrations/messages-server",
-                "integrations/vercel-ai-sdk"
-            ]
-        },
-        {
-            "group": "Get Started",
-            "pages": [
-                "python-client/get-started/introduction"
-            ]
-        },
-        {
-            "group": "Abstractions",
-            "pages": [
-                "python-client/abstractions/thread",
-                "python-client/abstractions/step"
-            ]
-        },
-        {
-            "group": "API Reference",
-            "pages": [
-                "python-client/api-reference/client",
-                "python-client/api-reference/api"
-            ]
-        },
-        {
-            "group": "Development",
-            "pages": [
-                "python-client/development/changelog"
-            ]
-        },
-        {
-            "group": "Get Started",
-            "pages": [
-                "typescript-client/introduction"
-            ]
-        },
-        {
-            "group": "API Reference",
-            "pages": [
-                "typescript-client/api-reference/dataset",
-                "typescript-client/api-reference/api-reference"
-            ]
-        },
-        {
-            "group": "Development",
-            "pages": [
-                "typescript-client/development/changelog"
-            ]
-        },
-        {
-            "group": "Self Hosting",
-            "pages": ["self-hosting/get-started", "self-hosting/deployment"]
-        },
-        {
-            "group": "More",
-            "pages": ["more/security", "more/export-data", "more/release-notes", "more/roadmap"]
-        },
-        {
-            "group": "Overview",
-            "pages": [
-                "guides/overview"
-            ]
-        },
-        {
-            "group": "Prompt",
-            "pages": [
-                "guides/prompt/prompt-format",
-                "guides/prompt/prompt-langchain"
-            ]
-        },
-        {
-            "group": "Observability",
-            "pages": [
-                "guides/observability/agent-run",
-                "guides/observability/conversational-agent",
-                "guides/observability/conversational-agent-fastapi",
-                "guides/observability/distributed-tracing",
-                "guides/observability/image-attachment",
-                "guides/observability/guide-tag-scores-metadata"
-            ]
-        },
-        {
-            "group": "Evaluation",
-            "pages": [
-                "guides/evaluation/dataset"
-            ]
-        },
-        {
-            "group": "Tutorials",
-            "pages": [
-                "guides/tutorials/nextjs-openai-chatbot",
-                "guides/tutorials/rag-example",
-                "guides/tutorials/rag-chatbot-offline-evaluation",
-                "guides/tutorials/evaluating-context-relevancy",
-                "guides/tutorials/evaluating-user-satisfaction",
-                "guides/tutorials/ab-testing-client-side"
-            ]
-        },
-        {
-            "group": "Github Cookbooks",
-            "pages": [
-                "guides/github-cookbook/evaluation"
-            ]
-        },
-        {
-            "group": "GraphQL API Reference",
-            "pages": [
-                "graphql-api-reference/introduction"
-            ]
-        }
-    ],
-    "footerSocials": {
-        "twitter": "https://twitter.com/chainlit_io",
-        "github": "https://github.com/Chainlit",
-        "linkedin": "https://www.linkedin.com/company/chainlit"
-    },
-    "analytics": {
-        "gtm": {
-            "tagId": "GTM-MTHNP8VZ"
-        }
+    {
+      "name": "GraphQL API Reference",
+      "url": "graphql-api-reference"
     }
+  ],
+  "anchors": [],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "get-started/overview",
+        "get-started/installation",
+        "get-started/quick-start"
+      ]
+    },
+    {
+      "group": "Concepts",
+      "pages": [
+        {
+          "group": "Prompt",
+          "pages": [
+            "concepts/prompt/overview",
+            "concepts/prompt/prompt-versioning",
+            "concepts/prompt/prompt-api",
+            "concepts/prompt/prompt-playground"
+          ]
+        },
+        {
+          "group": "Observability",
+          "pages": [
+            "concepts/observability/thread",
+            "concepts/observability/step",
+            "concepts/observability/run",
+            "concepts/observability/generation",
+            "concepts/observability/tags",
+            "concepts/observability/multimodal",
+            "concepts/observability/user"
+          ]
+        },
+        {
+          "group": "Evaluation",
+          "pages": [
+            "concepts/evaluation/dataset",
+            "concepts/evaluation/score",
+            "concepts/evaluation/experiment",
+            "concepts/evaluation/ab-testing",
+            "concepts/evaluation/online-evaluation"
+          ]
+        },
+        {
+          "group": "Monitoring",
+          "pages": [
+            "concepts/monitoring/overview",
+            "concepts/monitoring/automated-rules"
+          ]
+        },
+        "concepts/project-roles"
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/openai",
+        "integrations/openai-assistant",
+        "integrations/chainlit",
+        "integrations/langchain",
+        "integrations/llama-index",
+        "integrations/llm-providers",
+        "integrations/messages-server",
+        "integrations/vercel-ai-sdk"
+      ]
+    },
+    {
+      "group": "Get Started",
+      "pages": ["python-client/get-started/introduction"]
+    },
+    {
+      "group": "Abstractions",
+      "pages": [
+        "python-client/abstractions/thread",
+        "python-client/abstractions/step"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "python-client/api-reference/client",
+        "python-client/api-reference/api"
+      ]
+    },
+    {
+      "group": "Development",
+      "pages": ["python-client/development/changelog"]
+    },
+    {
+      "group": "Get Started",
+      "pages": ["typescript-client/introduction"]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "typescript-client/api-reference/dataset",
+        "typescript-client/api-reference/api-reference"
+      ]
+    },
+    {
+      "group": "Development",
+      "pages": ["typescript-client/development/changelog"]
+    },
+    {
+      "group": "Self Hosting",
+      "pages": ["self-hosting/get-started", "self-hosting/deployment"]
+    },
+    {
+      "group": "More",
+      "pages": [
+        "more/security",
+        "more/export-data",
+        "more/release-notes",
+        "more/roadmap"
+      ]
+    },
+    {
+      "group": "Overview",
+      "pages": ["guides/overview"]
+    },
+    {
+      "group": "Observability",
+      "pages": [
+        "guides/observability/agent-run",
+        "guides/observability/conversational-agent",
+        "guides/observability/conversational-agent-fastapi",
+        "guides/observability/distributed-tracing",
+        "guides/observability/image-attachment",
+        "guides/observability/guide-tag-scores-metadata"
+      ]
+    },
+    {
+      "group": "Evaluation",
+      "pages": [
+        "guides/evaluation/dataset",
+        "guides/evaluation/ab-testing",
+        "guides/evaluation/evaluate-tools"
+      ]
+    },
+    {
+      "group": "Overview",
+      "pages": ["tutorials/overview"]
+    },
+    {
+      "group": "Python Tutorials",
+      "pages": [
+        "tutorials/rag-chatbot-offline-evaluation",
+        "tutorials/evaluating-context-relevancy",
+        "tutorials/evaluating-user-satisfaction"
+      ]
+    },
+    {
+      "group": "Typescript Tutorials",
+      "pages": ["tutorials/nextjs-openai-chatbot", "tutorials/promptfoo"]
+    },
+    {
+      "group": "GraphQL API Reference",
+      "pages": ["graphql-api-reference/introduction"]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/chainlit_io",
+    "github": "https://github.com/Chainlit",
+    "linkedin": "https://www.linkedin.com/company/chainlit"
+  },
+  "analytics": {
+    "gtm": {
+      "tagId": "GTM-MTHNP8VZ"
+    }
+  }
 }

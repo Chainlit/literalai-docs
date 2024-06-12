@@ -1,11 +1,15 @@
 ---
-title: Build and evaluate a RAG chatbot with Chainlit, OpenAI, Pinecone and Literal AI
+title: Building and evaluating a RAG chatbot
 ---
 
 In this guide you will learn how to build, monitor, evaluate and improve a conversational application.
-We will use [Chainlit](https://docs.chainlit.io/get-started/overview) in combination with Literal AI, 
-to show the development flow of building, evaluating and improving the chatbot. The chatbot uses Retrieval
-Augmented Generation (RAG) to retrieve contexts for answer generation. 
+The chatbot uses Retrieval Augmented Generation (RAG) to retrieve contexts for answer generation. 
+
+
+In combination with Literal AI we will use the following tools :
+* OpenAI's embeddings and models
+* [Chainlit](https://docs.chainlit.io/get-started/overview) as the basis for our chat application
+* [Pinecone](https://www.pinecone.io/) as the vector database where we will store the data for our RAG
 
 ## 1. Build a RAG chatbot with Chainlit
 
