@@ -169,6 +169,10 @@
       "pages": ["guides/overview"]
     },
     {
+      "group": "Prompt",
+      "pages": ["guides/prompt/prompt-format", "guides/prompt/prompt-langchain"]
+    },
+    {
       "group": "Observability",
       "pages": [
         "guides/observability/agent-run",
