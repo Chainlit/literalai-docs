@@ -53,17 +53,18 @@
         },
         {
             "group": "Concepts",
-            "pages": [{
-                    "group": "Prompt",
+            "pages": [
+                "concepts/dashboard", 
+                {
+                    "group": "Monitor",
                     "pages": [
-                        "concepts/prompt/overview",
-                        "concepts/prompt/prompt-versioning",
-                        "concepts/prompt/prompt-api",
-                        "concepts/prompt/prompt-playground"
+                        "concepts/monitoring/score",
+                        "concepts/monitoring/compare",
+                        "concepts/monitoring/online-evaluation"
                     ]
                 },
                 {
-                    "group": "Observability",
+                    "group": "Observe",
                     "pages": [
                         "concepts/observability/thread",
                         "concepts/observability/step",
@@ -75,23 +76,26 @@
                     ]
                 },
                 {
-                    "group": "Evaluation",
+                    "group": "Prompt",
                     "pages": [
-                        "concepts/evaluation/dataset",
-                        "concepts/evaluation/score",
-                        "concepts/evaluation/experiment",
-                        "concepts/evaluation/ab-testing",
-                        "concepts/evaluation/online-evaluation"
+                        "concepts/prompt/overview",
+                        "concepts/prompt/prompt-versioning",
+                        "concepts/prompt/prompt-api",
+                        "concepts/prompt/prompt-playground"
                     ]
                 },
                 {
-                    "group": "Monitoring",
+                    "group": "Evaluate",
                     "pages": [
-                        "concepts/monitoring/overview",
-                        "concepts/monitoring/automated-rules"
+                        "concepts/evaluation/dataset",
+                        "concepts/evaluation/experiment"
                     ]
                 },
-                "concepts/project-roles"
+                {
+                    "group": "Settings",
+                    "pages": [
+                        "concepts/settings/project-roles"                    ]
+                }
             ]
         },
         {
