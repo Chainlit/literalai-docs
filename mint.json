@@ -58,7 +58,6 @@
                 {
                     "group": "Monitor",
                     "pages": [
-                        "concepts/monitoring/score",
                         "concepts/monitoring/compare",
                         "concepts/monitoring/online-evaluation"
                     ]
@@ -71,6 +70,7 @@
                         "concepts/observability/run",
                         "concepts/observability/generation",
                         "concepts/observability/tags",
+                        "concepts/observability/scores",
                         "concepts/observability/multimodal",
                         "concepts/observability/user"
                     ]
