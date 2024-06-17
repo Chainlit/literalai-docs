@@ -4,6 +4,41 @@ title: Release Notes
 
 All changes and improvements to Literal AI are listed here. For changes in the SDKs, go to the [Python SDK](/python-client/development/changelog) or [TypeScript SDK](/typescript-client/development/changelog).
 
+# 0.0.609-beta (June 17, 2024)
+
+This version is compatible with:
+* [Chainlit](https://docs.chainlit.io/get-started/overview) version `1.0.504` and above.
+* [Python SDK](/python-client) version `0.0.509` and above.
+* [TypeScript SDK](/typescript-client) version `0.0.503` and above.
+
+### Breaking changes
+
+None
+
+### New features
+
+* Added a "maintainer" role for the project, that allows for write while preventing the user to manage the project
+
+### Improvements
+
+* Simplify the Generation and Step data handling
+* Rules can now be updated directly
+* In "Experiment" you can now see the diff between inputs and outputs columns
+* The navigation is improved
+* Score templates can now be accessed in the "Evaluate" section
+* When scoring with a "categorical" score, the score value now uses its name rather than the value itself
+* In the dashboards we no longer display nullish values as 0
+* Rules have now their own detail page
+
+### Fixes
+
+* Fixed an issue where prompt playground settings were not correctly persisted
+* Fixed an issue where some step rows were duplicated
+* Fixed an issue with the "dataset link"
+* Fixed an issue where it was not possible to select custom models in the playground
+* Fixed an issue with the "Generations" page pagination
+
+
 # 0.0.608-beta (June 4, 2024)
 
 This version is compatible with:
