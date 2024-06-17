@@ -1,11 +1,11 @@
 ---
-title: Multimodal Conversation Logging with OpenAI and Literal AI
+title: Multimodal Conversations with OpenAI
 ---
 
 Literal AI offers multimodal logging. In this example, you see how an image is logged by Literal AI in an application using OpenAI's GPT4-Turbo model. A chat Thread is initiated, in which the assistent start with a welcome message. Then, a user query comes in, with a photo as attachment. In this example, this is hardcoded, but of course you can implement similar behavior in your chatbot. The attachment is added to the user message Step. This picture is then sent to the multimodal AI model, and the response is logged in Literal AI as well. 
 
 <CodeGroup>
-```python Multimodal conversation with OpenAI and Literal AI
+```python multimodal.py
 import os
 from literalai import LiteralClient
 from openai import OpenAI
@@ -72,11 +72,11 @@ literal_client.flush_and_stop()
 ```
 </CodeGroup>
 
-The chat with attachment is displayed in a Literal AI Thread as follows: 
+Here's an example of how different kinds of attachments are displayed in Literal :
 
-<Frame caption="Example of an image attachment">
+<Frame caption="Examples of attachments">
   <img
     src="/images/attachments.png"
-    alt="An attachment on a step"
+    alt="Attachments on a step"
   />
 </Frame>
