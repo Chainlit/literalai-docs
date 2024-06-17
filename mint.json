@@ -53,7 +53,29 @@
         },
         {
             "group": "Concepts",
-            "pages": [{
+            "pages": [
+                "concepts/dashboard", 
+                {
+                    "group": "Monitor",
+                    "pages": [
+                        "concepts/monitoring/compare",
+                        "concepts/monitoring/online-evaluation"
+                    ]
+                },
+                {
+                    "group": "Observe",
+                    "pages": [
+                        "concepts/observability/thread",
+                        "concepts/observability/step",
+                        "concepts/observability/run",
+                        "concepts/observability/generation",
+                        "concepts/observability/tags",
+                        "concepts/observability/scores",
+                        "concepts/observability/multimodal",
+                        "concepts/observability/user"
+                    ]
+                },
+                {
                     "group": "Prompt",
                     "pages": [
                         "concepts/prompt/overview",
@@ -63,35 +85,17 @@
                     ]
                 },
                 {
-                    "group": "Observability",
-                    "pages": [
-                        "concepts/observability/thread",
-                        "concepts/observability/step",
-                        "concepts/observability/run",
-                        "concepts/observability/generation",
-                        "concepts/observability/tags",
-                        "concepts/observability/multimodal",
-                        "concepts/observability/user"
-                    ]
-                },
-                {
-                    "group": "Evaluation",
+                    "group": "Evaluate",
                     "pages": [
                         "concepts/evaluation/dataset",
-                        "concepts/evaluation/score",
-                        "concepts/evaluation/experiment",
-                        "concepts/evaluation/ab-testing",
-                        "concepts/evaluation/online-evaluation"
+                        "concepts/evaluation/experiment"
                     ]
                 },
                 {
-                    "group": "Monitoring",
+                    "group": "Settings",
                     "pages": [
-                        "concepts/monitoring/overview",
-                        "concepts/monitoring/automated-rules"
-                    ]
-                },
-                "concepts/project-roles"
+                        "concepts/settings/project-roles"                    ]
+                }
             ]
         },
         {
