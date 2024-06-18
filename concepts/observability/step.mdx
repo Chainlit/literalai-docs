@@ -37,6 +37,8 @@ A `tool` step is used to document interactions with external tools or services. 
 
 An `llm` step is used to document interactions with large language models (LLMs). This step type is particularly useful for applications that leverage AI models, such as GPT-3, for generating responses, content, or performing analysis.
 
+<Warning>Steps of type `llm` require input messages. Attempts to create `llm` steps without either `generation.messages` (chat API) or `generation.prompt` (completion API) yield a `run` step.</Warning>
+
 ## Implementing Steps
 
 Possible `"type"`s are: `"run"`, `"tool"`, `"llm"`, `"embedding"`, `"retrieval"`, `"rerank"`, `"undefined"`, `"user_message"`, `"assistant_message"`, `"system_message"`.
