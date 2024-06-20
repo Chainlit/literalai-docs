@@ -42,8 +42,7 @@ To get your API key, go to your [project page](https://cloud.getliteral.ai) and 
 import os
 from literalai import LiteralClient
 
-# Not compatible with gunicorn's --preload flag
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) # This is the default and can be omitted
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 with literal_client.thread(name="My first thread !") as thread:
   literal_client.message(content="Hello world", type="user_message", name="My first step !")
@@ -54,7 +53,7 @@ literal_client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 const thread = await literalClient
   .thread({ name: "My first thread !" })
