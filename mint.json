@@ -78,27 +78,25 @@
             "concepts/observability/generation",
             "concepts/observability/tags",
             "concepts/observability/multimodal",
-            "concepts/observability/user"
+            "concepts/observability/user",
+            "concepts/observability/scores"
           ]
         },
         {
           "group": "Evaluation",
           "pages": [
             "concepts/evaluation/dataset",
-            "concepts/evaluation/score",
-            "concepts/evaluation/experiment",
-            "concepts/evaluation/ab-testing",
-            "concepts/evaluation/online-evaluation"
+            "concepts/evaluation/experiment"
           ]
         },
         {
           "group": "Monitoring",
           "pages": [
-            "concepts/monitoring/overview",
-            "concepts/monitoring/automated-rules"
+            "concepts/monitoring/compare",
+            "concepts/monitoring/online-evaluation"
           ]
         },
-        "concepts/project-roles"
+        "concepts/settings/project-roles"
       ]
     },
     {
