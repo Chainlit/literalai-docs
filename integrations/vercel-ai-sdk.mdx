@@ -3,7 +3,7 @@ title: "Vercel AI SDK"
 ---
 
 
-This integration allows you to very simply add observability and monitoring to your LLM application based on [Vercel's AI SDK](https://sdk.vercel.ai/docs/introduction). The instrumentation is available for the two main methods of the Vercel AI SDK, `generateText` and `streamText`.
+This integration allows you to very simply add observability and monitoring to your LLM application based on [Vercel's AI SDK](https://sdk.vercel.ai/docs/introduction). The instrumentation is available for the two main methods of the Vercel AI SDK: `generateText` and `streamText`.
 
 <CodeGroup>
 ```typescript generateText
@@ -38,6 +38,7 @@ import { openai } from '@ai-sdk/openai';
 const streamText = literalClient.instrumentation.vercel.instrument(baseStreamText);
 
 export async function POST(req: Request) {
+  // The wrapped version of `streamText` accepts the same parameters as the original function.
   const { textStream } = await streamText({
     model: openai('gpt-3.5-turbo'),
     system: question,
@@ -52,20 +53,12 @@ export async function POST(req: Request) {
 
 ## With Threads and Steps
 
-You can pass a [Threads](/concepts/observability/thread) or a [Steps](/concepts/observability/step) as an option of your generations to keep your logs organized.
+In most cases, you will want to keep track of the different generations from your application by grouping them into [Threads](/concepts/observability/thread) or [Steps](/concepts/observability/step). This is especially useful when you want to understand the context in which a generation was made, or when you want to compare different generations.
 
-<CodeGroup>
+You can attach generation to a `Thread` or a `Step` by passing it as the `literalAiParent` parameter. This parameter should be an instance of a `Thread` or a `Step` that you have created using the Literal AI SDK.
+
 ```typescript TypeScript
-import { LiteralClient } from '@literalai/client';
-
-import { generateText as baseGenerateText } from 'ai';
-import { openai } from '@ai-sdk/openai';
-
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
-
-const generateText = literalClient.instrumentation.vercel.instrument(baseGenerateText);
-
-export async function getAnswer(question: string) {
+export async function POST(req: Request) {
   const thread = await literalClient.thread({ name: "Example" }).upsert();
 
   const { text } = await generateText({
@@ -77,4 +70,10 @@ export async function getAnswer(question: string) {
   return { text };
 }
 ```
-</CodeGroup>
+
+## Cookbooks
+
+You can find more involved examples in our Cookbooks repository :
+
+* [This chatbot](https://github.com/Chainlit/literal-cookbook/blob/main/typescript/nextjs-openai) uses Vercel AI SDK's `useChat` hook in the frontend
+* [This example](https://github.com/Chainlit/literal-cookbook/blob/main/typescript/vercel-ai-sdk) uses the Vercel AI SDK integration in the backend
