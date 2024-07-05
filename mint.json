@@ -5,10 +5,6 @@
     "dark": "/logo/logo-dark.svg",
     "light": "/logo/logo-light.svg"
   },
-  "modeToggle": {
-    "default": "light",
-    "isHidden": true
-  },
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#F80061",
@@ -114,7 +110,9 @@
     },
     {
       "group": "Get Started",
-      "pages": ["python-client/get-started/introduction"]
+      "pages": [
+        "python-client/get-started/introduction"
+      ]
     },
     {
       "group": "Abstractions",
@@ -132,11 +130,15 @@
     },
     {
       "group": "Development",
-      "pages": ["python-client/development/changelog"]
+      "pages": [
+        "python-client/development/changelog"
+      ]
     },
     {
       "group": "Get Started",
-      "pages": ["typescript-client/introduction"]
+      "pages": [
+        "typescript-client/introduction"
+      ]
     },
     {
       "group": "API Reference",
@@ -147,11 +149,16 @@
     },
     {
       "group": "Development",
-      "pages": ["typescript-client/development/changelog"]
+      "pages": [
+        "typescript-client/development/changelog"
+      ]
     },
     {
       "group": "Self Hosting",
-      "pages": ["self-hosting/get-started", "self-hosting/deployment"]
+      "pages": [
+        "self-hosting/get-started",
+        "self-hosting/deployment"
+      ]
     },
     {
       "group": "More",
@@ -164,11 +171,16 @@
     },
     {
       "group": "Overview",
-      "pages": ["guides/overview"]
+      "pages": [
+        "guides/overview"
+      ]
     },
     {
       "group": "Prompt",
-      "pages": ["guides/prompt/prompt-format", "guides/prompt/prompt-langchain"]
+      "pages": [
+        "guides/prompt/prompt-format",
+        "guides/prompt/prompt-langchain"
+      ]
     },
     {
       "group": "Observability",
@@ -191,7 +203,9 @@
     },
     {
       "group": "Overview",
-      "pages": ["tutorials/overview"]
+      "pages": [
+        "tutorials/overview"
+      ]
     },
     {
       "group": "Python Tutorials",
@@ -203,11 +217,16 @@
     },
     {
       "group": "Typescript Tutorials",
-      "pages": ["tutorials/nextjs-openai-chatbot", "tutorials/promptfoo"]
+      "pages": [
+        "tutorials/nextjs-openai-chatbot",
+        "tutorials/promptfoo"
+      ]
     },
     {
       "group": "GraphQL API Reference",
-      "pages": ["graphql-api-reference/introduction"]
+      "pages": [
+        "graphql-api-reference/introduction"
+      ]
     }
   ],
   "footerSocials": {
