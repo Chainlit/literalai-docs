@@ -12,15 +12,21 @@ Once a project is created, you can invite others to collaborate:
 
 1. Go to the project settings.
 2. Invite members by entering their email addresses.
-3. Assign roles to each member:
-   - **Admin**: Full access to the project.
-   - **User**: Read-only access to the project.
+3. Assign roles to each member.
 
 <Frame caption="Invite a collaborator">
   <img src="/images/members.jpg" alt="Invite a collaborator" />
 </Frame>
 
-Contact us to create more fine-grained roles.
+### Role Based Access Control (RBAC)
+
+Literal AI supports role based access control to help teams manage access to the resources.
+Project administrators are responsible for assigning roles to the team members, each role has a different set of permissions.
+
+**Supported roles:**
+- **Admin**: Full access to the project. Can manage members, settings, and all project resources.
+- **AI Engineer**: Can manage threads, generate API keys, manage prompts and rules. Can't manage project settings or members.
+- **Domain Expert**: Can read observability data, score and tag the data. Limited access to other project resources.
 
 ### Managing Literal AI API Keys
 
