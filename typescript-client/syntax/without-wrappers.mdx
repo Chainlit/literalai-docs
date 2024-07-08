@@ -1,0 +1,69 @@
+---
+title: Without wrappers
+---
+
+The Literal AI Typescript SDK provides a way to interact with the Literal AI API without using wrappers. This is useful when you want to have more control over the API calls, or when you want to use the API in a more functional way. It implies that you will have to manually manage thread and step IDs, and also to manually send API calls to Literal AI.
+
+Manual code can further be simplified by using one of our [Integrations](/integrations).
+
+```typescript
+import {
+  IGenerationMessage,
+  LiteralClient,
+} from "@literalai/client";
+import OpenAI from "openai";
+
+const client = new LiteralClient();
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+async function main(file: ArrayBuffer) {
+  const thread = await client.thread({ name: 'Test Thread' }).upsert();
+
+  // You can also create a step directly attached
+  // to the thread using `thread.step(...)`
+  const run = await client
+    .step({
+      threadId: thread.id,
+      type: "run",
+      name: "Tool Run",
+    })
+    .send();
+
+  const start = new Date();
+
+  const { text: transcribedText } = await openai.audio.transcriptions.create({
+    file: audioFile,
+    model: "whisper-1",
+    language: "en",
+  });
+
+  const end = new Date();
+
+  const input: IGenerationMessage = {
+    role: "user",
+    content: "Audio file",
+  };
+  const output: IGenerationMessage = {
+    role: "assistant",
+    content: transcribedText,
+  };
+
+  await run
+  .step({
+    type: "llm",
+    name: "whisper-1",
+    input,
+    output,
+    startTime: start.toISOString(),
+    endTime: end.toISOString(),
+    generation: {
+      type: "CHAT",
+      provider: "openai",
+      model: "whisper-1",
+      messages: [input],
+      messageCompletion: output,
+    },
+  })
+  .send();
+}
+```

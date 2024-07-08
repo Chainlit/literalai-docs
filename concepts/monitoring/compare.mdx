@@ -53,7 +53,6 @@ with literal_client.thread() as thread:
 
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
-import * as random from 'random';
 
 const client = new LiteralClient(process.env['LITERAL_API_KEY']);
 
@@ -62,52 +61,48 @@ const promptNameB = 'Prompt B';
 const promptA = await client.api.getPrompt(promptNameA);
 const promptB = await client.api.getPrompt(promptNameB);
 
-async function answer(thread: Thread, group: string,) {
-  const run = thread.step({
-    name: "My Run",
-    type: "run",
-    input: { content: question },
-  });
-
-  if (group === "A") {
-    const response = { content: "answer to question with prompt A" }; // e.g., LLM call with prompt A
-  } else {
-    const response = { content: "answer to question with prompt B" }; // e.g., LLM call with prompt A
-  }
-
-  run.output = response;
-  await run.send();
-
-  return response;
+async function answer(question: string, group: string) {
+  return client
+    .run({
+      name: 'My Run',
+      input: { content: question }
+    })
+    .wrap(() => {
+      if (group === 'A') {
+        // Here we simulate a response from the prompt A
+        return { content: 'answer to question with prompt A' };
+      } else {
+        // Here we simulate a response from the prompt B
+        return { content: 'answer to question with prompt B' };
+      }
+    });
 }
 
 async function main() {
-    const thread = await literalClient
-      .thread({ name: "Thread Example", participantId: participantId })
-      .upsert();
+  await client.thread({ name: 'Thread Example' }).wrap(async () => {
+    const group = Math.random() < 0.5 ? 'A' : 'B';
 
-    const group = random.float() < 0.5 ? "A" : "B";
-    
-    const userQuery = "What are the features of Literal AI?";
-    await thread
+    const userQuery = 'What are the features of Literal AI?';
+    await client
       .step({
-        type: "user_message",
-        name: "User",
+        type: 'user_message',
+        name: 'User',
         output: { content: userQuery },
+        tags: [`group:${group}`]
       })
       .send();
- 
-    const assistantResponse = await answer(thread, userQuery, group);
-    await thread
-      .step({
-        type: "assistant_message",
-        name: "Assistant",
-        output: assistantResponse,
-      })
-      .send();
-}
 
-main();
+    const assistantResponse = await answer(userQuery, group);
+
+    await client
+      .step({
+        type: 'assistant_message',
+        name: 'Assistant',
+        output: assistantResponse
+      })
+      .send();
+  });
+}
 ```
 </CodeGroup>
 

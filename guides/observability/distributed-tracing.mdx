@@ -2,67 +2,62 @@
 title: Distributed Tracing
 ---
 
-Distributed tracing is a method for monitoring and visualizing the flow of requests through a distributed system. 
+Distributed tracing is a method for monitoring and visualizing the flow of requests through a distributed system. This enables the **tracking** of the request as it interacts with an external weather service and the subsequent processing by the AI model. By using **distributed tracing**, developers can gain insights into the **performance** of their system, **debug** issues, and understand the behavior of complex, interconnected services.
 
-In the TypeScript example, a `LiteralClient` is used to create a step that logs a particular action, in this case, fetching weather data. This step is associated with a `parent_step_id`, which allows for the **tracing** of the request's journey through the system. Similarly, in the Python code, the `LiteralClient` is used to instrument the OpenAI client, and a decorator `@literal_client.step` is used to mark the function `run()` as a traceable step. This enables the **tracking** of the request as it interacts with an external weather service and the subsequent processing by the AI model. By using **distributed tracing**, developers can gain insights into the **performance** of their system, **debug** issues, and understand the behavior of complex, interconnected services.
+## Typescript
 
-```bash
-export OPENAI_API_KEY=
-export LITERAL_API_KEY=
-```
-
+In the TypeScript example, a `LiteralClient` is used to create a step that logs a particular action, in this case, fetching weather data. This step is associated with a `parentStepId`, which allows for the **tracing** of the request's journey through the system.
 
 ```typescript server.ts
 import * as http from "http";
 import { Step, LiteralClient } from "@literalai/client";
-
 const literalClient = new LiteralClient();
 
 const server = http.createServer(async (req, res) => {
-  if (req.method === "POST" && req.url === "/get-weather") {
-    let body = "";
-    req.on("data", (chunk) => {
+  if (req.method === 'POST' && req.url === '/get-weather') {
+    let body = '';
+    req.on('data', (chunk) => {
       body += chunk.toString(); // convert Buffer to string
     });
-    req.on("end", async () => {
-      const { location, unit, parent_step_id } = JSON.parse(body);
-      console.log(location, unit, parent_step_id);
+    req.on('end', async () => {
+      const { location, unit, parentStepId } = JSON.parse(body);
+      console.log(location, unit, parentStepId);
 
       // Log the step with the received parent_step_id
-      const step = literal_client.step({
-        type: "tool",
-        name: "get_weather",
-        input: { location, unit },
-        parentId: parent_step_id,
-      });
+      const weatherData = literalClient
+        .step({
+          type: 'tool',
+          name: 'get_weather',
+          input: { location, unit },
+          parentId: parentStepId
+        })
+        .wrap(() => {
+          // Mock API call to the weather service
+          const weatherData = mockWeatherApiCall(location, unit);
 
-      // Mock API call to the weather service
-      const weatherData = mockWeatherApiCall(location, unit);
+          return weatherData;
+        });
 
-      // Output the result of the mock API call
-      step.output = { weatherData };
-      await step.send();
-
-      res.writeHead(200, { "Content-Type": "application/json" });
+      res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(weatherData));
     });
   } else {
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ error: "Not found" }));
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Not found' }));
   }
 });
 
 const PORT = process.env.PORT || 3000;
 
 // Mock function to simulate weather API response
-function mockWeatherApiCall(location: string, unit = "celsius") {
+function mockWeatherApiCall(location: string, unit = 'celsius') {
   // This is a mock function, replace with actual API call if needed
   const weatherApiResponse = {
     location: location,
-    temperature: unit === "celsius" ? "15°C" : "59°F",
-    condition: "Partly Cloudy",
-    humidity: "68%",
-    windSpeed: "10 km/h",
+    temperature: unit === 'celsius' ? '15°C' : '59°F',
+    condition: 'Partly Cloudy',
+    humidity: '68%',
+    windSpeed: '10 km/h'
   };
   return weatherApiResponse;
 }
@@ -72,11 +67,9 @@ server.listen(PORT, () => {
 });
 ```
 
-```bash
-npx ts-node service.ts
-```
+## Python
 
-Then the python code, containing the Agent logic.
+In the Python code, the `LiteralClient` is used to instrument the OpenAI client, and a decorator `@literal_client.step` is used to mark the function `run()` as a traceable step. 
 
 ```python app.py
 from openai import OpenAI
@@ -163,9 +156,4 @@ def run():
 print(run())
 
 literal_client.flush_and_stop()
-```
-
-
-```bash
-python3 app.py
 ```

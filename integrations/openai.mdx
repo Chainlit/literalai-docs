@@ -98,65 +98,62 @@ literal_client.flush_and_stop()
 import { LiteralClient, Thread } from '@literalai/client';
 import OpenAI from 'openai';
 
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+const literalClient = new LiteralClient();
 
-const openai = new OpenAI({
-  apiKey: process.env['OPENAI_API_KEY'] // This is the default and can be omitted
-});
+const openai = new OpenAI();
 
-async function myAssistant(thread: Thread, initialUserQuery: string) {
-  const run = thread.step({
-    name: "My Assistant",
-    type: "run",
-    input: { content: initialUserQuery },
-  });
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4",
-    messages: [{ role: "user", content: initialUserQuery }],
-  });
-  await literalClient.instrumentation.openai(completion, run);
-
-  run.output = completion.choices[0].message;
-  await run.send();
-
-  await run
-    .step({
-      output: completion.choices[0].message,
-      type: "assistant_message",
-      name: "My Assistant",
+async function myAssistant(initialUserQuery: string) {
+  return literalClient
+    .run({
+      name: 'My Assistant',
+      input: { content: initialUserQuery }
     })
-    .send();
+    .wrap(async (run) => {
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [{ role: 'user', content: initialUserQuery }]
+      });
+      await literalClient.instrumentation.openai(completion, run);
+
+      const output = completion.choices[0].message;
+
+      await literalClient
+        .step({
+          output: completion.choices[0].message,
+          type: 'assistant_message',
+          name: 'My Assistant'
+        })
+        .send();
+
+      return output;
+    });
 }
 
 async function main() {
-  const thread = await literalClient.thread({ name: "Example" }).upsert();
+  await literalClient.thread({ name: 'Example' }).wrap(async () => {
+    const initialUserQuery = 'Hello, how are you?';
 
-  const initialUserQuery = "Hello, how are you?";
+    await literalClient
+      .step({
+        output: { content: initialUserQuery },
+        type: 'user_message',
+        name: 'User'
+      })
+      .send();
+    await myAssistant(initialUserQuery);
 
-  await thread
-    .step({
-      output: { content: initialUserQuery },
-      type: "user_message",
-      name: "User",
-    })
-    .send();
-  await myAssistant(thread, initialUserQuery);
+    const followUpQuery = 'Follow up query';
 
-  const followUpQuery = "Follow up query";
-
-  await thread
-    .step({
-      output: { content: followUpQuery },
-      type: "user_message",
-      name: "User",
-    })
-    .send();
-  await myAssistant(thread, followUpQuery);
+    await literalClient
+      .step({
+        output: { content: followUpQuery },
+        type: 'user_message',
+        name: 'User'
+      })
+      .send();
+    await myAssistant(followUpQuery);
+  });
 }
-
-main()
-  .then(() => process.exit(0))
-  .catch((error) => console.error(error));
 ```
 </CodeGroup>
 
@@ -172,15 +169,6 @@ You can add [Tags](/concepts/observability/tags) to the Generations in Steps cre
 
 <CodeGroup>
 ```python Python
-import os
-from openai import OpenAI
-from literalai import LiteralClient
-
-openai_client = OpenAI()
-
-literal_client = LiteralClient()
-literal_client.instrument_openai()
-
 completion = openai_client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[
@@ -192,27 +180,9 @@ completion = openai_client.chat.completions.create(
 ```
 
 ```typescript TypeScript
-import { LiteralClient } from '@literalai/client';
-import OpenAI from 'openai';
-
-const literalClient = new LiteralClient();
-
-const openai = new OpenAI();
-
-const thread = await literalClient.thread({ /* ... */ }).upsert();
-
-const run = thread.step({ /* ... */ });
-
-const completion = await openai.chat.completions.create({
-  model: "gpt-3.5-turbo",
-  messages: [
-    // ...
-  ],
-});
-
 await literalClient.instrumentation.openai(completion, run, {
-  // Add tags
-  tags: ["tag1", "tag2"],
+  tags: ['tag1', 'tag2']
 });
+
 ```
 </CodeGroup>

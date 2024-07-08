@@ -69,40 +69,24 @@ client.flush_and_stop()
 
 ```typescript TypeScript
 import { LiteralClient, Step, Thread } from "@literalai/client";
-
-const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 // Run example
-async function myRun(thread: Thread) {
-  const run = thread.step({
-    name: "My Run",
-    type: "run",
-    input: { content: "My run Input" },
-  });
-
-  // Implement your custom logic here
-  const response = { content: "Success" };
-
-  run.output = response;
-  await run.send();
-
-  return response;
+async function myRun() {
+  return literalClient
+    .step({
+      type: 'run',
+      name: 'My Run',
+      input: { content: 'My run Input' }
+    })
+    .wrap(() => {
+      return { content: 'Success' };
+    });
 }
 
 async function main() {
-  const thread = literalClient.thread();
-  // Message example
-  await thread
-    .step({
-      output: { content: "Hello World" },
-      type: "assistant_message",
-      name: "My Assistant",
-    })
-    .send();
-
-  await myRun(thread);
+  await literalClient.thread({ name: 'My Thread' }).wrap(() => myRun());
 }
-
 ```
 
 </CodeGroup>
@@ -152,26 +136,18 @@ import { LiteralClient } from "@literalai/client";
 const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 // The Assistant could have intermediary steps
-async function myFunction(question:string) {
-  const run = literalClient.run({
-    name: "My Assistant Run",
-    input: { content: question },
-    metadata: { region: "europe" },
-  });
-
-  // Implement your assistant logic here
-  await new Promise((r) => setTimeout(r, 1000));
-  const response = { content: "My assistant response" };
-
-  run.output = response;
-  await run.send();
-
-  return response;
+async function myRun() {
+  return literalClient
+    .step({
+      type: 'run',
+      name: 'My Run',
+      input: { content: 'My run Input' },
+      metadata: { region: "europe" },
+    })
+    .wrap(() => {
+      return { content: 'Success' };
+    });
 }
-
-myFunction("hello")
-  .then(() => process.exit(0))
-  .catch((error) => console.error(error));
 ```
 
 </CodeGroup>

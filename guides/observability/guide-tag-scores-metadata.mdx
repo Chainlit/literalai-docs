@@ -59,36 +59,18 @@ import { LiteralClient, Thread } from "@literalai/client";
 const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 async function main() {
-
-  const thread = await literalClient
-    .thread({ name: "Thread Example" })
-    .upsert();
-
-  // Add user query step to the thread, with metadata
-  const userQuery = "Hello, can I ask you a question?";
-  await thread
-    .step({
-      type: "user_message",
-      name: "User",
-      output: { content: userQuery },
-      metadata: { location: "France" },
-    })
-    .send();
-
-  // Send assistant message to the thread, without metadata
-  const assistantResponse = "Yes, how can I help you?";
-  await thread
-    .step({
-      type: "assistant_message",
-      name: "Assistant",
-      output: assistantResponse,
-    })
-    .send();
+  await literalClient.thread({ name: 'Thread Example' }).wrap(async () => {
+    const userQuery = 'Hello, can I ask you a question?';
+    await literalClient
+      .step({
+        type: 'user_message',
+        name: 'User',
+        output: { content: userQuery },
+        metadata: { location: 'France' }
+      })
+      .send();
+  });
 }
-
-main()
-  .then(() => process.exit(0))
-  .catch((error) => console.error(error));
 ```
 
 </CodeGroup>
@@ -141,7 +123,8 @@ const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 const thread = await literalClient.api.upsertThread({ 
   threadId: "e39b9a4c-ec8f-4ddb-8c0d-acbd2274d476", // thread uuid
-  tags: ["example"]}); // add tags here
+  tags: ["example"]}
+); // add tags here
 ```
 
 </CodeGroup>
