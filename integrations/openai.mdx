@@ -108,12 +108,12 @@ async function myAssistant(initialUserQuery: string) {
       name: 'My Assistant',
       input: { content: initialUserQuery }
     })
-    .wrap(async (run) => {
+    .wrap(async () => {
       const completion = await openai.chat.completions.create({
         model: 'gpt-4',
         messages: [{ role: 'user', content: initialUserQuery }]
       });
-      await literalClient.instrumentation.openai(completion, run);
+      await literalClient.instrumentation.openai(completion, literalClient.getCurrentStep());
 
       const output = completion.choices[0].message;
 
