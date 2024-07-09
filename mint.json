@@ -235,8 +235,9 @@
     "linkedin": "https://www.linkedin.com/company/chainlit"
   },
   "analytics": {
-    "gtm": {
-      "tagId": "GTM-MTHNP8VZ"
+    "posthog": {
+      "apiKey": "phc_B5OPGyB2PSuzWeqrrOmUIuIl7tQcroYE8jJDc56ES6Q",
+      "apiHost": "https://eu.i.posthog.com"
     }
   }
 }
