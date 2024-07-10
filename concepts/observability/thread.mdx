@@ -99,7 +99,7 @@ async function main() {
     .thread({ name: 'Thread Example', participantId: participantId })
     .wrap(async () => {
       // You can access the current thread with `literalClient.getCurrentThread()`
-      console.log(literalClient.getCurrentThread()?.id);
+      console.log(literalClient.getCurrentThread().id);
 
       await literalClient
         .step({

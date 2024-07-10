@@ -10,7 +10,7 @@ Wrappers will automatically handle the thread and step IDs for you, and will als
 * The output from the wrapped function is logged as the output of the step
 * The updated step is sent to the Literal AI API
 
-<Note>If your environment doesn't support AsyncLocalStorage, or if you don't like the callback style, you can always revert to the [wrapper-less syntax](typescript-client/syntax/without-wrappers.mdx). Please note that this syntax requires you to manually manage thread and step IDs, and also to manually send entities to the Literal AI API.</Note>
+<Note>If your environment doesn't support AsyncLocalStorage, or if you don't like the callback style, you can always revert to the [wrapper-less syntax](typescript-client/without-wrappers.mdx). Please note that this syntax requires you to manually manage thread and step IDs, and also to manually send entities to the Literal AI API.</Note>
 
 ## Basic usage
 
@@ -106,6 +106,10 @@ There are two ways to access the context object:
 * It is provided as an argument to the wrapper function
 * It is available as a property of the client object : `client.getCurrentThread()` and `client.getCurrentStep()`
 
+<Warning>
+  The `getCurrentThread` and `getCurrentStep` methods are type-safe and they will throw an error if called outside of a wrapped context.
+</Warning>
+
 ```typescript
 // Using the argument
 client.step({ name: 'Completion', type: 'llm' }).wrap(async (step) => {
@@ -116,7 +120,7 @@ client.step({ name: 'Completion', type: 'llm' }).wrap(async (step) => {
 
 // Using the client helper
 client.step({ name: 'Retrieve', type: 'retrieval' }).wrap(async () => {
-  client.getCurrentThread()!.name = 'Updated retrieval';
+  client.getCurrentThread().name = 'Updated retrieval';
 
   return [
     { score: 0.8, text: 'France is a country in Europe' },

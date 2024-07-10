@@ -132,13 +132,10 @@
     },
     {
       "group": "Get Started",
-      "pages": ["typescript-client/introduction"]
-    },
-    {
-      "group": "Syntax",
       "pages": [
-        "typescript-client/syntax/with-wrappers",
-        "typescript-client/syntax/without-wrappers"
+        "typescript-client/introduction",
+        "typescript-client/with-wrappers",
+        "typescript-client/without-wrappers"
       ]
     },
     {

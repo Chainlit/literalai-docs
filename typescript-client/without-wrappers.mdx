@@ -19,12 +19,9 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 async function main(file: ArrayBuffer) {
   const thread = await client.thread({ name: 'Test Thread' }).upsert();
 
-  // You can also create a step directly attached
-  // to the thread using `thread.step(...)`
-  const run = await client
-    .step({
+  const run = await thread
+    .run({
       threadId: thread.id,
-      type: "run",
       name: "Tool Run",
     })
     .send();
@@ -39,15 +36,6 @@ async function main(file: ArrayBuffer) {
 
   const end = new Date();
 
-  const input: IGenerationMessage = {
-    role: "user",
-    content: "Audio file",
-  };
-  const output: IGenerationMessage = {
-    role: "assistant",
-    content: transcribedText,
-  };
-
   await run
   .step({
     type: "llm",
@@ -56,14 +44,10 @@ async function main(file: ArrayBuffer) {
     output,
     startTime: start.toISOString(),
     endTime: end.toISOString(),
-    generation: {
-      type: "CHAT",
-      provider: "openai",
-      model: "whisper-1",
-      messages: [input],
-      messageCompletion: output,
-    },
   })
   .send();
+
+  run.endTime = end.toISOString();
+  await run.send();
 }
 ```
