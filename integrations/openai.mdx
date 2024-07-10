@@ -104,9 +104,10 @@ const openai = new OpenAI();
 
 async function myAssistant(initialUserQuery: string) {
   return literalClient
-    .run({
-      name: 'My Assistant',
-      input: { content: initialUserQuery }
+    .step({
+      output: completion.choices[0].message,
+      type: 'assistant_message',
+      name: 'Assistant response'
     })
     .wrap(async () => {
       const completion = await openai.chat.completions.create({
@@ -115,18 +116,8 @@ async function myAssistant(initialUserQuery: string) {
       });
       await literalClient.instrumentation.openai(completion, literalClient.getCurrentStep());
 
-      const output = completion.choices[0].message;
-
-      await literalClient
-        .step({
-          output: completion.choices[0].message,
-          type: 'assistant_message',
-          name: 'My Assistant'
-        })
-        .send();
-
-      return output;
-    });
+      return completion.choices[0].message;
+    })
 }
 
 async function main() {

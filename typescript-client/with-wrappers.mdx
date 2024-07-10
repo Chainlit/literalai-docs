@@ -24,7 +24,8 @@ await client
   .wrap(async () => {
     // You can access the current thread and step using the client
     const thread = client.getCurrentThread();
-    const step = client.getCurrentStep(); // this will return null as we are not currently inside a step
+    // Because we are not currently in a step, the next line would throw if uncommented
+    // const step = client.getCurrentStep();
 
     // This step will be created with the thread as its parent
     await client.step({ name: 'Test Wrappers Step', type: "assistant_message" }).send();
