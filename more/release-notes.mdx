@@ -13,6 +13,27 @@ Literal AI cloud is currently compatible with:
 * [TypeScript SDK](/typescript-client) version `0.0.503` and above.
 </Note>
 
+# 0.0.612-beta (July 10th, 2024)
+
+## New features
+
+* When scoring a step through the platform, we now track the user who created the score
+* We are preparing the platform for the upcoming release of the Annotation Queue
+* A new chart on the dashboard shows the number of runs per day per run name
+* Upon signup, a new account will now contain a default project populated with Threads, Steps, Datasets etc...
+
+### Improvements
+
+* We are rolling out a new Role system. Possible roles are now as follows : Admin, AI Engineer, Domain expert
+* We have revamped the creation, edition and deletion of Rules for Online Evaluation
+* We have improved screen space management in tables, notably when displaying code previews
+* Some design tweaks on the dashboard and dark mode
+
+### Fixes
+* Fixed a bug where the generation was not correctly displayed in a run
+* Fixed a bug where some logos would not display correctly in dark mode
+* Fixed a bug where the scores API could break if no generationId was provided
+
 
 # 0.0.611-beta (July 1st, 2024)
 
