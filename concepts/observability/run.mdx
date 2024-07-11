@@ -15,7 +15,10 @@ The example in the following image shows a Run called `Query` of a RAG chatbot a
   />
 </Frame>
 
-In the following code example you can see that you can tag steps with the type `"Run"`, by writing `@literal_client.step(type="run")` in Python or `@literal_client.step(type="run")` in TypeScript:
+In the following code example you can see that you can tag steps with the type `"Run"`, by writing :
+
+* `@literal_client.step(type="run")` in Python 
+* `literal_client.run()` in TypeScript (this is a helper function that creates a step with the type `run`, equivalent to `literal_client.step({ type: "run" })`).
 
 <CodeGroup>
 
@@ -42,31 +45,24 @@ client.flush_and_stop()
 ```typescript TypeScript
 import { LiteralClient } from "@literalai/client";
 
-const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 // Run example
 async function myRun() {
-  const run = literalClient.step({
-    name: "My Run",
-    type: "run",
-    input: { content: "My run Input" },
-  });
-
-  // Implement your custom logic here
-  const response = { content: "Success" };
-
-  run.output = response;
-  await run.send();
-  return response;
+  return literalClient
+    .run({
+      name: 'My Run',
+      input: { content: 'My run Input' }
+    })
+    .wrap(() => {
+      // Implement your custom logic here
+      return { content: 'Success' };
+    });
 }
 
 async function main() {
   await myRun();
 }
-
-main().catch((error) => {
-  console.error("Error running main function:", error);
-});
 ```
 
 </CodeGroup>

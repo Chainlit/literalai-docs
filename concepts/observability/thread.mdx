@@ -41,7 +41,7 @@ main()
 
 A more flexible option is to use the Python context manager `with` statement. More information about ways of logging Threads in Python applications, visit [this page](/python-client/abstractions/thread).
 
-In TypeScript, you can initiate a Thread using `literalClient.thread().upsert()`.
+In TypeScript, you can wrap your applicative code in a Thread using `literalClient.thread().wrap(...)`.
 
 <CodeGroup>
 ```python Python
@@ -75,77 +75,71 @@ client.flush_and_stop()
 
 ```typescript TypeScript
 import { LiteralClient, Thread } from "@literalai/client";
+const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
-const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
-
-// The Assistant could have intermediary steps
-async function myAssistant(thread: Thread, query: string) {
-  const run = thread.step({
-    type: "run",
-    name: "My Assistant Run",
-    input: { content: query },
-  });
-
-  // Implement your assistant logic here
-  await new Promise((r) => setTimeout(r, 1000));
-  const response = { content: "My assistant response" };
-
-  run.output = response;
-  await run.send();
-
-  return response;
+// The Assistant code is wrapped in a run step
+// It will be attached to the thread in the context of the `wrap` function
+async function myAssistant(query: string) {
+  return literalClient
+    .run({
+      name: 'My Assistant Run',
+      input: { content: query }
+    })
+    .wrap(async () => {
+      // Implement your assistant logic here
+      await new Promise((r) => setTimeout(r, 1000));
+      return { content: 'My assistant response' };
+    });
 }
 
 async function main() {
-  const participantId = await literalClient.api.getOrCreateUser("John Doe");
+  const participantId = await literalClient.api.getOrCreateUser('John Doe');
 
-  // You can also continue a thread by passing the thread id
-  const thread = await literalClient
-    .thread({ name: "Thread Example", participantId: participantId })
-    .upsert();
+  await literalClient
+    .thread({ name: 'Thread Example', participantId: participantId })
+    .wrap(async () => {
+      // You can access the current thread with `literalClient.getCurrentThread()`
+      console.log(literalClient.getCurrentThread().id);
 
-  console.log(thread.id);
+      await literalClient
+        .step({
+          type: 'user_message',
+          name: 'User',
+          output: { content: userQuery }
+        })
+        .send();
 
-  const userQuery = "Hello World";
-  await thread
-    .step({
-      type: "user_message",
-      name: "User",
-      output: { content: userQuery },
-    })
-    .send();
+      const assistantResponse = await myAssistant(userQuery);
 
-  const assistantResponse = await myAssistant(thread, userQuery);
-  await thread
-    .step({
-      type: "assistant_message",
-      name: "Assistant",
-      output: assistantResponse,
-    })
-    .send();
+      await literalClient
+        .step({
+          type: 'assistant_message',
+          name: 'Assistant',
+          output: assistantResponse
+        })
+        .send();
 
-  const followUpQuery = "Follow up!";
-  await thread
-    .step({
-      type: "user_message",
-      name: "User",
-      output: { content: followUpQuery },
-    })
-    .send();
+      const followUpQuery = 'Follow up!';
 
-  const followUpResponse = await myAssistant(thread, followUpQuery);
-  await thread
-    .step({
-      type: "assistant_message",
-      name: "Assistant",
-      output: followUpResponse,
-    })
-    .send();
+      await literalClient
+        .step({
+          type: 'user_message',
+          name: 'User',
+          output: { content: followUpQuery }
+        })
+        .send();
+
+      const followUpResponse = await myAssistant(followUpQuery);
+
+      await literalClient
+        .step({
+          type: 'assistant_message',
+          name: 'Assistant',
+          output: followUpResponse
+        })
+        .send();
+    });
 }
-
-main()
-  .then(() => process.exit(0))
-  .catch((error) => console.error(error));
 ```
 
 </CodeGroup>
@@ -211,8 +205,6 @@ async function main() {
   const threads = await client.api.getThreads({first: 5, filters: [{"operator": "eq", "field": "participantId", "value": userId}]});
   console.log(threads);
 }
-
-main()
 ```
 </CodeGroup>
 

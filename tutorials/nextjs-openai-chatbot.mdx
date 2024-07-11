@@ -98,7 +98,12 @@ export default function Home() {
             <div className="border border-gray-500 p-1">
               {message.role === "user" ? "🧑‍💻" : "🤖"}
             </div>
-            <div>{message.content}</div>
+            {message.role === "user" && (
+              <div className="flex-1">{message.content}</div>
+            )}
+            {message.role !== "user" && (
+              <pre className="flex-1 text-pretty">{message.content}</pre>
+            )}
           </article>
         ))}
       </section>
@@ -155,15 +160,13 @@ As such, this page just pipes your messages directly to ChatGPT. Let us customiz
 
 Instantiate a Literal Client in your API route. By default, it will use the `LITERAL_API_KEY` environment variable.
 
-In all the following code examples, lines that have been modified or added are marked with a `// <-` comment.
-
 ```tsx src/app/api/chat/route.ts
 import { OpenAI } from "openai";
 import { OpenAIStream, StreamingTextResponse } from "ai";
-import { LiteralClient } from "@literalai/client"; // <-
+import { LiteralClient } from "@literalai/client";
 
 const openai = new OpenAI();
-const literalClient = new LiteralClient(); // <-
+const literalClient = new LiteralClient();
 ```
 
 ## **2. Adding a system prompt**
@@ -208,15 +211,15 @@ const { messages } = await req.json();
 
 // Get the prompt from the Literal API
 // It will always be the latest version of the prompt// model and settings.
-const promptName = "Simple Chatbot"; // <-
-const prompt = await literalClient.api.getPrompt(promptName); // <-
-if (!prompt) throw new Error("Prompt not found"); // <-
-const promptMessages = prompt.formatMessages(); // <-
+const promptName = "Simple Chatbot";
+const prompt = await literalClient.api.getPrompt(promptName);
+if (!prompt) throw new Error("Prompt not found");
+const promptMessages = prompt.formatMessages();
 
 const result = await openai.chat.completions.create({
   stream: true,
-  messages: [...promptMessages, ...messages], // <-
-  ...prompt.settings, // <-
+  messages: [...promptMessages, ...messages],
+  ...prompt.settings,
 });
 
 // ...
@@ -241,7 +244,7 @@ const result = await openai.chat.completions.create({
 });
 
 // Register the response with Literal AI so we can track it
-literalClient.instrumentation.openai(result); // <-
+literalClient.instrumentation.openai(result);
 ```
 
 With that simple operation, all the settings and content of OpenAI calls will be logged on Literal AI.
@@ -255,31 +258,36 @@ With that simple operation, all the settings and content of OpenAI calls will be
 
 Storing all your Generations as one-shots is impractical though. Wouldn’t it be more convenient if we could group all the messages from a single conversation into one Thread?
 
-First, we need to create a unique ID for the conversation. We will use `crypto.randomUUID` for this as it will generate an ID that is suitable to use on Literal.
+First, we need to create a unique ID for the conversation, and another one for each subsequent exchange between the user and the LLM. We will use `crypto.randomUUID` for this as it will generate an ID that is suitable to use on Literal.
 
 ```tsx src/app/page.tsx
 "use client";
 
 import { useChat } from "ai/react";
-import { useState } from "react"; // <-
+import { useState } from "react";
 
 export default function Home() {
-  // When creating IDs for use in Literal, always use crypto.randomUUID
-  // or any other UUID library
-  const [threadId] = useState(crypto.randomUUID()); // <-
+  const [threadId] = useState(crypto.randomUUID());
+  const [runId, setRunId] = useState(crypto.randomUUID());
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "api/chat",
-    // Here we attach the thread ID so that it is accessible from our
+    // Here we attach the thread ID so that they are accessible from our
     // API route
-    body: { threadId }, // <-
+    body: { threadId },
+    onFinish: (message) => {
+      // When we receive a response from the LLM, we generate a new run ID
+      setRunId(crypto.randomUUID());
+    },
   });
 
   return ...
 }
 ```
 
-Then retrieve the threadId in the API route:
+Then we use these IDs in our API route to create a new Thread (that will be global to the conversation) and a new Run (that will change with each interaction).
+
+To achieve this we use Literal AI SDK's wrappers system.
 
 ```tsx src/app/api/chat/route.ts
 // ...
@@ -287,72 +295,50 @@ Then retrieve the threadId in the API route:
 export async function POST(req: Request) {
 	// Here we can retrieve any arbitrary data that has been added to the `body`
 	// in `useChat`
-  const { messages: chatMessages, threadId } = await req.json(); // <-
+  const { messages: chatMessages, threadId } = await req.json();
 
-  // Get the prompt from the Literal API
-  // It will always be the latest version of the prompt
-  // model and settings.
-  const promptName = "Simple Chatbot";
-  const prompt = await literalClient.api.getPrompt(promptName);
-  if (!prompt) throw new Error("Prompt not found");
-  const promptMessages = prompt.formatMessages();
+  // ...
 
-  // Create or retrieve the thread
-  const thread = await literalClient // <-
-    .thread({ id: threadId, name: "Simple Chatbot" }) // <-
-    .upsert(); // <-
+  // Wrap the interaction in the thread
+  return literalClient
+    .thread({ id: threadId, name: "Simple Chatbot" })
+    .wrap(async () => {
+      // First save the user's message in the Thread
+      // Because it is inside a wrapper, it will be attached to the thread
+      await literalClient
+        .step({
+          type: "user_message",
+          name: "User",
+          output: { content: chatMessages[chatMessages.length - 1].content },
+        })
+        .send();
 
-  // Save user message in the thread
-  await thread                                                  // <-
-    .step({                                                     // <-
-      type: "user_message",                                     // <-
-      name: "User",                                             // <-
-      output: {                                                 // <-
-        content: chatMessages[chatMessages.length - 1].content, // <-
-        },                                                      // <-
-    })                                                          // <-
-    .send();                                                    // <-
+      // Wrap the AI completion step in a Run
+      return literalClient
+        .run({
+          id: runId,
+          name: "My Assistant Run",
+          input: { content: [...promptMessages, ...chatMessages] },
+        })
+        .wrap(async (run) => {
+          // ...
 
-  const result = await openai.chat.completions.create({
-    stream: true,
-    messages: [...promptMessages, ...chatMessages], // <-
-    ...prompt.settings,
-  });
+          literalClient.instrumentation.openai(result, run);
 
-  // Create a step for the ai run
-  const run = thread.step({
-    type: "run",
-    name: "My Assistant Run",
-    input: { content: [...promptMessages, ...chatMessages] },
-  });
+          const stream = OpenAIStream(result, {
+            onCompletion: async (completion) => {
+              // Once we have the full response from the LLM we update the run's output
+              // This has to be done manually because this callback will be executed
+              // outside of the wrapper's execution context
+              run.output = { content: completion };
+              await run.send();
+            },
+          });
 
-  // Register the response with Literal AI so we can track it
-  // Please not that we have added the run as a parameter, so that
-  // every subsequent generation is nested inside this run
-  literalClient.instrumentation.openai(result, run);
-
-  // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(result, {                     // <-
-    // Here we send the chatbot's response to Literal
-    // as soon as it is complete
-    onCompletion: async (completion) => {                   // <-
-      // Update the run Step with the chatbot's response
-      run.output = { content: completion };                 // <-
-      await run.send();                                     // <-
-
-      // Save assistant message
-      await thread                                          // <-
-        .step({                                             // <-
-          type: "assistant_message",                        // <-
-          name: "Bot",                                      // <-
-          output: { content: completion },                  // <-
-        })                                                  // <-
-        .send();                                            // <-
-    },
-  });
-
-  // Respond with the stream
-  return new StreamingTextResponse(stream);
+          // Respond with the stream to allow streaming display on the frontend
+          return new StreamingTextResponse(stream);
+        });
+    });
 }
 
 ```
@@ -408,97 +394,46 @@ To accomplish this, we will first need to create a Score Template on Literal AI.
   />
 </Frame>
 
-Now let us think about the plumbing we will need to assemble this feature: to be able to vote on a chatbot’s message, we will need to know its Step ID on Literal AI. Fortunately, `ai` has a helper that allows us to inject arbitrary data to the `useChat` response, without losing its streaming behaviour.
+Now let us think about the plumbing we will need to assemble this feature: to be able to vote on a chatbot’s message, we will need to know its Step ID on Literal AI. Right now we have two sets of IDs :
 
-```tsx src/app/api/chat/route.ts
+* the `runId` that we generate before each message is sent
+* the `message.id` that Vercel AI SDK generates after each message is sent
 
-import { JSONValue, OpenAIStream, StreamData, StreamingTextResponse } from "ai"; // <-
-
-export async function POST(req: Request) {
-	// Here we can retrieve any arbitrary data that has been added to the `body`
-	// in `useChat`
-  const { messages: chatMessages, threadId } = await req.json();
-  const data = new StreamData(); // <-
-
-  // ...
-
-  // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(result, {
-    // Here we send the chatbot's response to Literal
-    // as soon as it is complete
-    onCompletion: async (completion) => {
-      // ...
-    },
-    // When the message is completed, we append the stepId from
-    // the run into the streaming response
-    onFinal: async (final) => {                     // <-
-      data.append({ stepId: run.id } as JSONValue); // <-
-      data.close();                                 // <-
-    },                                              // <-
-  });
-
-  // Respond with the stream
-  return new StreamingTextResponse(stream, {}, data); // <-
-}
-```
-
-On the frontend side, we will now retrieve this stepId, and map it to the corresponding message’s ID:
+So we will need to do some mapping between the two. We also want to keep track of the messages that have already been evaluated by the user.
 
 ```tsx src/app/page.tsx
 "use client";
 
-import { JSONValue } from "ai";
 import { useChat } from "ai/react";
-import { useEffect, useState } from "react";
-
-// This method is used to narrow down the type of the dataFrame object
-// from JSONValue to a more specific type that we can work with.
-const isValidDataFrame = (                         // <-
-  dataFrame: JSONValue                             // <-
-): dataFrame is { stepId: string } => {            // <-
-  if (!dataFrame) return false;                    // <-
-  if (typeof dataFrame !== "object") return false; // <-
-  if (Array.isArray(dataFrame)) return false;      // <-
-
-  return typeof dataFrame.stepId === "string";     // <-
-};                                                 // <-
+import { useState } from "react";   
 
 export default function Home() {
-  // When creating IDs for use in Literal, use crypto.randomUUID
   const [threadId] = useState(crypto.randomUUID());
-  // We will map Message IDs to Step IDs in the following format:
-  // { [messageId]: stepId }
-  const [messageIdMapping, setMessageIdMapping] = useState<{ // <-
-    [messageId: string]: string;                             // <-
-  }>({});                                                    // <-
+  const [runId, setRunId] = useState(crypto.randomUUID());
 
-  // useChat is a very helpful function that will handle the streaming
-  // communication with the server and hold all necessary states.
-  const { messages, data, input, handleInputChange, handleSubmit } = useChat({ // <-
+  // Mapping between the message ID (generated by Vercel AI SDK) and the run ID (managed by us)
+  const [messageIdMapping, setMessageIdMapping] = useState<{
+    [messageId: string]: string;
+  }>({});
+
+  // IDs of the messages that the user has upvoted
+  const [upvotedMessages, setUpvotedMessages] = useState<string[]>([]);
+
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "api/chat",
-    // Here we attach the thread ID so that it is accessible from our
-    // API route
-    body: { threadId },
+    body: { threadId, runId },
+    onFinish: (message) => {
+      // When we receive a reply, we will store the mapping between
+      // its message ID and the run ID sent to Literal AI.
+      setMessageIdMapping((prev) => ({
+        ...prev,
+        [message.id]: runId,
+      }));
+
+      // When we receive a response from the LLM, we generate a new run ID
+      setRunId(crypto.randomUUID());
+    },
   });
-  
-  // Whenever we receive data from useChat, we will try to map it to a message ID
-  // in the messages history. This way we can associate the message with 
-  // the corresponding step ID.
-  useEffect(() => {                                      // <-
-    const latestMessage = messages[messages.length - 1]; // <-
-    const dataFrame = data?.[0];                         // <-
-
-    if (!latestMessage || !dataFrame) return;            // <-
-
-    if (isValidDataFrame(dataFrame)) {                   // <-
-      // Store the mapping between the message ID returned by `useChat` and 
-      // the step ID returned by Literal AI
-      setMessageIdMapping((prev) => ({                   // <-
-        ...prev,                                         // <-
-        [latestMessage.id]: dataFrame.stepId,            // <-
-      }));                                               // <-
-    }                                                    // <-
-  }, [data, messages]);                                  // <-
 	
 	// ...
 }
@@ -524,14 +459,18 @@ export default function Home() {
               <div className="border border-gray-500 p-1">
                 {message.role === "user" ? "🧑‍💻" : "🤖"}
               </div>
-              <div className="flex-1">{message.content}</div> { /* <- */ }
-              { /* new block */}
+              {message.role === "user" && (
+                <div className="flex-1">{message.content}</div>
+              )}
+              {message.role !== "user" && (
+                <pre className="flex-1 text-pretty">{message.content}</pre>
+              )}
+              { /* Upvote button */}
               {!!stepId && (
                 <button onClick={() => console.log(message.id, stepId)}>
                   👍
                 </button>
               )}
-              { /* end new block */}
             </article>
           );
         })}
@@ -560,10 +499,23 @@ import { LiteralClient } from "@literalai/client";
 const literalClient = new LiteralClient();
 
 export async function POST(req: Request) {
-  const { stepId, score } = await req.json();
+  const { runId, score } = await req.json();
 
+  // Right now we have the ID for the Run however what we're really scoring is the Step
+  // We fetch it simply as it should be the only child Step of the Run
+  const res = await literalClient.api.getSteps({
+    filters: [{ field: "parentId", operator: "eq", value: runId }],
+  });
+
+  const step = res.data[0];
+
+  if (!step) {
+    throw new Error("No step was found for the given runId");
+  }
+
+  // Send a score for the step
   await literalClient.api.createScore({
-    stepId,
+    stepId: step.id,
     name: "simple-chatbot-score",
     type: "HUMAN",
     value: score,
@@ -571,6 +523,7 @@ export async function POST(req: Request) {
 
   return Response.json({ ok: true });
 }
+
 
 ```
 
@@ -580,55 +533,58 @@ Now we just need to plug the 👍 button to our new API route:
 // ...
 
 export default function Home() {
-  // When creating IDs for use in Literal, use crypto.randomUUID
-  const [threadId] = useState(crypto.randomUUID());
-  const [messageIdMapping, setMessageIdMapping] = useState<{
-    [messageId: string]: string;
-  }>({});
-  // This state will store the IDs of the messages that the user has upvoted.
-  const [upvotedMessages, setUpvotedMessages] = useState<string[]>([]); // <-
-  
   // ...
-
-  const handleScore = ({                                       // <-
-    messageId,                                                 // <-
-    stepId,                                                    // <-
-    upvote,                                                    // <-
-  }: {                                                         // <-
-    messageId: string;                                         // <-
-    stepId: string;                                            // <-
-    upvote: boolean;                                           // <-
-  }) => {                                                      // <-
-    fetch("api/score", {                                       // <-
-      method: "POST",                                          // <-
-      headers: { "Content-Type": "application/json" },         // <-
-      body: JSON.stringify({ stepId, score: upvote ? 1 : 0 }), // <-
-    }).then(() => {                                            // <-
-      if (upvote) {                                            // <-
-        // Add the message ID to the list of upvoted messages
-        setUpvotedMessages([...upvotedMessages, messageId]);   // <-
-      }                                                        // <-
-    });                                                        // <-
-  };                                                           // <-
+  const handleScore = ({
+    messageId,
+    upvotedRunId,
+    upvote,
+  }: {
+    messageId: string;
+    upvotedRunId: string;
+    upvote: boolean;
+  }) => {
+    fetch("api/score", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ runId: upvotedRunId, score: upvote ? 1 : 0 }),
+    }).then(() => {
+      if (upvote) {
+        setUpvotedMessages([...upvotedMessages, messageId]);
+      }
+    });
+  };
   
   return (
-	  // ...
-    {/* To avoid double scoring a chatbot's response, we will add
-      a visual cue to already upvoted messages, and disable their
-      scoring button */}
-    {!!stepId && (
-	    <button
-	      onClick={() =>
-	        handleScore({ messageId: message.id, stepId, upvote: true }) // <-
-	      }
-	      disabled={upvotedMessages.includes(message.id)} // <-
-	      className={
-	        upvotedMessages.includes(message.id) ? "" : "grayscale" // <-
-	      }
-	    >
-	      👍
-	    </button>
-	  )}
+    <main className="min-h-screen">
+      <section className="mx-auto w-2/3 mt-10 mb-20">
+        {messages.map((message) => {
+          const mappedRunId = messageIdMapping[message.id];
+          const isAlreadyUpvoted = upvotedMessages.includes(message.id);
+
+          return (
+            <article key={message.id} className="flex gap-3 my-3">
+              // ...
+              {!!mappedRunId && (
+                <button
+                  onClick={() =>
+                    handleScore({
+                      messageId: message.id,
+                      upvotedRunId: mappedRunId,
+                      upvote: true,
+                    })
+                  }
+                  disabled={isAlreadyUpvoted}
+                  className={isAlreadyUpvoted ? "" : "grayscale"}
+                >
+                  👍
+                </button>
+              )}
+            </article>
+          );
+        })}
+      </section>
+      /* ... */
+    </main>
   )
 }
 ```

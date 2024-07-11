@@ -65,14 +65,10 @@ const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 const threadId = "<THREAD_ID>";
 const tags =  ["outlier", "to review"];
 async function main() {
-    const thread = await literalClient.api.upsertThread(
-        threadId,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        tags
-    );
+  const thread = await literalClient.api.upsertThread({
+    threadId,
+    tags
+  });
 }
 main();
 ```

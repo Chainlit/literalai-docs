@@ -1,0 +1,154 @@
+---
+title: With wrappers
+---
+
+The simplest way to add Literal AI to your codebase is to use the provided wrappers. Wrappers are based on the [AsyncLocalStorage API](https://nodejs.org/api/async_context.html#class-asynclocalstorage) and are designed to play nice with async code.
+
+Wrappers will automatically handle the thread and step IDs for you, and will also automatically send entities to the Literal AI API upon exiting. When a step wrapper is exited, the following actions will be taken :
+
+* Start and end time are logged
+* The output from the wrapped function is logged as the output of the step
+* The updated step is sent to the Literal AI API
+
+<Note>If your environment doesn't support AsyncLocalStorage, or if you don't like the callback style, you can always revert to the [wrapper-less syntax](typescript-client/without-wrappers.mdx). Please note that this syntax requires you to manually manage thread and step IDs, and also to manually send entities to the Literal AI API.</Note>
+
+## Basic usage
+
+```typescript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient();
+
+await client
+  .thread({ name: 'Test Wrappers Thread' })
+  .wrap(async () => {
+    // You can access the current thread and step using the client
+    const thread = client.getCurrentThread();
+    // Because we are not currently in a step, the next line would throw if uncommented
+    // const step = client.getCurrentStep();
+
+    // This step will be created with the thread as its parent
+    await client.step({ name: 'Test Wrappers Step', type: "assistant_message" }).send();
+  });
+```
+
+## Advanced usage
+
+### Nesting wrappers
+
+One advantage of using wrappers is that the structure of your code will closely represent the structure of the conversation as it is logged on Literal AI. For example consider the following code :
+
+```typescript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient();
+
+// Wrapped functions can be defined anywhere
+// When they run, they will inherit the current thread and step from the context
+const retrieve = async (_query: string) =>
+  client.step({ name: 'Retrieve', type: 'retrieval' }).wrap(async () => {
+    // Fetch data from the vector database ...
+
+    return [
+      { score: 0.8, text: 'France is a country in Europe' },
+      { score: 0.7, text: 'Paris is the capital of France' }
+    ]
+  });
+
+const completion = async (_query: string, _augmentations: string[]) =>
+  client.step({ name: 'Completion', type: 'llm' }).wrap(async () => {
+    // Fetch completions from the language model ...
+    return { content: 'Paris is a city in Europe' };
+  });
+
+  // The output of wrapped functions will always bubble up the wrapper chain
+  const result = await client
+    .thread({ name: 'Test Wrappers Thread' })
+    .wrap(async () => {
+      return client.run({ name: 'Test Wrappers Run' }).wrap(async () => {
+        const results = await retrieve(query);
+        const augmentations = results.map((result) => result.text);
+        const completionText = await completion(query, augmentations);
+        return completionText.content;
+      });
+    });
+
+  return result;
+```
+
+This will result in the following structure on Literal AI :
+
+<Frame caption="Nested threads and steps">
+  <img
+    src="/images/syntax/wrappers-log.png"
+    alt="Step with score"
+  />
+</Frame>
+
+### Wrapping existing threads or steps
+
+When you fetch a thread or step from the client, you can wrap it with the `wrap` method. This will allow you to add additional steps or threads to the existing one.
+
+```typescript
+const thread = await client.api.getThread(threadId);
+
+await thread.wrap(async () => {
+  await client.step({ name: 'New step', type: 'assistant_message' }).send();
+});
+```
+
+## Updating steps and threads
+
+### Using the context
+
+You can also update the current step or thread using the context object. The context object is available in the wrapped function and it will be sent to Literal AI upon exiting the wrapped function.
+
+There are two ways to access the context object:
+* It is provided as an argument to the wrapper function
+* It is available as a property of the client object : `client.getCurrentThread()` and `client.getCurrentStep()`
+
+<Warning>
+  The `getCurrentThread` and `getCurrentStep` methods are type-safe and they will throw an error if called outside of a wrapped context.
+</Warning>
+
+```typescript
+// Using the argument
+client.step({ name: 'Completion', type: 'llm' }).wrap(async (step) => {
+    step.name = "Updated completion";
+
+    return { content: 'Paris is a city in Europe' };
+  });
+
+// Using the client helper
+client.step({ name: 'Retrieve', type: 'retrieval' }).wrap(async () => {
+  client.getCurrentThread().name = 'Updated retrieval';
+
+  return [
+    { score: 0.8, text: 'France is a country in Europe' },
+    { score: 0.7, text: 'Paris is the capital of France' }
+  ]
+});
+```
+
+### Using the wrapper's callback
+
+The wrappers take a second argument that allows you to update the current step or thread upon exiting the wrapped function. The second argument can either be a static object, or a function that takes the wrapper's output as an argument and returns a valid step or thread object.
+
+```typescript
+// Update the current step with a static object
+client.step({ name: 'Completion', type: 'llm' }).wrap(async () => {
+  return { content: 'Paris is a city in Europe' };
+}, { name: "Updated completion" }); 
+
+// Update the current step with a callback
+client.step({ name: 'Retrieve', type: 'retrieval' }).wrap(async () => {
+  return [
+    { score: 0.8, text: 'France is a country in Europe' },
+    { score: 0.7, text: 'Paris is the capital of France' }
+  ]
+}, (output) => {
+  return {
+    metadata: { topScore: output[0].score, topK: output.length}
+  }
+});
+```
