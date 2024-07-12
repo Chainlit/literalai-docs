@@ -5,7 +5,9 @@ title: "OpenAI"
 
 You can use the Literal AI platform to instrument OpenAI API calls. This allows you to track and monitor the usage of the OpenAI API in your application and replay them in the Prompt Playground.
 
-<Check>The OpenAI instrumentation supports sync, async, streamed and regular responses!</Check>
+<Check>
+The OpenAI instrumentation supports **completions**, **chat completions**, and **image generation**. It handles both streaming and synchronous responses.
+</Check>
 
 ## Instrumenting OpenAI API calls
 
@@ -28,21 +30,20 @@ literal_client.instrument_openai()
 import { LiteralClient } from '@literalai/client';
 import OpenAI from 'openai';
 
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+const literalClient = new LiteralClient();
 
-const openai = new OpenAI({
-  apiKey: process.env['OPENAI_API_KEY'] // This is the default and can be omitted
-});
+const openai = new OpenAI();
+
+// Instrument the OpenAI client
+client.instrumentation.openai();
 
 async function main() {
-    const stream = await openai.chat.completions.create({
-        model: 'gpt-4',
-        stream: true,
-        messages: [{ role: 'user', content: 'Say this is a test' }]
-    });
-
-    // Instrument the openai response
-    await literalClient.instrumentation.openai(stream);
+  // This will be automagically logged by Literal AI
+  const stream = await openai.chat.completions.create({
+    model: 'gpt-4',
+    stream: true,
+    messages: [{ role: 'user', content: 'Say this is a test' }]
+  });
 };
 main();
 ```
@@ -102,6 +103,8 @@ const literalClient = new LiteralClient();
 
 const openai = new OpenAI();
 
+client.instrumentation.openai();
+
 async function myAssistant(initialUserQuery: string) {
   return literalClient
     .step({
@@ -110,11 +113,11 @@ async function myAssistant(initialUserQuery: string) {
       name: 'Assistant response'
     })
     .wrap(async () => {
+      // Because this call is wrapped, it will be logged in the right step
       const completion = await openai.chat.completions.create({
         model: 'gpt-4',
         messages: [{ role: 'user', content: initialUserQuery }]
       });
-      await literalClient.instrumentation.openai(completion, literalClient.getCurrentStep());
 
       return completion.choices[0].message;
     })
@@ -156,7 +159,7 @@ Which will produce the following logs in the `Threads` page:
 
 ## Adding Tags
 
-You can add [Tags](/concepts/observability/tags) to the Generations in Steps created via the instrumentation.
+You can add [Tags](/concepts/observability/tags) to the Generations and Steps created via the instrumentation.
 
 <CodeGroup>
 ```python Python
@@ -171,7 +174,7 @@ completion = openai_client.chat.completions.create(
 ```
 
 ```typescript TypeScript
-await literalClient.instrumentation.openai(completion, run, {
+await literalClient.instrumentation.openai({
   tags: ['tag1', 'tag2']
 });
 

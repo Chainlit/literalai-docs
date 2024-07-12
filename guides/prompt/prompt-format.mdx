@@ -126,11 +126,10 @@ loop.run_until_complete(main())
 import { LiteralClient } from '@literalai/client';
 import OpenAI from 'openai';
 
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalClient = new LiteralClient();
+const openai = new OpenAI();
 
-const openai = new OpenAI({
-  apiKey: process.env['OPENAI_API_KEY'],
-});
+literalClient.instrumentation.openai();
 
 async function main() {
   const prompt = await literalClient.api.getPrompt('RAG prompt');
@@ -148,7 +147,7 @@ async function main() {
     stream: true
   });
 
-  await literalClient.instrumentation.openai(result);
+  await 
 }
 
 main();
