@@ -10,6 +10,14 @@ Revamp of the OpenAI instrumentation : instead of manually instrumenting each ca
 
 This new implementation is context-aware and will log the OpenAI calls in the right steps and threads if you use the new wrapper syntax.
 
+<Warning>
+  If you were using the `instrumentation.openai` method in your code and upgrade the Literal AI SDK to `0.0.510`, you will get the following error at compile time : `error TS2554: Expected 0-1 arguments, but got 2.`.
+
+  To fix this, you should move the `instrumentation.openai` call to the top of your code and remove the arguments apart from the optional `{ tags: []}` argument.
+
+  You can find code examples in the [OpenAI Instrumentation](/integrations/openai) guide.
+</Warning>
+
 # `0.0.509`
 
 ### New Features
