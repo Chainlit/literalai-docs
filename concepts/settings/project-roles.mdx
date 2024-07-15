@@ -22,10 +22,22 @@ Once a project is created, you can invite others to collaborate:
 
 Project administrators hold the responsibility of assigning and managing permissions for all team members. Permissions in Literal AI are packaged as the following set of roles :
 
-**Supported roles:**
+####Supported roles
+
 - **Admin**: Admins have full, unrestricted access to the entire project. They can manage all aspects of the project, including adding and removing team members, modifying project settings, and accessing and altering all project resources. Admins are responsible for the overall governance of the project, ensuring smooth operations and compliance with organizational policies.
 - **AI Engineer**: AI Engineers have specific access tailored to their technical responsibilities. They can manage observability data, generate and manage API keys, and create and modify prompts and rules necessary for the AI's evaluation. However, they do not have permissions to alter project settings or manage team member roles. AI Engineers focus on the technical implementation and maintenance of AI models observability, ensuring optimal performance.
 - **Domain Expert**: Domain Experts have a specialized set of permissions, allowing them to read observability data. They can also score and tag data, providing insights based on their expertise. Domain Experts have limited access to broader project resources and do not manage API keys, or project settings. Their role is to interpret data and provide feedback that enhances the project's data, ensuring outputs align with domain-specific requirements.
+
+#### Permissions per role
+
+| | Admin | AI Engineer | Domain Expert |
+|--|-------|-------------|---------------|
+| Annotations (scores, tags...) | Read & Write | Read & Write | Read & Write |
+| Observability (threads, steps...) | Read & Write | Read & Write | Read |
+| Datasets (items, experiments...) | Read & Write | Read & Write | Read |
+| Prompt (playground, versions...) | Read & Write | Read & Write |  |
+| API Keys & Credentials | Read & Write | Read & Write |  |
+| Project & Team | Read & Write | Read |  |
 
 ### Managing Literal AI API Keys
 
