@@ -100,6 +100,7 @@
       "pages": [
         "integrations/openai",
         "integrations/openai-assistant",
+        "integrations/mistralai",
         "integrations/chainlit",
         "integrations/langchain",
         "integrations/llama-index",

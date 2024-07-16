@@ -1,0 +1,34 @@
+---
+title: "Mistral AI"
+---
+
+You can use the Literal AI platform to instrument Mistral AI API calls. This allows you to track and monitor the usage of Mistral AI API calls in your application and replay them in the Prompt Playground.
+
+<Check>The Mistral AI instrumentation supports sync, async, streamed and regular responses!</Check>
+
+## Instrumenting Mistral AI API calls
+
+<CodeGroup>
+```python Python
+from mistralai.models.chat_completion import ChatMessage
+from mistralai.client import MistralClient
+import json, os
+from literalai import LiteralClient
+
+lai = LiteralClient(api_key="")
+lai.instrument_mistralai()
+
+client = MistralClient(api_key="")
+
+messages = [
+    ChatMessage(role="user", content="What is the best French cheese?")
+]
+# With streaming
+stream_response = client.chat_stream(model="mistral-large-latest", messages=messages)
+
+for chunk in stream_response:
+    print(chunk.choices[0].delta.content)
+
+# Now you can use the OpenAI API as you normally would
+```
+</CodeGroup>
