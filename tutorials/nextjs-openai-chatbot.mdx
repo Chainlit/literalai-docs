@@ -239,12 +239,15 @@ At its core, Literal AI allows you to observe and monitor the interactions betwe
 The simplest way to achieve this is to use the Literal SDK’s instrumentation API.
 
 ```tsx src/app/api/chat/route.ts
+const openai = new OpenAI();
+const literalClient = new LiteralClient();
+
+literalClient.instrumentation.openai();
+
+// All subsequent calls will be captured and logged on Literal AI
 const result = await openai.chat.completions.create({
   // ...
 });
-
-// Register the response with Literal AI so we can track it
-literalClient.instrumentation.openai(result);
 ```
 
 With that simple operation, all the settings and content of OpenAI calls will be logged on Literal AI.
@@ -322,8 +325,6 @@ export async function POST(req: Request) {
         })
         .wrap(async (run) => {
           // ...
-
-          literalClient.instrumentation.openai(result, run);
 
           const stream = OpenAIStream(result, {
             onCompletion: async (completion) => {
