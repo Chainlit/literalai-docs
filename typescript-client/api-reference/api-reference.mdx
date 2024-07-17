@@ -66,7 +66,61 @@ The unique identifier of the step to delete.
 
 A `Promise` that resolves to the ID of the deleted step.
 
-### uploadFile()
+### createAttachment()
+
+> **createAttachment**(`params`): `Promise`\<`object`\>
+
+Uploads a file to Literal AI, and creates an attachment out of it. If called within a step wrapper, the attachment will be automatically added to the step.
+
+This method supports uploading either through direct content or via a file path. It first signs the upload through a pre-configured endpoint and then proceeds to upload the file using the signed URL.
+
+#### Parameters
+
+▪ **params**: `object`
+
+The parameters for uploading a file, including:
+
+▪ **params.content?**: `ReadableStream | ReadStream | Buffer | File | Blob | ArrayBuffer`
+
+The content of the file to upload. Optional if `path` is provided.
+
+▪ **params.path?**: `Maybe`\<`string`\>
+
+The path to the file to upload. Optional if `content` is provided.
+
+▪ **params.id?**: `Maybe`\<`string`\>
+
+The unique identifier for the file. If not provided, a UUID will be generated.
+
+▪ **params.threadId**: `string`
+
+The unique identifier of the thread to which the file is being uploaded.
+
+▪ **params.mime?**: `Maybe`\<`string`\>
+
+The MIME type of the file. Defaults to 'application/octet-stream' if not provided.
+
+▪ **params.name?**: `string`
+
+The name of the attachment, which will appear on Literal AI.
+
+▪ **params.metadata?**: `Maybe`\<`Record`\<`string, any`\>`\>
+
+Additional metadata for the attachment as a key-value pair object.
+
+#### Returns
+
+`Promise`\<`Attachment`\>
+
+An instance of the `Attachment` class.
+
+#### Throws
+
+Throws an error if the server response is invalid.
+
+### uploadFile() (deprecated)
+
+<Info>This method remains for backwards compatibility but it is advised to use the new streamlined  [`createAttachment`](#createattachment) method.</Info>
 
 > **uploadFile**(`params`): `Promise`\<`object`\>
 
@@ -79,7 +133,7 @@ It first signs the upload through a pre-configured endpoint and then proceeds to
 
 The parameters for uploading a file, including:
 
-▪ **params.content?**: `any`
+▪ **params.content?**: `ReadableStream | ReadStream | Buffer | File | Blob | ArrayBuffer`
 
 The content of the file to upload. Optional if `path` is provided.
 
@@ -107,7 +161,7 @@ An object containing the `objectKey` of the uploaded file and the signed `url`, 
 
 #### Throws
 
-Throws an error if neither `content` nor `path` is provided, or if the server response is invalid.
+Throws an error if the server response is invalid.
 
 ### getGenerations()
 
