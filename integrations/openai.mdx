@@ -35,7 +35,7 @@ const literalClient = new LiteralClient();
 const openai = new OpenAI();
 
 // Instrument the OpenAI client
-client.instrumentation.openai();
+literalClient.instrumentation.openai();
 
 async function main() {
   // This will be automagically logged by Literal AI
