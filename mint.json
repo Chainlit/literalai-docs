@@ -199,7 +199,8 @@
       "pages": [
         "tutorials/rag-chatbot-offline-evaluation",
         "tutorials/evaluating-context-relevancy",
-        "tutorials/evaluating-user-satisfaction"
+        "tutorials/evaluating-user-satisfaction",
+        "tutorials/swap-llms"
       ]
     },
     {
