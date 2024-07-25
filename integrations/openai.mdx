@@ -185,7 +185,7 @@ literalClient.instrumentation.openai({
 // to specific calls. Tags and metadata from the client will be merged.
 // Please note that this client only supports the following methods :
 // chat.completion.create, completion.create, and image.generate
-const instrumentedOpenAi = client.instrumentation.openai({
+const instrumentedOpenAi = literalClient.instrumentation.openai({
   tags: ['tag1', 'tag2'],
   metadata: { key1: 'value1', key2: 'value2' }
 });
