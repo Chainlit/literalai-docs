@@ -2,6 +2,19 @@
 title: Changelog
 ---
 
+# `0.0.511`
+
+### New Features
+
+This release introduces a new, wrapper-aware method to create attachments : `client.api.createAttachment`. This method is a wrapper around the `uploadFile` method and the `new Attachment` constructor. It allows you to create an attachment in a single call, and attach it to the thread/step in the current context.
+
+The old method using `uploadFile` and `new Attachment` is considered obsolete, although it remains in the SDK for backward compatibility.
+
+### Improvements
+
+* `threadId` is now optional when creating an attachment or uploading a file
+* `createAttachment` and `uploadFile` now accept file data in the following formats : ReadableStream, ReadStream, Buffer, File, Blob & ArrayBuffer
+
 # `0.0.510`
 
 ## Breaking Changes

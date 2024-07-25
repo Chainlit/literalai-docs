@@ -60,35 +60,44 @@ import { LiteralClient, Attachment } from "@literalai/client";
 const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 async function main() {
-    const thread = await literalClient.thread().upsert();
+  const fileStream = fs.createReadStream('./image.jpeg');
+  const mime = 'image/jpeg';
 
-    const fileStream = fs.createReadStream('./image.jpeg');
-    const mime = 'image/jpeg';
-
-    const { objectKey } = await literalClient.api.uploadFile({
-        threadId: thread.id,
-        content: fileStream,
-        mime
-    });
-
-    const attachment = new Attachment({
-        name: 'test',
-        objectKey,
-        mime
-    });
-
-    const finalStep = await thread
+  await literalClient
     .step({
-        name: 'Assistant',
-        type: 'assistant_message',
-        output: {content: "Here is the generated image!"},
-        attachments: [attachment]
+      name: 'Assistant',
+      type: 'assistant_message',
+      output: { content: 'Here is the generated image!' }
     })
-    .send();
+    .wrap(async () => {
+      // This will upload the file, create the attachment
+      // and automatically attach it to the wrapped step
+      await literalClient.api.createAttachment({
+        content: fileStream,
+        mime,
+        name: 'Attachment'
+      });
+    });
+
+  // Alternatively you can create the attachment and later
+  // attach it manually to a relevant step
+  const attachment = await literalClient.api.createAttachment({
+    content: fileStream,
+    mime,
+    name: 'Attachment'
+  });
+
+  // Attach the attachment to a step
+  await literalClient.step({
+    name: 'Assistant',
+    type: 'assistant_message',
+    output: { content: 'Here is the generated image!' },
+    attachments: [attachment]
+  })
 };
 
 main();
 ```
 </CodeGroup>
 
-Check [this guide](/guides/observability/image-attachment) for an example of multimodal conversation logging in Python with OpenAI and Literal AI. 
+Check [this Python guide](/guides/observability/image-attachment) for an example of multimodal conversation logging with OpenAI and Literal AI. 
