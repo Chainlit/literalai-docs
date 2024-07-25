@@ -70,9 +70,9 @@ A `Promise` that resolves to the ID of the deleted step.
 
 > **createAttachment**(`params`): `Promise`\<`object`\>
 
-Uploads a file to Literal AI, and creates an attachment out of it. If called within a step wrapper, the attachment will be automatically added to the step.
+Securely uploads a file to Literal AI, and creates an attachment out of it. If called within a step wrapper, the attachment will be automatically added to the step.
 
-This method supports uploading either through direct content or via a file path. It first signs the upload through a pre-configured endpoint and then proceeds to upload the file using the signed URL.
+This method supports uploading either through direct content or via a file path.
 
 #### Parameters
 
@@ -124,8 +124,7 @@ Throws an error if the server response is invalid.
 
 > **uploadFile**(`params`): `Promise`\<`object`\>
 
-Uploads a file to a specified thread. This method supports uploading either through direct content or via a file path.
-It first signs the upload through a pre-configured endpoint and then proceeds to upload the file using the signed URL.
+Securely uploads a file to a specified thread. This method supports uploading either through direct content or via a file path.
 
 #### Parameters
 
