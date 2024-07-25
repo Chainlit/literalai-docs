@@ -58,6 +58,26 @@ Instruments the OpenAI API calls with the current client.
 
 <a id="literalai.client.BaseLiteralClient.langchain_callback"></a>
 
+#### instrument\_mistralai
+
+```python
+def instrument_mistralai()
+```
+
+Instruments the Mistral AI API calls with the current client.
+
+<a id="literalai.client.BaseLiteralClient.langchain_callback"></a>
+
+#### instrument\_llamaindex
+
+```python
+def instrument_llamaindex()
+```
+
+Instruments the API calls made by Llamaindex with the current client.
+
+<a id="literalai.client.BaseLiteralClient.langchain_callback"></a>
+
 #### langchain\_callback
 
 ```python
@@ -80,25 +100,6 @@ Get a Langchain callback tracer configured with the client.
 - `LangchainTracer` - Configured Langchain tracer.
 
 <a id="literalai.client.BaseLiteralClient.llama_index_callback"></a>
-
-#### llama\_index\_callback
-
-```python
-def llama_index_callback(**kwargs: Any)
-```
-
-Get a Llama Index callback tracer configured with the client.
-
-**Arguments**:
-
-- `**kwargs` - Additional arguments for the tracer.
-  
-
-**Returns**:
-
-- `LlamaIndexTracer` - Configured Llama Index tracer.
-
-<a id="literalai.client.BaseLiteralClient.thread"></a>
 
 #### thread
 
