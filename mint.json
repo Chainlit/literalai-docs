@@ -82,7 +82,8 @@
           "group": "Evaluation",
           "pages": [
             "concepts/evaluation/dataset",
-            "concepts/evaluation/experiment"
+            "concepts/evaluation/experiment",
+            "concepts/evaluation/queue"
           ]
         },
         {
