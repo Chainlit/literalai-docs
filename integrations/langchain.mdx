@@ -18,10 +18,6 @@ from langchain.prompts import ChatPromptTemplate
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-# Optional: Reset the context for each request to avoid mixing up the context
-literal_client.reset_context()
-
-
 cb = literal_client.langchain_callback()
 
 prompt = ChatPromptTemplate.from_messages(
@@ -83,9 +79,6 @@ import os
 from literalai import LiteralClient
 
 literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-# Optional: Reset the context for each request to avoid mixing up the context
-literal_client.reset_context()
 
 with literal_client.thread(name="Langchain example") as thread:
     cb = literal_client.langchain_callback()
