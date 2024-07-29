@@ -9,9 +9,29 @@ All changes and improvements to Literal AI are listed here. For changes in the S
 <Note>
 Literal AI cloud is currently compatible with:
 * [Chainlit](https://docs.chainlit.io/get-started/overview) version `1.0.504` and above.
-* [Python SDK](/python-client) version `0.0.509` and above.
-* [TypeScript SDK](/typescript-client) version `0.0.503` and above.
+* [Python SDK](/python-client/development) version `0.0.509` and above.
+* [TypeScript SDK](/typescript-client/development) version `0.0.503` and above.
 </Note>
+
+# 0.0.614-beta (July 30th, 2024)
+
+## New features
+* Annotation Queues: you can now collaborate as a team and assign steps for review
+* Environments allow you to silo experiment, development, staging and production logs   
+* Generations: you can add metadata to logged LLM calls
+
+## Improvements
+* Added explicit Custom provider option for custom endpoints - following OpenAI's messages API
+* The champion version in the Prompt versions table is now highlighted with a star
+* From the Prompt Playground, you can now copy to clipboard the template messages as an array
+* If created via a Score Template, a Score gets linked to its template
+* Input column for Generations now displays the last message in OpenAI's messages API
+* Unified & enhanced the user experience on score, tag and credentials creation
+* Added latest Anthropic model Claude Sonnet 3.5
+
+## Bug fixes
+* Project deletion completes successfully when experiments exist in project
+* Rule invocation now works with Azure OpenAI credentials
 
 # 0.0.613-beta (July 23rd, 2024)
 
