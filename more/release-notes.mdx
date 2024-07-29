@@ -15,12 +15,16 @@ Literal AI cloud is currently compatible with:
 
 # 0.0.614-beta (July 30th, 2024)
 
-## New features
+### New features
 * Annotation Queues: you can now collaborate as a team and assign steps for review
 * Environments allow you to silo experiment, development, staging and production logs   
+* Experiments:
+  * The link between Experiment and Dataset is now optional
+  * Experiment items are now sortable by score in a leaderboard fashion
+  * Each experiment item now has a pointer to visualize the trace of its corresponding experiment run 
 * Generations: you can add metadata to logged LLM calls
 
-## Improvements
+### Improvements
 * Added explicit Custom provider option for custom endpoints - following OpenAI's messages API
 * The champion version in the Prompt versions table is now highlighted with a star
 * From the Prompt Playground, you can now copy to clipboard the template messages as an array
@@ -29,24 +33,24 @@ Literal AI cloud is currently compatible with:
 * Unified & enhanced the user experience on score, tag and credentials creation
 * Added latest Anthropic model Claude Sonnet 3.5
 
-## Bug fixes
+### Bug fixes
 * Project deletion completes successfully when experiments exist in project
 * Rule invocation now works with Azure OpenAI credentials
 
 # 0.0.613-beta (July 23rd, 2024)
 
-## New features
+### New features
 * Datasets : you can now create a dataset from a CSV file
 * Onboarding : empty pages on a new project will now include code snippets and instructions to start sending data on Literal AI
 * Navigation : the sidebar has been revamped for flatter navigation between platform modules
 
-## Improvements
+### Improvements
 * A new, tighter tree view that better displays Chain of Thought reasoning
 * Add new Run/Generation filters when creating or updating an evaluation rule : model, duration, prompt lineage, prompt version
 * Improve edition of Azure OpenAI credentials
 * Various improvements on platform deployment, both for cloud and self-hosting
 
-## Bug fixes
+### Bug fixes
 * Fix a bug with Azure OpenAI in the prompt playground and other LLM calls
 * The credentials table will now refresh correctly after creting or updating an item
 * Local LLMs are now correctly handled by the prompt playground and other LLM calls
@@ -54,7 +58,7 @@ Literal AI cloud is currently compatible with:
 
 # 0.0.612-beta (July 10th, 2024)
 
-## New features
+### New features
 
 * When scoring a step through the platform, we now track the user who created the score
 * We are preparing the platform for the upcoming release of the Annotation Queue
