@@ -4,44 +4,42 @@ title: "Llama Index"
 
 The Llama Index integration enables to monitor your RAG pipelines with a single line of code.
 
-<Note>You should create a new instance of the callback handler for each invocation.</Note>
+<Warning>
+  The Llama Index integration in the Python SDK is compatible with Llama Index starting at version 0.10.58.
+</Warning>
 
 <CodeGroup>
 ```python Python
-import os
 from literalai import LiteralClient
-from llama_index.core.callbacks import CallbackManager
+from llama_index.core import Document, VectorStoreIndex
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-Settings.callback_manager = CallbackManager([literal_client.llama_index_callback()])
+client = LiteralClient()
+# The magic happens here
+client.instrument_llamaindex()
 
-# Assuming you have an index object
-query_engine = index.as_query_engine(similarity_top_k=2)
+index = VectorStoreIndex.from_documents([Document.example()])
+query_engine = index.as_query_engine()
 
-# Optional: Reset the context for each request to avoid mixing up the context
-literal_client.reset_context()
+# Here we are outside of a thread so the integration will create one for us
+query_engine.query("Tell me about LLMs")
+
+# If we call Llamaindex from inside a context, the integration will use it
+with client.thread(name="Test Llamaindex Thread") as thread:
+    query_engine.query("Tell me about LLMs")
+
+# If we make several calls inside the context, they will all be logged in the same thread
+with client.thread(name="Llamaindex Questions") as thread:
+    query_engine.query("Tell me about LLMs")
+    query_engine.query("What is RAG ?")
+
+# Optional: make sure to flush the events before stopping the client
+client.flush_and_stop()
 
 ```
 </CodeGroup>
 
-## Multiple calls in a single thread
+Each Thread will result in the following tree on Literal AI :
 
-You can combine the Llama Index callback handler with the concept of [Thread](/concepts/observability/thread) to monitor multiple calls in a single thread.
-
-<CodeGroup>
-```python Python
-import os
-from literalai import LiteralClient
-from llama_index.core.callbacks import CallbackManager
-
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-# Optional: Reset the context for each request to avoid mixing up the context
-literal_client.reset_context()
-
-with literal_client.thread(name="Llama Index example") as thread:
-    Settings.callback_manager = CallbackManager([literal_client.llama_index_callback()])
-    # Call here
-```
-
-</CodeGroup>
+<Frame caption="A Llamaindex RAG thread on Literal AI">
+  <img src="/images/llamaindex-thread.png" alt="A Llamaindex RAG thread on Literal AI" />
+</Frame>
