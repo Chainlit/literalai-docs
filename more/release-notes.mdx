@@ -17,19 +17,19 @@ Literal AI cloud is currently compatible with:
 
 ### New features
 * Annotation Queues: you can now collaborate as a team and assign steps for review
-* Environments allow you to silo experiment, development, staging and production logs   
+* Environments allow you to silo experiment, development, staging and production logs 
 * Experiments:
-  * The link between Experiment and Dataset is now optional
-  * Experiment items are now sortable by score in a leaderboard fashion
-  * Each experiment item now has a pointer to visualize the trace of its corresponding experiment run 
-* Generations: you can add metadata to logged LLM calls
+  * Faster bootstrap to launch experiments without the need to link to a Dataset
+  * Experiment items are now sortable by score in a leaderboard fashion for easier comparison
+  * You can now troubleshoot your experiment items by visualizing the experiment runs as full traces
+* Generations: you can now enrich your logged LLM calls with metadata
 
 ### Improvements
-* Added explicit Custom provider option for custom endpoints - following OpenAI's messages API
-* The champion version in the Prompt versions table is now highlighted with a star
-* From the Prompt Playground, you can now copy to clipboard the template messages as an array
-* If created via a Score Template, a Score gets linked to its template
-* Input column for Generations now displays the last message in OpenAI's messages API
+* Work with your own LLM endpoint by configuring a Custom LLM provider in your settings - based on OpenAI's messages API
+* Quickly identify your champion version in the Prompt versions table with a star icon
+* Swiftly re-use your Playground prompts in code by using the new Copy button on Template messages
+* If created via a Score Template, a Score gets linked to its template for traceability
+* Improved Generations table readability by displaying Input as the last message in OpenAI's messages API
 * Unified & enhanced the user experience on score, tag and credentials creation
 * Added latest Anthropic model Claude Sonnet 3.5
 
