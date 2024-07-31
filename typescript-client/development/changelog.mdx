@@ -2,20 +2,20 @@
 title: Changelog
 ---
 
-# `0.0.511`
+# `0.0.512`
 
 ### Breaking Changes
 
 Instantiation of the TypeScript client was altered to take in an object as argument:
 
 <CodeGroup>
-```typescript >= 0.0.511
+```typescript >= 0.0.512
 client = new LiteralClient({
   apiKey: process.env.LITERAL_API_KEY,
   apiUrl: process.env.LITERAL_API_URL
 });
 ```
-```typescript < 0.0.511
+```typescript < 0.0.512
 client = new LiteralClient(process.env.LITERAL_API_KEY, process.env.LITERAL_API_URL);
 ```
 </CodeGroup>
@@ -33,7 +33,7 @@ The old method using `uploadFile` and `new Attachment` is considered obsolete, a
 * `Generation` creation now supports passing `tags` and `metadata` 
 * `Experiment` become optionally linked to a `Dataset`
 
-<Warning>Starting with `0.0.511`, you need to have Literal AI version 0.0.614-beta or above.</Warning>
+<Warning>Starting with `0.0.512`, you need to have Literal AI version 0.0.615-beta or above.</Warning>
 
 # `0.0.510`
 
