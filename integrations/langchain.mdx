@@ -1,5 +1,5 @@
 ---
-title: "Langchain"
+title: "LangChain/LangGraph"
 ---
 
 The Langchain integration enables to monitor your Langchain agents and chains with a single line of code.
@@ -96,3 +96,30 @@ const cb = literalClient.instrumentation.langchain.literalCallback(thread.id);
 // Call your Langchain agent here
 ```
 </CodeGroup>
+
+
+## LangGraph
+
+LangGraph works similarly to LangChain when it comes to using the Literal AI callback handler.
+
+<CodeGroup>
+```python Python
+# list imports 
+
+workflow = StateGraph(MessagesState)
+# define graph ...
+
+app = workflow.compile(checkpointer=checkpointer)
+
+# run the app with LangChain callback handler
+cb = literal_client.langchain_callback()
+final_state = app.invoke(
+    {"messages": [HumanMessage(content="what is the weather in sf")]},
+    config=RunnableConfig(callbacks=[cb])
+)
+```
+</CodeGroup>
+
+<Card title="Full LangGraph Example" icon="play" href="/tutorials/langgraph-example">
+  Check out this LangGraph example.
+</Card>

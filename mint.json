@@ -201,7 +201,8 @@
         "tutorials/rag-chatbot-offline-evaluation",
         "tutorials/evaluating-context-relevancy",
         "tutorials/evaluating-user-satisfaction",
-        "tutorials/swap-llms"
+        "tutorials/swap-llms",
+        "tutorials/langgraph-example"
       ]
     },
     {
