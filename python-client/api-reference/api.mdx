@@ -1759,6 +1759,7 @@ async def create_step(thread_id: Optional[str] = None,
                       parent_id: Optional[str] = None,
                       name: Optional[str] = None,
                       tags: Optional[List[str]] = None)
+                      root_run_id: Optional[str] = None
 ```
 
 Asynchronously creates a new step with the specified parameters.
@@ -1775,6 +1776,7 @@ Asynchronously creates a new step with the specified parameters.
 - `parent_id` _Optional[str]_ - The ID of the parent step, if any.
 - `name` _Optional[str]_ - The name of the step.
 - `tags` _Optional[List[str]]_ - Tags associated with the step.
+- `root_run_id` _Optional[str]_ - The ID of root run step, if any.
   
 
 **Returns**:

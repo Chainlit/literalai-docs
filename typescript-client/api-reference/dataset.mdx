@@ -161,6 +161,7 @@ type DatasetItem = {
   input: Record<string, any>;
   expectedOutput?: Maybe<Record<string, any>>;
   intermediarySteps: Record<string, any>[];
+  stepId?: Maybe<string>;
 }
 ```
 
@@ -192,6 +193,9 @@ type DatasetItem = {
   An optional list of intermediary steps involved in the output. This can include any processing steps or intermediate results. They are automatically generated when using "steps" to build a dataset.
 </ParamField>
 
+<ParamField path="stepId" type="Record<string, any>[]">
+  The optional reference ID to a specific step.
+</ParamField>
 
 ### Create a dataset item
 
