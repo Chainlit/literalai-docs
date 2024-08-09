@@ -135,6 +135,7 @@ def step(original_function=None,
          id: Optional[str] = None,
          parent_id: Optional[str] = None,
          thread_id: Optional[str] = None,
+         root_run_id: Optional[str] = None,
          **kwargs)
 ```
 
@@ -148,6 +149,7 @@ Decorator or context manager for step-level event grouping.
 - `id` _Optional[str], optional_ - ID of the step. Defaults to None.
 - `parent_id` _Optional[str], optional_ - Parent ID of the step. Defaults to None.
 - `thread_id` _Optional[str], optional_ - Thread ID of the step. Defaults to None.
+- `root_run_id` _Optional[str], optional_ - Root run ID of the step. Defaults to None.
 - `**kwargs` - Additional arguments for the step context manager or decorator.
   
 
@@ -166,6 +168,7 @@ def run(original_function=None,
         id: Optional[str] = None,
         parent_id: Optional[str] = None,
         thread_id: Optional[str] = None)
+        root_run_id: Optional[str] = None,
 ```
 
 Decorator or context manager for run-level event grouping.
@@ -177,6 +180,7 @@ Decorator or context manager for run-level event grouping.
 - `id` _Optional[str], optional_ - ID of the run. Defaults to None.
 - `parent_id` _Optional[str], optional_ - Parent ID of the run. Defaults to None.
 - `thread_id` _Optional[str], optional_ - Thread ID of the run. Defaults to None.
+- `root_run_id` _Optional[str], optional_ - Root run ID of the run. Defaults to None.
   
 
 **Returns**:
@@ -197,6 +201,7 @@ def message(content: str = "",
             attachments: List[Attachment] = [],
             tags: Optional[List[str]] = None,
             metadata: Dict = {})
+            root_run_id: Optional[str] = None,
 ```
 
 Creates and ends a message step.
@@ -212,6 +217,7 @@ Creates and ends a message step.
 - `attachments` _List[Attachment], optional_ - List of attachments. Defaults to [].
 - `tags` _Optional[List[str]], optional_ - List of tags. Defaults to None.
 - `metadata` _Dict, optional_ - Metadata for the message. Defaults to {}.
+- `root_run_id` _Optional[str], optional_ - Root run ID of the run. Defaults to None.
   
 
 **Returns**:
@@ -228,6 +234,7 @@ def start_step(name: str = "",
                id: Optional[str] = None,
                parent_id: Optional[str] = None,
                thread_id: Optional[str] = None,
+               root_run_id: Optional[str] = None,
                **kwargs)
 ```
 
@@ -240,6 +247,7 @@ Starts a new step.
 - `id` _Optional[str], optional_ - ID of the step. Defaults to None.
 - `parent_id` _Optional[str], optional_ - Parent ID of the step. Defaults to None.
 - `thread_id` _Optional[str], optional_ - Thread ID of the step. Defaults to None.
+- `root_run_id` _Optional[str], optional_ - Root run ID of the run. Defaults to None.
 - `**kwargs` - Additional arguments for the step.
   
 
@@ -274,6 +282,20 @@ Retrieves the current active thread.
 **Returns**:
 
 - `Optional[ThreadContextManager]` - The current active thread or None if no threads are active.
+
+<a id="literalai.client.BaseLiteralClient.get_root_run"></a>
+
+#### get\_root\_run
+
+```python
+def get_root_run()
+```
+
+Retrieves the active root run step.
+
+**Returns**:
+
+- `Optional[Step]` - The active root run step or None if no runs are active.
 
 <a id="literalai.client.BaseLiteralClient.reset_context"></a>
 
