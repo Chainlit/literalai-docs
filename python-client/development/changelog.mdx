@@ -2,6 +2,15 @@
 title: Changelog
 ---
 
+# `0.0.611`
+* Adapt the Mistral AI integration to account for Mistral AI Python client changes
+* Added option to send a root run ID upon creation of a `Step`
+* The API `update_prompt_ab_testing` replaces the old `promote_prompt` and extends on it to allow for A/B testing
+* Tags and metadata arguments passed to LangChain will now show in logs
+* Fixed the event processor when batch not filled every X seconds
+
+<Warning>Starting with `0.0.611`, you need to have Literal AI version 0.0.617-beta or above.</Warning>
+
 # `0.0.610`
 * Adapt the LlamaIndex integration to the new [instrumentation API](https://docs.llamaindex.ai/en/stable/module_guides/observability/instrumentation/#instrumentation)
 * Add option to send metadata on Generation creation
