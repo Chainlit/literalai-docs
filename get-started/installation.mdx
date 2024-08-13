@@ -35,44 +35,17 @@ const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This
 
 To get your API key, go to your [project page](https://cloud.getliteral.ai) and click on the **Settings** tab. You will find your API key in the **API Key** section.
 
-## Log your first thread
-
-<CodeGroup>
-```python Python
-import os
-from literalai import LiteralClient
-
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-with literal_client.thread(name="My first thread !") as thread:
-  literal_client.message(content="Hello world", type="user_message", name="My first step !")
-
-literal_client.flush_and_stop()
-```
-
-```typescript TypeScript
-import { LiteralClient } from '@literalai/client';
-
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
-
-const thread = await literalClient
-  .thread({ name: "My first thread !" })
-  .upsert();
-
-await thread
-  .step({
-    type: "user_message",
-    name: "My first step !",
-    output: { content: "Hello world" },
-  })
-  .send();
-```
-</CodeGroup>
-
-You can now go to your [project page](https://cloud.getliteral.ai) and see your first thread.
 
 ## Next up
 
-<Card title="Quick Start" icon="play" href="/get-started/quick-start">
-  Log your data to Literal AI
+<CardGroup cols={2}>
+
+<Card title="Integrations" icon="gears" color="#2662d9" href="/integrations">
+  Browse the list of integrations available with Literal AI.
 </Card>
+
+<Card title="Logging" icon="list-tree" color="#2eb88a" href="/concepts/logs">
+  Learn how to instrument your code with the Literal AI SDK.
+</Card>
+
+</CardGroup>

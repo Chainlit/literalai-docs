@@ -1,0 +1,293 @@
+---
+title: Logs
+---
+
+Logs are essential to monitor and improve your LLM system in production. Literal AI provides a flexible and composable SDK to log your LLM system at different levels of granularity.
+
+## Semantics
+
+Literal AI approaches LLM logging at three levels:
+1. **Generation**: Log a single LLM call.
+2. **Run**: Log a single invocation of an Agent/Chain invocation, including its intermediate steps. Can contain one or multiple generations.
+3. **Thread**: Log a collection of runs that are part of a single conversation.
+
+<Frame caption="A Thread containing a run and two generations in Literal AI">
+  <img src="/images/threads-overview.png" alt="Literal AI Platform"/>
+</Frame>
+
+You can log a generation only (typically for extraction use cases), or log a run only (typically for task automation), or combine them in threads (typically for chatbots). 
+
+<Note>See [installation](/get-started/installation) to get your API key and instantiate the SDK</Note>
+
+## Log a Generation
+Generations are logged by [integrations](/integrations) with LLM providers. They capture the prompt, completion, settings, and token latency.
+
+Here is an example with OpenAI:
+
+<CodeGroup>
+```python Python
+literalai_client.instrument_openai()
+
+# Run a regular OpenAI chat completion
+from openai import OpenAI
+
+oai = OpenAI()
+
+def call_openai(user_input: str):
+    oai.chat.completions.create(
+        model="gpt-4o",
+        messages=[{ "role": "user", "content": user_input }]
+    )
+
+call_openai()
+```
+
+```typescript TypeScript
+literalAiClient.instrumentation.openai();
+
+const openai = new OpenAI();
+
+async function callOpenAI(userInput: string) {
+  const stream = await openai.chat.completions.create({
+    model: 'gpt-4',
+    stream: true,
+    messages: [{ role: 'user', content: userInput }]
+  });
+};
+callOpenAI();
+```
+</CodeGroup>
+
+## Log a Run
+A Run can be logged manually with decorators or with framework integrations such as [Llama Index](/integrations/llama-index) or [LangChain](/integrations/langchain).
+
+Here is an example with decorators:
+
+<CodeGroup>
+```python Python
+@literalai_client.step(type="tool")
+def get_temperature(city: str):
+    return "10C"
+
+@literalai_client.step(type="run")
+def my_agent(user_input: str):
+    # Reusing the OpenAI call from the previous example
+    call_openai(user_input)
+    # Naive tool example
+    get_temperature("paris")
+    return "Success"
+    
+my_agent()
+
+# Wait for all steps to be sent. This is NOT needed in production code.
+literalai_client.flush()
+```
+
+```typescript TypeScript
+async function getTemperature(city: string) {
+  return literalAiClient
+    .step({
+      type: 'tool',
+      name: 'Get Temperature',
+      input: { city },
+    })
+    .wrap(() => {
+      return { content: '10C' };
+    });
+}
+
+
+async function myAgent(userInput: string) {
+  return literalAiClient
+    .run({
+      name: 'My Agent',
+      input: { userInput }
+    })
+    .wrap(async () => {
+      // Reusing the OpenAI call from the previous example
+      await callOpenAI(userInput);
+      // Naive tool example
+      await getTemperature("Paris");
+      return { content: 'Success' };
+    });
+}
+
+myAgent();
+```
+</CodeGroup>
+
+The intermediate steps and the agent itself are logged using the `Step` class. You can learn more about the Step API in the following references:
+
+<CardGroup cols={2}>
+<Card title="Python Step API reference" icon="python" color="#2eb88a" href="/python-client/abstractions/step">
+    Learn how to use the Python Step API.
+</Card>
+
+<Card title="TypeScript Step API reference"  color="#2662d9" icon="js" href="/python-client/abstractions/step">
+    Learn how to use the TypeScript Step API.
+</Card>
+</CardGroup>
+
+### Score a Run
+
+Scoring a run is useful to capture product metrics such as:
+- Direct User feedback
+- Implicit user feedback (user accepted suggestion or not)
+
+Here is an example:
+
+<CodeGroup>
+```python Python
+def add_user_feedback(run_id: str, value: int, comment: str):
+    literalai_client.api.create_score(
+        step_id=run_id,
+        name="user-feedback",
+        type="HUMAN",
+        value=value,
+        comment=comment,
+    )
+```
+
+```typescript TypeScript
+async function addUserFeedback(runId: string, value: number, comment: string) {
+    const score = await literalClient.api.createScore({
+        stepId: runId,
+        name: 'user-feedback',
+        type: 'HUMAN',
+        comment,
+        value,
+      });
+};
+```
+</CodeGroup>
+
+### Attach a File
+
+You can attach files to a Run or any of its intermediate steps. It is useful for multimodal use cases.
+Let's add an image to our step tool:
+
+<CodeGroup>
+```python Python
+@literalai_client.step(type="tool")
+def get_temperature():
+    with open ("./image.jpeg", "rb") as file:
+        literalai_client.create_attachment(
+          name="my_attachment",
+          content=file.read()
+          )
+    return "10C"
+```
+
+```typescript TypeScript
+async function getTemperature(city: string) {
+  return literalAiClient
+    .step({
+      type: 'tool',
+      name: 'Get Temperature',
+      input: { city },
+    })
+    .wrap(() => {
+      const fileStream = fs.createReadStream('./image.jpeg');
+      const mime = 'image/jpeg';
+      await literalAiClient.api.createAttachment({
+        content: fileStream,
+        mime,
+        name: 'Attachment'
+      });
+      return { content: '10C' };
+    });
+}
+```
+</CodeGroup>
+
+
+## Log a Thread
+
+It is up to the application to keep track of the thread ID and pass it to the Literal AI client.
+Every run logged with the same thread ID will be part of the same conversation.
+
+Here is an example:
+
+<CodeGroup>
+```python Python
+import uuid
+
+def process_message(thread_id: str, user_input: str):
+    with literalai_client.thread(thread_id=thread_id) as thread:
+        # Reusing the Agent from the previous example
+        my_agent(user_input)
+
+thread_id = str(uuid.uuid4())
+# Calling the agent a first time
+process_message(thread_id=thread_id, user_input="foo")
+# Calling the agent a second time with the same thread ID
+process_message(thread_id=thread_id, user_input="bar")
+
+# Wait for all steps to be sent. This is NOT needed in production code.
+literalai_client.flush()
+```
+
+```typescript TypeScript
+import { v4 as uuidv4 } from 'uuid';
+
+async function processMessage(threadId: string, userInput: string) {
+    await literalAiClient
+        .thread({ id: threadId})
+        .wrap(async () => {
+            await myAgent(userInput);
+        });
+}
+
+const threadId = uuidv4();
+// Calling the agent a first time
+processMessage(threadId, "foo");
+// Calling the agent a second time with the same thread ID
+processMessage(threadId), "bar";
+```
+</CodeGroup>
+
+You can learn more about the Thread API in the following references:
+
+<CardGroup cols={2}>
+
+<Card title="Python Thread API reference" icon="python" color="#2eb88a" href="/python-client/abstractions/thread">
+    Learn how to use the Python Thread API.
+</Card>
+
+<Card title="TypeScript Thread API reference"  color="#2662d9" icon="js" href="/python-client/abstractions/thread">
+    Learn how to use the TypeScript Thread API.
+</Card>
+
+</CardGroup>
+
+### Bind a Thread to a User
+
+You can bind a thread to a user to track the user's activity. This is useful for chatbots or any other conversational AI.
+
+To do so, you need to use a common identifier for the user, such as an email or a user ID:
+
+<CodeGroup>
+```python Python
+user = literalai_client.api.get_or_create_user(identifier="John Doe")
+
+def process_message(thread_id: str, user_input: str):
+    with literalai_client.thread(participant_id=user.id, thread_id=thread_id) as thread:
+        # Reusing the Agent from the previous example
+        my_agent(user_input)
+```
+```typescript TypeScript
+const participantId = await literalAiClient.api.getOrCreateUser('John Doe');
+
+async function processMessage(threadId: string, userInput: string) {
+    await literalAiClient
+        .thread({ participantId, id: threadId})
+        .wrap(async () => {
+            await myAgent(userInput);
+        });
+}
+```
+</CodeGroup>
+
+## Conclusion
+
+Logging with Literal AI is composable and unopinionated. It can be done at different levels depending on your use case. 

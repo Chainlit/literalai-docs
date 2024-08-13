@@ -47,15 +47,13 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": [
-        "get-started/overview",
-        "get-started/installation",
-        "get-started/quick-start"
-      ]
+      "pages": ["get-started/overview", "get-started/installation"]
     },
     {
       "group": "Concepts",
       "pages": [
+        "concepts/logs",
+        "concepts/prompt-management",
         {
           "group": "Prompt",
           "pages": [
@@ -100,14 +98,12 @@
       "group": "Integrations",
       "pages": [
         "integrations/openai",
-        "integrations/openai-assistant",
-        "integrations/mistralai",
-        "integrations/chainlit",
         "integrations/langchain",
         "integrations/llama-index",
         "integrations/llm-providers",
-        "integrations/messages-server",
-        "integrations/vercel-ai-sdk"
+        "integrations/mistralai",
+        "integrations/vercel-ai-sdk",
+        "integrations/chainlit"
       ]
     },
     {

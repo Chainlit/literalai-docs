@@ -10,24 +10,32 @@ You can use the Literal AI platform to instrument Mistral AI API calls. This all
 
 <CodeGroup>
 ```python Python
-from mistralai.models.chat_completion import ChatMessage
-from mistralai.client import MistralClient
+from mistralai import Mistral, UserMessage
 import json, os
 from literalai import LiteralClient
 
 lai = LiteralClient(api_key="")
 lai.instrument_mistralai()
 
-client = MistralClient(api_key="")
+client = Mistral(api_key="")
+
+model = "mistral-large-latest"
 
 messages = [
-    ChatMessage(role="user", content="What is the best French cheese?")
+    {
+        "role": "user",
+        "content": "What is the best French cheese?",
+    }
 ]
+
 # With streaming
-stream_response = client.chat_stream(model="mistral-large-latest", messages=messages)
+stream_response = client.chat.stream(
+    model = model,
+    messages = messages,
+)
 
 for chunk in stream_response:
-    print(chunk.choices[0].delta.content)
+    print(chunk.data.choices[0].delta.content)
 
 # Now you can use the OpenAI API as you normally would
 ```

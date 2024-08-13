@@ -2,83 +2,40 @@
 title: Overview
 ---
 
-Literal AI is an all in one **observability**, **evaluation** and **analytics** platform for building **production-grade LLM apps**. Literal AI offers [multimodal logging](/concepts/observability/multimodal), including vision, audio, and video.
+Literal AI is a collaborative platform for building **production-grade LLM apps**.
 
-It covers a wide range of use cases, from conversational applications to task automation. Literal AI can be used with any LLM framework, for example [Chainlit](/integrations/chainlit) and [LangChain](/integrations/langchain). It integrates well with many LLM providers, like [OpenAI](/integrations/openai), [Anthrophic and Mistral](/integrations/llm-providers).
-
-Literal AI is developed by the builders of [Chainlit](https://github.com/Chainlit/chainlit), the open-source Conversational AI Python framework.
-
-<Frame caption="Literal AI Platform Overview">
-  <img src="/images/literal-ai-overview.png" alt="Literal AI Platform"/>
-</Frame>
-
-
-<Frame caption="Literal AI Platform Example Thread">
-  <img src="/images/threads-overview.jpeg" alt="Literal AI Platform Example RAG Thread"/>
-</Frame>
-
-
-# Key Features
-
-<CardGroup cols={2}>
-
-<Card
-  title="Observability"
-  icon="eye"
-  color="#ea5a0c"
-  href="/concepts/observability/thread">
-  Monitor your multimodal LLM app (including steps, feedback, prompts, token consumption) in a few minutes with our SDKs. Literal provides a unified view of all your data in one place.
-</Card>
-
-<Card
-  title="Evaluation"
-  icon="magnifying-glass"
-  color="#dc2626"
-  href="/concepts/evaluation/experiment">
-  Evaluate your threads and runs in real time using off the shelf and custom evaluators. Create datasets mixing production data and hand written examples to run non regression tests.
-</Card>
-
-<Card
-  title="Prompt Collaboration"
-  icon="gears"
-  color="#F80061"
-  href="/concepts/prompt">
-  Safely design, try, debug, version and deploy prompts directly from Literal AI.
-</Card>
-
-<Card
-  title="Monitoring"
-  icon="chart-mixed"
-  color="#0285c7"
-  href="/concepts/monitoring">
-  Monitor the performance of your LLM system in production. View LLM metrics in a dashboard, set automated rules and gather product & user analytics.
-</Card>
-
-</CardGroup>
-
-<Frame caption="Literal AI Features">
+<Frame caption="Collaborative Flow on Literal AI">
   <img src="/images/features.svg" alt="Literal AI Features"/>
 </Frame>
+
+It covers a wide range of use cases such as agentic applications, RAG, chat bots and task automation. Literal AI integrates seemlessly with third parties such as [OpenAI](/integrations/openai),  [LangChain](/integrations/langchain) or [Llama Index](/integrations/llama-index).
+
+<Note>
+Literal AI is developed by the builders of [Chainlit](https://github.com/Chainlit/chainlit), the open-source Conversational AI Python framework.
+</Note>
+
+
+## Key features
+
+1. [Logs:](/concepts/logs) Instrument your code with the Literal AI SDK to log your LLM system in production.
+
+2. [Prompt Management:](/concepts/prompt) Safely create, A/B test, debug, and version prompts directly from Literal AI.
+
+3. [Evaluation:](/concepts/evaluation/experiment) Create datasets mixing production data and hand written examples to run non regression tests.
+
+4. [Analytics:](/concepts/monitoring) Monitor the performance of your LLM system in production. View LLM metrics in a dashboard, set automated rules and gather product & user analytics.
+
 
 ## Next up
 
 <CardGroup cols={2}>
 
-<Card title="Get Started" icon="code" color="#0285c7" href="/get-started/installation">
+<Card title="Instrument your Code" icon="code" color="#2662d9" href="/get-started/installation">
   Install the Literal AI SDK and get your API key.
 </Card>
 
-<Card title="Learn more about integrations" icon="circle" color="#ea5a0c" href="/get-started/quick-start">
-  Learn about OpenAI, LangChain and Chainlit with Literal AI.
+<Card title="Create your First Prompt" icon="sparkles" color="#2eb88a" href="/concepts/prompt-management">
+  Create, version and A/B test your prompts in the Prompt Playground.
 </Card>
 
 </CardGroup>
-
-## More
-
-Use this documentation to 
-* Learn: [Concepts](/concepts/prompt), [Integrations](/integrations)
-* Find SDK references: [Python](/python-client/get-started/introduction), [TypeScript](/typescript-client/introduction)
-* Get inspired: [Guides](/guides), [Cookbook](https://www.github.com/chainlit/literal-cookbook)
-
-
