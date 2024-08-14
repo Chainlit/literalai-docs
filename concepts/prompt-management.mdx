@@ -1,10 +1,7 @@
 ---
 title: Prompt Management
+description: Prompt Management enables collaboration between software and product teams to create, version, A/B test, debug, and monitor prompts directly from Literal AI.
 ---
-
-Prompt Management is key to make sure your LLM system is moving forward while avoiding regressions.
-
-It enables collaboration between software and product teams to create, version, A/B test, debug, and monitor prompts directly from Literal AI.
 
 <img src="/images/prompt-management.svg" alt="Literal AI Platform"/>
 
@@ -17,7 +14,7 @@ On the left panel, define the template messages. In each template message, you c
   <img src="/images/create-prompt.gif" alt="Literal AI Platform"/>
 </Frame>
 
-You can try out the prompt template in the right panel by setting values for the variables and clicking on `Submit`.
+You can try out the prompt template by setting values for the variables, picking an LLM provider/model and clicking on `Submit`.
 
 The Prompt Playground supports multiple LLM providers/models and you can switch between them to see how the prompt behaves.
 
@@ -43,7 +40,7 @@ Edit the template messages and click on `Save` when you are done. A diff of the 
 
 ### Create from Code
 
-If you prefer to keep your Prompt Template in your code, you can still version it effortlessly on Literal AI.
+If you prefer to keep your Prompt Template in your code, you can still version it on Literal AI.
 Note that A/B testing is not available if you manage prompt templates in your code.
 
 <Note>See [installation](/get-started/installation) to get your API key and instantiate the SDK</Note>
@@ -155,10 +152,9 @@ const chatPrompt = prompt.toLangchainChatPromptTemplate();
 ```
 </CodeGroup>
 
-Once the prompt is formatted, you can use it with your LLM provider.
-If coupled with integrations such as [OpenAI](/integrations/openai) or [LangChain](/integrations/langchain), the Literal AI SDK will not only log the generations but also track which prompt versions were used to generate them.
+Coupled with integrations like [OpenAI](/integrations/openai) or [LangChain](/integrations/langchain), the Literal AI SDK will not only log the generations but also track which prompt versions were used to generate them.
 
-This is especially useful to track the performance of your prompt templates and debug.
+This is especially useful to track the performance of your prompt versions and debug in context.
 
 ## A/B Testing
 
@@ -174,4 +170,4 @@ By default the `v0` will have a rollout of 100%. You can change the rollout prob
 
 You can test a specific prompt template version against a dataset and a set of evaluators to measure the performance of the prompt and avoid regressions.
 
-🚧 Work in Progress, Coming Soon 🚧
+🚧 Work in progress, coming soon 🚧

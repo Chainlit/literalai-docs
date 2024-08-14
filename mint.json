@@ -54,6 +54,10 @@
       "pages": [
         "concepts/logs",
         "concepts/prompt-management",
+        "concepts/rule",
+        "concepts/dataset",
+        "concepts/experiment",
+        "concepts/annotation-queue",
         {
           "group": "Prompt",
           "pages": [

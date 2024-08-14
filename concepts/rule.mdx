@@ -1,0 +1,51 @@
+---
+title: "Rules"
+description: "Rules are used to automate actions on Literal AI based on specific conditions. Automated actions can range from evaluating an LLM generation to adding items in a dataset."
+---
+
+## Automate Output Evaluation
+
+Automating the evaluation of your [Run outputs or LLM generations](/concepts/logs#semantics) is essential to monitor and improve your LLM system in production.
+
+Go to the dashboard and click on `Configure Rules` to create/manage rules.
+
+<Frame caption="Pick a Rule Type">
+  <img src="/images/rule-type.png" alt="Pick a rule type" />
+</Frame>
+
+Once you picked a Rule Type, you will be able to update existing rules or create new ones.
+
+<Frame caption="Manage your Rules">
+  <img src="/images/rules.png" alt="Rules" />
+</Frame>
+
+A rule is composed of:
+
+- **Name**: A name to identify the rule.
+- **Sample Rate**: The percentage of outputs that will be evaluated by the rule.
+- **Filters**: Additional conditions to decide if the rule should be triggered.
+- **LLM**: The model to use for the evaluation.
+
+A rule outputing a score will be based on a **Score Schema** which is a definition of the possible categories to evaluate the output.
+
+A rule outputing a tag will be require a list of possible tags.
+
+<Frame caption="Configure a Rule">
+  <img src="/images/create-rule.png" alt="Configure Rule" />
+</Frame>
+
+## Automate addition to Datasets/Annotation Queues
+
+🚧 Work in progress, coming soon 🚧
+
+## Monitoring
+
+Once your rules are set up, you can monitor their activity in the dashboard.
+
+<Frame caption="Monitor your Rules">
+  <img src="/images/monitor-rule.png" alt="Monitor Rules" />
+</Frame>
+
+You can see the number of invocation per rule as well as the average score of the evaluations.
+
+You can also access the logs of the evaluations to look for potential errors.
