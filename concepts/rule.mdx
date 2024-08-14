@@ -5,7 +5,7 @@ description: "Rules are used to automate actions on Literal AI based on specific
 
 ## Automate Output Evaluation
 
-Automating the evaluation of your [Run outputs or LLM generations](/concepts/logs#semantics) is essential to monitor and improve your LLM system in production.
+Automating the evaluation of your [Run outputs or LLM generations](/concepts/logs#semantics) is essential to monitor and improve your LLM app in production.
 
 Go to the dashboard and click on `Configure Rules` to create/manage rules.
 
@@ -30,9 +30,12 @@ A rule outputing a score will be based on a **Score Schema** which is a definiti
 
 A rule outputing a tag will be require a list of possible tags.
 
+<Note>As of now, the prompt used for the evaluation is handled by Literal AI. We are working to allow you to specify your own eval prompt.</Note>
+
 <Frame caption="Configure a Rule">
   <img src="/images/create-rule.png" alt="Configure Rule" />
 </Frame>
+
 
 ## Automate addition to Datasets/Annotation Queues
 

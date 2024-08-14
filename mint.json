@@ -58,43 +58,6 @@
         "concepts/dataset",
         "concepts/experiment",
         "concepts/annotation-queue",
-        {
-          "group": "Prompt",
-          "pages": [
-            "concepts/prompt/overview",
-            "concepts/prompt/prompt-versioning",
-            "concepts/prompt/prompt-api",
-            "concepts/prompt/prompt-playground"
-          ]
-        },
-        {
-          "group": "Observability",
-          "pages": [
-            "concepts/observability/thread",
-            "concepts/observability/step",
-            "concepts/observability/run",
-            "concepts/observability/generation",
-            "concepts/observability/tags",
-            "concepts/observability/multimodal",
-            "concepts/observability/user",
-            "concepts/observability/scores"
-          ]
-        },
-        {
-          "group": "Evaluation",
-          "pages": [
-            "concepts/evaluation/dataset",
-            "concepts/evaluation/experiment",
-            "concepts/evaluation/queue"
-          ]
-        },
-        {
-          "group": "Monitoring",
-          "pages": [
-            "concepts/monitoring/compare",
-            "concepts/monitoring/online-evaluation"
-          ]
-        },
         "concepts/settings/project-roles"
       ]
     },
