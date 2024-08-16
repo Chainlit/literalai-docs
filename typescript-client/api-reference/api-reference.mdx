@@ -1,8 +1,21 @@
 --- 
-title: LiteralClient
+title: LiteralClient.api
 ---
 
+
 ## Methods
+
+### getProjectId()
+
+> **getProjectId**(): `Promise`\<`string`\>
+
+Get the project id associated with the API key.
+
+#### Returns
+
+`Promise`\<`string`\>
+
+the project id
 
 ### sendSteps()
 
@@ -23,6 +36,44 @@ An array of Step objects to be sent.
 `Promise`\<`any`\>
 
 The response from the GraphQL call.
+
+### getSteps()
+
+> **getSteps**(`variables`): `Promise`\<`PaginatedResponse`\<`Step`\>\>
+
+Retrieves a paginated list of steps (runs) based on the provided criteria.
+
+#### Parameters
+
+▪ **variables**: `object`
+
+The parameters to filter and paginate the steps.
+
+▪ **variables.first?**: `Maybe`\<`number`\>
+
+The number of steps to retrieve after the cursor. (Optional)
+
+▪ **variables.after?**: `Maybe`\<`string`\>
+
+The cursor to start retrieving steps after. (Optional)
+
+▪ **variables.before?**: `Maybe`\<`string`\>
+
+The cursor to start retrieving steps before. (Optional)
+
+▪ **variables.filters?**: `StepsFilter`[]
+
+The filters to apply on the steps retrieval. (Optional)
+
+▪ **variables.orderBy?**: `StepsOrderBy`
+
+The order in which to retrieve the steps. (Optional)
+
+#### Returns
+
+`Promise`\<`PaginatedResponse`\<`Step`\>\>
+
+A promise that resolves to a paginated response of steps.
 
 ### getStep()
 
@@ -66,91 +117,20 @@ The unique identifier of the step to delete.
 
 A `Promise` that resolves to the ID of the deleted step.
 
-### createAttachment()
+### uploadFile()
 
-> **createAttachment**(`params`): `Promise`\<`object`\>
-
-Securely uploads a file to Literal AI, and creates an attachment out of it. If called within a step wrapper, the attachment will be automatically added to the step.
-
-This method supports uploading either through direct content or via a file path.
-
-#### Parameters
-
-▪ **params**: `object`
-
-The parameters for uploading a file, including:
-
-▪ **params.content?**: `ReadableStream | ReadStream | Buffer | File | Blob | ArrayBuffer`
-
-The content of the file to upload. Optional if `path` is provided.
-
-▪ **params.path?**: `Maybe`\<`string`\>
-
-The path to the file to upload. Optional if `content` is provided.
-
-▪ **params.id?**: `Maybe`\<`string`\>
-
-The unique identifier for the file. If not provided, a UUID will be generated.
-
-▪ **params.threadId**: `string`
-
-The unique identifier of the thread to which the file is being uploaded.
-
-▪ **params.mime?**: `Maybe`\<`string`\>
-
-The MIME type of the file. Defaults to 'application/octet-stream' if not provided.
-
-▪ **params.name?**: `string`
-
-The name of the attachment, which will appear on Literal AI.
-
-▪ **params.metadata?**: `Maybe`\<`Record`\<`string, any`\>`\>
-
-Additional metadata for the attachment as a key-value pair object.
-
-#### Returns
-
-`Promise`\<`Attachment`\>
-
-An instance of the `Attachment` class.
-
-#### Throws
-
-Throws an error if the server response is invalid.
-
-### uploadFile() (deprecated)
-
-<Info>This method remains for backwards compatibility but it is advised to use the new streamlined  [`createAttachment`](#createattachment) method.</Info>
+#### uploadFile(params)
 
 > **uploadFile**(`params`): `Promise`\<`object`\>
 
-Securely uploads a file to a specified thread. This method supports uploading either through direct content or via a file path.
+Uploads a file to a specified thread. This method supports uploading either through direct content or via a file path.
+It first signs the upload through a pre-configured endpoint and then proceeds to upload the file using the signed URL.
 
 #### Parameters
 
-▪ **params**: `object`
+▪ **params**: `UploadFileParamsWithContent`
 
 The parameters for uploading a file, including:
-
-▪ **params.content?**: `ReadableStream | ReadStream | Buffer | File | Blob | ArrayBuffer`
-
-The content of the file to upload. Optional if `path` is provided.
-
-▪ **params.path?**: `Maybe`\<`string`\>
-
-The path to the file to upload. Optional if `content` is provided.
-
-▪ **params.id?**: `Maybe`\<`string`\>
-
-The unique identifier for the file. If not provided, a UUID will be generated.
-
-▪ **params.threadId**: `string`
-
-The unique identifier of the thread to which the file is being uploaded.
-
-▪ **params.mime?**: `Maybe`\<`string`\>
-
-The MIME type of the file. Defaults to 'application/octet-stream' if not provided.
 
 #### Returns
 
@@ -160,7 +140,56 @@ An object containing the `objectKey` of the uploaded file and the signed `url`, 
 
 #### Throws
 
-Throws an error if the server response is invalid.
+Throws an error if neither `content` nor `path` is provided, or if the server response is invalid.
+
+#### uploadFile(params)
+
+> **uploadFile**(`params`): `Promise`\<`object`\>
+
+#### Parameters
+
+▪ **params**: `UploadFileParamsWithPath`
+
+#### Returns
+
+`Promise`\<`object`\>
+
+### createAttachment()
+
+#### createAttachment(params)
+
+> **createAttachment**(`params`): `Promise`\<`Attachment`\>
+
+Uploads a file to a specified thread and creates an attachment object.
+If called inside a context, the attachment will be added to the current step and thread.
+
+#### Parameters
+
+▪ **params**: `UploadFileBaseParams` & `object` & `CreateAttachmentParams`
+
+The parameters for uploading a file, including:
+
+#### Returns
+
+`Promise`\<`Attachment`\>
+
+An object containing the `objectKey` of the uploaded file and the signed `url`, or `null` values if the upload fails.
+
+#### Throws
+
+Throws an error if neither `content` nor `path` is provided, or if the server response is invalid.
+
+#### createAttachment(params)
+
+> **createAttachment**(`params`): `Promise`\<`Attachment`\>
+
+#### Parameters
+
+▪ **params**: `UploadFileBaseParams` & `object` & `CreateAttachmentParams`
+
+#### Returns
+
+`Promise`\<`Attachment`\>
 
 ### getGenerations()
 
@@ -215,7 +244,47 @@ A Promise resolving to the newly created `Generation` object.
 
 ### upsertThread()
 
-> **upsertThread**(`threadId`, `name`?, `metadata`?, `participantId`?, `environment`?, `tags`?): `Promise`\<`any`\>
+#### upsertThread(options)
+
+> **upsertThread**(`options`): `Promise`\<`CleanThreadFields`\>
+
+Upserts a Thread with new information.
+
+#### Parameters
+
+▪ **options**: `object`
+
+The parameters to upsert a thread.
+
+▪ **options.threadId**: `string`
+
+The unique identifier of the thread. (Required)
+
+▪ **options.name?**: `Maybe`\<`string`\>
+
+The name of the thread. (Optional)
+
+▪ **options.metadata?**: `Maybe`\<`Record`\<`string`, `any`\>\>
+
+Additional metadata for the thread as a key-value pair object. (Optional)
+
+▪ **options.participantId?**: `Maybe`\<`string`\>
+
+The unique identifier of the participant. (Optional)
+
+▪ **options.tags?**: `Maybe`\<`string`[]\>
+
+An array of tags associated with the thread. (Optional)
+
+#### Returns
+
+`Promise`\<`CleanThreadFields`\>
+
+The upserted thread object.
+
+#### upsertThread(threadId, name, metadata, participantId, tags)
+
+> **upsertThread**(`threadId`, `name`?, `metadata`?, `participantId`?, `tags`?): `Promise`\<`CleanThreadFields`\>
 
 Upserts a Thread with new information.
 
@@ -237,23 +306,23 @@ Additional metadata for the thread as a key-value pair object. (Optional)
 
 The unique identifier of the participant. (Optional)
 
-▪ **environment?**: `Maybe`\<`string`\>
-
-The environment where the thread is being upserted. (Optional)
-
 ▪ **tags?**: `Maybe`\<`string`[]\>
 
 An array of tags associated with the thread. (Optional)
 
 #### Returns
 
-`Promise`\<`any`\>
+`Promise`\<`CleanThreadFields`\>
 
 The upserted thread object.
 
+#### Deprecated
+
+Use one single object attribute instead of multiple parameters.
+
 ### getThreads()
 
-> **getThreads**(`variables`): `Promise`\<`PaginatedResponse`\<`CleanThreadFields`\>\>
+> **getThreads**(`variables`): `Promise`\<`PaginatedResponse`\<`Thread`\>\>
 
 Retrieves a paginated list of threads (conversations) based on the provided criteria.
 
@@ -287,13 +356,13 @@ The order in which to retrieve the threads. (Optional)
 
 #### Returns
 
-`Promise`\<`PaginatedResponse`\<`CleanThreadFields`\>\>
+`Promise`\<`PaginatedResponse`\<`Thread`\>\>
 
 A promise that resolves to a paginated response of threads.
 
 ### getThread()
 
-> **getThread**(`id`): `Promise`\<`any`\>
+> **getThread**(`id`): `Promise`\<`Maybe`\<`Thread`\>\>
 
 Retrieves information from a single Thread.
 
@@ -305,13 +374,13 @@ The unique identifier of the thread. This parameter is required.
 
 #### Returns
 
-`Promise`\<`any`\>
+`Promise`\<`Maybe`\<`Thread`\>\>
 
 The detailed information of the specified thread.
 
 ### deleteThread()
 
-> **deleteThread**(`id`): `Promise`\<`any`\>
+> **deleteThread**(`id`): `Promise`\<`string`\>
 
 Deletes a single Thread by its unique identifier.
 
@@ -323,7 +392,7 @@ The unique identifier of the thread to be deleted. This parameter is required.
 
 #### Returns
 
-`Promise`\<`any`\>
+`Promise`\<`string`\>
 
 The ID of the deleted thread.
 
@@ -590,6 +659,18 @@ The unique identifier of the score to delete. (required)
 
 The ID of the deleted score.
 
+### getDatasets()
+
+> **getDatasets**(): `Promise`\<`object`[]\>
+
+List all datasets in the platform.
+
+#### Returns
+
+`Promise`\<`object`[]\>
+
+The names and ids of all datasets.
+
 ### createDataset()
 
 > **createDataset**(`dataset`): `Promise`\<`Dataset`\>
@@ -824,19 +905,29 @@ A `DatasetItem` instance populated with the data of the newly added generation.
 
 > **addGenerationsToDataset**(`datasetId`, `generationIds`): `Promise`\<`DatasetItem`[]\>
 
+Adds multiple generation items to a dataset.
+
 #### Parameters
 
 ▪ **datasetId**: `string`
 
+The unique identifier of the dataset. This parameter is required.
+
 ▪ **generationIds**: `string`[]
+
+An array of unique identifiers for the generations to be added. This parameter is required.
 
 #### Returns
 
 `Promise`\<`DatasetItem`[]\>
 
+An array of `DatasetItem` instances populated with the data of the newly added generations
+
 ### createExperiment()
 
 > **createExperiment**(`datasetExperiment`): `Promise`\<`DatasetExperiment`\>
+
+Creates a new dataset experiment.
 
 #### Parameters
 
@@ -844,27 +935,41 @@ A `DatasetItem` instance populated with the data of the newly added generation.
 
 ▪ **datasetExperiment.name**: `string`
 
-▪ **datasetExperiment.datasetId**: `string`
+The name of the dataset experiment.
+
+▪ **datasetExperiment.datasetId?**: `string`
+
+The dataset ID to associate with the experiment.
 
 ▪ **datasetExperiment.promptId?**: `string`
 
+The prompt ID to associate with the experiment.
+
 ▪ **datasetExperiment.params?**: `Record`\<`string`, `any`\> \| `Record`\<`string`, `any`\>[]
+
+The parameters for the experiment as a key-value pair object or an array of the same.
 
 #### Returns
 
 `Promise`\<`DatasetExperiment`\>
 
+The newly created dataset experiment object.
+
 ### createExperimentItem()
 
-> **createExperimentItem**(`__namedParameters`): `Promise`\<`DatasetExperimentItem`\>
+> **createExperimentItem**(`parameters`): `Promise`\<`DatasetExperimentItem`\>
+
+Creates a new dataset experiment item.
 
 #### Parameters
 
-▪ **\_\_namedParameters**: `DatasetExperimentItem`
+▪ **parameters**: `DatasetExperimentItem`
 
 #### Returns
 
 `Promise`\<`DatasetExperimentItem`\>
+
+The dataset experiment object.
 
 ### createPromptLineage()
 
@@ -933,6 +1038,8 @@ Optional settings for the prompt.
 
 ▪ **tools?**: `Maybe`\<`Record`\<`string`, `any`\>\>
 
+Optional tools for the prompt.
+
 #### Returns
 
 `Promise`\<`Prompt`\>
@@ -979,20 +1086,42 @@ The version number of the prompt (optional).
 
 An instance of `Prompt` containing the prompt data, or `null` if not found.
 
-### getPromptWithQuery()
+### getPromptAbTesting()
 
-> **getPromptWithQuery**(`query`, `variables`): `Promise`\<`null` \| `Prompt`\>
+> **getPromptAbTesting**(`name`): `Promise`\<`null` \| `IPromptRollout`[]\>
+
+Retrieves a prompt A/B testing rollout by its name.
 
 #### Parameters
 
-▪ **query**: `string`
+▪ **name**: `string`
 
-▪ **variables**: `Record`\<`string`, `any`\>
+The name of the prompt to retrieve.
 
 #### Returns
 
-`Promise`\<`null` \| `Prompt`\>
+`Promise`\<`null` \| `IPromptRollout`[]\>
 
-***
+A list of prompt rollout versions.
 
-Generated using [typedoc-plugin-markdown](https://www.npmjs.com/package/typedoc-plugin-markdown) and [TypeDoc](https://typedoc.org/)
+### updatePromptAbTesting()
+
+> **updatePromptAbTesting**(`name`, `rollouts`): `Promise`\<`any`\>
+
+Update a prompt A/B testing rollout by its name.
+
+#### Parameters
+
+▪ **name**: `string`
+
+The name of the prompt to retrieve.
+
+▪ **rollouts**: `IPromptRollout`[]
+
+A list of prompt rollout versions.
+
+#### Returns
+
+`Promise`\<`any`\>
+
+A list of prompt rollout versions.
