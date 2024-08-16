@@ -2,18 +2,9 @@
 title: Get Started
 ---
 
-The default option for self-hosting Literal AI is to use the public Docker image on the Docker registry. This image can be pulled and run on any machine with Docker installed.
+To self host the Literal AI platform, you will need to deploy the Docker image on your infrastructure. The Docker image is available on a private registry. You will need to [contact us](https://forms.gle/uyKyZmmpVET95Wbx8) to get access to the registry.
 
-While this is the easiest way to get started, it does require the platform to authenticate with our servers. In the future it may have some light telemetry to help us improve the platform, but **this will never include the content of the conversations between your users and your LLM application**.
-
-<Tip>If you need to run the platform in an air-gapped environment, you can contact us [here](https://forms.gle/uyKyZmmpVET95Wbx8) to get access to the private Docker image. This version of the platform can be run without needing to authenticate with our servers.</Tip>
-
-# Registering your self-hosted platform
-
-To register your self-hosted platform, please fill the form [here](https://distrib.literalai.com/register.html). You will then receive an email containing the following :
-
-* Your Literal Client ID
-* Your Literal Authorization Token
+<Tip>If you are looking to try out the platform, you can use the [cloud hosted version](https://cloud.getliteral.ai/) for free!</Tip>
 
 # Deploying the Image
 
@@ -30,7 +21,7 @@ You have several options for hosting the platform:
 <Card
   title="AWS"
   icon="aws"
-  color="black"
+  color="#FF9900"
   href="https://github.com/Chainlit/literal-on-aws">
     Deploy the Literal AI platform on AWS in a few minutes with the CDK.
 </Card>
