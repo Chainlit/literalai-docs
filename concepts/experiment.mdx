@@ -141,11 +141,21 @@ experiment = literalai_client.api.create_experiment(
     params=[{"foo": "bar"}]  # optional
 )
 
-# Run the experiment the same way as before, except that the inputs are coming from the dataset
+@literalai_client.experiment_item_run
+def run_and_eval(item):
+    output = my_agent(item.input)
+    experiment_item = {
+      # Notice that the experiment item is now linked to the dataset item
+      "datasetItemId": item.id,
+      "scores": score_output(output),
+      "input": input,
+      "output": output
+    }
+    experiment.log(experiment_item)
 
 def run_experiment():
     for item in dataset.items:
-        run_and_eval(item.input)
+        run_and_eval(item)
 ```
 ```typescript TypeScript
 const datasetId = 'MY_DATASET_ID';
@@ -158,9 +168,22 @@ async function main() {
         params: { foo: 'bar' } // optional
     });
 
-    dataset?.items.forEach((item) => {
-    // Run the experiment the same way as before, except that the inputs are coming from the dataset
-    });
+    for (const item of dataset.items) {
+        await literalaiClient.experimentItemRun().wrap(async () => {
+            const agentOutput = await myAgent(item.input);
+            const scores = scoreOutput(agentOutput);
+
+            const experimentItem = {
+                // Notice that the experiment item is now linked to the dataset item
+                datasetItemId: item.id,
+                scores: scores,
+                input: item.input,
+                output: agentOutput
+            };
+
+            await experiment.log(experimentItem);
+        });
+    }
 }
 ```
 </CodeGroup>

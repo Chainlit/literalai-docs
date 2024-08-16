@@ -166,6 +166,25 @@ When pulling a prompt template without specifying a version, Literal AI will use
 
 By default the `v0` will have a rollout of 100%. You can change the rollout probabilities in the Prompts page.
 
+### Update from Code
+
+You can also update the A/B testing rollout probabilities from your code:
+
+<CodeGroup>
+```python Python
+literalai_client.api.update_prompt_ab_testing(
+    "MY_PROMPT",
+    [{ "version": 0, "rollout": 0.5 }, { "version": 1, "rollout": 0.5 }]
+    )
+```
+```typescript TypeScript
+await literalAiClient.api.updatePromptAbTesting(
+    "MY_PROMPT",
+    [{ version: 0, rollout: 0.5 }, { version: 1, rollout: 0.5 }]
+    )
+```
+</CodeGroup>
+
 ## Experiments
 
 You can test a specific prompt template version against a dataset and a set of evaluators to measure the performance of the prompt and avoid regressions.

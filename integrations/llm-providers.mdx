@@ -20,7 +20,7 @@ cb = lai.langchain_callback()
 gpt_4o.invoke("what's your name", config=RunnableConfig(callbacks=[cb]))
 claude_opus.invoke("what's your name", config=RunnableConfig(callbacks=[cb]))
 
-lai.flush_and_stop()
+lai.flush()
 ```
 
 
@@ -50,50 +50,3 @@ model.invoke([message], {
 </CodeGroup>
 
 You can thus monitor Anthropic, Mistral AI, Cohere and many other LLM providers. Full list [here](https://python.langchain.com/docs/integrations/platforms/).
-
-## Link prompts to logged generations
-
-The above code allows you to log all LLM calls. Now, let's connect it to prompt capabilities, creating a virtuous cycle.
-
-1. Save the prompt template on Literal AI 
-<Frame caption="Prompt Template">
-  <img
-    src="/images/template-prompt.png"
-    alt="Prompt Template"
-  />
-</Frame>
-
-2. Run the code to pull the prompt and iterate from there
-
-```python Python
-from literalai import LiteralClient
-from langchain.schema.runnable.config import RunnableConfig
-from langchain.chat_models import init_chat_model
-from dotenv import load_dotenv
-load_dotenv()
-
-lai = LiteralClient()  # Initialize LiteralClient
-
-# Get prompt containing: prompt template, model provider, and model settings
-prompt = lai.api.get_prompt(name="user intent")
-
-messages = prompt.to_langchain_chat_prompt_template()
-inp = messages.format_messages(
-    support_ticket="The screen is cracked, there are scratches on the surface, and a component is missing."
-)
-
-# Initialize any model instance supported by LangChain
-gpt_4o = init_chat_model(model_provider=prompt.provider, **prompt.settings)
-
-# Literal AI LangChain Callback
-cb = lai.langchain_callback()
-
-# Invoke the model with input and callback configuration
-completion = gpt_4o.invoke(inp, config=RunnableConfig(callbacks=[cb]))
-
-# Print the completion result
-print(completion)
-
-lai.flush_and_stop()
-```
-

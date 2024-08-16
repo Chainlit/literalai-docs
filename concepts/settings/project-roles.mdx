@@ -2,27 +2,33 @@
 title: Projects & Roles
 ---
 
-With the ability to create projects on Literal AI, you can compartmentalize different parts of your LLM Product.
+You can have multiple projects in Literal AI, each with its own set of members, roles, and settings. Projects are the primary way to organize your work and collaborate with your team.
 
-### Creating & inviting members to a Project
+### Create & Invite Members to a Project
 
-To start a new project, navigate to the bottom part and create a new project.
+To create a new project, click on the Project switcher at the bottom of the sidebar and click on `Create Project`.
+
+<Frame caption="Create a New Project">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/create-project.mp4"
+    />
+</Frame>
 
 Once a project is created, you can invite others to collaborate:
 
-1. Go to the project settings.
-2. Invite members by entering their email addresses.
-3. Assign roles to each member.
-
-<Frame caption="Invite a collaborator">
-  <img src="/images/members.jpg" alt="Invite a collaborator" />
-</Frame>
+1. Go to the project `Settings`.
+2. Go to the `Team` tab.
+3. Click on the `+` button.
 
 ### Role Based Access Control (RBAC)
 
 Project administrators hold the responsibility of assigning and managing permissions for all team members. Permissions in Literal AI are packaged as the following set of roles :
 
-####Supported roles
+#### Supported roles
 
 - **Admin**: Full access to the project, including team management, project settings, and all resources.
 - **AI Engineer**: Manages observability data, API keys, and AI prompts. Cannot alter project settings or team roles.
@@ -43,23 +49,15 @@ Feel free to reach out to us to create a custom role: contact@literalai.com
 
 ### Managing Literal AI API Keys
 
-You can then navigate to the "Settings > General" tab in your project, access the "Literal AI API Keys" section, generate a new API key, and use it in your application.
+To copy or create a new API key, go to the `Settings` page and look for the **Literal AI API Keys** section.
 
-### Managing LLM API Keys
-
-You can find more information on managing your credentials [here](/concepts/prompt#credentials).
+Each API key is associated with a specific project, user and role.
 
 ### Project-level settings
 
 Project-level settings in Literal AI:
 
-- **LLM Providers**: Set up credentials for LLM providers like Groq, Anthropic, OpenAI, and Mistral.
-- **Tags**: Organize project threads and steps with tags. Add or remove as needed.
-- **Score Templates**: Craft score templates to assess LLM application performance.
-
-See documentation for setup details or contact support for help.
-
-<Frame caption="Project-level settings">
-  <img src="/images/settings-panel.jpg" alt="Project-level settings"/>
-</Frame>
+- **LLM Provider Credentials**
+- **Tags**
+- **Score Schemas**
 

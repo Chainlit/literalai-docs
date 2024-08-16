@@ -1,58 +1,78 @@
 ---
 title: "Annotation Queues"
+description: "Annotation Queues help you organise and streamline the human evaluation process. You can easily set-up queues, add data for review and provide an accessible and efficient ui for domain experts to score, tag and add to datasets crucial insights."
 ---
-
-The Literal AI platform helps you organise and streamline the human evaluation process by easily setting-up annotation queues.
-Each queue let you add data for review and provides an accessible and efficient ui for domain experts to score, tag and add to datasets crucial insights.
 
 ## Creating an annotation queue
 
-You can access your queues on the "Annotation Queues" page, and create them by pressing the "+" button in the top right corner of the table.
+You can access your queues on the `Annotation Queues` page, and create one by clicking the `+` button in the top right corner of the table.
 
 <Frame caption="Annotation Queues Page">
-  <img src="/images/create-annotation-queue.png" alt="Create annotation queue" />
+  <img src="/images/create-queue.gif" alt="Create annotation queue" />
 </Frame>
 
 This will open a modal form, that you can fill with a **name** to identify the annotation queue and a **description** to convey the queue meaning.
-
-<Frame caption="Create Annotation Queue Form">
-  <img src="/images/create-annotation-queue-form.png" alt="Create annotation queue form" />
-</Frame>
 
 <Note>Each new project comes with a "Default" annotation queue.</Note>
 
 ## Populating a queue with data
 
-With your queues created you can manually add items to review by accessing your run/generation logs, selecting them and clicking "Add to Annotation Queue".
+Once you have created a queue, you can start adding data to it. You can add runs/generations at once from the logs page. 
 
-<Frame caption="Generation Logs Page">
-  <img src="/images/add-generations-queue.png" alt="Add generations to the queue" />
+<Frame caption="Add Multiple Items to the Annotation Queue">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/add-multiple-to-queue.mp4"
+  />
 </Frame>
 
-To more precisely pick the relevant data you are able to select specific steps.
+You can also add a single item to the queue from a thread/run/generation detail page.
 
-<Frame caption="Generation Detail Page">
-  <img src="/images/add-step-queue.png" alt="Add steps to the queue" />
+<Frame caption="Add a Single Item to the Annotation Queue">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/add-one-to-queue.mp4"
+  />
 </Frame>
 
-## Review queues
+## Streamlined review process
 
-On the "Annotation Queues" page, a reviewer can open a specific queue and start reviewing added items. They can provide you with human feedback by scoring and tagging each item.
+On the `Annotation Queues` page, a reviewer can open a specific queue and start reviewing added items.
 
 <Frame caption="Annotation Queue Item Page">
-  <img src="/images/annotation-item-view.png" alt="The annotation item page" />
+  <img src="/images/annotation-queue.png" alt="The annotation item page" />
 </Frame>
 
-A reviewer can also add a specific step to an existing dataset for further processing.
+A reviewer can:
 
-Finally, once the work is done, they can mark the item as Reviewed.
+- **Score** the item
+- **Tag** the item
+- **Add to Dataset** the item
 
-## More granular control
+Finally, once the review is done, they can mark the item as Reviewed.
 
-To keep track of what is happening in the queues, we also provide a list of Annotation Queue items for super users.
+## Monitor Progress
+
+Admins can monitor the progress of the queues on the `Annotation Queues` page by clicking on the `Admin View` button.
+
 
 <Frame caption="Annotation Queue Items List Page">
-  <img src="/images/annotation-item-list.png" alt="The annotation item list page" />
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/annotation-queue-admin-view.mp4"
+  />
 </Frame>
+
+In this view, the Admin can switch between the `Pending` and `Reviewed` tabs to see how many items are left to review and how many have been reviewed.
+
 
 
