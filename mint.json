@@ -37,10 +37,6 @@
     {
       "name": "TypeScript Client",
       "url": "typescript-client"
-    },
-    {
-      "name": "GraphQL API Reference",
-      "url": "graphql-api-reference"
     }
   ],
   "anchors": [],
