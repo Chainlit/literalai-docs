@@ -53,7 +53,7 @@ from literalai.client import LiteralClient
 
 MY_LITERAL_API_URL = "http://localhost:3000"
 
-sdk = LiteralClient(api_key="YOUR_API_KEY", url=MY_LITERAL_API_URL)
+literalai_client = LiteralClient(api_key="YOUR_API_KEY", url=MY_LITERAL_API_URL)
 ```
 
 ```typescript TypeScript
@@ -61,7 +61,10 @@ import { LiteralClient } from '@literalai/client';
 
 const MY_LITERAL_API_URL = "http://localhost:3000"
 
-const literalClient = new LiteralClient(YOUR_API_KEY, MY_LITERAL_API_URL);
+const literalAiClient = new LiteralClient({
+  apiKey: YOUR_API_KEY,
+  apiUrl: MY_LITERAL_API_URL
+});
 ```
 </CodeGroup>
 
