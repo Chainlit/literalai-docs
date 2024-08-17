@@ -39,7 +39,7 @@ def call_openai(user_input: str):
         messages=[{ "role": "user", "content": user_input }]
     )
 
-call_openai()
+call_openai("Hello world")
 ```
 
 ```typescript TypeScript
@@ -54,7 +54,7 @@ async function callOpenAI(userInput: string) {
     messages: [{ role: 'user', content: userInput }]
   });
 };
-callOpenAI();
+callOpenAI("Hello world");
 ```
 </CodeGroup>
 
@@ -77,7 +77,7 @@ def my_agent(user_input: str):
     get_temperature("paris")
     return "Success"
     
-my_agent()
+my_agent("Hello world")
 
 # Wait for all steps to be sent. This is NOT needed in production code.
 literalai_client.flush()
@@ -112,7 +112,7 @@ async function myAgent(userInput: string) {
     });
 }
 
-myAgent();
+myAgent("Hello world");
 ```
 </CodeGroup>
 
@@ -242,7 +242,7 @@ const threadId = uuidv4();
 // Calling the agent a first time
 processMessage(threadId, "foo");
 // Calling the agent a second time with the same thread ID
-processMessage(threadId), "bar";
+processMessage(threadId, "bar");
 ```
 </CodeGroup>
 
