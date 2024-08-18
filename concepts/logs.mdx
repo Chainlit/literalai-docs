@@ -8,11 +8,12 @@ icon: list-tree
 
 Literal AI approaches LLM logging at three levels:
 1. **Generation**: Log a single LLM call.
-2. **Run**: Log a single invocation of an Agent/Chain invocation, including its intermediate steps. Can contain one or multiple generations.
-3. **Thread**: Log a collection of runs that are part of a single conversation.
+2. **Step**: Log a regular function, which is usually an intermediate step in an LLM system. It can be `tool`, `embedding`, `retrieval`, `other`.
+3. **Run**: Log a single invocation of an Agent/Chain invocation, including its intermediate steps. Can contain one or multiple generations.
+4. **Thread**: Log a collection of runs that are part of a single conversation.
 
-<Frame caption="A Thread containing a run and two generations in Literal AI">
-  <img src="/images/threads-overview.png" alt="Literal AI Platform"/>
+<Frame caption="A Thread containing a run and intermediate steps in Literal AI">
+  <img src="/images/threads-overview.gif" alt="Literal AI Platform"/>
 </Frame>
 
 You can log a generation only (typically for extraction use cases), or log a run only (typically for task automation), or combine them in threads (typically for chatbots). 
