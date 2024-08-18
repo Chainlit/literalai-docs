@@ -5,7 +5,7 @@ icon: database
 ---
 
 ## Dataset Types
-There are two types of datasets in Literal AI: Key Value and Generation. 
+There are two types of datasets in Literal AI: **Key Value** and **Generation**. 
 
 ### Key Value Datasets
 
@@ -44,7 +44,7 @@ expected_output = {
 
 ## Create a Dataset
 
-### From File
+### From a file
 
 You can upload a dataset on Literal AI from a CSV file (Key Value datasets) or a JSONL file (Generation datasets).
 
@@ -60,7 +60,7 @@ To do so, go to the Datasets page and click on the `+` button to create a new da
     />
 </Frame>
 
-### From Code
+### From your code
 
 You can also create a dataset and populate it with items programmatically using the SDK.
 
@@ -113,7 +113,7 @@ const datasetItem = await literalClient.api.createDatasetItem(
 ```
 </CodeGroup>
 
-## Create a Dataset Item from Logs
+### From existing logs
 
 A benefit of managing your datasets and production logs in Literal AI is that you can continuously improve your app by using the logs to create new dataset items.
 
