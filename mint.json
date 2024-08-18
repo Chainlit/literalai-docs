@@ -54,7 +54,7 @@
       "pages": [
         "concepts/logs",
         "concepts/prompt-management",
-        "concepts/rule",
+        "concepts/automated-evaluation",
         "concepts/dataset",
         "concepts/experiment",
         "concepts/annotation-queue",
