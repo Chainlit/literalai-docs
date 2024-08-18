@@ -6,6 +6,13 @@ icon: message-code
 
 <img src="/images/prompt-management.svg" alt="Literal AI Platform"/>
 
+## What is a Prompt Template?
+
+A **Prompt** or **Prompt Template** in Literal AI consists of:
+- the **prompt** i.e. the messages, and its variables
+- the **LLM provider** i.e. OpenAI, Anthropic, etc.
+- the **LLM settings** i.e. temperature, top P, etc.
+
 ## Create a Prompt Template
 
 Go to the Prompt Playground to create your first prompt template.
@@ -157,7 +164,9 @@ Coupled with integrations like [OpenAI](/integrations/openai) or [LangChain](/in
 
 This is especially useful to track the performance of your prompt versions and debug in context.
 
-## A/B Testing
+## A/B Test a Prompt
+
+### On Literal AI
 
 When pulling a prompt template without specifying a version, Literal AI will use the A/B testing rollout probabilities to select the version to use.
 
@@ -167,7 +176,7 @@ When pulling a prompt template without specifying a version, Literal AI will use
 
 By default the `v0` will have a rollout of 100%. You can change the rollout probabilities in the Prompts page.
 
-### Update from Code
+### From your code
 
 You can also update the A/B testing rollout probabilities from your code:
 
@@ -185,6 +194,9 @@ await literalAiClient.api.updatePromptAbTesting(
     )
 ```
 </CodeGroup>
+
+### Add a custom LLM provider
+// TODO 
 
 ## Experiments
 
