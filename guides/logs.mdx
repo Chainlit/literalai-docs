@@ -84,7 +84,11 @@ You can leverage multimodal capabilities on Literal AI in two ways:
 </Frame>
 
 
-## Log an individual Step
+## Log a Run
+
+A Run can be logged **manually with decorators** or with **framework integrations** such as [Llama Index](/integrations/llama-index) or [LangChain](/integrations/langchain).
+
+### Log an intermediate Step
 <CodeGroup>
 ```python Python
 @literalai_client.step(type="tool")
@@ -109,7 +113,7 @@ async function getTemperature(city: string) {
 ```
 </CodeGroup>
 
-### Add metadata and tags
+#### Add metadata and tags
 Metadata serves as a powerful tool for enriching objects with additional context, details, or configuration that can be instrumental in customizing and enhancing the functionality of each object. Specifically, the metadata field is available on Thread, Step, User, and Generation objects within the platform.
 
 **How to add metadata to a Run or a Step**
@@ -146,7 +150,7 @@ async function myRun() {
 ```
 
 </CodeGroup>
-### Add an Attachment
+#### Add an Attachment
 
 You can attach files to a Run or any of its intermediate steps. It is useful for multimodal use cases.
 <Frame caption="Example of attachments">
@@ -192,10 +196,6 @@ async function loadDocument(city: string) {
 </CodeGroup>
 
 
-
-## Log a Run
-
-A Run can be logged manually with decorators or with framework integrations such as [Llama Index](/integrations/llama-index) or [LangChain](/integrations/langchain).
 
 Here is an example with decorators:
 
