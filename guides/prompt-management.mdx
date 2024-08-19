@@ -1,11 +1,11 @@
 ---
 title: Prompt Management
-description: Prompt Management enables collaboration between software and product teams to create, version, A/B test, debug, and monitor prompts directly from Literal AI.
+description: Prompt Management enables collaboration between engineering and product teams to create, version, A/B test, debug, and monitor prompts directly from Literal AI.
 icon: message-code
 ---
-
+<Frame caption="Prompt Management: prompts can be stored in either Literal AI or in your application code.">
 <img src="/images/prompt-management.svg" alt="Literal AI Platform"/>
-
+</Frame>
 ## What is a Prompt Template?
 
 A **Prompt** or **Prompt Template** in Literal AI consists of:
@@ -13,7 +13,14 @@ A **Prompt** or **Prompt Template** in Literal AI consists of:
 - the **LLM provider** i.e. OpenAI, Anthropic, etc.
 - the **LLM settings** i.e. temperature, top P, etc.
 
-## Create a Prompt Template
+Prompts in Literal AI allow you to:
+- Enable product teams and domain experts to draft and iterate on prompts.
+- Deploy new prompt versions without redeploying your code.
+- Track which prompt version was used for a specific generation. Improve prompts by debugging logged LLM generations with context.
+- Compare prompt versions, LLM models, settings and providers to determine which one performs better.
+- Collaborate effectively with your team.
+
+## Create a Prompt
 
 Go to the Prompt Playground to create your first prompt template.
 On the left panel, define the template messages. In each template message, you can define variables following the [Mustache](https://mustache.github.io/mustache.5.html) syntax.
@@ -28,7 +35,7 @@ The Prompt Playground supports multiple LLM providers/models and you can switch 
 
 Once you are happy with the prompt, you click on `Save`.
 
-### Create a New Version
+### Create a new version
 
 Whether to fix a bug or to add a new feature, you can create a new version of a prompt template.
 
@@ -46,7 +53,7 @@ To do so, go to the Prompts page, select the prompt template you want to iterate
 
 Edit the template messages and click on `Save` when you are done. A diff of the changes will be displayed. Optionally provide a changelog to keep track of the changes.
 
-### Create from Code
+### Programmatically
 
 If you prefer to keep your Prompt Template in your code, you can still version it on Literal AI.
 Note that A/B testing is not available if you manage prompt templates in your code.
@@ -73,7 +80,7 @@ Answer:"""
 prompt = literalai_client.api.get_or_create_prompt(
     name=PROMPT_NAME,
     template_messages=template_messages
-    )
+)
 ```
     
 ```typescript TypeScript
@@ -197,6 +204,24 @@ await literalAiClient.api.updatePromptAbTesting(
 
 ## Add a custom LLM provider
 // TODO 
+
+## Add LLM provider credentials
+
+### Local credentials
+
+In order to interact with various providers using the prompt playground you will need to use your own credentials.
+You can directly setup the credentials for the current provider when using the prompt playground.
+Additionally you can access the credentials you defined in the "Settings > LLMs" page.
+
+<Note>The local credentials are stored in the local storage of your browser.</Note>
+
+### Shared credentials
+
+<Warning>Shared credentials are restricted to the admins of a project.</Warning>
+
+To favor collaboration, you can create credentials in the "Settings > LLMs" page. Once created any admin users of a project will be able to use it in the prompt playground. It is important that we are not exposing shared credentials' keys to the client.
+
+<Note>The shared credentials are stored online, and the key is encrypted.</Note>
 
 ## Experiments
 
