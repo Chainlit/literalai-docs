@@ -5,12 +5,7 @@ versions perform better than previous ones."
 icon: flask
 ---
 
-An experiment should be run when you want to evaluate the performance of your prompt/agent.
-
-To run an experiment, you need:
-- A prompt or agent to evaluate.
-- A set of inputs/expected outputs (usually a [Dataset](/concepts/dataset)).
-- A set of metrics to evaluate the output of your prompt/agent against the expected output.
+An experiment evaluates the performance of your **LLM system** (simple prompt or multi-step LLM chain/agent) against a **dataset** and a set of **evaluation metrics**.
 
 <Frame caption="An experiment logged on Literal AI">
   <video
@@ -22,11 +17,9 @@ To run an experiment, you need:
     />
 </Frame>
 
-## Offline Experiments
+## Run an experiment from your code
 
-Offline Experiments are not running directly on Literal AI, instead they are run on your local machine or on your own infrastructure.
-
-This allow you to run complex experiments with your own code and tools and then log the results on Literal AI.
+Complex multi-step LLM systems are heavily dependent on your code and instrastructure. Literal AI enables you to evaluate your LLM systems from your own code and then log the results on Literal AI.
 
 Here is a naive example of how you can run an experiment with Literal AI:
 
@@ -112,7 +105,7 @@ main();
 ```
 </CodeGroup>
 
-### With a Dataset
+### Link it to a Literal AI Dataset
 
 The best way to run an experiment is to use a [Dataset](/concepts/dataset) to store your inputs and expected outputs. This way you can track on which data your experiment was run and compare the results of different experiments.
 
@@ -189,7 +182,7 @@ async function main() {
 ```
 </CodeGroup>
 
-### Evaluate a Prompt
+### Link it to a Literal AI Prompt
 
 If you are evaluating a prompt [living on Literal AI](concepts/prompt-management), you can bind it to the experiment to track the performance of the prompt.
 
@@ -222,9 +215,9 @@ async function main() {
 </CodeGroup>
 
 
-## Online Experiments
+## Run an experiment on Literal AI
 
-Online Experiments are running directly on Literal AI. This allows you to run experiments without having to manage the infrastructure.
+Experiments can be ran directly on Literal AI. This allows you to run experiments without having to manage the infrastructure.
 However then can only be used to evaluate prompts managed on Literal AI, see [Prompt Management](/concepts/prompt-management).
 
 🚧 Work in progress, coming soon 🚧
