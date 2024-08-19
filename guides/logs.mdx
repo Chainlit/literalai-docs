@@ -7,10 +7,10 @@ icon: list-tree
 ## Semantics
 
 Literal AI approaches LLM logging at three levels:
-1. **Generation**: Log a single LLM call.
-2. **Step**: Log a regular function, which is usually an intermediate step in an LLM system. It can be `tool`, `embedding`, `retrieval`, `other`.
-3. **Run**: Log a single invocation of an Agent/Chain invocation, including its intermediate steps. Can contain one or multiple generations.
-4. **Thread**: Log a collection of runs that are part of a single conversation.
+1. **Generation**: Log of a single LLM call. (Generations are Steps.)
+2. **Step**: Log of a regular function, which is usually an intermediate step in an LLM system. It can be `tool`, `embedding`, `retrieval`, `other`. Steps can be considered as Spans.
+3. **Run**: Trace of an Agent/Chain run, including its intermediate steps. Can contain one or multiple generations. 
+4. **Thread**: A collection of Runs that are part of a single conversation.
 
 <Frame caption="A Thread containing a run and intermediate steps in Literal AI">
   <img src="/images/threads-overview.gif" alt="Literal AI Platform"/>
