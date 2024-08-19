@@ -5,6 +5,10 @@
 
 SRC_DIR=../literalai-typescript
 OUTPUT_DIR=typescript-client/api-reference
+TMP_DIR=typescript-client/api-reference/tmp
+
+# keep the dir of this script to use it as a base dir
+BASEDIR=$(pwd)
 
 # switch flags to change the src and output directories
 for i in "$@"
@@ -24,9 +28,20 @@ do
     esac
 done
 
+FILES=(
+    "api"
+    "thread"
+    "step"
+)
+
 # if output directory does not exist, create it
 if [ ! -d "$OUTPUT_DIR" ]; then
     mkdir -p $OUTPUT_DIR
+fi
+
+# if tmp directory does not exist, create it
+if [ ! -d "$TMP_DIR" ]; then
+    mkdir -p $TMP_DIR
 fi
 
 # get the absolute path of the output directory
@@ -44,8 +59,40 @@ echo "\033[1;33mCurrent directory: $(pwd)\033[0m"
 # install the dependencies
 npm install
 
-# Generate the documentation
-npx typedoc --out $OUTPUT_DIR --tsconfig tsconfig.json src/api.ts
+for i in "${FILES[@]}"; do
+    echo "Writing docs for $i in $OUTPUT_DIR/$i.mdx"
+    # Generate the documentation
 
-# rename the generated file api-reference.mdx
-mv $OUTPUT_DIR/README.md $OUTPUT_DIR/api-reference.mdx
+    if [ "$i" = "api" ]; then
+        npx typedoc --out $TMP_DIR --tsconfig tsconfig.json src/$i.ts --name $i
+    else
+        npx typedoc --out $TMP_DIR --tsconfig tsconfig.json src/observability/$i.ts
+    fi
+    cp $TMP_DIR/README.md $OUTPUT_DIR/$i.mdx
+done
+
+rm -rf $TMP_DIR/README.md
+
+cd $BASEDIR
+
+for i in "${FILES[@]}"; do
+
+    # remove the 6 first lines (very bad solution, but removes useless auto-generated stuff)
+    sed -i '' '1,2d' $OUTPUT_DIR/$i.mdx
+
+    # remove the 2 last lines (very bad solution, but removes useless auto-generated stuff)
+    sed -i '' '$d' $OUTPUT_DIR/$i.mdx
+    sed -i '' '$d' $OUTPUT_DIR/$i.mdx
+
+    # replace arguments and returns from title 6 to bold plain text
+    sed -E -i '' -f "scripts/change_headers6_to_bold.txt" $OUTPUT_DIR/$i.mdx
+
+    # replace title 5 with title 3
+    sed -E -i '' -f "scripts/replace_title5_title3.txt" $OUTPUT_DIR/$i.mdx
+
+    # zoom_subtitles_special
+    sed -E -i '' -f "scripts/zoom_subtitles_special.txt" $OUTPUT_DIR/$i.mdx
+
+    python3 scripts/make_returns_tables.py $OUTPUT_DIR/$i.mdx
+
+done

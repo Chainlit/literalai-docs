@@ -1,10 +1,9 @@
 <a id="literalai.api.__init__"></a>
 
-# literalai.api.\_\_init\_\_
 
 <a id="literalai.api.__init__.LiteralAPI"></a>
 
-## LiteralAPI Objects
+## LiteralAPI
 
 ```python
 class LiteralAPI(BaseLiteralAPI)
@@ -23,19 +22,19 @@ Executes a GraphQL call with the provided query and variables.
 
 **Arguments**:
 
-- `description` _str_ - Description of the GraphQL operation for logging purposes.
-- `query` _str_ - The GraphQL query to be executed.
-- `variables` _Dict[str, Any]_ - Variables required for the GraphQL query.
+<ResponseField name="description" type="str">Description of the GraphQL operation for logging purposes.</ResponseField>
+<ResponseField name="query" type="str">The GraphQL query to be executed.</ResponseField>
+<ResponseField name="variables" type="Dict[str, Any]">Variables required for the GraphQL query.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The JSON response from the GraphQL endpoint.
+<ResponseField name="Dict">The JSON response from the GraphQL endpoint.</ResponseField>
   
 
 **Raises**:
 
-- `Exception` - If the GraphQL call fails or returns errors.
+<ResponseField name="Exception">If the GraphQL call fails or returns errors.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.make_rest_call"></a>
 
@@ -49,13 +48,13 @@ Executes a REST API call to the specified subpath with the given body.
 
 **Arguments**:
 
-- `subpath` _str_ - The subpath of the REST API endpoint.
-- `body` _Dict[str, Any]_ - The JSON body to send with the POST request.
+<ResponseField name="subpath" type="str">The subpath of the REST API endpoint.</ResponseField>
+<ResponseField name="body" type="Dict[str, Any]">The JSON body to send with the POST request.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The JSON response from the REST API endpoint.
+<ResponseField name="Dict">The JSON response from the REST API endpoint.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.gql_helper"></a>
 
@@ -70,15 +69,15 @@ Helper function to make a GraphQL call and process the response.
 
 **Arguments**:
 
-- `query` _str_ - The GraphQL query to execute.
-- `description` _str_ - Description of the GraphQL operation for logging purposes.
-- `variables` _Dict_ - Variables required for the GraphQL query.
-- `process_response` _Callable[..., R]_ - A function to process the response.
+<ResponseField name="query" type="str">The GraphQL query to execute.</ResponseField>
+<ResponseField name="description" type="str">Description of the GraphQL operation for logging purposes.</ResponseField>
+<ResponseField name="variables" type="Dict">Variables required for the GraphQL query.</ResponseField>
+<ResponseField name="process_response" type="Callable[..., R]">A function to process the response.</ResponseField>
   
 
 **Returns**:
 
-- `R` - The result of processing the response.
+<ResponseField name="R">The result of processing the response.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.get_users"></a>
 
@@ -95,15 +94,15 @@ Retrieves a list of users based on pagination and optional filters.
 
 **Arguments**:
 
-- `first` _Optional[int]_ - The number of users to retrieve.
-- `after` _Optional[str]_ - A cursor for use in pagination, fetching records after this cursor.
-- `before` _Optional[str]_ - A cursor for use in pagination, fetching records before this cursor.
+<ResponseField name="first" type="Optional[int]">The number of users to retrieve.</ResponseField>
+<ResponseField name="after" type="Optional[str]">A cursor for use in pagination, fetching records after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">A cursor for use in pagination, fetching records before this cursor.</ResponseField>
 - `filters` _Optional[users_filters]_ - Filters to apply to the user query.
   
 
 **Returns**:
 
-- `Dict` - A dictionary containing the queried user data.
+<ResponseField name="Dict">A dictionary containing the queried user data.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.get_user"></a>
 
@@ -117,8 +116,8 @@ Retrieves a user based on the provided ID or identifier.
 
 **Arguments**:
 
-- `id` _Optional[str]_ - The unique ID of the user.
-- `identifier` _Optional[str]_ - A unique identifier for the user, such as a username or email.
+<ResponseField name="id" type="Optional[str]">The unique ID of the user.</ResponseField>
+<ResponseField name="identifier" type="Optional[str]">A unique identifier for the user, such as a username or email.</ResponseField>
   
 
 **Returns**:
@@ -137,8 +136,8 @@ Creates a new user with the specified identifier and optional metadata.
 
 **Arguments**:
 
-- `identifier` _str_ - A unique identifier for the user, such as a username or email.
-- `metadata` _Optional[Dict]_ - Additional data associated with the user.
+<ResponseField name="identifier" type="str">A unique identifier for the user, such as a username or email.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional data associated with the user.</ResponseField>
   
 
 **Returns**:
@@ -159,9 +158,9 @@ Updates an existing user identified by the given ID, with optional new identifie
 
 **Arguments**:
 
-- `id` _str_ - The unique ID of the user to update.
-- `identifier` _Optional[str]_ - A new identifier for the user, such as a username or email.
-- `metadata` _Optional[Dict]_ - New or updated metadata for the user.
+<ResponseField name="id" type="str">The unique ID of the user to update.</ResponseField>
+<ResponseField name="identifier" type="Optional[str]">A new identifier for the user, such as a username or email.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">New or updated metadata for the user.</ResponseField>
   
 
 **Returns**:
@@ -180,7 +179,7 @@ Deletes a user identified by the given ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique ID of the user to delete.
+<ResponseField name="id" type="str">The unique ID of the user to delete.</ResponseField>
   
 
 **Returns**:
@@ -199,8 +198,8 @@ Retrieves a user by their identifier, or creates a new user if they do not exist
 
 **Arguments**:
 
-- `identifier` _str_ - The identifier of the user to retrieve or create.
-- `metadata` _Optional[Dict]_ - Metadata to associate with the user if they are created.
+<ResponseField name="identifier" type="str">The identifier of the user to retrieve or create.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata to associate with the user if they are created.</ResponseField>
   
 
 **Returns**:
@@ -224,9 +223,9 @@ Fetches a list of threads based on pagination and optional filters.
 
 **Arguments**:
 
-- `first` _Optional[int]_ - Number of threads to fetch.
-- `after` _Optional[str]_ - Cursor for pagination, fetch threads after this cursor.
-- `before` _Optional[str]_ - Cursor for pagination, fetch threads before this cursor.
+<ResponseField name="first" type="Optional[int]">Number of threads to fetch.</ResponseField>
+<ResponseField name="after" type="Optional[str]">Cursor for pagination, fetch threads after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">Cursor for pagination, fetch threads before this cursor.</ResponseField>
 - `filters` _Optional[threads_filters]_ - Filters to apply on the threads query.
 - `order_by` _Optional[threads_order_by]_ - Order by clause for threads.
   
@@ -262,9 +261,9 @@ result = literal_client.api.list_threads(filters=filters)
 
 **Arguments**:
 
-- `first` _Optional[int]_ - Number of threads to list.
-- `after` _Optional[str]_ - Cursor for pagination, list threads after this cursor.
-- `before` _Optional[str]_ - Cursor for pagination, list threads before this cursor.
+<ResponseField name="first" type="Optional[int]">Number of threads to list.</ResponseField>
+<ResponseField name="after" type="Optional[str]">Cursor for pagination, list threads after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">Cursor for pagination, list threads before this cursor.</ResponseField>
 - `filters` _Optional[threads_filters]_ - Filters to apply on the threads listing.
 - `order_by` _Optional[threads_order_by]_ - Order by clause for threads.
   
@@ -285,7 +284,7 @@ Retrieves a single thread by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the thread.
+<ResponseField name="id" type="str">The unique identifier of the thread.</ResponseField>
   
 
 **Returns**:
@@ -308,11 +307,11 @@ Creates a new thread with the specified details.
 
 **Arguments**:
 
-- `name` _Optional[str]_ - Name of the thread.
-- `metadata` _Optional[Dict]_ - Metadata associated with the thread.
-- `participant_id` _Optional[str]_ - Identifier for the participant.
-- `environment` _Optional[str]_ - Environment in which the thread operates.
-- `tags` _Optional[List[str]]_ - List of tags associated with the thread.
+<ResponseField name="name" type="Optional[str]">Name of the thread.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the thread.</ResponseField>
+<ResponseField name="participant_id" type="Optional[str]">Identifier for the participant.</ResponseField>
+<ResponseField name="environment" type="Optional[str]">Environment in which the thread operates.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">List of tags associated with the thread.</ResponseField>
   
 
 **Returns**:
@@ -336,12 +335,12 @@ Updates an existing thread or creates a new one if it does not exist.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the thread.
-- `name` _Optional[str]_ - Name of the thread.
-- `metadata` _Optional[Dict]_ - Metadata associated with the thread.
-- `participant_id` _Optional[str]_ - Identifier for the participant.
-- `environment` _Optional[str]_ - Environment in which the thread operates.
-- `tags` _Optional[List[str]]_ - List of tags associated with the thread.
+<ResponseField name="id" type="str">The unique identifier of the thread.</ResponseField>
+<ResponseField name="name" type="Optional[str]">Name of the thread.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the thread.</ResponseField>
+<ResponseField name="participant_id" type="Optional[str]">Identifier for the participant.</ResponseField>
+<ResponseField name="environment" type="Optional[str]">Environment in which the thread operates.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">List of tags associated with the thread.</ResponseField>
   
 
 **Returns**:
@@ -365,12 +364,12 @@ Updates the specified details of an existing thread.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the thread to update.
-- `name` _Optional[str]_ - New name of the thread.
-- `metadata` _Optional[Dict]_ - New metadata for the thread.
-- `participant_id` _Optional[str]_ - New identifier for the participant.
-- `environment` _Optional[str]_ - New environment for the thread.
-- `tags` _Optional[List[str]]_ - New list of tags for the thread.
+<ResponseField name="id" type="str">The unique identifier of the thread to update.</ResponseField>
+<ResponseField name="name" type="Optional[str]">New name of the thread.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">New metadata for the thread.</ResponseField>
+<ResponseField name="participant_id" type="Optional[str]">New identifier for the participant.</ResponseField>
+<ResponseField name="environment" type="Optional[str]">New environment for the thread.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">New list of tags for the thread.</ResponseField>
   
 
 **Returns**:
@@ -389,7 +388,7 @@ Deletes a thread identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the thread to delete.
+<ResponseField name="id" type="str">The unique identifier of the thread to delete.</ResponseField>
   
 
 **Returns**:
@@ -415,14 +414,14 @@ Creates a single score in the database.
 
 **Arguments**:
 
-- `name` _str_ - The name of the score.
-- `value` _float_ - The numerical value of the score.
-- `type` _ScoreType_ - The type of the score.
-- `step_id` _Optional[str]_ - The ID of the step associated with the score.
-- `generation_id` _Optional[str]_ - The ID of the generation associated with the score.
-- `dataset_experiment_item_id` _Optional[str]_ - The ID of the dataset experiment item associated with the score.
-- `comment` _Optional[str]_ - An optional comment about the score.
-- `tags` _Optional[List[str]]_ - Optional tags associated with the score.
+<ResponseField name="name" type="str">The name of the score.</ResponseField>
+<ResponseField name="value" type="float">The numerical value of the score.</ResponseField>
+<ResponseField name="type" type="ScoreType">The type of the score.</ResponseField>
+<ResponseField name="step_id" type="Optional[str]">The ID of the step associated with the score.</ResponseField>
+<ResponseField name="generation_id" type="Optional[str]">The ID of the generation associated with the score.</ResponseField>
+<ResponseField name="dataset_experiment_item_id" type="Optional[str]">The ID of the dataset experiment item associated with the score.</ResponseField>
+<ResponseField name="comment" type="Optional[str]">An optional comment about the score.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">Optional tags associated with the score.</ResponseField>
   
 
 **Returns**:
@@ -441,8 +440,8 @@ Updates a score identified by its ID with new parameters.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the score to update.
-- `update_params` _ScoreUpdate_ - A dictionary of parameters to update in the score.
+<ResponseField name="id" type="str">The unique identifier of the score to update.</ResponseField>
+<ResponseField name="update_params" type="ScoreUpdate">A dictionary of parameters to update in the score.</ResponseField>
   
 
 **Returns**:
@@ -461,7 +460,7 @@ Deletes a score identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the score to delete.
+<ResponseField name="id" type="str">The unique identifier of the score to delete.</ResponseField>
   
 
 **Returns**:
@@ -482,14 +481,14 @@ Uploads a file to the server.
 
 **Arguments**:
 
-- `content` _Union[bytes, str]_ - The content of the file to upload.
-- `thread_id` _Optional[str]_ - The ID of the thread associated with the file.
-- `mime` _Optional[str]_ - The MIME type of the file. Defaults to 'application/octet-stream'.
+<ResponseField name="content" type="Union[bytes, str]">The content of the file to upload.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str]">The ID of the thread associated with the file.</ResponseField>
+<ResponseField name="mime" type="Optional[str]">The MIME type of the file. Defaults to 'application/octet-stream'.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - A dictionary containing the object key and URL of the uploaded file, or None values if the upload fails.
+<ResponseField name="Dict">A dictionary containing the object key and URL of the uploaded file, or None values if the upload fails.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.create_attachment"></a>
 
@@ -512,21 +511,21 @@ Creates an attachment associated with a thread and step, potentially uploading f
 
 **Arguments**:
 
-- `thread_id` _str_ - The ID of the thread to which the attachment is linked.
-- `step_id` _str_ - The ID of the step to which the attachment is linked.
-- `id` _Optional[str]_ - The ID of the attachment, if updating an existing one.
-- `metadata` _Optional[Dict]_ - Metadata associated with the attachment.
-- `mime` _Optional[str]_ - MIME type of the file, if content is provided.
-- `name` _Optional[str]_ - Name of the attachment.
-- `object_key` _Optional[str]_ - Object key of the uploaded file, if already known.
-- `url` _Optional[str]_ - URL of the uploaded file, if already known.
-- `content` _Optional[Union[bytes, str]]_ - File content to upload.
-- `path` _Optional[str]_ - Path where the file should be stored.
+<ResponseField name="thread_id" type="str">The ID of the thread to which the attachment is linked.</ResponseField>
+<ResponseField name="step_id" type="str">The ID of the step to which the attachment is linked.</ResponseField>
+<ResponseField name="id" type="Optional[str]">The ID of the attachment, if updating an existing one.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the attachment.</ResponseField>
+<ResponseField name="mime" type="Optional[str]">MIME type of the file, if content is provided.</ResponseField>
+<ResponseField name="name" type="Optional[str]">Name of the attachment.</ResponseField>
+<ResponseField name="object_key" type="Optional[str]">Object key of the uploaded file, if already known.</ResponseField>
+<ResponseField name="url" type="Optional[str]">URL of the uploaded file, if already known.</ResponseField>
+<ResponseField name="content" type="Optional[Union[bytes, str]]">File content to upload.</ResponseField>
+<ResponseField name="path" type="Optional[str]">Path where the file should be stored.</ResponseField>
   
 
 **Returns**:
 
-- `Attachment` - The created or updated attachment object.
+<ResponseField name="Attachment">The created or updated attachment object.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.update_attachment"></a>
 
@@ -540,8 +539,8 @@ Updates an existing attachment with new parameters.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the attachment to update.
-- `update_params` _AttachmentUpload_ - The parameters to update in the attachment.
+<ResponseField name="id" type="str">The unique identifier of the attachment to update.</ResponseField>
+<ResponseField name="update_params" type="AttachmentUpload">The parameters to update in the attachment.</ResponseField>
   
 
 **Returns**:
@@ -560,7 +559,7 @@ Retrieves an attachment by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the attachment to retrieve.
+<ResponseField name="id" type="str">The unique identifier of the attachment to retrieve.</ResponseField>
   
 
 **Returns**:
@@ -579,7 +578,7 @@ Deletes an attachment identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the attachment to delete.
+<ResponseField name="id" type="str">The unique identifier of the attachment to delete.</ResponseField>
   
 
 **Returns**:
@@ -601,24 +600,22 @@ def create_step(thread_id: Optional[str] = None,
                 parent_id: Optional[str] = None,
                 name: Optional[str] = None,
                 tags: Optional[List[str]] = None)
-                root_run_id: Optional[str] = None
 ```
 
 Creates a new step with the specified parameters.
 
 **Arguments**:
 
-- `thread_id` _Optional[str]_ - The ID of the thread this step is associated with.
-- `type` _Optional[StepType]_ - The type of the step, defaults to "undefined".
-- `start_time` _Optional[str]_ - The start time of the step.
-- `end_time` _Optional[str]_ - The end time of the step.
-- `input` _Optional[Dict]_ - Input data for the step.
-- `output` _Optional[Dict]_ - Output data from the step.
-- `metadata` _Optional[Dict]_ - Metadata associated with the step.
-- `parent_id` _Optional[str]_ - The ID of the parent step, if any.
-- `name` _Optional[str]_ - The name of the step.
-- `tags` _Optional[List[str]]_ - Tags associated with the step.
-- `root_run_id` _Optional[str]_ - The ID of root run step, if any.
+<ResponseField name="thread_id" type="Optional[str]">The ID of the thread this step is associated with.</ResponseField>
+<ResponseField name="type" type="Optional[StepType]">The type of the step, defaults to "undefined".</ResponseField>
+<ResponseField name="start_time" type="Optional[str]">The start time of the step.</ResponseField>
+<ResponseField name="end_time" type="Optional[str]">The end time of the step.</ResponseField>
+<ResponseField name="input" type="Optional[Dict]">Input data for the step.</ResponseField>
+<ResponseField name="output" type="Optional[Dict]">Output data from the step.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the step.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The ID of the parent step, if any.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the step.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">Tags associated with the step.</ResponseField>
   
 
 **Returns**:
@@ -646,16 +643,16 @@ Updates an existing step identified by its ID with new parameters.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the step to update.
-- `type` _Optional[StepType]_ - The type of the step.
-- `input` _Optional[str]_ - Input data for the step.
-- `output` _Optional[str]_ - Output data from the step.
-- `metadata` _Optional[Dict]_ - Metadata associated with the step.
-- `name` _Optional[str]_ - The name of the step.
-- `tags` _Optional[List[str]]_ - Tags associated with the step.
-- `start_time` _Optional[str]_ - The start time of the step.
-- `end_time` _Optional[str]_ - The end time of the step.
-- `parent_id` _Optional[str]_ - The ID of the parent step, if any.
+<ResponseField name="id" type="str">The unique identifier of the step to update.</ResponseField>
+<ResponseField name="type" type="Optional[StepType]">The type of the step.</ResponseField>
+<ResponseField name="input" type="Optional[str]">Input data for the step.</ResponseField>
+<ResponseField name="output" type="Optional[str]">Output data from the step.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the step.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the step.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">Tags associated with the step.</ResponseField>
+<ResponseField name="start_time" type="Optional[str]">The start time of the step.</ResponseField>
+<ResponseField name="end_time" type="Optional[str]">The end time of the step.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The ID of the parent step, if any.</ResponseField>
   
 
 **Returns**:
@@ -679,9 +676,9 @@ Fetches a list of steps based on pagination and optional filters.
 
 **Arguments**:
 
-- `first` _Optional[int]_ - Number of steps to fetch.
-- `after` _Optional[str]_ - Cursor for pagination, fetch steps after this cursor.
-- `before` _Optional[str]_ - Cursor for pagination, fetch steps before this cursor.
+<ResponseField name="first" type="Optional[int]">Number of steps to fetch.</ResponseField>
+<ResponseField name="after" type="Optional[str]">Cursor for pagination, fetch steps after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">Cursor for pagination, fetch steps before this cursor.</ResponseField>
 - `filters` _Optional[steps_filters]_ - Filters to apply on the steps query.
 - `order_by` _Optional[steps_order_by]_ - Order by clause for steps.
   
@@ -702,7 +699,7 @@ Retrieves a step by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the step to retrieve.
+<ResponseField name="id" type="str">The unique identifier of the step to retrieve.</ResponseField>
   
 
 **Returns**:
@@ -721,7 +718,7 @@ Deletes a step identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the step to delete.
+<ResponseField name="id" type="str">The unique identifier of the step to delete.</ResponseField>
   
 
 **Returns**:
@@ -740,7 +737,7 @@ Sends a list of steps to be processed.
 
 **Arguments**:
 
-- `steps` _List[Union[StepDict, "Step"]]_ - A list of steps or step dictionaries to send.
+<ResponseField name="steps" type="List[Union[StepDict, Step]]">A list of steps or step dictionaries to send.</ResponseField>
   
 
 **Returns**:
@@ -763,9 +760,9 @@ Fetches a list of generations based on pagination and optional filters.
 
 **Arguments**:
 
-- `first` _Optional[int]_ - The number of generations to retrieve.
-- `after` _Optional[str]_ - A cursor for use in pagination, fetching records after this cursor.
-- `before` _Optional[str]_ - A cursor for use in pagination, fetching records before this cursor.
+<ResponseField name="first" type="Optional[int]">The number of generations to retrieve.</ResponseField>
+<ResponseField name="after" type="Optional[str]">A cursor for use in pagination, fetching records after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">A cursor for use in pagination, fetching records before this cursor.</ResponseField>
 - `filters` _Optional[generations_filters]_ - Filters to apply to the generations query.
 - `order_by` _Optional[generations_order_by]_ - Order by clause for generations.
   
@@ -786,7 +783,7 @@ Creates a new generation, either a chat or completion type.
 
 **Arguments**:
 
-- `generation` _Union[ChatGeneration, CompletionGeneration]_ - The generation data to create.
+<ResponseField name="generation" type="Union[ChatGeneration, CompletionGeneration]">The generation data to create.</ResponseField>
   
 
 **Returns**:
@@ -808,10 +805,10 @@ Creates a new dataset with the specified properties.
 
 **Arguments**:
 
-- `name` _str_ - The name of the dataset.
-- `description` _Optional[str]_ - A description of the dataset.
-- `metadata` _Optional[Dict]_ - Additional metadata for the dataset.
-- `type` _DatasetType_ - The type of the dataset, defaults to "key_value".
+<ResponseField name="name" type="str">The name of the dataset.</ResponseField>
+<ResponseField name="description" type="Optional[str]">A description of the dataset.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional metadata for the dataset.</ResponseField>
+<ResponseField name="type" type="DatasetType">The type of the dataset, defaults to "key_value".</ResponseField>
   
 
 **Returns**:
@@ -830,8 +827,8 @@ Retrieves a dataset by its ID or name.
 
 **Arguments**:
 
-- `id` _Optional[str]_ - The unique identifier of the dataset.
-- `name` _Optional[str]_ - The name of the dataset.
+<ResponseField name="id" type="Optional[str]">The unique identifier of the dataset.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the dataset.</ResponseField>
   
 
 **Returns**:
@@ -853,10 +850,10 @@ Updates an existing dataset identified by its ID with new properties.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the dataset to update.
-- `name` _Optional[str]_ - A new name for the dataset.
-- `description` _Optional[str]_ - A new description for the dataset.
-- `metadata` _Optional[Dict]_ - New or updated metadata for the dataset.
+<ResponseField name="id" type="str">The unique identifier of the dataset to update.</ResponseField>
+<ResponseField name="name" type="Optional[str]">A new name for the dataset.</ResponseField>
+<ResponseField name="description" type="Optional[str]">A new description for the dataset.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">New or updated metadata for the dataset.</ResponseField>
   
 
 **Returns**:
@@ -875,7 +872,7 @@ Deletes a dataset identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the dataset to delete.
+<ResponseField name="id" type="str">The unique identifier of the dataset to delete.</ResponseField>
   
 
 **Returns**:
@@ -897,15 +894,15 @@ Creates a new experiment associated with a specific dataset.
 
 **Arguments**:
 
-- `dataset_id` _str_ - The unique identifier of the dataset.
-- `name` _str_ - The name of the experiment.
-- `prompt_id` _Optional[str]_ - The identifier of the prompt associated with the experiment.
-- `params` _Optional[Dict]_ - Additional parameters for the experiment.
+<ResponseField name="dataset_id" type="str">The unique identifier of the dataset.</ResponseField>
+<ResponseField name="name" type="str">The name of the experiment.</ResponseField>
+<ResponseField name="prompt_id" type="Optional[str]">The identifier of the prompt associated with the experiment.</ResponseField>
+<ResponseField name="params" type="Optional[Dict]">Additional parameters for the experiment.</ResponseField>
   
 
 **Returns**:
 
-- `DatasetExperiment` - The newly created experiment object.
+<ResponseField name="DatasetExperiment">The newly created experiment object.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.create_experiment_item"></a>
 
@@ -920,12 +917,12 @@ Creates an experiment item within an existing experiment.
 
 **Arguments**:
 
-- `experiment_item` _DatasetExperimentItem_ - The experiment item to be created, containing all necessary data.
+<ResponseField name="experiment_item" type="DatasetExperimentItem">The experiment item to be created, containing all necessary data.</ResponseField>
   
 
 **Returns**:
 
-- `DatasetExperimentItem` - The newly created experiment item with scores attached.
+<ResponseField name="DatasetExperimentItem">The newly created experiment item with scores attached.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.create_dataset_item"></a>
 
@@ -942,15 +939,15 @@ Creates a new dataset item with the specified properties.
 
 **Arguments**:
 
-- `dataset_id` _str_ - The unique identifier of the dataset.
-- `input` _Dict_ - The input data for the dataset item.
-- `expected_output` _Optional[Dict]_ - The expected output data for the dataset item.
-- `metadata` _Optional[Dict]_ - Additional metadata for the dataset item.
+<ResponseField name="dataset_id" type="str">The unique identifier of the dataset.</ResponseField>
+<ResponseField name="input" type="Dict">The input data for the dataset item.</ResponseField>
+<ResponseField name="expected_output" type="Optional[Dict]">The expected output data for the dataset item.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional metadata for the dataset item.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The result of the dataset item creation operation.
+<ResponseField name="Dict">The result of the dataset item creation operation.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.get_dataset_item"></a>
 
@@ -964,12 +961,12 @@ Retrieves a dataset item by its unique identifier.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the dataset item to retrieve.
+<ResponseField name="id" type="str">The unique identifier of the dataset item to retrieve.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The dataset item data.
+<ResponseField name="Dict">The dataset item data.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.delete_dataset_item"></a>
 
@@ -983,12 +980,12 @@ Deletes a dataset item by its unique identifier.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the dataset item to delete.
+<ResponseField name="id" type="str">The unique identifier of the dataset item to delete.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The result of the dataset item deletion operation.
+<ResponseField name="Dict">The result of the dataset item deletion operation.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.add_step_to_dataset"></a>
 
@@ -1004,14 +1001,14 @@ Adds a step to a dataset.
 
 **Arguments**:
 
-- `dataset_id` _str_ - The unique identifier of the dataset.
-- `step_id` _str_ - The unique identifier of the step to add.
-- `metadata` _Optional[Dict]_ - Additional metadata for the step being added.
+<ResponseField name="dataset_id" type="str">The unique identifier of the dataset.</ResponseField>
+<ResponseField name="step_id" type="str">The unique identifier of the step to add.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional metadata for the step being added.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The result of adding the step to the dataset.
+<ResponseField name="Dict">The result of adding the step to the dataset.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.add_generation_to_dataset"></a>
 
@@ -1027,14 +1024,14 @@ Adds a generation to a dataset.
 
 **Arguments**:
 
-- `dataset_id` _str_ - The unique identifier of the dataset.
-- `generation_id` _str_ - The unique identifier of the generation to add.
-- `metadata` _Optional[Dict]_ - Additional metadata for the generation being added.
+<ResponseField name="dataset_id" type="str">The unique identifier of the dataset.</ResponseField>
+<ResponseField name="generation_id" type="str">The unique identifier of the generation to add.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional metadata for the generation being added.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The result of adding the generation to the dataset.
+<ResponseField name="Dict">The result of adding the generation to the dataset.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.create_prompt_lineage"></a>
 
@@ -1048,13 +1045,13 @@ Creates a prompt lineage with the specified name and optional description.
 
 **Arguments**:
 
-- `name` _str_ - The name of the prompt lineage.
-- `description` _Optional[str]_ - An optional description of the prompt lineage.
+<ResponseField name="name" type="str">The name of the prompt lineage.</ResponseField>
+<ResponseField name="description" type="Optional[str]">An optional description of the prompt lineage.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The result of the prompt lineage creation operation.
+<ResponseField name="Dict">The result of the prompt lineage creation operation.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.get_or_create_prompt"></a>
 
@@ -1073,14 +1070,14 @@ Otherwise, a new prompt is created.
 
 **Arguments**:
 
-- `name` _str_ - The name of the prompt to retrieve or create.
-- `template_messages` _List[GenerationMessage]_ - A list of template messages for the prompt.
-- `settings` _Optional[Dict]_ - Optional settings for the prompt.
+<ResponseField name="name" type="str">The name of the prompt to retrieve or create.</ResponseField>
+<ResponseField name="template_messages" type="List[GenerationMessage]">A list of template messages for the prompt.</ResponseField>
+<ResponseField name="settings" type="Optional[Dict]">Optional settings for the prompt.</ResponseField>
   
 
 **Returns**:
 
-- `Prompt` - The prompt that was retrieved or created.
+<ResponseField name="Prompt">The prompt that was retrieved or created.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.get_prompt"></a>
 
@@ -1101,14 +1098,14 @@ If both are provided, the `id` is used.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the prompt to retrieve.
-- `name` _str_ - The name of the prompt to retrieve.
-- `version` _Optional[int]_ - The version number of the prompt to retrieve.
+<ResponseField name="id" type="str">The unique identifier of the prompt to retrieve.</ResponseField>
+<ResponseField name="name" type="str">The name of the prompt to retrieve.</ResponseField>
+<ResponseField name="version" type="Optional[int]">The version number of the prompt to retrieve.</ResponseField>
   
 
 **Returns**:
 
-- `Prompt` - The prompt with the given identifier or name.
+<ResponseField name="Prompt">The prompt with the given identifier or name.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.get_my_project_id"></a>
 
@@ -1126,7 +1123,7 @@ Retrieves the projectId associated to the API key.
 
 <a id="literalai.api.__init__.AsyncLiteralAPI"></a>
 
-## AsyncLiteralAPI Objects
+## AsyncLiteralAPI
 
 ```python
 class AsyncLiteralAPI(BaseLiteralAPI)
@@ -1145,19 +1142,19 @@ Asynchronously makes a GraphQL call using the provided query and variables.
 
 **Arguments**:
 
-- `description` _str_ - Description of the GraphQL operation for logging purposes.
-- `query` _str_ - The GraphQL query to be executed.
-- `variables` _Dict[str, Any]_ - Variables required for the GraphQL query.
+<ResponseField name="description" type="str">Description of the GraphQL operation for logging purposes.</ResponseField>
+<ResponseField name="query" type="str">The GraphQL query to be executed.</ResponseField>
+<ResponseField name="variables" type="Dict[str, Any]">Variables required for the GraphQL query.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The JSON response from the GraphQL endpoint.
+<ResponseField name="Dict">The JSON response from the GraphQL endpoint.</ResponseField>
   
 
 **Raises**:
 
-- `Exception` - If the GraphQL call fails or returns errors.
+<ResponseField name="Exception">If the GraphQL call fails or returns errors.</ResponseField>
 
 <a id="literalai.api.__init__.AsyncLiteralAPI.make_rest_call"></a>
 
@@ -1171,13 +1168,13 @@ Asynchronously makes a REST API call to a specified subpath with the provided bo
 
 **Arguments**:
 
-- `subpath` _str_ - The endpoint subpath to which the POST request is made.
-- `body` _Dict[str, Any]_ - The JSON body of the POST request.
+<ResponseField name="subpath" type="str">The endpoint subpath to which the POST request is made.</ResponseField>
+<ResponseField name="body" type="Dict[str, Any]">The JSON body of the POST request.</ResponseField>
   
 
 **Returns**:
 
-- `Dict` - The JSON response from the REST API endpoint.
+<ResponseField name="Dict">The JSON response from the REST API endpoint.</ResponseField>
 
 <a id="literalai.api.__init__.AsyncLiteralAPI.gql_helper"></a>
 
@@ -1192,15 +1189,15 @@ Helper function to process a GraphQL query by making an asynchronous call and pr
 
 **Arguments**:
 
-- `query` _str_ - The GraphQL query to be executed.
-- `description` _str_ - Description of the GraphQL operation for logging purposes.
-- `variables` _Dict_ - Variables required for the GraphQL query.
-- `process_response` _Callable[..., R]_ - The function to process the response.
+<ResponseField name="query" type="str">The GraphQL query to be executed.</ResponseField>
+<ResponseField name="description" type="str">Description of the GraphQL operation for logging purposes.</ResponseField>
+<ResponseField name="variables" type="Dict">Variables required for the GraphQL query.</ResponseField>
+<ResponseField name="process_response" type="Callable[..., R]">The function to process the response.</ResponseField>
   
 
 **Returns**:
 
-- `R` - The result of processing the response.
+<ResponseField name="R">The result of processing the response.</ResponseField>
 
 <a id="literalai.api.__init__.AsyncLiteralAPI.get_users"></a>
 
@@ -1217,9 +1214,9 @@ Asynchronously fetches a list of users based on pagination and optional filters.
 
 **Arguments**:
 
-- `first` _Optional[int]_ - The number of users to retrieve.
-- `after` _Optional[str]_ - A cursor for use in pagination, fetching records after this cursor.
-- `before` _Optional[str]_ - A cursor for use in pagination, fetching records before this cursor.
+<ResponseField name="first" type="Optional[int]">The number of users to retrieve.</ResponseField>
+<ResponseField name="after" type="Optional[str]">A cursor for use in pagination, fetching records after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">A cursor for use in pagination, fetching records before this cursor.</ResponseField>
 - `filters` _Optional[users_filters]_ - Filters to apply to the user query.
   
 
@@ -1239,8 +1236,8 @@ Asynchronously retrieves a user by ID or identifier.
 
 **Arguments**:
 
-- `id` _Optional[str]_ - The unique identifier of the user to retrieve.
-- `identifier` _Optional[str]_ - An alternative identifier for the user.
+<ResponseField name="id" type="Optional[str]">The unique identifier of the user to retrieve.</ResponseField>
+<ResponseField name="identifier" type="Optional[str]">An alternative identifier for the user.</ResponseField>
   
 
 **Returns**:
@@ -1259,8 +1256,8 @@ Asynchronously creates a new user with the specified identifier and optional met
 
 **Arguments**:
 
-- `identifier` _str_ - The identifier for the new user.
-- `metadata` _Optional[Dict]_ - Additional metadata for the user.
+<ResponseField name="identifier" type="str">The identifier for the new user.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional metadata for the user.</ResponseField>
   
 
 **Returns**:
@@ -1281,9 +1278,9 @@ Asynchronously updates an existing user identified by ID with new identifier and
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the user to update.
-- `identifier` _Optional[str]_ - New identifier for the user.
-- `metadata` _Optional[Dict]_ - New metadata for the user.
+<ResponseField name="id" type="str">The unique identifier of the user to update.</ResponseField>
+<ResponseField name="identifier" type="Optional[str]">New identifier for the user.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">New metadata for the user.</ResponseField>
   
 
 **Returns**:
@@ -1302,7 +1299,7 @@ Asynchronously deletes a user identified by ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the user to delete.
+<ResponseField name="id" type="str">The unique identifier of the user to delete.</ResponseField>
   
 
 **Returns**:
@@ -1321,8 +1318,8 @@ Asynchronously retrieves a user by identifier or creates a new one if it does no
 
 **Arguments**:
 
-- `identifier` _str_ - The identifier of the user to retrieve or create.
-- `metadata` _Optional[Dict]_ - Metadata for the user if creation is necessary.
+<ResponseField name="identifier" type="str">The identifier of the user to retrieve or create.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata for the user if creation is necessary.</ResponseField>
   
 
 **Returns**:
@@ -1346,9 +1343,9 @@ Asynchronously fetches a list of threads based on pagination and optional filter
 
 **Arguments**:
 
-- `first` _Optional[int]_ - The number of threads to retrieve.
-- `after` _Optional[str]_ - A cursor for use in pagination, fetching records after this cursor.
-- `before` _Optional[str]_ - A cursor for use in pagination, fetching records before this cursor.
+<ResponseField name="first" type="Optional[int]">The number of threads to retrieve.</ResponseField>
+<ResponseField name="after" type="Optional[str]">A cursor for use in pagination, fetching records after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">A cursor for use in pagination, fetching records before this cursor.</ResponseField>
 - `filters` _Optional[threads_filters]_ - Filters to apply to the thread query.
 - `order_by` _Optional[threads_order_by]_ - Ordering criteria for the threads.
   
@@ -1373,9 +1370,9 @@ Asynchronously lists threads based on pagination and optional filters and orderi
 
 **Arguments**:
 
-- `first` _Optional[int]_ - The number of threads to list.
-- `after` _Optional[str]_ - A cursor for use in pagination, fetching records after this cursor.
-- `before` _Optional[str]_ - A cursor for use in pagination, fetching records before this cursor.
+<ResponseField name="first" type="Optional[int]">The number of threads to list.</ResponseField>
+<ResponseField name="after" type="Optional[str]">A cursor for use in pagination, fetching records after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">A cursor for use in pagination, fetching records before this cursor.</ResponseField>
 - `filters` _Optional[threads_filters]_ - Filters to apply to the thread query.
 - `order_by` _Optional[threads_order_by]_ - Ordering criteria for the threads.
   
@@ -1396,7 +1393,7 @@ Asynchronously retrieves a thread by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the thread to retrieve.
+<ResponseField name="id" type="str">The unique identifier of the thread to retrieve.</ResponseField>
   
 
 **Returns**:
@@ -1419,11 +1416,11 @@ Asynchronously creates a new thread with specified details.
 
 **Arguments**:
 
-- `name` _Optional[str]_ - The name of the thread.
-- `metadata` _Optional[Dict]_ - Metadata associated with the thread.
-- `participant_id` _Optional[str]_ - Identifier for the participant associated with the thread.
-- `environment` _Optional[str]_ - The environment in which the thread operates.
-- `tags` _Optional[List[str]]_ - Tags associated with the thread.
+<ResponseField name="name" type="Optional[str]">The name of the thread.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the thread.</ResponseField>
+<ResponseField name="participant_id" type="Optional[str]">Identifier for the participant associated with the thread.</ResponseField>
+<ResponseField name="environment" type="Optional[str]">The environment in which the thread operates.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">Tags associated with the thread.</ResponseField>
   
 
 **Returns**:
@@ -1447,12 +1444,12 @@ Asynchronously updates or inserts a thread based on the provided ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the thread to upsert.
-- `name` _Optional[str]_ - The name of the thread.
-- `metadata` _Optional[Dict]_ - Metadata associated with the thread.
-- `participant_id` _Optional[str]_ - Identifier for the participant associated with the thread.
-- `environment` _Optional[str]_ - The environment in which the thread operates.
-- `tags` _Optional[List[str]]_ - Tags associated with the thread.
+<ResponseField name="id" type="str">The unique identifier of the thread to upsert.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the thread.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the thread.</ResponseField>
+<ResponseField name="participant_id" type="Optional[str]">Identifier for the participant associated with the thread.</ResponseField>
+<ResponseField name="environment" type="Optional[str]">The environment in which the thread operates.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">Tags associated with the thread.</ResponseField>
   
 
 **Returns**:
@@ -1476,12 +1473,12 @@ Asynchronously updates an existing thread identified by ID with new details.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the thread to update.
-- `name` _Optional[str]_ - New name of the thread.
-- `metadata` _Optional[Dict]_ - New metadata for the thread.
-- `participant_id` _Optional[str]_ - New identifier for the participant.
-- `environment` _Optional[str]_ - New environment for the thread.
-- `tags` _Optional[List[str]]_ - New list of tags for the thread.
+<ResponseField name="id" type="str">The unique identifier of the thread to update.</ResponseField>
+<ResponseField name="name" type="Optional[str]">New name of the thread.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">New metadata for the thread.</ResponseField>
+<ResponseField name="participant_id" type="Optional[str]">New identifier for the participant.</ResponseField>
+<ResponseField name="environment" type="Optional[str]">New environment for the thread.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">New list of tags for the thread.</ResponseField>
   
 
 **Returns**:
@@ -1500,7 +1497,7 @@ Asynchronously deletes a thread identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the thread to delete.
+<ResponseField name="id" type="str">The unique identifier of the thread to delete.</ResponseField>
   
 
 **Returns**:
@@ -1523,9 +1520,9 @@ Asynchronously fetches scores based on pagination and optional filters.
 
 **Arguments**:
 
-- `first` _Optional[int]_ - The number of scores to retrieve.
-- `after` _Optional[str]_ - A cursor for use in pagination, fetching records after this cursor.
-- `before` _Optional[str]_ - A cursor for use in pagination, fetching records before this cursor.
+<ResponseField name="first" type="Optional[int]">The number of scores to retrieve.</ResponseField>
+<ResponseField name="after" type="Optional[str]">A cursor for use in pagination, fetching records after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">A cursor for use in pagination, fetching records before this cursor.</ResponseField>
 - `filters` _Optional[scores_filters]_ - Filters to apply to the scores query.
 - `order_by` _Optional[scores_order_by]_ - Ordering options for the scores.
   
@@ -1546,7 +1543,7 @@ Asynchronously creates multiple scores.
 
 **Arguments**:
 
-- `scores` _List[ScoreDict]_ - A list of dictionaries representing the scores to be created.
+<ResponseField name="scores" type="List[ScoreDict]">A list of dictionaries representing the scores to be created.</ResponseField>
   
 
 **Returns**:
@@ -1572,14 +1569,14 @@ Asynchronously creates a single score.
 
 **Arguments**:
 
-- `name` _str_ - The name of the score.
-- `value` _float_ - The numerical value of the score.
-- `type` _ScoreType_ - The type of the score.
-- `step_id` _Optional[str]_ - The ID of the step associated with the score.
-- `generation_id` _Optional[str]_ - The ID of the generation associated with the score.
-- `dataset_experiment_item_id` _Optional[str]_ - The ID of the dataset experiment item associated with the score.
-- `comment` _Optional[str]_ - A comment associated with the score.
-- `tags` _Optional[List[str]]_ - A list of tags associated with the score.
+<ResponseField name="name" type="str">The name of the score.</ResponseField>
+<ResponseField name="value" type="float">The numerical value of the score.</ResponseField>
+<ResponseField name="type" type="ScoreType">The type of the score.</ResponseField>
+<ResponseField name="step_id" type="Optional[str]">The ID of the step associated with the score.</ResponseField>
+<ResponseField name="generation_id" type="Optional[str]">The ID of the generation associated with the score.</ResponseField>
+<ResponseField name="dataset_experiment_item_id" type="Optional[str]">The ID of the dataset experiment item associated with the score.</ResponseField>
+<ResponseField name="comment" type="Optional[str]">A comment associated with the score.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">A list of tags associated with the score.</ResponseField>
   
 
 **Returns**:
@@ -1598,8 +1595,8 @@ Asynchronously updates a score identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the score to update.
-- `update_params` _ScoreUpdate_ - A dictionary of parameters to update.
+<ResponseField name="id" type="str">The unique identifier of the score to update.</ResponseField>
+<ResponseField name="update_params" type="ScoreUpdate">A dictionary of parameters to update.</ResponseField>
   
 
 **Returns**:
@@ -1618,7 +1615,7 @@ Asynchronously deletes a score identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the score to delete.
+<ResponseField name="id" type="str">The unique identifier of the score to delete.</ResponseField>
   
 
 **Returns**:
@@ -1640,9 +1637,9 @@ Asynchronously uploads a file to the server.
 
 **Arguments**:
 
-- `content` _Union[bytes, str]_ - The content of the file to upload.
-- `thread_id` _str_ - The ID of the thread associated with the file.
-- `mime` _Optional[str]_ - The MIME type of the file.
+<ResponseField name="content" type="Union[bytes, str]">The content of the file to upload.</ResponseField>
+<ResponseField name="thread_id" type="str">The ID of the thread associated with the file.</ResponseField>
+<ResponseField name="mime" type="Optional[str]">The MIME type of the file.</ResponseField>
   
 
 **Returns**:
@@ -1670,16 +1667,16 @@ Asynchronously creates an attachment and uploads it if content is provided.
 
 **Arguments**:
 
-- `thread_id` _str_ - The ID of the thread associated with the attachment.
-- `step_id` _str_ - The ID of the step associated with the attachment.
-- `id` _Optional[str]_ - An optional unique identifier for the attachment.
-- `metadata` _Optional[Dict]_ - Optional metadata for the attachment.
-- `mime` _Optional[str]_ - The MIME type of the attachment.
-- `name` _Optional[str]_ - The name of the attachment.
-- `object_key` _Optional[str]_ - The object key for the attachment if already uploaded.
-- `url` _Optional[str]_ - The URL of the attachment if already uploaded.
-- `content` _Optional[Union[bytes, str]]_ - The content of the attachment to upload.
-- `path` _Optional[str]_ - The file path of the attachment if it is to be uploaded from a local file.
+<ResponseField name="thread_id" type="str">The ID of the thread associated with the attachment.</ResponseField>
+<ResponseField name="step_id" type="str">The ID of the step associated with the attachment.</ResponseField>
+<ResponseField name="id" type="Optional[str]">An optional unique identifier for the attachment.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Optional metadata for the attachment.</ResponseField>
+<ResponseField name="mime" type="Optional[str]">The MIME type of the attachment.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the attachment.</ResponseField>
+<ResponseField name="object_key" type="Optional[str]">The object key for the attachment if already uploaded.</ResponseField>
+<ResponseField name="url" type="Optional[str]">The URL of the attachment if already uploaded.</ResponseField>
+<ResponseField name="content" type="Optional[Union[bytes, str]]">The content of the attachment to upload.</ResponseField>
+<ResponseField name="path" type="Optional[str]">The file path of the attachment if it is to be uploaded from a local file.</ResponseField>
   
 
 **Returns**:
@@ -1698,8 +1695,8 @@ Asynchronously updates an attachment identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the attachment to update.
-- `update_params` _AttachmentUpload_ - A dictionary of parameters to update the attachment.
+<ResponseField name="id" type="str">The unique identifier of the attachment to update.</ResponseField>
+<ResponseField name="update_params" type="AttachmentUpload">A dictionary of parameters to update the attachment.</ResponseField>
   
 
 **Returns**:
@@ -1718,7 +1715,7 @@ Asynchronously retrieves an attachment by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the attachment to retrieve.
+<ResponseField name="id" type="str">The unique identifier of the attachment to retrieve.</ResponseField>
   
 
 **Returns**:
@@ -1737,7 +1734,7 @@ Asynchronously deletes an attachment identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the attachment to delete.
+<ResponseField name="id" type="str">The unique identifier of the attachment to delete.</ResponseField>
   
 
 **Returns**:
@@ -1759,24 +1756,22 @@ async def create_step(thread_id: Optional[str] = None,
                       parent_id: Optional[str] = None,
                       name: Optional[str] = None,
                       tags: Optional[List[str]] = None)
-                      root_run_id: Optional[str] = None
 ```
 
 Asynchronously creates a new step with the specified parameters.
 
 **Arguments**:
 
-- `thread_id` _Optional[str]_ - The ID of the thread associated with the step.
-- `type` _Optional[StepType]_ - The type of the step, defaults to "undefined".
-- `start_time` _Optional[str]_ - The start time of the step.
-- `end_time` _Optional[str]_ - The end time of the step.
-- `input` _Optional[Dict]_ - Input data for the step.
-- `output` _Optional[Dict]_ - Output data from the step.
-- `metadata` _Optional[Dict]_ - Metadata associated with the step.
-- `parent_id` _Optional[str]_ - The ID of the parent step, if any.
-- `name` _Optional[str]_ - The name of the step.
-- `tags` _Optional[List[str]]_ - Tags associated with the step.
-- `root_run_id` _Optional[str]_ - The ID of root run step, if any.
+<ResponseField name="thread_id" type="Optional[str]">The ID of the thread associated with the step.</ResponseField>
+<ResponseField name="type" type="Optional[StepType]">The type of the step, defaults to "undefined".</ResponseField>
+<ResponseField name="start_time" type="Optional[str]">The start time of the step.</ResponseField>
+<ResponseField name="end_time" type="Optional[str]">The end time of the step.</ResponseField>
+<ResponseField name="input" type="Optional[Dict]">Input data for the step.</ResponseField>
+<ResponseField name="output" type="Optional[Dict]">Output data from the step.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the step.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The ID of the parent step, if any.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the step.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">Tags associated with the step.</ResponseField>
   
 
 **Returns**:
@@ -1804,16 +1799,16 @@ Asynchronously updates an existing step identified by its ID with new parameters
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the step to update.
-- `type` _Optional[StepType]_ - The type of the step.
-- `input` _Optional[str]_ - Input data for the step.
-- `output` _Optional[str]_ - Output data from the step.
-- `metadata` _Optional[Dict]_ - Metadata associated with the step.
-- `name` _Optional[str]_ - The name of the step.
-- `tags` _Optional[List[str]]_ - Tags associated with the step.
-- `start_time` _Optional[str]_ - The start time of the step.
-- `end_time` _Optional[str]_ - The end time of the step.
-- `parent_id` _Optional[str]_ - The ID of the parent step, if any.
+<ResponseField name="id" type="str">The unique identifier of the step to update.</ResponseField>
+<ResponseField name="type" type="Optional[StepType]">The type of the step.</ResponseField>
+<ResponseField name="input" type="Optional[str]">Input data for the step.</ResponseField>
+<ResponseField name="output" type="Optional[str]">Output data from the step.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the step.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the step.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">Tags associated with the step.</ResponseField>
+<ResponseField name="start_time" type="Optional[str]">The start time of the step.</ResponseField>
+<ResponseField name="end_time" type="Optional[str]">The end time of the step.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The ID of the parent step, if any.</ResponseField>
   
 
 **Returns**:
@@ -1832,7 +1827,7 @@ Asynchronously retrieves a step by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the step to retrieve.
+<ResponseField name="id" type="str">The unique identifier of the step to retrieve.</ResponseField>
   
 
 **Returns**:
@@ -1851,7 +1846,7 @@ Asynchronously deletes a step identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the step to delete.
+<ResponseField name="id" type="str">The unique identifier of the step to delete.</ResponseField>
   
 
 **Returns**:
@@ -1870,7 +1865,7 @@ Asynchronously sends a list of steps to be processed.
 
 **Arguments**:
 
-- `steps` _List[Union[StepDict, "Step"]]_ - A list of steps or step dictionaries to send.
+<ResponseField name="steps" type="List[Union[StepDict, Step]]">A list of steps or step dictionaries to send.</ResponseField>
   
 
 **Returns**:
@@ -1893,9 +1888,9 @@ Asynchronously fetches a list of generations based on pagination and optional fi
 
 **Arguments**:
 
-- `first` _Optional[int]_ - The number of generations to retrieve.
-- `after` _Optional[str]_ - A cursor for use in pagination, fetching records after this cursor.
-- `before` _Optional[str]_ - A cursor for use in pagination, fetching records before this cursor.
+<ResponseField name="first" type="Optional[int]">The number of generations to retrieve.</ResponseField>
+<ResponseField name="after" type="Optional[str]">A cursor for use in pagination, fetching records after this cursor.</ResponseField>
+<ResponseField name="before" type="Optional[str]">A cursor for use in pagination, fetching records before this cursor.</ResponseField>
 - `filters` _Optional[generations_filters]_ - Filters to apply to the generations query.
 - `order_by` _Optional[generations_order_by]_ - Ordering options for the generations.
   
@@ -1917,7 +1912,7 @@ Asynchronously creates a new generation with the specified details.
 
 **Arguments**:
 
-- `generation` _Union[ChatGeneration, CompletionGeneration]_ - The generation data to create.
+<ResponseField name="generation" type="Union[ChatGeneration, CompletionGeneration]">The generation data to create.</ResponseField>
   
 
 **Returns**:
@@ -1939,10 +1934,10 @@ Asynchronously creates a new dataset with the specified details.
 
 **Arguments**:
 
-- `name` _str_ - The name of the dataset.
-- `description` _Optional[str]_ - A description of the dataset.
-- `metadata` _Optional[Dict]_ - Metadata associated with the dataset.
-- `type` _DatasetType_ - The type of the dataset, defaults to "key_value".
+<ResponseField name="name" type="str">The name of the dataset.</ResponseField>
+<ResponseField name="description" type="Optional[str]">A description of the dataset.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the dataset.</ResponseField>
+<ResponseField name="type" type="DatasetType">The type of the dataset, defaults to "key_value".</ResponseField>
   
 
 **Returns**:
@@ -1961,8 +1956,8 @@ Asynchronously retrieves a dataset by its ID or name.
 
 **Arguments**:
 
-- `id` _Optional[str]_ - The unique identifier of the dataset to retrieve.
-- `name` _Optional[str]_ - The name of the dataset to retrieve.
+<ResponseField name="id" type="Optional[str]">The unique identifier of the dataset to retrieve.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the dataset to retrieve.</ResponseField>
   
 
 **Returns**:
@@ -1984,10 +1979,10 @@ Asynchronously updates an existing dataset identified by its ID with new details
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the dataset to update.
-- `name` _Optional[str]_ - The new name of the dataset.
-- `description` _Optional[str]_ - A new description for the dataset.
-- `metadata` _Optional[Dict]_ - New metadata for the dataset.
+<ResponseField name="id" type="str">The unique identifier of the dataset to update.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The new name of the dataset.</ResponseField>
+<ResponseField name="description" type="Optional[str]">A new description for the dataset.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">New metadata for the dataset.</ResponseField>
   
 
 **Returns**:
@@ -2006,7 +2001,7 @@ Asynchronously deletes a dataset identified by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the dataset to delete.
+<ResponseField name="id" type="str">The unique identifier of the dataset to delete.</ResponseField>
   
 
 **Returns**:
@@ -2026,12 +2021,12 @@ Asynchronously creates an item within an experiment.
 
 **Arguments**:
 
-- `experiment_item` _DatasetExperimentItem_ - The experiment item to be created.
+<ResponseField name="experiment_item" type="DatasetExperimentItem">The experiment item to be created.</ResponseField>
   
 
 **Returns**:
 
-- `DatasetExperimentItem` - The created experiment item with updated scores.
+<ResponseField name="DatasetExperimentItem">The created experiment item with updated scores.</ResponseField>
 
 <a id="literalai.api.__init__.AsyncLiteralAPI.create_dataset_item"></a>
 
@@ -2048,10 +2043,10 @@ Asynchronously creates a dataset item.
 
 **Arguments**:
 
-- `dataset_id` _str_ - The unique identifier of the dataset.
-- `input` _Dict_ - The input data for the dataset item.
-- `expected_output` _Optional[Dict]_ - The expected output data for the dataset item.
-- `metadata` _Optional[Dict]_ - Additional metadata for the dataset item.
+<ResponseField name="dataset_id" type="str">The unique identifier of the dataset.</ResponseField>
+<ResponseField name="input" type="Dict">The input data for the dataset item.</ResponseField>
+<ResponseField name="expected_output" type="Optional[Dict]">The expected output data for the dataset item.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional metadata for the dataset item.</ResponseField>
   
 
 **Returns**:
@@ -2070,7 +2065,7 @@ Asynchronously retrieves a dataset item by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the dataset item.
+<ResponseField name="id" type="str">The unique identifier of the dataset item.</ResponseField>
   
 
 **Returns**:
@@ -2089,7 +2084,7 @@ Asynchronously deletes a dataset item by its ID.
 
 **Arguments**:
 
-- `id` _str_ - The unique identifier of the dataset item to delete.
+<ResponseField name="id" type="str">The unique identifier of the dataset item to delete.</ResponseField>
   
 
 **Returns**:
@@ -2110,9 +2105,9 @@ Asynchronously adds a step to a dataset.
 
 **Arguments**:
 
-- `dataset_id` _str_ - The unique identifier of the dataset.
-- `step_id` _str_ - The unique identifier of the step to add.
-- `metadata` _Optional[Dict]_ - Additional metadata for the step being added.
+<ResponseField name="dataset_id" type="str">The unique identifier of the dataset.</ResponseField>
+<ResponseField name="step_id" type="str">The unique identifier of the step to add.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional metadata for the step being added.</ResponseField>
   
 
 **Returns**:
@@ -2133,9 +2128,9 @@ Asynchronously adds a generation to a dataset.
 
 **Arguments**:
 
-- `dataset_id` _str_ - The unique identifier of the dataset.
-- `generation_id` _str_ - The unique identifier of the generation to add.
-- `metadata` _Optional[Dict]_ - Additional metadata for the generation being added.
+<ResponseField name="dataset_id" type="str">The unique identifier of the dataset.</ResponseField>
+<ResponseField name="generation_id" type="str">The unique identifier of the generation to add.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Additional metadata for the generation being added.</ResponseField>
   
 
 **Returns**:
@@ -2154,8 +2149,8 @@ Asynchronously creates a prompt lineage.
 
 **Arguments**:
 
-- `name` _str_ - The name of the prompt lineage.
-- `description` _Optional[str]_ - An optional description of the prompt lineage.
+<ResponseField name="name" type="str">The name of the prompt lineage.</ResponseField>
+<ResponseField name="description" type="Optional[str]">An optional description of the prompt lineage.</ResponseField>
   
 
 **Returns**:

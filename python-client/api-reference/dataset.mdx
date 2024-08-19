@@ -1,0 +1,214 @@
+<a id="literalai.dataset"></a>
+
+
+<a id="literalai.dataset.DatasetDict"></a>
+
+## DatasetDict
+
+```python
+class DatasetDict(TypedDict)
+```
+
+A dictionary representation of a Dataset. All attributes are optional.
+
+**Attributes**:
+
+<ResponseField name="id" type="str">The unique identifier for the dataset.</ResponseField>
+<ResponseField name="createdAt" type="str">The timestamp when the dataset was created.</ResponseField>
+<ResponseField name="metadata" type="Dict[str, Any]">Additional metadata for the dataset.</ResponseField>
+<ResponseField name="name" type="str">The name of the dataset.</ResponseField>
+<ResponseField name="description" type="str">The description of the dataset.</ResponseField>
+<ResponseField name="items" type="List[DatasetItemDict]">The items in the dataset.</ResponseField>
+<ResponseField name="type" type="DatasetType">The type of the dataset.</ResponseField>
+
+<a id="literalai.dataset.Dataset"></a>
+
+## Dataset
+
+```python
+@dataclass(repr=False)
+class Dataset(Utils)
+```
+
+A class representing a dataset of items.
+
+**Attributes**:
+
+<ResponseField name="api" type="LiteralAPI">The API client to handle the dataset.</ResponseField>
+<ResponseField name="id" type="str">The unique identifier for the dataset.</ResponseField>
+<ResponseField name="created_at" type="str">The timestamp when the dataset was created.</ResponseField>
+<ResponseField name="metadata" type="Dict[str, Any]">Additional metadata for the dataset.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the dataset. Defaults to None.</ResponseField>
+<ResponseField name="description" type="Optional[str]">The description of the dataset. Defaults to None.</ResponseField>
+<ResponseField name="items" type="List[DatasetItem]">The items in the dataset. Defaults to [].</ResponseField>
+<ResponseField name="type" type="DatasetType">The type of the dataset. Defaults to "key_value".</ResponseField>
+
+<a id="literalai.dataset.Dataset.to_dict"></a>
+
+#### to\_dict
+
+```python
+def to_dict()
+```
+
+Converts the Dataset object to a DatasetDict dictionary.
+
+**Returns**:
+
+<ResponseField name="DatasetDict">The dictionary representation of the Dataset object.</ResponseField>
+
+<a id="literalai.dataset.Dataset.from_dict"></a>
+
+#### from\_dict
+
+```python
+@classmethod
+def from_dict(cls, api: "LiteralAPI", dataset: DatasetDict) -> "Dataset"
+```
+
+Creates a Dataset object from a DatasetDict dictionary.
+
+**Arguments**:
+
+<ResponseField name="api" type="LiteralAPI">The API client to handle the dataset.</ResponseField>
+<ResponseField name="dataset" type="DatasetDict">The dictionary representation of the Dataset object.</ResponseField>
+  
+
+**Returns**:
+
+<ResponseField name="Dataset">The Dataset object created from the dictionary.</ResponseField>
+
+<a id="literalai.dataset.Dataset.update"></a>
+
+#### update
+
+```python
+def update(name: Optional[str] = None,
+           description: Optional[str] = None,
+           metadata: Optional[Dict] = None)
+```
+
+Updates the name, description, and metadata of the dataset.
+
+**Arguments**:
+
+<ResponseField name="name" type="Optional[str], optional">The new name for the dataset. Defaults to None.</ResponseField>
+<ResponseField name="description" type="Optional[str], optional">The new description for the dataset. Defaults to None.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict], optional">The new metadata for the dataset. Defaults to None.</ResponseField>
+
+<a id="literalai.dataset.Dataset.delete"></a>
+
+#### delete
+
+```python
+def delete()
+```
+
+Deletes the dataset.
+
+<a id="literalai.dataset.Dataset.create_item"></a>
+
+#### create\_item
+
+```python
+def create_item(input: Dict,
+                expected_output: Optional[Dict] = None,
+                metadata: Optional[Dict] = None) -> DatasetItem
+```
+
+Create a new dataset item and add it to this dataset.
+
+**Arguments**:
+
+<ResponseField name="input" type="Dict">The input data for the dataset item.</ResponseField>
+<ResponseField name="expected_output" type="Optional[Dict], optional">The output data for the dataset item. Defaults to None.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict], optional">Metadata for the dataset item. Defaults to None.</ResponseField>
+  
+
+**Returns**:
+
+<ResponseField name="DatasetItem">The created DatasetItem instance.</ResponseField>
+
+<a id="literalai.dataset.Dataset.create_experiment"></a>
+
+#### create\_experiment
+
+```python
+def create_experiment(name: str,
+                      prompt_id: Optional[str] = None,
+                      params: Optional[Dict] = None) -> DatasetExperiment
+```
+
+Creates a new dataset experiment based on this dataset.
+
+**Arguments**:
+
+<ResponseField name="name" type="str">The name of the experiment.</ResponseField>
+<ResponseField name="prompt_id" type="Optional[str], optional">The Prompt ID used on LLM calls. Defaults to None.</ResponseField>
+<ResponseField name="params" type="Optional[Dict], optional">The params used on the experiment. Defaults to None.</ResponseField>
+  
+
+**Returns**:
+
+<ResponseField name="DatasetExperiment">The created DatasetExperiment instance.</ResponseField>
+
+<a id="literalai.dataset.Dataset.delete_item"></a>
+
+#### delete\_item
+
+```python
+def delete_item(item_id: str)
+```
+
+Delete a dataset item from this dataset.
+
+**Arguments**:
+
+<ResponseField name="item_id" type="str">The ID of the dataset item to delete.</ResponseField>
+
+<a id="literalai.dataset.Dataset.add_step"></a>
+
+#### add\_step
+
+```python
+def add_step(step_id: str, metadata: Optional[Dict] = None) -> DatasetItem
+```
+
+Create a new dataset item based on a step and add it to this dataset.
+
+**Arguments**:
+
+<ResponseField name="step_id" type="str">The id of the step to add to the dataset.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict], optional">Metadata for the dataset item. Defaults to None.</ResponseField>
+  
+
+**Returns**:
+
+<ResponseField name="DatasetItem">The created DatasetItem instance.</ResponseField>
+  
+
+**Raises**:
+
+<ResponseField name="ValueError">If the dataset type is "generation".</ResponseField>
+
+<a id="literalai.dataset.Dataset.add_generation"></a>
+
+#### add\_generation
+
+```python
+def add_generation(generation_id: str,
+                   metadata: Optional[Dict] = None) -> DatasetItem
+```
+
+Create a new dataset item based on a generation and add it to this dataset.
+
+**Arguments**:
+
+<ResponseField name="generation_id" type="str">The id of the generation to add to the dataset.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict], optional">Metadata for the dataset item. Defaults to None.</ResponseField>
+  
+
+**Returns**:
+
+<ResponseField name="DatasetItem">The created DatasetItem instance.</ResponseField>
+

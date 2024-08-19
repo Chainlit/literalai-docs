@@ -1,10 +1,9 @@
 <a id="literalai.client"></a>
 
-# literalai.client
 
 <a id="literalai.client.BaseLiteralClient"></a>
 
-## BaseLiteralClient Objects
+## BaseLiteralClient
 
 ```python
 class BaseLiteralClient()
@@ -14,23 +13,23 @@ class BaseLiteralClient()
 
 **Attributes**:
 
-- `api` _Union[LiteralAPI, AsyncLiteralAPI]_ - Instance of the Literal API.
-- `disabled` _bool_ - Flag indicating if the client is disabled.
-- `event_processor` _EventProcessor_ - Processor for handling events.
+<ResponseField name="api" type="Union[LiteralAPI, AsyncLiteralAPI]">Instance of the Literal API.</ResponseField>
+<ResponseField name="disabled" type="bool">Flag indicating if the client is disabled.</ResponseField>
+<ResponseField name="event_processor" type="EventProcessor">Processor for handling events.</ResponseField>
   
 
 **Arguments**:
 
-- `batch_size` _int, optional_ - Batch size for event processing. Defaults to 5.
-- `is_async` _bool, optional_ - Flag indicating if the API should be asynchronous. Defaults to False.
-- `api_key` _Optional[str], optional_ - API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.
-- `url` _Optional[str], optional_ - URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.
-- `disabled` _bool, optional_ - Flag to disable the client. Defaults to False.
+<ResponseField name="batch_size" type="int, optional">Batch size for event processing. Defaults to 5.</ResponseField>
+<ResponseField name="is_async" type="bool, optional">Flag indicating if the API should be asynchronous. Defaults to False.</ResponseField>
+<ResponseField name="api_key" type="Optional[str], optional">API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.</ResponseField>
+<ResponseField name="url" type="Optional[str], optional">URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.</ResponseField>
+<ResponseField name="disabled" type="bool, optional">Flag to disable the client. Defaults to False.</ResponseField>
   
 
 **Raises**:
 
-- `Exception` - If 'LITERAL_API_KEY' is not provided and not found in environment variables.
+<ResponseField name="Exception">If 'LITERAL_API_KEY' is not provided and not found in environment variables.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.to_sync"></a>
 
@@ -44,7 +43,7 @@ Convert the client to synchronous mode.
 
 **Returns**:
 
-- `LiteralClient` - Synchronous LiteralClient instance.
+<ResponseField name="LiteralClient">Synchronous LiteralClient instance.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.instrument_openai"></a>
 
@@ -55,26 +54,6 @@ def instrument_openai()
 ```
 
 Instruments the OpenAI API calls with the current client.
-
-<a id="literalai.client.BaseLiteralClient.instrument_mistralai"></a>
-
-#### instrument\_mistralai
-
-```python
-def instrument_mistralai()
-```
-
-Instruments the Mistral AI API calls with the current client.
-
-<a id="literalai.client.BaseLiteralClient.instrument_llamaindex"></a>
-
-#### instrument\_llamaindex
-
-```python
-def instrument_llamaindex()
-```
-
-Instruments the API calls made by Llamaindex with the current client.
 
 <a id="literalai.client.BaseLiteralClient.langchain_callback"></a>
 
@@ -90,14 +69,35 @@ Get a Langchain callback tracer configured with the client.
 
 **Arguments**:
 
-- `to_ignore` _Optional[List[str]], optional_ - List of event types to ignore. Defaults to None.
-- `to_keep` _Optional[List[str]], optional_ - List of event types to keep. Defaults to None.
-- `**kwargs` - Additional arguments for the tracer.
+<ResponseField name="to_ignore" type="Optional[List[str]], optional">List of event types to ignore. Defaults to None.</ResponseField>
+<ResponseField name="to_keep" type="Optional[List[str]], optional">List of event types to keep. Defaults to None.</ResponseField>
+<ResponseField name="**kwargs">Additional arguments for the tracer.</ResponseField>
   
 
 **Returns**:
 
-- `LangchainTracer` - Configured Langchain tracer.
+<ResponseField name="LangchainTracer">Configured Langchain tracer.</ResponseField>
+
+<a id="literalai.client.BaseLiteralClient.llama_index_callback"></a>
+
+#### llama\_index\_callback
+
+```python
+def llama_index_callback(**kwargs: Any)
+```
+
+Get a Llama Index callback tracer configured with the client.
+
+**Arguments**:
+
+<ResponseField name="**kwargs">Additional arguments for the tracer.</ResponseField>
+  
+
+**Returns**:
+
+<ResponseField name="LlamaIndexTracer">Configured Llama Index tracer.</ResponseField>
+
+<a id="literalai.client.BaseLiteralClient.thread"></a>
 
 #### thread
 
@@ -113,10 +113,10 @@ Decorator or context manager for thread-level event grouping.
 
 **Arguments**:
 
-- `original_function` _callable, optional_ - Function to decorate. Defaults to None.
-- `thread_id` _Optional[str], optional_ - ID of the thread. Defaults to None.
-- `name` _Optional[str], optional_ - Name of the thread. Defaults to None.
-- `**kwargs` - Additional arguments for the thread context manager or decorator.
+<ResponseField name="original_function" type="callable, optional">Function to decorate. Defaults to None.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str], optional">ID of the thread. Defaults to None.</ResponseField>
+<ResponseField name="name" type="Optional[str], optional">Name of the thread. Defaults to None.</ResponseField>
+<ResponseField name="**kwargs">Additional arguments for the thread context manager or decorator.</ResponseField>
   
 
 **Returns**:
@@ -135,7 +135,6 @@ def step(original_function=None,
          id: Optional[str] = None,
          parent_id: Optional[str] = None,
          thread_id: Optional[str] = None,
-         root_run_id: Optional[str] = None,
          **kwargs)
 ```
 
@@ -143,14 +142,13 @@ Decorator or context manager for step-level event grouping.
 
 **Arguments**:
 
-- `original_function` _callable, optional_ - Function to decorate. Defaults to None.
-- `name` _str, optional_ - Name of the step. Defaults to "".
-- `type` _TrueStepType, optional_ - Type of the step. Defaults to "undefined".
-- `id` _Optional[str], optional_ - ID of the step. Defaults to None.
-- `parent_id` _Optional[str], optional_ - Parent ID of the step. Defaults to None.
-- `thread_id` _Optional[str], optional_ - Thread ID of the step. Defaults to None.
-- `root_run_id` _Optional[str], optional_ - Root run ID of the step. Defaults to None.
-- `**kwargs` - Additional arguments for the step context manager or decorator.
+<ResponseField name="original_function" type="callable, optional">Function to decorate. Defaults to None.</ResponseField>
+<ResponseField name="name" type="str, optional">Name of the step. Defaults to "".</ResponseField>
+<ResponseField name="type" type="TrueStepType, optional">Type of the step. Defaults to "undefined".</ResponseField>
+<ResponseField name="id" type="Optional[str], optional">ID of the step. Defaults to None.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str], optional">Parent ID of the step. Defaults to None.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str], optional">Thread ID of the step. Defaults to None.</ResponseField>
+<ResponseField name="**kwargs">Additional arguments for the step context manager or decorator.</ResponseField>
   
 
 **Returns**:
@@ -168,19 +166,17 @@ def run(original_function=None,
         id: Optional[str] = None,
         parent_id: Optional[str] = None,
         thread_id: Optional[str] = None)
-        root_run_id: Optional[str] = None,
 ```
 
 Decorator or context manager for run-level event grouping.
 
 **Arguments**:
 
-- `original_function` _callable, optional_ - Function to decorate. Defaults to None.
-- `name` _str, optional_ - Name of the run. Defaults to "".
-- `id` _Optional[str], optional_ - ID of the run. Defaults to None.
-- `parent_id` _Optional[str], optional_ - Parent ID of the run. Defaults to None.
-- `thread_id` _Optional[str], optional_ - Thread ID of the run. Defaults to None.
-- `root_run_id` _Optional[str], optional_ - Root run ID of the run. Defaults to None.
+<ResponseField name="original_function" type="callable, optional">Function to decorate. Defaults to None.</ResponseField>
+<ResponseField name="name" type="str, optional">Name of the run. Defaults to "".</ResponseField>
+<ResponseField name="id" type="Optional[str], optional">ID of the run. Defaults to None.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str], optional">Parent ID of the run. Defaults to None.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str], optional">Thread ID of the run. Defaults to None.</ResponseField>
   
 
 **Returns**:
@@ -201,28 +197,26 @@ def message(content: str = "",
             attachments: List[Attachment] = [],
             tags: Optional[List[str]] = None,
             metadata: Dict = {})
-            root_run_id: Optional[str] = None,
 ```
 
 Creates and ends a message step.
 
 **Arguments**:
 
-- `content` _str, optional_ - Content of the message. Defaults to "".
-- `id` _Optional[str], optional_ - ID of the message. Defaults to None.
-- `parent_id` _Optional[str], optional_ - Parent ID of the message. Defaults to None.
-- `type` _Optional[MessageStepType], optional_ - Type of the message. Defaults to None.
-- `name` _Optional[str], optional_ - Name of the message. Defaults to None.
-- `thread_id` _Optional[str], optional_ - Thread ID of the message. Defaults to None.
-- `attachments` _List[Attachment], optional_ - List of attachments. Defaults to [].
-- `tags` _Optional[List[str]], optional_ - List of tags. Defaults to None.
-- `metadata` _Dict, optional_ - Metadata for the message. Defaults to {}.
-- `root_run_id` _Optional[str], optional_ - Root run ID of the run. Defaults to None.
+<ResponseField name="content" type="str, optional">Content of the message. Defaults to "".</ResponseField>
+<ResponseField name="id" type="Optional[str], optional">ID of the message. Defaults to None.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str], optional">Parent ID of the message. Defaults to None.</ResponseField>
+<ResponseField name="type" type="Optional[MessageStepType], optional">Type of the message. Defaults to None.</ResponseField>
+<ResponseField name="name" type="Optional[str], optional">Name of the message. Defaults to None.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str], optional">Thread ID of the message. Defaults to None.</ResponseField>
+<ResponseField name="attachments" type="List[Attachment], optional">List of attachments. Defaults to [].</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]], optional">List of tags. Defaults to None.</ResponseField>
+<ResponseField name="metadata" type="Dict, optional">Metadata for the message. Defaults to {}.</ResponseField>
   
 
 **Returns**:
 
-- `Message` - Created message step.
+<ResponseField name="Message">Created message step.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.start_step"></a>
 
@@ -234,7 +228,6 @@ def start_step(name: str = "",
                id: Optional[str] = None,
                parent_id: Optional[str] = None,
                thread_id: Optional[str] = None,
-               root_run_id: Optional[str] = None,
                **kwargs)
 ```
 
@@ -242,18 +235,17 @@ Starts a new step.
 
 **Arguments**:
 
-- `name` _str, optional_ - Name of the step. Defaults to "".
-- `type` _Optional[TrueStepType], optional_ - Type of the step. Defaults to None.
-- `id` _Optional[str], optional_ - ID of the step. Defaults to None.
-- `parent_id` _Optional[str], optional_ - Parent ID of the step. Defaults to None.
-- `thread_id` _Optional[str], optional_ - Thread ID of the step. Defaults to None.
-- `root_run_id` _Optional[str], optional_ - Root run ID of the run. Defaults to None.
-- `**kwargs` - Additional arguments for the step.
+<ResponseField name="name" type="str, optional">Name of the step. Defaults to "".</ResponseField>
+<ResponseField name="type" type="Optional[TrueStepType], optional">Type of the step. Defaults to None.</ResponseField>
+<ResponseField name="id" type="Optional[str], optional">ID of the step. Defaults to None.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str], optional">Parent ID of the step. Defaults to None.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str], optional">Thread ID of the step. Defaults to None.</ResponseField>
+<ResponseField name="**kwargs">Additional arguments for the step.</ResponseField>
   
 
 **Returns**:
 
-- `Step` - Started step.
+<ResponseField name="Step">Started step.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.get_current_step"></a>
 
@@ -267,7 +259,7 @@ Retrieves the current active step.
 
 **Returns**:
 
-- `Optional[Step]` - The current active step or None if no steps are active.
+<ResponseField name="Optional[Step]">The current active step or None if no steps are active.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.get_current_thread"></a>
 
@@ -281,21 +273,7 @@ Retrieves the current active thread.
 
 **Returns**:
 
-- `Optional[ThreadContextManager]` - The current active thread or None if no threads are active.
-
-<a id="literalai.client.BaseLiteralClient.get_root_run"></a>
-
-#### get\_root\_run
-
-```python
-def get_root_run()
-```
-
-Retrieves the active root run step.
-
-**Returns**:
-
-- `Optional[Step]` - The active root run step or None if no runs are active.
+<ResponseField name="Optional[ThreadContextManager]">The current active thread or None if no threads are active.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.reset_context"></a>
 
@@ -319,7 +297,7 @@ Flushes the event processor and stops it.
 
 <a id="literalai.client.LiteralClient"></a>
 
-## LiteralClient Objects
+## LiteralClient
 
 ```python
 class LiteralClient(BaseLiteralClient)
@@ -329,10 +307,10 @@ Synchronous LiteralClient for interacting with the Literal API.
 
 **Arguments**:
 
-- `batch_size` _int, optional_ - Batch size for event processing. Defaults to 5.
-- `api_key` _Optional[str], optional_ - API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.
-- `url` _Optional[str], optional_ - URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.
-- `disabled` _bool, optional_ - Flag to disable the client. Defaults to False.
+<ResponseField name="batch_size" type="int, optional">Batch size for event processing. Defaults to 5.</ResponseField>
+<ResponseField name="api_key" type="Optional[str], optional">API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.</ResponseField>
+<ResponseField name="url" type="Optional[str], optional">URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.</ResponseField>
+<ResponseField name="disabled" type="bool, optional">Flag to disable the client. Defaults to False.</ResponseField>
 
 <a id="literalai.client.LiteralClient.flush"></a>
 
@@ -346,7 +324,7 @@ Flushes the event processor.
 
 <a id="literalai.client.AsyncLiteralClient"></a>
 
-## AsyncLiteralClient Objects
+## AsyncLiteralClient
 
 ```python
 class AsyncLiteralClient(BaseLiteralClient)
@@ -356,15 +334,15 @@ Asynchronous LiteralClient for interacting with the Literal API.
 
 **Attributes**:
 
-- `api` _AsyncLiteralAPI_ - Instance of the asynchronous Literal API.
+<ResponseField name="api" type="AsyncLiteralAPI">Instance of the asynchronous Literal API.</ResponseField>
   
 
 **Arguments**:
 
-- `batch_size` _int, optional_ - Batch size for event processing. Defaults to 5.
-- `api_key` _Optional[str], optional_ - API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.
-- `url` _Optional[str], optional_ - URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.
-- `disabled` _bool, optional_ - Flag to disable the client. Defaults to False.
+<ResponseField name="batch_size" type="int, optional">Batch size for event processing. Defaults to 5.</ResponseField>
+<ResponseField name="api_key" type="Optional[str], optional">API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.</ResponseField>
+<ResponseField name="url" type="Optional[str], optional">URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.</ResponseField>
+<ResponseField name="disabled" type="bool, optional">Flag to disable the client. Defaults to False.</ResponseField>
 
 <a id="literalai.client.AsyncLiteralClient.flush"></a>
 

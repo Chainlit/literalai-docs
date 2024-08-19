@@ -1,0 +1,170 @@
+<a id="literalai.step"></a>
+
+
+<a id="literalai.step.StepDict"></a>
+
+## StepDict
+
+```python
+class StepDict(TypedDict)
+```
+
+A dictionary representation of a Step. All attributes are optional.
+
+**Attributes**:
+
+<ResponseField name="id" type="str">The unique identifier for the step.</ResponseField>
+<ResponseField name="name" type="str">The name of the step.</ResponseField>
+<ResponseField name="type" type="StepType">The type of the step.</ResponseField>
+<ResponseField name="threadId" type="str">The identifier of the thread the step belongs to.</ResponseField>
+<ResponseField name="error" type="str">The error message, if any.</ResponseField>
+<ResponseField name="input" type="Dict[str, Any]">The input to the step.</ResponseField>
+<ResponseField name="output" type="Dict[str, Any]">The output of the step.</ResponseField>
+<ResponseField name="metadata" type="Dict[str, Any]">Additional metadata for the step.</ResponseField>
+<ResponseField name="tags" type="List[str]">A list of tags associated with the step.</ResponseField>
+<ResponseField name="parentId" type="str">The identifier of the parent step.</ResponseField>
+<ResponseField name="createdAt" type="str">The timestamp when the step was created.</ResponseField>
+<ResponseField name="startTime" type="str">The timestamp when the step started.</ResponseField>
+<ResponseField name="endTime" type="str">The timestamp when the step ended.</ResponseField>
+<ResponseField name="generation" type="Dict[str, Any]">The generation information, if any.</ResponseField>
+<ResponseField name="scores" type="List[ScoreDict]">The scores associated with the step.</ResponseField>
+<ResponseField name="attachments" type="List[AttachmentDict]">The attachments associated with the step.</ResponseField>
+
+<a id="literalai.step.Step"></a>
+
+## Step
+
+```python
+class Step(Utils)
+```
+
+A class representing a step in a process.
+
+**Attributes**:
+
+<ResponseField name="id" type="Optional[str]">The unique identifier for the step. Defaults to None.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the step. Defaults to "".</ResponseField>
+<ResponseField name="type" type="Optional[StepType]">The type of the step. Defaults to None.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict[str, Any]]">Additional metadata for the step. Defaults to None.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The identifier of the parent step. Defaults to None.</ResponseField>
+<ResponseField name="start_time" type="Optional[str]">The timestamp when the step started. Defaults to None.</ResponseField>
+<ResponseField name="end_time" type="Optional[str]">The timestamp when the step ended. Defaults to None.</ResponseField>
+<ResponseField name="created_at" type="Optional[str]">The timestamp when the step was created. Defaults to None.</ResponseField>
+<ResponseField name="error" type="Optional[str]">The error message, if any. Defaults to None.</ResponseField>
+<ResponseField name="input" type="Optional[Dict[str, Any]]">The input to the step. Defaults to None.</ResponseField>
+<ResponseField name="output" type="Optional[Dict[str, Any]]">The output of the step. Defaults to None.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">A list of tags associated with the step. Defaults to None.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str]">The identifier of the thread the step belongs to. Defaults to None.</ResponseField>
+<ResponseField name="generation" type="Optional[Union[ChatGeneration, CompletionGeneration]]">The generation information, if any. Defaults to None.</ResponseField>
+<ResponseField name="scores" type="Optional[List[Score]]">The scores associated with the step. Defaults to [].</ResponseField>
+<ResponseField name="attachments" type="List[Attachment]">The attachments associated with the step. Defaults to [].</ResponseField>
+
+<a id="literalai.step.Step.start"></a>
+
+#### start
+
+```python
+def start()
+```
+
+Starts the step and updates the active steps.
+
+<a id="literalai.step.Step.end"></a>
+
+#### end
+
+```python
+def end()
+```
+
+Ends the step, updates the active steps, and adds the event to the processor.
+
+<a id="literalai.step.Step.to_dict"></a>
+
+#### to\_dict
+
+```python
+def to_dict()
+```
+
+Converts the Step object to a StepDict dictionary.
+
+**Returns**:
+
+<ResponseField name="StepDict">The dictionary representation of the Step object.</ResponseField>
+
+<a id="literalai.step.Step.from_dict"></a>
+
+#### from\_dict
+
+```python
+@classmethod
+def from_dict(cls, step_dict: StepDict) -> "Step"
+```
+
+Creates a Step object from a StepDict dictionary.
+
+**Arguments**:
+
+<ResponseField name="step_dict" type="StepDict">The dictionary representation of the Step object.</ResponseField>
+  
+
+**Returns**:
+
+<ResponseField name="Step">The Step object created from the dictionary.</ResponseField>
+
+<a id="literalai.step.StepContextManager"></a>
+
+## StepContextManager
+
+```python
+class StepContextManager()
+```
+
+A context manager for handling steps.
+
+**Attributes**:
+
+<ResponseField name="client" type="BaseLiteralClient">The client to handle the step.</ResponseField>
+<ResponseField name="step_name" type="str">The name of the step.</ResponseField>
+<ResponseField name="step_type" type="TrueStepType">The type of the step.</ResponseField>
+<ResponseField name="id" type="Optional[str]">The unique identifier for the step. Defaults to None.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The identifier of the parent step. Defaults to None.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str]">The identifier of the thread the step belongs to. Defaults to None.</ResponseField>
+<ResponseField name="kwargs" type="Dict[str, Any]">Additional keyword arguments for the step.</ResponseField>
+
+<a id="literalai.step.step_decorator"></a>
+
+#### step\_decorator
+
+```python
+def step_decorator(client: "BaseLiteralClient",
+                   func: Callable,
+                   type: TrueStepType = "undefined",
+                   name: str = "",
+                   id: Optional[str] = None,
+                   parent_id: Optional[str] = None,
+                   thread_id: Optional[str] = None,
+                   ctx_manager: Optional[StepContextManager] = None,
+                   **decorator_kwargs)
+```
+
+A decorator for handling steps.
+
+**Arguments**:
+
+<ResponseField name="client" type="BaseLiteralClient">The client to handle the step.</ResponseField>
+<ResponseField name="func" type="Callable">The function to decorate.</ResponseField>
+<ResponseField name="type" type="TrueStepType, optional">The type of the step. Defaults to "undefined".</ResponseField>
+<ResponseField name="name" type="str, optional">The name of the step. Defaults to "".</ResponseField>
+<ResponseField name="id" type="Optional[str], optional">The unique identifier for the step. Defaults to None.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str], optional">The identifier of the parent step. Defaults to None.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str], optional">The identifier of the thread the step belongs to. Defaults to None.</ResponseField>
+<ResponseField name="ctx_manager" type="Optional[StepContextManager], optional">The context manager for the step. Defaults to None.</ResponseField>
+<ResponseField name="**decorator_kwargs">Additional keyword arguments for the decorator.</ResponseField>
+  
+
+**Returns**:
+
+<ResponseField name="Callable">The decorated function.</ResponseField>
+

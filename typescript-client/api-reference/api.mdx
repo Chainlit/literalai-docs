@@ -1,0 +1,1008 @@
+### API
+
+## Methods
+
+### getProjectId()
+
+```ts
+getProjectId(): Promise<string>
+```
+
+Get the project id associated with the API key.
+
+**Returns**
+
+`Promise`\<`string`\>
+
+the project id
+
+### sendSteps()
+
+```ts
+sendSteps(steps): Promise<any>
+```
+
+Sends a collection of steps to the GraphQL endpoint.
+
+This method constructs a GraphQL query using the provided steps, then executes the query.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `steps` | `Step`[] | An array of Step objects to be sent. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`any`\> | The response from the GraphQL call |
+
+### getSteps()
+
+```ts
+getSteps(variables): Promise<PaginatedResponse<Step>>
+```
+
+Retrieves a paginated list of steps (runs) based on the provided criteria.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `variables` | `object` | The parameters to filter and paginate the steps. |
+| `variables.first`? | `Maybe`\<`number`\> | The number of steps to retrieve after the cursor. (Optional) |
+| `variables.after`? | `Maybe`\<`string`\> | The cursor to start retrieving steps after. (Optional) |
+| `variables.before`? | `Maybe`\<`string`\> | The cursor to start retrieving steps before. (Optional) |
+| `variables.filters`? | `StepsFilter`[] | The filters to apply on the steps retrieval. (Optional) |
+| `variables.orderBy`? | `StepsOrderBy` | The order in which to retrieve the steps. (Optional) |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`PaginatedResponse`\<`Step`\>\> | A promise that resolves to a paginated response of steps |
+
+### getStep()
+
+```ts
+getStep(id): Promise<Maybe<Step>>
+```
+
+Retrieves a step by its ID.
+
+This method constructs a GraphQL query to fetch a step by its unique identifier.
+It then executes the query and returns the step if found.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the step to retrieve. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Maybe`\<`Step`\>\> | A `Promise` that resolves to the step if found, or `null` if not found |
+
+### deleteStep()
+
+```ts
+deleteStep(id): Promise<string>
+```
+
+Deletes a Step from the platform by its unique identifier.
+
+This method constructs a GraphQL mutation to delete a step by its unique identifier.
+It then executes the mutation and returns the ID of the deleted step.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the step to delete. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`string`\> | A `Promise` that resolves to the ID of the deleted step |
+
+### uploadFile()
+
+**uploadFile(params)**
+
+```ts
+uploadFile(params): Promise<object>
+```
+
+Uploads a file to a specified thread. This method supports uploading either through direct content or via a file path.
+It first signs the upload through a pre-configured endpoint and then proceeds to upload the file using the signed URL.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `params` | `UploadFileParamsWithContent` | The parameters for uploading a file, including: |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`object`\> | An object containing the `objectKey` of the uploaded file and the signed `url`, or `null` values if the upload fails |
+
+**Throws**
+
+Throws an error if neither `content` nor `path` is provided, or if the server response is invalid.
+
+**uploadFile(params)**
+
+```ts
+uploadFile(params): Promise<object>
+```
+
+**Parameters**
+
+| Parameter | Type |
+| :------ | :------ |
+| `params` | `UploadFileParamsWithPath` |
+
+**Returns**
+
+`Promise`\<`object`\>
+
+### createAttachment()
+
+**createAttachment(params)**
+
+```ts
+createAttachment(params): Promise<Attachment>
+```
+
+Uploads a file to a specified thread and creates an attachment object.
+If called inside a context, the attachment will be added to the current step and thread.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `params` | `UploadFileBaseParams` & `object` & `CreateAttachmentParams` | The parameters for uploading a file, including: |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Attachment`\> | An object containing the `objectKey` of the uploaded file and the signed `url`, or `null` values if the upload fails |
+
+**Throws**
+
+Throws an error if neither `content` nor `path` is provided, or if the server response is invalid.
+
+**createAttachment(params)**
+
+```ts
+createAttachment(params): Promise<Attachment>
+```
+
+**Parameters**
+
+| Parameter | Type |
+| :------ | :------ |
+| `params` | `UploadFileBaseParams` & `object` & `CreateAttachmentParams` |
+
+**Returns**
+
+`Promise`\<`Attachment`\>
+
+### getGenerations()
+
+```ts
+getGenerations(variables): Promise<PaginatedResponse<PersistedGeneration>>
+```
+
+Retrieves a paginated list of Generations based on the provided filters and sorting order.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `variables` | `object` | The variables to filter and sort the Generations. It includes:<br />- `first`: The number of items to return.<br />- `after`: The cursor to fetch items after.<br />- `before`: The cursor to fetch items before.<br />- `filters`: The filters applied to the Generations.<br />- `orderBy`: The order in which the Generations are sorted. |
+| `variables.first`? | `Maybe`\<`number`\> | - |
+| `variables.after`? | `Maybe`\<`string`\> | - |
+| `variables.before`? | `Maybe`\<`string`\> | - |
+| `variables.filters`? | `GenerationsFilter`[] | - |
+| `variables.orderBy`? | `GenerationsOrderBy` | - |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`PaginatedResponse`\<`PersistedGeneration`\>\> | A `Promise` that resolves to a `PaginatedResponse<Generation>` object containing the filtered and sorted Generations |
+
+### createGeneration()
+
+```ts
+createGeneration(generation): Promise<PersistedGeneration>
+```
+
+Creates a new generation entity and sends it to the platform.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `generation` | `Generation` | The `Generation` object to be created and sent to the platform. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`PersistedGeneration`\> | A Promise resolving to the newly created `Generation` object |
+
+### upsertThread()
+
+**upsertThread(options)**
+
+```ts
+upsertThread(options): Promise<CleanThreadFields>
+```
+
+Upserts a Thread with new information.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `options` | `object` | The parameters to upsert a thread. |
+| `options.threadId` | `string` | The unique identifier of the thread. (Required) |
+| `options.name`? | `Maybe`\<`string`\> | The name of the thread. (Optional) |
+| `options.metadata`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Additional metadata for the thread as a key-value pair object. (Optional) |
+| `options.participantId`? | `Maybe`\<`string`\> | The unique identifier of the participant. (Optional) |
+| `options.tags`? | `Maybe`\<`string`[]\> | An array of tags associated with the thread. (Optional) |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`CleanThreadFields`\> | The upserted thread object |
+
+**upsertThread(threadId, name, metadata, participantId, tags)**
+
+```ts
+upsertThread(
+   threadId, 
+   name?, 
+   metadata?, 
+   participantId?, 
+tags?): Promise<CleanThreadFields>
+```
+
+Upserts a Thread with new information.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `threadId` | `string` | The unique identifier of the thread. (Required) |
+| `name`? | `Maybe`\<`string`\> | The name of the thread. (Optional) |
+| `metadata`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Additional metadata for the thread as a key-value pair object. (Optional) |
+| `participantId`? | `Maybe`\<`string`\> | The unique identifier of the participant. (Optional) |
+| `tags`? | `Maybe`\<`string`[]\> | An array of tags associated with the thread. (Optional) |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`CleanThreadFields`\> | The upserted thread object |
+
+**Deprecated**
+
+Use one single object attribute instead of multiple parameters.
+
+### getThreads()
+
+```ts
+getThreads(variables): Promise<PaginatedResponse<Thread>>
+```
+
+Retrieves a paginated list of threads (conversations) based on the provided criteria.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `variables` | `object` | The parameters to filter and paginate the threads. |
+| `variables.first`? | `Maybe`\<`number`\> | The number of threads to retrieve after the cursor. (Optional) |
+| `variables.after`? | `Maybe`\<`string`\> | The cursor to start retrieving threads after. (Optional) |
+| `variables.before`? | `Maybe`\<`string`\> | The cursor to start retrieving threads before. (Optional) |
+| `variables.filters`? | `ThreadsFilter`[] | The filters to apply on the threads retrieval. (Optional) |
+| `variables.orderBy`? | `ThreadsOrderBy` | The order in which to retrieve the threads. (Optional) |
+| `variables.stepTypesToKeep`? | `StepType`[] | - |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`PaginatedResponse`\<`Thread`\>\> | A promise that resolves to a paginated response of threads |
+
+### getThread()
+
+```ts
+getThread(id): Promise<Maybe<Thread>>
+```
+
+Retrieves information from a single Thread.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the thread. This parameter is required. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Maybe`\<`Thread`\>\> | The detailed information of the specified thread |
+
+### deleteThread()
+
+```ts
+deleteThread(id): Promise<string>
+```
+
+Deletes a single Thread by its unique identifier.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the thread to be deleted. This parameter is required. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`string`\> | The ID of the deleted thread |
+
+### getUsers()
+
+```ts
+getUsers(variables): Promise<PaginatedResponse<OmitUtils<User>>>
+```
+
+Retrieves a list of users with optional filters.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `variables` | `object` | The parameters used to filter and paginate the user list. |
+| `variables.first`? | `Maybe`\<`number`\> | Optional. The number of items to return. |
+| `variables.after`? | `Maybe`\<`string`\> | Optional. The cursor after which to start fetching data. |
+| `variables.before`? | `Maybe`\<`string`\> | Optional. The cursor before which to start fetching data. |
+| `variables.filters`? | `ParticipantsFilter`[] | Optional. Array of filters to apply to the user query. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`PaginatedResponse`\<`OmitUtils`\<`User`\>\>\> | A `PaginatedResponse` containing a list of users without utility types |
+
+### createUser()
+
+```ts
+createUser(identifier, metadata?): Promise<User>
+```
+
+Creates a new user and sends it to the platform.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `identifier` | `string` | The unique identifier for the user. This parameter is required. |
+| `metadata`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Optional metadata for the user. This parameter is optional. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`User`\> | A promise that resolves with the newly created User object |
+
+### updateUser()
+
+```ts
+updateUser(
+   id, 
+   identifier?, 
+metadata?): Promise<User>
+```
+
+Updates an existing user's details in the platform.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the user to update. This parameter is required. |
+| `identifier`? | `string` | A new identifier for the user. This parameter is optional. |
+| `metadata`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Additional metadata for the user. This parameter is optional. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`User`\> | A promise that resolves with the updated User object |
+
+### getOrCreateUser()
+
+```ts
+getOrCreateUser(identifier, metadata?): Promise<string>
+```
+
+Retrieves an existing user by their identifier or creates a new one if they do not exist.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `identifier` | `string` | The unique identifier for the user. This parameter is required. |
+| `metadata`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Additional metadata for the user. This parameter is optional. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`string`\> | The ID of the existing or newly created user |
+
+### getUser()
+
+```ts
+getUser(identifier): Promise<Maybe<User>>
+```
+
+Retrieves a user by their unique identifier.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `identifier` | `string` | The unique identifier for the user. This parameter is required. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Maybe`\<`User`\>\> | A `Promise` that resolves to a `User` object if found, otherwise `undefined` |
+
+### deleteUser()
+
+```ts
+deleteUser(id): Promise<string>
+```
+
+Deletes a single user by their unique identifier.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the user to be deleted. This parameter is required. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`string`\> | A `Promise` that resolves to the ID of the deleted user |
+
+### getScores()
+
+```ts
+getScores(variables): Promise<PaginatedResponse<OmitUtils<Score>>>
+```
+
+Get all scores connected to the platform.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `variables` | `object` | The parameters for querying scores. |
+| `variables.first`? | `Maybe`\<`number`\> | Optional. The number of scores to retrieve. |
+| `variables.after`? | `Maybe`\<`string`\> | Optional. The cursor after which to start fetching scores. |
+| `variables.before`? | `Maybe`\<`string`\> | Optional. The cursor before which to start fetching scores. |
+| `variables.filters`? | `ScoresFilter`[] | Optional. Filters to apply to the score query. |
+| `variables.orderBy`? | `ScoresOrderBy` | Optional. The order in which to sort the scores. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`PaginatedResponse`\<`OmitUtils`\<`Score`\>\>\> | A `Promise` that resolves to a paginated response of scores, excluding certain utility fields |
+
+### createScores()
+
+```ts
+createScores(scores): Promise<Score[]>
+```
+
+Creates multiple scores in the database using the provided array of scores.
+Each score in the array is transformed into a GraphQL mutation call.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `scores` | `Score`[] | An array of `Score` objects to be created. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Score`[]\> | A promise that resolves to an array of `Score` instances populated with the created scores' data |
+
+### createScore()
+
+```ts
+createScore(variables): Promise<Score>
+```
+
+Creates a new score in the database using the provided parameters.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `variables` | `OmitUtils`\<`Score`\> | The score details to be used in the creation process. This includes: |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Score`\> | A new `Score` instance populated with the created score's data |
+
+### updateScore()
+
+```ts
+updateScore(id, updateParams): Promise<Score>
+```
+
+Updates an existing score in the database.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the score to update. (required) |
+| `updateParams` | `object` | The parameters to update in the score. (required) |
+| `updateParams.comment`? | `Maybe`\<`string`\> | A new or updated comment for the score. (optional) |
+| `updateParams.value` | `number` | The new value to set for the score. (required) |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Score`\> | A `Score` instance representing the updated score |
+
+### deleteScore()
+
+```ts
+deleteScore(id): Promise<any>
+```
+
+Deletes a single score from the database.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the score to delete. (required) |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`any`\> | The ID of the deleted score |
+
+### getDatasets()
+
+```ts
+getDatasets(): Promise<object[]>
+```
+
+List all datasets in the platform.
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`object`[]\> | The names and ids of all datasets |
+
+### createDataset()
+
+```ts
+createDataset(dataset): Promise<Dataset>
+```
+
+Creates a new dataset in the database.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `dataset` | `object` | The dataset details to be created. |
+| `dataset.name` | `string` | The name of the dataset. (required) |
+| `dataset.description`? | `Maybe`\<`string`\> | The description of the dataset. (optional) |
+| `dataset.metadata`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Additional metadata for the dataset as a key-value pair object. (optional) |
+| `dataset.type`? | `DatasetType` | The type of the dataset, defined by the DatasetType enum. (optional) |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Dataset`\> | A new Dataset instance populated with the created dataset's data |
+
+### getDataset()
+
+```ts
+getDataset(variables): Promise<null | Dataset>
+```
+
+Retrieves a dataset based on provided ID or name.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `variables` | `object` | An object containing optional `id` and `name` properties to specify which dataset to retrieve. |
+| `variables.id`? | `string` | - |
+| `variables.name`? | `string` | - |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`null` \| `Dataset`\> | A `Dataset` instance populated with the retrieved dataset's data, or `null` if no data is found |
+
+### updateDataset()
+
+```ts
+updateDataset(id, dataset): Promise<Dataset>
+```
+
+Updates a dataset with new information.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the dataset to update. This parameter is required. |
+| `dataset` | `object` | An object containing the new dataset information. |
+| `dataset.name`? | `Maybe`\<`string`\> | The new name of the dataset. (optional) |
+| `dataset.description`? | `Maybe`\<`string`\> | The new description of the dataset. (optional) |
+| `dataset.metadata`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Additional metadata for the dataset as a key-value pair object. (optional) |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Dataset`\> | A new `Dataset` instance populated with the updated dataset's data |
+
+### deleteDataset()
+
+```ts
+deleteDataset(id): Promise<Dataset>
+```
+
+Deletes a single dataset by its unique identifier.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the dataset to delete. This parameter is required. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Dataset`\> | A new `Dataset` instance populated with the deleted dataset's data |
+
+### createDatasetItem()
+
+```ts
+createDatasetItem(datasetId, datasetItem): Promise<DatasetItem>
+```
+
+Creates a new item in a dataset.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `datasetId` | `string` | The unique identifier of the dataset. This parameter is required. |
+| `datasetItem` | `object` | The data for the new dataset item. This parameter is required. |
+| `datasetItem.input` | `Record`\<`string`, `any`\> | The input data for the dataset item. This field is required. |
+| `datasetItem.expectedOutput`? | `Maybe`\<`Record`\<`string`, `any`\>\> | The expected output data for the dataset item. This field is optional. |
+| `datasetItem.metadata`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Additional metadata for the dataset item. This field is optional. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`DatasetItem`\> | A new `DatasetItem` instance populated with the created dataset item's data |
+
+### getDatasetItem()
+
+```ts
+getDatasetItem(id): Promise<DatasetItem>
+```
+
+Retrieves a single item from a dataset by its unique identifier.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the dataset item. This parameter is required. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`DatasetItem`\> | A `DatasetItem` instance populated with the retrieved dataset item's data |
+
+### deleteDatasetItem()
+
+```ts
+deleteDatasetItem(id): Promise<DatasetItem>
+```
+
+Deletes a single item from a dataset by its unique identifier.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | The unique identifier of the dataset item to be deleted. This parameter is required. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`DatasetItem`\> | A `DatasetItem` instance populated with the data of the deleted dataset item |
+
+### addStepToDataset()
+
+```ts
+addStepToDataset(
+   datasetId, 
+   stepId, 
+metadata?): Promise<DatasetItem>
+```
+
+Adds a single step item to a dataset.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `datasetId` | `string` | The unique identifier of the dataset. This parameter is required. |
+| `stepId` | `string` | The unique identifier of the step to be added. This parameter is required. |
+| `metadata`? | `Maybe`\<`Record`\<`string`, `unknown`\>\> | Additional metadata for the step as a JSON object. This parameter is optional. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`DatasetItem`\> | A `DatasetItem` instance populated with the data of the newly added step |
+
+### addGenerationToDataset()
+
+```ts
+addGenerationToDataset(
+   datasetId, 
+   generationId, 
+metadata?): Promise<DatasetItem>
+```
+
+Adds a generation item to a dataset.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `datasetId` | `string` | The unique identifier of the dataset. This parameter is required. |
+| `generationId` | `string` | The unique identifier of the generation to be added. This parameter is required. |
+| `metadata`? | `Maybe`\<`Record`\<`string`, `unknown`\>\> | Additional metadata for the generation as a JSON object. This parameter is optional. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`DatasetItem`\> | A `DatasetItem` instance populated with the data of the newly added generation |
+
+### addGenerationsToDataset()
+
+```ts
+addGenerationsToDataset(datasetId, generationIds): Promise<DatasetItem[]>
+```
+
+Adds multiple generation items to a dataset.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `datasetId` | `string` | The unique identifier of the dataset. This parameter is required. |
+| `generationIds` | `string`[] | An array of unique identifiers for the generations to be added. This parameter is required. |
+
+**Returns**
+
+`Promise`\<`DatasetItem`[]\>
+
+An array of `DatasetItem` instances populated with the data of the newly added generations
+
+### createExperiment()
+
+```ts
+createExperiment(datasetExperiment): Promise<DatasetExperiment>
+```
+
+Creates a new dataset experiment.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `datasetExperiment` | `object` |  |
+| `datasetExperiment.name` | `string` | The name of the dataset experiment. |
+| `datasetExperiment.datasetId`? | `string` | The dataset ID to associate with the experiment. |
+| `datasetExperiment.promptId`? | `string` | The prompt ID to associate with the experiment. |
+| `datasetExperiment.params`? | `Record`\<`string`, `any`\> \| `Record`\<`string`, `any`\>[] | The parameters for the experiment as a key-value pair object or an array of the same. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`DatasetExperiment`\> | The newly created dataset experiment object |
+
+### createExperimentItem()
+
+```ts
+createExperimentItem(parameters): Promise<DatasetExperimentItem>
+```
+
+Creates a new dataset experiment item.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `parameters` | `DatasetExperimentItem` |  |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`DatasetExperimentItem`\> | The dataset experiment object |
+
+### createPromptLineage()
+
+```ts
+createPromptLineage(name, description?): Promise<any>
+```
+
+Create a new prompt lineage.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the prompt lineage. This parameter is required. |
+| `description`? | `string` | A description for the prompt lineage. This parameter is optional. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`any`\> | The newly created prompt lineage object, or null if creation failed |
+
+### createPrompt()
+
+```ts
+createPrompt(
+   name, 
+   templateMessages, 
+settings?): Promise<Prompt>
+```
+
+**Parameters**
+
+| Parameter | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `templateMessages` | `IGenerationMessage`[] |
+| `settings`? | `Maybe`\<`Record`\<`string`, `any`\>\> |
+
+**Returns**
+
+`Promise`\<`Prompt`\>
+
+**Deprecated**
+
+Please use getOrCreatePrompt instead.
+
+### getOrCreatePrompt()
+
+```ts
+getOrCreatePrompt(
+   name, 
+   templateMessages, 
+   settings?, 
+tools?): Promise<Prompt>
+```
+
+A Prompt is fully defined by its name, template_messages, settings
+and tools.
+If a prompt already exists for the given arguments, it is returned.
+Otherwise, a new prompt is created.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the prompt to retrieve or create. |
+| `templateMessages` | `IGenerationMessage`[] | A list of template messages for the prompt. |
+| `settings`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Optional settings for the prompt. |
+| `tools`? | `Maybe`\<`Record`\<`string`, `any`\>\> | Optional tools for the prompt. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`Prompt`\> | The prompt that was retrieved or created |
+
+### getPromptById()
+
+```ts
+getPromptById(id): Promise<null | Prompt>
+```
+
+Retrieves a prompt by its id.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `string` | ID of the prompt to retrieve. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`null` \| `Prompt`\> | The prompt with given ID |
+
+### getPrompt()
+
+```ts
+getPrompt(name, version?): Promise<null | Prompt>
+```
+
+Retrieves a prompt by its name and optionally by its version.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the prompt to retrieve. |
+| `version`? | `number` | The version number of the prompt (optional). |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`null` \| `Prompt`\> | An instance of `Prompt` containing the prompt data, or `null` if not found |
+
+### getPromptAbTesting()
+
+```ts
+getPromptAbTesting(name): Promise<null | IPromptRollout[]>
+```
+
+Retrieves a prompt A/B testing rollout by its name.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the prompt to retrieve. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`null` \| `IPromptRollout`[]\> | A list of prompt rollout versions |
+
+### updatePromptAbTesting()
+
+```ts
+updatePromptAbTesting(name, rollouts): Promise<any>
+```
+
+Update a prompt A/B testing rollout by its name.
+
+**Parameters**
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the prompt to retrieve. |
+| `rollouts` | `IPromptRollout`[] | A list of prompt rollout versions. |
+
+**Returns**
+| type | description |
+| :------ | :------ |
+| `Promise`\<`any`\> | A list of prompt rollout versions |
+
+***
