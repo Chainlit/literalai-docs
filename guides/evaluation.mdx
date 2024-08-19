@@ -4,6 +4,26 @@ description: "Rules are used to automate actions on Literal AI based on specific
 icon: ruler
 ---
 
+## Why evaluate?
+
+Evaluation is key to enable continuous deployment of LLM-based applications and guarantee that newer
+versions perform better than previous ones. To best capture the **user experience** one must understand the
+multiple steps which make up the application. As AI applications grow in complexity, they tend to chain 
+multiple steps.
+
+Literal AI lets you log & monitor the various steps of your LLM application. By doing so, you can continuously improve the performance of your LLM system, building the most relevant metrics:
+- Thread &mdash; user satisfaction, etc.
+- Agent Run &mdash; task completion, etc.
+- LLM Generation &mdash; hallucination, etc.
+
+An example is the vanilla Retrieval Augmented Generation (RAG), which augments Large Language Models
+(LLMs) with domain-specific data. Examples of metrics you can score against are:
+- context relevancy
+- faithfulness
+- answer relevancy
+- etc.
+
+
 ## How to think about evaluation?
 
 Scores are a crucial part of developing and improving your LLM application or agent.
@@ -132,7 +152,12 @@ allowed from the application. Score Templates come in two flavors: *Categorical*
 
 From a Step or a Generation, admins can then score by selecting a template and filling
 in the required form fields.
-
+<Frame caption="Label an LLM Generation">
+  <img
+    src="/images/create-score-template.png"
+    alt="Label an LLM Generation"
+  />
+</Frame>
 For simple adding of Scores, you can do it from the Logs tab. 
 If you plan to annotate a batch of logs, leverage the [annotation queue](/guides/annotation-queue.mdx)
 
