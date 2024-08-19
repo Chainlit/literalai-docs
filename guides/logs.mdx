@@ -291,7 +291,45 @@ async function processMessage(threadId: string, userInput: string) {
 
 ## Log a user feedback
 
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+score = literal_client.api.create_score(
+            step_id="<STEP_UUID>",
+            name="user-feedback",
+            type="HUMAN",
+            comment="Hello world",
+            value=1,
+        )
+```
+
+```typescript TypeScript
+import { LiteralClient, ChatGeneration} from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+async function main() {
+    const score = await literalClient.api.createScore({
+        stepId: '05b217b4-5890-4434-b1a2-1749d842b2db',
+        name: 'user-feedback',
+        type: 'HUMAN',
+        comment: 'Example score',
+        value: 1,
+      });
+      
+};
+main();
+```
+</CodeGroup>
+
+
 ## Log a product-related metric
+Can be done on Literal AI. 
+Can be done by pushing on Posthog and others
 
 
 ## Conclusion
