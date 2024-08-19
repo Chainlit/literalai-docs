@@ -33,11 +33,6 @@
       "icon": "js"
     },
     {
-      "name": "Guides",
-      "url": "guides",
-      "icon": "book-open"
-    },
-    {
       "name": "Cookbooks",
       "url": "https://github.com/Chainlit/literal-cookbook",
       "icon": "cauldron"
@@ -50,15 +45,15 @@
       "pages": ["get-started/overview", "get-started/installation"]
     },
     {
-      "group": "Concepts",
+      "group": "Guides",
       "pages": [
-        "concepts/logs",
-        "concepts/prompt-management",
-        "concepts/automated-evaluation",
-        "concepts/dataset",
-        "concepts/experiment",
-        "concepts/annotation-queue",
-        "concepts/settings/project-roles"
+        "guides/logs",
+        "guides/prompt-management",
+        "guides/automated-evaluation",
+        "guides/dataset",
+        "guides/experiment",
+        "guides/annotation-queue",
+        "guides/settings/project-roles"
       ]
     },
     {
@@ -113,66 +108,6 @@
     {
       "group": "Development",
       "pages": ["typescript-client/development/changelog"]
-    },
-    {
-      "group": "Prompt",
-      "pages": [
-        "guides/prompt/create-prompt-template",
-        "guides/prompt/format-prompt-template",
-        "guides/prompt/create-prompt-template-from-code",
-        "guides/prompt/iterate-promote-new-version",
-        "guides/prompt/use-prompt-with-langchain",
-        "guides/prompt/swap-llm-provider-models",
-        "guides/prompt/ab-test-deployed-prompt",
-        "guides/prompt/analyse-ab-test-results"
-      ]
-    },
-    {
-      "group": "Observability",
-      "pages": [
-        "guides/observability/log-generation",
-        "guides/observability/log-run",
-        "guides/observability/log-rag",
-        "guides/observability/log-conversation-thread",
-        "guides/observability/log-distributed-trace",
-        "guides/observability/add-metadata-tags-to-runs",
-        "guides/observability/visualise-conversation-thread"
-      ]
-    },
-    {
-      "group": "Continuous Evaluation",
-      "pages": [
-        "guides/evaluation/attach-score-to-run",
-        "guides/evaluation/configure-score-schema",
-        "guides/evaluation/configure-evaluation-rule",
-        "guides/evaluation/run-custom-evaluation-metric"
-      ]
-    },
-    {
-      "group": "Experimentation",
-      "pages": [
-        "guides/experimentation/create-dataset-from-logs-ui",
-        "guides/experimentation/create-dataset-from-dsk-ui",
-        "guides/experimentation/create-annotation-queue-from-logs",
-        "guides/experimentation/evaluate-multi-step-llm-system",
-        "guides/experimentation/evaluate-prompt-ui",
-        "guides/experimentation/compare-experiments"
-      ]
-    },
-    {
-      "group": "Monitor",
-      "pages": [
-        "guides/monitor/analyse-human-feedback",
-        "guides/monitor/analyse-product-metrics"
-      ]
-    },
-    {
-      "group": "Misc",
-      "pages": [
-        "guides/misc/run-cicd-dataset-experiment",
-        "guides/misc/invite-member",
-        "guides/misc/add-shared-llm-provider-credentials"
-      ]
     },
     {
       "group": "Self Hosting",
