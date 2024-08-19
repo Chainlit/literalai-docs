@@ -6,7 +6,7 @@
 # https://github.com/NiklasRosenstein/pydoc-markdown/blob/develop/src/pydoc_markdown/contrib/processors/filter.py#L31
 
 
-SOURCE_DIR="."
+SOURCE_DIR="../literalai-typescript"
 
 # change the DOCS_DIR to output the generated files to a different directory
 DOCS_DIR="python-client/api-reference"
@@ -26,7 +26,7 @@ do
         BEAUTIFY=true
         shift # past argument=value
         ;;
-        -d=*|--docs-dir=*)
+        -o=*|--output-dir=*)
         DOCS_DIR="${i#*=}"
         shift # past argument=value
         ;;
