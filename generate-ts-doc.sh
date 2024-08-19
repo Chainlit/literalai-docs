@@ -46,3 +46,6 @@ npm install
 
 # Generate the documentation
 npx typedoc --out $OUTPUT_DIR --tsconfig tsconfig.json src/api.ts
+
+# rename the generated file api-reference.mdx
+mv $OUTPUT_DIR/README.md $OUTPUT_DIR/api-reference.mdx

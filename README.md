@@ -29,7 +29,7 @@ mintlify broken-links
 The python SDK documentation is generated using ```generate-py-doc.sh``` script. The script uses the python docstrings to generate the documentation. The script relies on pydoc-markdown to generate the markdown files. The script can be run using the following arguments:
 - ```-s``` or ```--source-dir``` : The source directory where the python files are located. The default value is ```../literalai-python```.
 - ```o``` or ```--output-dir``` : The output directory where the markdown files will be generated. The default value is ```python-client/api-reference```.
-- ```b``` or ```--beautify``` : Uses some mintlify flags for a prettier result. The default value is ```true```.
+- ```b``` or ```--beautify``` : Uses some mintlify flags for a prettier result.
 - ```c``` or ```--config-file``` : The config file to be used for the generation. The default value is ```pydoc-markdown.yml```.
 
 The script generates the markdown files in the output directory. The markdown files are then copied to the ```python-client/api-reference``` directory. Note that all the generated mdx files should be documented in the mint.json file.

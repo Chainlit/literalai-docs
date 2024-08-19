@@ -6,7 +6,7 @@
 # https://github.com/NiklasRosenstein/pydoc-markdown/blob/develop/src/pydoc_markdown/contrib/processors/filter.py#L31
 
 
-SOURCE_DIR="../literalai-typescript"
+SOURCE_DIR="../literalai-python"
 
 # change the DOCS_DIR to output the generated files to a different directory
 DOCS_DIR="python-client/api-reference"
