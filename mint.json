@@ -49,7 +49,7 @@
       "pages": [
         "guides/logs",
         "guides/prompt-management",
-        "guides/automated-evaluation",
+        "guides/evaluation",
         "guides/dataset",
         "guides/experiment",
         "guides/annotation-queue",
