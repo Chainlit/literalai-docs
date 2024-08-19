@@ -42,7 +42,10 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["get-started/overview", "get-started/installation"]
+      "pages": [
+        "get-started/overview",
+        "get-started/quick-start"
+      ]
     },
     {
       "group": "Guides",
