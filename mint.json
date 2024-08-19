@@ -115,17 +115,15 @@
       "pages": ["python-client/get-started/introduction"]
     },
     {
-      "group": "Abstractions",
-      "pages": [
-        "python-client/abstractions/thread",
-        "python-client/abstractions/step"
-      ]
-    },
-    {
       "group": "API Reference",
       "pages": [
         "python-client/api-reference/client",
-        "python-client/api-reference/api"
+        "python-client/api-reference/api",
+        "python-client/api-reference/dataset",
+        "python-client/api-reference/dataset_item",
+        "python-client/api-reference/step",
+        "python-client/api-reference/thread",
+        "python-client/api-reference/message"
       ]
     },
     {
