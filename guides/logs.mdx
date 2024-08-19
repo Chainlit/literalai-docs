@@ -6,9 +6,14 @@ icon: list-tree
 
 ## Semantics
 
+TODO: update image
+<Frame caption="A Thread with Steps and Tags.">
+  <img src="/images/thread-steps.svg" alt="A Thread with Steps and Tags." />
+</Frame>
+
 Literal AI approaches LLM logging at three levels:
 1. **Generation**: Log of a single LLM call. (Generations are Steps.)
-2. **Step**: Log of a regular function, which is usually an intermediate step in an LLM system. It can be `tool`, `embedding`, `retrieval`, `other`. Steps can be considered as Spans.
+2. **Step**: Log of a regular function execution, which is usually an intermediate step in an LLM system. Possible `type`s are: `run`, `tool`, `llm`, `embedding`, `retrieval`, `rerank`, `undefined`, `user_message`, `assistant_message`, `system_message`. Steps can be considered as Spans.
 3. **Run**: Trace of an Agent/Chain run, including its intermediate steps. Can contain one or multiple generations. 
 4. **Thread**: A collection of Runs that are part of a single conversation.
 
@@ -20,8 +25,15 @@ You can log a generation only (typically for extraction use cases), or log a run
 
 <Note>See [installation](/get-started/installation) to get your API key and instantiate the SDK</Note>
 
-## Log a Generation
+## Log an LLM Generation
 Generations are logged by [integrations](/integrations) with LLM providers. They capture the prompt, completion, settings, and token latency.
+
+<Frame caption="An example of a Generation on Literal AI">     
+  <img
+    src="/images/generation-example.png"
+    alt="An example of a Generation"
+  />
+</Frame>
 
 Here is an example with OpenAI:
 
@@ -59,7 +71,130 @@ callOpenAI("Hello world");
 ```
 </CodeGroup>
 
+### Multimodal logs
+You can leverage multimodal capabilities on Literal AI in two ways:
+- Simple logging on API calls to Multimodal LLM APIs, like `gpt-vision`
+- Save multimodal files as [Attachments](/guides/logs#add-an-attachment). Image, videos, audio and other files are shown as `Attachment` in the Literal AI platform, which can be accessed and downloaded via a `Step`. 
+
+<Frame caption="Example of a logged multimodal LLM call">
+  <img
+    src="/images/multimodal-playground.jpeg"
+    alt="A logged multimodal LLM call"
+  />
+</Frame>
+
+
+## Log an individual Step
+<CodeGroup>
+```python Python
+@literalai_client.step(type="tool")
+def get_temperature(city: str):
+    return "10C"
+# Wait for all steps to be sent. This is NOT needed in production code.
+literalai_client.flush()
+```
+
+```typescript TypeScript
+async function getTemperature(city: string) {
+  return literalAiClient
+    .step({
+      type: 'tool',
+      name: 'Get Temperature',
+      input: { city },
+    })
+    .wrap(() => {
+      return { content: '10C' };
+    });
+}
+```
+</CodeGroup>
+
+### Add metadata and tags
+Metadata serves as a powerful tool for enriching objects with additional context, details, or configuration that can be instrumental in customizing and enhancing the functionality of each object. Specifically, the metadata field is available on Thread, Step, User, and Generation objects within the platform.
+
+**How to add metadata to a Run or a Step**
+
+<CodeGroup>
+
+```python Python
+@literalai_client.step(type="run", name="my_step")
+def my_step(input):
+    current_step = literalai_client.get_current_step()
+    # some code, llm call, tool call, etc.
+    current_step.metadata = {"region": "europe"}
+    return "answer"
+
+```
+```typescript TypeScript
+import { LiteralClient } from "@literalai/client";
+
+const literalAiClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+// The Assistant could have intermediary steps
+async function myRun() {
+  return literalAiClient
+    .step({
+      type: 'run',
+      name: 'My Run',
+      input: { content: 'My run Input' },
+      metadata: { region: "europe" },
+    })
+    .wrap(() => {
+      return { content: 'Success' };
+    });
+}
+```
+
+</CodeGroup>
+### Add an Attachment
+
+You can attach files to a Run or any of its intermediate steps. It is useful for multimodal use cases.
+<Frame caption="Example of attachments">
+  <img
+    src="/images/attachments.png"
+    alt="Attachments on a step"
+  />
+</Frame>
+
+Let's add an image to our step tool:
+
+<CodeGroup>
+```python Python
+@literalai_client.step(type="tool")
+def load_document():
+    with open ("./some.pdf", "rb") as file:
+        literalai_client.create_attachment(
+          name="pdf_document",
+          content=file.read()
+          )
+    return "doc loaded"
+```
+
+```typescript TypeScript
+async function loadDocument(city: string) {
+  return literalAiClient
+    .step({
+      type: 'tool',
+      input: { document },
+    })
+    .wrap(() => {
+      const fileStream = fs.createReadStream('./some.pdf');
+      const mime = 'application/pdf';
+      await literalAiClient.api.createAttachment({
+        content: fileStream,
+        mime,
+        name: 'pdf_document'
+      });
+      return { content: "doc loaded" };
+    });
+}
+```
+</CodeGroup>
+
+
+
 ## Log a Run
+
 A Run can be logged manually with decorators or with framework integrations such as [Llama Index](/integrations/llama-index) or [LangChain](/integrations/langchain).
 
 Here is an example with decorators:
@@ -162,47 +297,10 @@ async function addUserFeedback(runId: string, value: number, comment: string) {
 ```
 </CodeGroup>
 
-### Attach a File to a Step
-
-You can attach files to a Run or any of its intermediate steps. It is useful for multimodal use cases.
-Let's add an image to our step tool:
-
-<CodeGroup>
-```python Python
-@literalai_client.step(type="tool")
-def get_temperature():
-    with open ("./image.jpeg", "rb") as file:
-        literalai_client.create_attachment(
-          name="my_attachment",
-          content=file.read()
-          )
-    return "10C"
-```
-
-```typescript TypeScript
-async function getTemperature(city: string) {
-  return literalAiClient
-    .step({
-      type: 'tool',
-      name: 'Get Temperature',
-      input: { city },
-    })
-    .wrap(() => {
-      const fileStream = fs.createReadStream('./image.jpeg');
-      const mime = 'image/jpeg';
-      await literalAiClient.api.createAttachment({
-        content: fileStream,
-        mime,
-        name: 'Attachment'
-      });
-      return { content: '10C' };
-    });
-}
-```
-</CodeGroup>
-
 
 ## Log a Thread
+
+You can interact with an example Thread in the platform [here](https://cloud.getliteral.ai/thread/b3b61ec8-0d8a-444d-9e70-d6929c1129d1). 
 
 It is up to the application to keep track of the thread ID and pass it to the Literal AI client.
 Every run logged with the same thread ID will be part of the same conversation.
@@ -336,6 +434,45 @@ main();
 Can be done on Literal AI. 
 Can be done by pushing on Posthog and others
 
+## Filter logs
+
+TODO: Gif about filtering 
+
+## Fetch existing logs
+You can get all the threads from Literal AI to your program:
+<CodeGroup>
+```python Python
+from literalai import LiteralClient
+
+literalai_client = LiteralClient()
+
+user_id = 'uuid'
+
+threads = literalai_client.api.list_threads(
+    first=5,
+    filters=[{"operator": "eq", "field": "participantId", "value": user_id}]
+)
+
+for d in threads.data:
+    print(d.to_dict())
+
+literalai_client.flush_and_stop()
+```
+
+```typescript TypeScript
+import { LiteralClient } from '@literalai/client';
+const literalAiClient = new LiteralClient("YOUR_API_KEY");
+
+async function main() {
+
+  const userId = 'uuid'
+  const threads = await literalAiClient.api.getThreads({first: 5, filters: [{"operator": "eq", "field": "participantId", "value": userId}]});
+  console.log(threads);
+}
+```
+</CodeGroup>
+
+More generally, you can fetch any Literal AI object. Check out the SDKs and API reference to learn how.
 
 ## Debug logged LLM generations
 
