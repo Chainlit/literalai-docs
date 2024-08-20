@@ -118,6 +118,7 @@ def my_step(input):
     current_step = literalai_client.get_current_step()
     # some code, llm call, tool call, etc.
     current_step.metadata = {"region": "europe"}
+    current_step.tags = ["to_review"]
     return "answer"
 
 ```
@@ -134,6 +135,7 @@ async function myRun() {
       name: 'My Run',
       input: { content: 'My run Input' },
       metadata: { region: "europe" },
+      tags: ["to_review"],
     })
     .wrap(() => {
       return { content: 'Success' };
