@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pip3 install pydoc-markdown --break-system-packages
+
 # ./run-docs.sh ../literal-docs/python-client/
 
 # https://github.com/NiklasRosenstein/pydoc-markdown/blob/develop/src/pydoc_markdown/contrib/renderers/markdown.py#L52
@@ -44,11 +46,11 @@ done
 apiFiles=(
     "api.__init__"
     "client"
-    "message"
-    "step"
-    "thread"
-    "dataset"
-    "dataset_item"
+    "observability.message"
+    "observability.step"
+    "observability.thread"
+    "evaluation.dataset"
+    "evaluation.dataset_item"
 )
 
 mkdir -p $DOCS_DIR
