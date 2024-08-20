@@ -1,27 +1,7 @@
-<a id="literalai.thread"></a>
+<a id="literalai.observability.thread"></a>
 
 
-<a id="literalai.thread.ThreadDict"></a>
-
-## ThreadDict
-
-```python
-class ThreadDict(TypedDict)
-```
-
-A dictionary representation of a Thread. All attributes are optional.
-
-**Attributes**:
-
-<ResponseField name="id" type="str">The unique identifier for the thread.</ResponseField>
-<ResponseField name="name" type="str">The name of the thread.</ResponseField>
-<ResponseField name="metadata" type="Dict[str, Any]">Additional metadata for the thread.</ResponseField>
-<ResponseField name="tags" type="List[str]">A list of tags associated with the thread.</ResponseField>
-<ResponseField name="createdAt" type="str">The timestamp when the thread was created.</ResponseField>
-<ResponseField name="steps" type="List[StepDict]">The steps in the thread.</ResponseField>
-<ResponseField name="participant" type="UserDict">The participant in the thread.</ResponseField>
-
-<a id="literalai.thread.Thread"></a>
+<a id="literalai.observability.thread.Thread"></a>
 
 ## Thread
 
@@ -29,113 +9,9 @@ A dictionary representation of a Thread. All attributes are optional.
 class Thread(Utils)
 ```
 
-A class representing a thread of steps.
-
-**Attributes**:
-
-<ResponseField name="id" type="str">The unique identifier for the thread.</ResponseField>
-<ResponseField name="name" type="Optional[str]">The name of the thread. Defaults to None.</ResponseField>
-<ResponseField name="metadata" type="Optional[Dict[str, Any]]">Additional metadata for the thread. Defaults to None.</ResponseField>
-<ResponseField name="tags" type="Optional[List[str]]">A list of tags associated with the thread. Defaults to None.</ResponseField>
-<ResponseField name="steps" type="Optional[List[Step]]">The steps in the thread. Defaults to None.</ResponseField>
-<ResponseField name="participant_id" type="Optional[str]">The identifier of the participant in the thread. Defaults to None.</ResponseField>
-<ResponseField name="participant_identifier" type="Optional[str]">The identifier of the participant in the thread. Defaults to None.</ResponseField>
-<ResponseField name="created_at" type="Optional[str]">The timestamp when the thread was created. Defaults to None.</ResponseField>
-<ResponseField name="needs_upsert" type="Optional[bool]">A flag indicating whether the thread needs to be updated. Defaults to None.</ResponseField>
-
-<a id="literalai.thread.Thread.created_at"></a>
+<a id="literalai.observability.thread.Thread.created_at"></a>
 
 #### created\_at
 
 read-only, set by server
-
-<a id="literalai.thread.Thread.to_dict"></a>
-
-#### to\_dict
-
-```python
-def to_dict() -> ThreadDict
-```
-
-Converts the Thread object to a ThreadDict dictionary.
-
-**Returns**:
-
-<ResponseField name="ThreadDict">The dictionary representation of the Thread object.</ResponseField>
-
-<a id="literalai.thread.Thread.from_dict"></a>
-
-#### from\_dict
-
-```python
-@classmethod
-def from_dict(cls, thread_dict: ThreadDict) -> "Thread"
-```
-
-Creates a Thread object from a ThreadDict dictionary.
-
-**Arguments**:
-
-<ResponseField name="thread_dict" type="ThreadDict">The dictionary representation of the Thread object.</ResponseField>
-  
-
-**Returns**:
-
-<ResponseField name="Thread">The Thread object created from the dictionary.</ResponseField>
-
-<a id="literalai.thread.ThreadContextManager"></a>
-
-## ThreadContextManager
-
-```python
-class ThreadContextManager()
-```
-
-A context manager for handling threads.
-
-**Attributes**:
-
-<ResponseField name="client" type="BaseLiteralClient">The client to handle the thread.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str]">The unique identifier for the thread. Defaults to None.</ResponseField>
-<ResponseField name="name" type="Optional[str]">The name of the thread. Defaults to None.</ResponseField>
-<ResponseField name="kwargs" type="Dict[str, Any]">Additional keyword arguments for the thread.</ResponseField>
-
-<a id="literalai.thread.ThreadContextManager.upsert"></a>
-
-#### upsert
-
-```python
-def upsert()
-```
-
-Updates the thread on the server, if necessary.
-
-<a id="literalai.thread.thread_decorator"></a>
-
-#### thread\_decorator
-
-```python
-def thread_decorator(client: "BaseLiteralClient",
-                     func: Callable,
-                     thread_id: Optional[str] = None,
-                     name: Optional[str] = None,
-                     ctx_manager: Optional[ThreadContextManager] = None,
-                     **decorator_kwargs)
-```
-
-A decorator for handling threads.
-
-**Arguments**:
-
-<ResponseField name="client" type="BaseLiteralClient">The client to handle the thread.</ResponseField>
-<ResponseField name="func" type="Callable">The function to decorate.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str], optional">The unique identifier for the thread. Defaults to None.</ResponseField>
-<ResponseField name="name" type="Optional[str], optional">The name of the thread. Defaults to None.</ResponseField>
-<ResponseField name="ctx_manager" type="Optional[ThreadContextManager], optional">The context manager for the thread. Defaults to None.</ResponseField>
-<ResponseField name="**decorator_kwargs">Additional keyword arguments for the decorator.</ResponseField>
-  
-
-**Returns**:
-
-<ResponseField name="Callable">The decorated function.</ResponseField>
 

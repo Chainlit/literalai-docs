@@ -228,6 +228,8 @@ Fetches a list of threads based on pagination and optional filters.
 <ResponseField name="before" type="Optional[str]">Cursor for pagination, fetch threads before this cursor.</ResponseField>
 - `filters` _Optional[threads_filters]_ - Filters to apply on the threads query.
 - `order_by` _Optional[threads_order_by]_ - Order by clause for threads.
+  step_types_to_keep (Optional[List[StepType]]) : If set, only steps of the corresponding types
+  will be returned
   
 
 **Returns**:
@@ -247,17 +249,6 @@ def list_threads(first: Optional[int] = None,
 ```
 
 Lists threads based on pagination and optional filters, similar to get_threads but may include additional processing.
-
-```
-from literalai.thread import DateTimeFilter, ThreadFilter
-
-filters = ThreadFilter(
-    createdAt=DateTimeFilter(operator="gt", value="2023-12-14"),
-)
-
-page = 1
-result = literal_client.api.list_threads(filters=filters)
-```
 
 **Arguments**:
 
@@ -299,7 +290,6 @@ Retrieves a single thread by its ID.
 def create_thread(name: Optional[str] = None,
                   metadata: Optional[Dict] = None,
                   participant_id: Optional[str] = None,
-                  environment: Optional[str] = None,
                   tags: Optional[List[str]] = None)
 ```
 
@@ -310,7 +300,6 @@ Creates a new thread with the specified details.
 <ResponseField name="name" type="Optional[str]">Name of the thread.</ResponseField>
 <ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the thread.</ResponseField>
 <ResponseField name="participant_id" type="Optional[str]">Identifier for the participant.</ResponseField>
-<ResponseField name="environment" type="Optional[str]">Environment in which the thread operates.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">List of tags associated with the thread.</ResponseField>
   
 
@@ -327,7 +316,6 @@ def upsert_thread(id: str,
                   name: Optional[str] = None,
                   metadata: Optional[Dict] = None,
                   participant_id: Optional[str] = None,
-                  environment: Optional[str] = None,
                   tags: Optional[List[str]] = None)
 ```
 
@@ -339,7 +327,6 @@ Updates an existing thread or creates a new one if it does not exist.
 <ResponseField name="name" type="Optional[str]">Name of the thread.</ResponseField>
 <ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the thread.</ResponseField>
 <ResponseField name="participant_id" type="Optional[str]">Identifier for the participant.</ResponseField>
-<ResponseField name="environment" type="Optional[str]">Environment in which the thread operates.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">List of tags associated with the thread.</ResponseField>
   
 
@@ -356,7 +343,6 @@ def update_thread(id: str,
                   name: Optional[str] = None,
                   metadata: Optional[Dict] = None,
                   participant_id: Optional[str] = None,
-                  environment: Optional[str] = None,
                   tags: Optional[List[str]] = None)
 ```
 
@@ -368,7 +354,6 @@ Updates the specified details of an existing thread.
 <ResponseField name="name" type="Optional[str]">New name of the thread.</ResponseField>
 <ResponseField name="metadata" type="Optional[Dict]">New metadata for the thread.</ResponseField>
 <ResponseField name="participant_id" type="Optional[str]">New identifier for the participant.</ResponseField>
-<ResponseField name="environment" type="Optional[str]">New environment for the thread.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">New list of tags for the thread.</ResponseField>
   
 
@@ -495,8 +480,8 @@ Uploads a file to the server.
 #### create\_attachment
 
 ```python
-def create_attachment(thread_id: str,
-                      step_id: str,
+def create_attachment(thread_id: Optional[str] = None,
+                      step_id: Optional[str] = None,
                       id: Optional[str] = None,
                       metadata: Optional[Dict] = None,
                       mime: Optional[str] = None,
@@ -525,7 +510,7 @@ Creates an attachment associated with a thread and step, potentially uploading f
 
 **Returns**:
 
-<ResponseField name="Attachment">The created or updated attachment object.</ResponseField>
+<ResponseField name="literalai.observability.step.Attachment">The created or updated attachment object.</ResponseField>
 
 <a id="literalai.api.__init__.LiteralAPI.update_attachment"></a>
 
@@ -599,7 +584,8 @@ def create_step(thread_id: Optional[str] = None,
                 metadata: Optional[Dict] = None,
                 parent_id: Optional[str] = None,
                 name: Optional[str] = None,
-                tags: Optional[List[str]] = None)
+                tags: Optional[List[str]] = None,
+                root_run_id: Optional[str] = None)
 ```
 
 Creates a new step with the specified parameters.
@@ -616,6 +602,7 @@ Creates a new step with the specified parameters.
 <ResponseField name="parent_id" type="Optional[str]">The ID of the parent step, if any.</ResponseField>
 <ResponseField name="name" type="Optional[str]">The name of the step.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">Tags associated with the step.</ResponseField>
+<ResponseField name="root_run_id" type="Optional[str]">The ID of the root run, if any.</ResponseField>
   
 
 **Returns**:
@@ -820,7 +807,8 @@ Creates a new dataset with the specified properties.
 #### get\_dataset
 
 ```python
-def get_dataset(id: Optional[str] = None, name: Optional[str] = None)
+def get_dataset(id: Optional[str] = None,
+                name: Optional[str] = None) -> Optional[Dataset]
 ```
 
 Retrieves a dataset by its ID or name.
@@ -884,8 +872,8 @@ Deletes a dataset identified by its ID.
 #### create\_experiment
 
 ```python
-def create_experiment(dataset_id: str,
-                      name: str,
+def create_experiment(name: str,
+                      dataset_id: Optional[str] = None,
                       prompt_id: Optional[str] = None,
                       params: Optional[Dict] = None) -> "DatasetExperiment"
 ```
@@ -894,8 +882,8 @@ Creates a new experiment associated with a specific dataset.
 
 **Arguments**:
 
-<ResponseField name="dataset_id" type="str">The unique identifier of the dataset.</ResponseField>
 <ResponseField name="name" type="str">The name of the experiment.</ResponseField>
+<ResponseField name="dataset_id" type="Optional[str]">The unique identifier of the dataset.</ResponseField>
 <ResponseField name="prompt_id" type="Optional[str]">The identifier of the prompt associated with the experiment.</ResponseField>
 <ResponseField name="params" type="Optional[Dict]">Additional parameters for the experiment.</ResponseField>
   
@@ -1033,15 +1021,16 @@ Adds a generation to a dataset.
 
 <ResponseField name="Dict">The result of adding the generation to the dataset.</ResponseField>
 
-<a id="literalai.api.__init__.LiteralAPI.create_prompt_lineage"></a>
+<a id="literalai.api.__init__.LiteralAPI.get_or_create_prompt_lineage"></a>
 
-#### create\_prompt\_lineage
+#### get\_or\_create\_prompt\_lineage
 
 ```python
-def create_prompt_lineage(name: str, description: Optional[str] = None)
+def get_or_create_prompt_lineage(name: str, description: Optional[str] = None)
 ```
 
 Creates a prompt lineage with the specified name and optional description.
+If the prompt lineage with that name already exists, it is returned.
 
 **Arguments**:
 
@@ -1073,6 +1062,7 @@ Otherwise, a new prompt is created.
 <ResponseField name="name" type="str">The name of the prompt to retrieve or create.</ResponseField>
 <ResponseField name="template_messages" type="List[GenerationMessage]">A list of template messages for the prompt.</ResponseField>
 <ResponseField name="settings" type="Optional[Dict]">Optional settings for the prompt.</ResponseField>
+<ResponseField name="tools" type="Optional[List[Dict]]">Optional tool options for the model</ResponseField>
   
 
 **Returns**:
@@ -1086,7 +1076,7 @@ Otherwise, a new prompt is created.
 ```python
 def get_prompt(id: Optional[str] = None,
                name: Optional[str] = None,
-               version: Optional[int] = 0) -> Prompt
+               version: Optional[int] = None) -> Prompt
 ```
 
 Gets a prompt either by:
@@ -1106,6 +1096,44 @@ If both are provided, the `id` is used.
 **Returns**:
 
 <ResponseField name="Prompt">The prompt with the given identifier or name.</ResponseField>
+
+<a id="literalai.api.__init__.LiteralAPI.get_prompt_ab_testing"></a>
+
+#### get\_prompt\_ab\_testing
+
+```python
+def get_prompt_ab_testing(name: str) -> List[PromptRollout]
+```
+
+Get the A/B testing configuration for a prompt lineage.
+
+**Arguments**:
+
+<ResponseField name="name" type="str">The name of the prompt lineage.</ResponseField>
+
+**Returns**:
+
+  List[PromptRollout]
+
+<a id="literalai.api.__init__.LiteralAPI.update_prompt_ab_testing"></a>
+
+#### update\_prompt\_ab\_testing
+
+```python
+def update_prompt_ab_testing(name: str, rollouts: List[PromptRollout]) -> Dict
+```
+
+Update the A/B testing configuration for a prompt lineage.
+
+**Arguments**:
+
+<ResponseField name="name" type="str">The name of the prompt lineage.</ResponseField>
+<ResponseField name="rollouts" type="List[PromptRollout]">The percentage rollout for each prompt version.</ResponseField>
+  
+
+**Returns**:
+
+  Dict
 
 <a id="literalai.api.__init__.LiteralAPI.get_my_project_id"></a>
 
@@ -1348,6 +1376,8 @@ Asynchronously fetches a list of threads based on pagination and optional filter
 <ResponseField name="before" type="Optional[str]">A cursor for use in pagination, fetching records before this cursor.</ResponseField>
 - `filters` _Optional[threads_filters]_ - Filters to apply to the thread query.
 - `order_by` _Optional[threads_order_by]_ - Ordering criteria for the threads.
+  step_types_to_keep (Optional[List[StepType]]) : If set, only steps of the corresponding types
+  will be returned
   
 
 **Returns**:
@@ -1408,7 +1438,6 @@ Asynchronously retrieves a thread by its ID.
 async def create_thread(name: Optional[str] = None,
                         metadata: Optional[Dict] = None,
                         participant_id: Optional[str] = None,
-                        environment: Optional[str] = None,
                         tags: Optional[List[str]] = None)
 ```
 
@@ -1419,7 +1448,6 @@ Asynchronously creates a new thread with specified details.
 <ResponseField name="name" type="Optional[str]">The name of the thread.</ResponseField>
 <ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the thread.</ResponseField>
 <ResponseField name="participant_id" type="Optional[str]">Identifier for the participant associated with the thread.</ResponseField>
-<ResponseField name="environment" type="Optional[str]">The environment in which the thread operates.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">Tags associated with the thread.</ResponseField>
   
 
@@ -1436,7 +1464,6 @@ async def upsert_thread(id: str,
                         name: Optional[str] = None,
                         metadata: Optional[Dict] = None,
                         participant_id: Optional[str] = None,
-                        environment: Optional[str] = None,
                         tags: Optional[List[str]] = None)
 ```
 
@@ -1448,7 +1475,6 @@ Asynchronously updates or inserts a thread based on the provided ID.
 <ResponseField name="name" type="Optional[str]">The name of the thread.</ResponseField>
 <ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the thread.</ResponseField>
 <ResponseField name="participant_id" type="Optional[str]">Identifier for the participant associated with the thread.</ResponseField>
-<ResponseField name="environment" type="Optional[str]">The environment in which the thread operates.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">Tags associated with the thread.</ResponseField>
   
 
@@ -1465,7 +1491,6 @@ async def update_thread(id: str,
                         name: Optional[str] = None,
                         metadata: Optional[Dict] = None,
                         participant_id: Optional[str] = None,
-                        environment: Optional[str] = None,
                         tags: Optional[List[str]] = None)
 ```
 
@@ -1477,7 +1502,6 @@ Asynchronously updates an existing thread identified by ID with new details.
 <ResponseField name="name" type="Optional[str]">New name of the thread.</ResponseField>
 <ResponseField name="metadata" type="Optional[Dict]">New metadata for the thread.</ResponseField>
 <ResponseField name="participant_id" type="Optional[str]">New identifier for the participant.</ResponseField>
-<ResponseField name="environment" type="Optional[str]">New environment for the thread.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">New list of tags for the thread.</ResponseField>
   
 
@@ -1543,7 +1567,7 @@ Asynchronously creates multiple scores.
 
 **Arguments**:
 
-<ResponseField name="scores" type="List[ScoreDict]">A list of dictionaries representing the scores to be created.</ResponseField>
+<ResponseField name="scores" type="List[literalai.observability.step.ScoreDict]">A list of dictionaries representing the scores to be created.</ResponseField>
   
 
 **Returns**:
@@ -1573,7 +1597,7 @@ Asynchronously creates a single score.
 <ResponseField name="value" type="float">The numerical value of the score.</ResponseField>
 <ResponseField name="type" type="ScoreType">The type of the score.</ResponseField>
 <ResponseField name="step_id" type="Optional[str]">The ID of the step associated with the score.</ResponseField>
-<ResponseField name="generation_id" type="Optional[str]">The ID of the generation associated with the score.</ResponseField>
+<ResponseField name="generation_id">Deprecated - use step_id</ResponseField>
 <ResponseField name="dataset_experiment_item_id" type="Optional[str]">The ID of the dataset experiment item associated with the score.</ResponseField>
 <ResponseField name="comment" type="Optional[str]">A comment associated with the score.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">A list of tags associated with the score.</ResponseField>
@@ -1629,7 +1653,7 @@ Asynchronously deletes a score identified by its ID.
 ```python
 async def upload_file(
         content: Union[bytes, str],
-        thread_id: str,
+        thread_id: Optional[str] = None,
         mime: Optional[str] = "application/octet-stream") -> Dict
 ```
 
@@ -1755,7 +1779,8 @@ async def create_step(thread_id: Optional[str] = None,
                       metadata: Optional[Dict] = None,
                       parent_id: Optional[str] = None,
                       name: Optional[str] = None,
-                      tags: Optional[List[str]] = None)
+                      tags: Optional[List[str]] = None,
+                      root_run_id: Optional[str] = None)
 ```
 
 Asynchronously creates a new step with the specified parameters.
@@ -1772,6 +1797,7 @@ Asynchronously creates a new step with the specified parameters.
 <ResponseField name="parent_id" type="Optional[str]">The ID of the parent step, if any.</ResponseField>
 <ResponseField name="name" type="Optional[str]">The name of the step.</ResponseField>
 <ResponseField name="tags" type="Optional[List[str]]">Tags associated with the step.</ResponseField>
+<ResponseField name="root_run_id" type="Optional[str]">The ID of the root run, if any.</ResponseField>
   
 
 **Returns**:
@@ -2136,24 +2162,4 @@ Asynchronously adds a generation to a dataset.
 **Returns**:
 
   The result of the GraphQL helper function for adding a generation to a dataset.
-
-<a id="literalai.api.__init__.AsyncLiteralAPI.create_prompt_lineage"></a>
-
-#### create\_prompt\_lineage
-
-```python
-async def create_prompt_lineage(name: str, description: Optional[str] = None)
-```
-
-Asynchronously creates a prompt lineage.
-
-**Arguments**:
-
-<ResponseField name="name" type="str">The name of the prompt lineage.</ResponseField>
-<ResponseField name="description" type="Optional[str]">An optional description of the prompt lineage.</ResponseField>
-  
-
-**Returns**:
-
-  The result of the GraphQL helper function for creating a prompt lineage.
 

@@ -9,28 +9,6 @@
 class BaseLiteralClient()
 ```
 
-<Warning>Use LiteralClient or AsyncLiteralClient in your code. Both classes inherit from BaseLiteralClient and have access to its methods.</Warning>
-
-**Attributes**:
-
-<ResponseField name="api" type="Union[LiteralAPI, AsyncLiteralAPI]">Instance of the Literal API.</ResponseField>
-<ResponseField name="disabled" type="bool">Flag indicating if the client is disabled.</ResponseField>
-<ResponseField name="event_processor" type="EventProcessor">Processor for handling events.</ResponseField>
-  
-
-**Arguments**:
-
-<ResponseField name="batch_size" type="int, optional">Batch size for event processing. Defaults to 5.</ResponseField>
-<ResponseField name="is_async" type="bool, optional">Flag indicating if the API should be asynchronous. Defaults to False.</ResponseField>
-<ResponseField name="api_key" type="Optional[str], optional">API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.</ResponseField>
-<ResponseField name="url" type="Optional[str], optional">URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.</ResponseField>
-<ResponseField name="disabled" type="bool, optional">Flag to disable the client. Defaults to False.</ResponseField>
-  
-
-**Raises**:
-
-<ResponseField name="Exception">If 'LITERAL_API_KEY' is not provided and not found in environment variables.</ResponseField>
-
 <a id="literalai.client.BaseLiteralClient.to_sync"></a>
 
 #### to\_sync
@@ -39,11 +17,11 @@ class BaseLiteralClient()
 def to_sync() -> "LiteralClient"
 ```
 
-Convert the client to synchronous mode.
+Converts the current client to its synchronous version.
 
 **Returns**:
 
-<ResponseField name="LiteralClient">Synchronous LiteralClient instance.</ResponseField>
+<ResponseField name="LiteralClient">The current client's synchronous version.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.instrument_openai"></a>
 
@@ -53,7 +31,27 @@ Convert the client to synchronous mode.
 def instrument_openai()
 ```
 
-Instruments the OpenAI API calls with the current client.
+Instruments the OpenAI SDK so that all LLM calls are logged to Literal AI.
+
+<a id="literalai.client.BaseLiteralClient.instrument_mistralai"></a>
+
+#### instrument\_mistralai
+
+```python
+def instrument_mistralai()
+```
+
+Instruments the Mistral AI SDK so that all LLM calls are logged to Literal AI.
+
+<a id="literalai.client.BaseLiteralClient.instrument_llamaindex"></a>
+
+#### instrument\_llamaindex
+
+```python
+def instrument_llamaindex()
+```
+
+Instruments the Llama Index framework so that all RAG & LLM calls are logged to Literal AI.
 
 <a id="literalai.client.BaseLiteralClient.langchain_callback"></a>
 
@@ -65,37 +63,17 @@ def langchain_callback(to_ignore: Optional[List[str]] = None,
                        **kwargs: Any)
 ```
 
-Get a Langchain callback tracer configured with the client.
+Creates a Callback for Langchain that logs all LLM calls to Literal AI.
 
 **Arguments**:
 
-<ResponseField name="to_ignore" type="Optional[List[str]], optional">List of event types to ignore. Defaults to None.</ResponseField>
-<ResponseField name="to_keep" type="Optional[List[str]], optional">List of event types to keep. Defaults to None.</ResponseField>
-<ResponseField name="**kwargs">Additional arguments for the tracer.</ResponseField>
+<ResponseField name="to_ignore" type="Optional[List[str]]">Runs to ignore to declutter logging.</ResponseField>
+<ResponseField name="to_keep" type="Optional[List[str]]">Runs to keep within ignored runs.</ResponseField>
   
 
 **Returns**:
 
-<ResponseField name="LangchainTracer">Configured Langchain tracer.</ResponseField>
-
-<a id="literalai.client.BaseLiteralClient.llama_index_callback"></a>
-
-#### llama\_index\_callback
-
-```python
-def llama_index_callback(**kwargs: Any)
-```
-
-Get a Llama Index callback tracer configured with the client.
-
-**Arguments**:
-
-<ResponseField name="**kwargs">Additional arguments for the tracer.</ResponseField>
-  
-
-**Returns**:
-
-<ResponseField name="LlamaIndexTracer">Configured Llama Index tracer.</ResponseField>
+<ResponseField name="LangchainTracer">The callback to use in Langchain's invoke methods.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.thread"></a>
 
@@ -109,19 +87,19 @@ def thread(original_function=None,
            **kwargs)
 ```
 
-Decorator or context manager for thread-level event grouping.
+Creates a thread where all the subsequents steps will be logged.
+Works as a decorator or a ContextManager.
 
 **Arguments**:
 
-<ResponseField name="original_function" type="callable, optional">Function to decorate. Defaults to None.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str], optional">ID of the thread. Defaults to None.</ResponseField>
-<ResponseField name="name" type="Optional[str], optional">Name of the thread. Defaults to None.</ResponseField>
-<ResponseField name="**kwargs">Additional arguments for the thread context manager or decorator.</ResponseField>
+<ResponseField name="original_function">The function to execute in the thread's context.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str]">The id of the thread to create.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the thread to create.</ResponseField>
   
 
 **Returns**:
 
-  Union[ThreadContextManager, callable]: Thread context manager or decorated function.
+  The wrapper for the thread's context.
 
 <a id="literalai.client.BaseLiteralClient.step"></a>
 
@@ -135,25 +113,28 @@ def step(original_function=None,
          id: Optional[str] = None,
          parent_id: Optional[str] = None,
          thread_id: Optional[str] = None,
+         root_run_id: Optional[str] = None,
          **kwargs)
 ```
 
-Decorator or context manager for step-level event grouping.
+Creates a step where all the subsequents steps will be logged. Works as a decorator or a ContextManager.
+This is used to create Agent steps. For conversational messages use `message` instead.
 
 **Arguments**:
 
-<ResponseField name="original_function" type="callable, optional">Function to decorate. Defaults to None.</ResponseField>
-<ResponseField name="name" type="str, optional">Name of the step. Defaults to "".</ResponseField>
-<ResponseField name="type" type="TrueStepType, optional">Type of the step. Defaults to "undefined".</ResponseField>
-<ResponseField name="id" type="Optional[str], optional">ID of the step. Defaults to None.</ResponseField>
-<ResponseField name="parent_id" type="Optional[str], optional">Parent ID of the step. Defaults to None.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str], optional">Thread ID of the step. Defaults to None.</ResponseField>
-<ResponseField name="**kwargs">Additional arguments for the step context manager or decorator.</ResponseField>
+<ResponseField name="original_function">The function to execute in the step's context.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the step to create.</ResponseField>
+<ResponseField name="type" type="TrueStepType">The type of the step. Must be one of the following :</ResponseField>
+  "run", "tool", "llm", "embedding", "retrieval","rerank", "undefined".
+<ResponseField name="id" type="Optional[str]">The id of the step to create.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The id of the parent step.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str]">The id of the parent thread.</ResponseField>
+<ResponseField name="root_run_id" type="Optional[str]">The id of the root run.</ResponseField>
   
 
 **Returns**:
 
-  Union[StepContextManager, callable]: Step context manager or decorated function.
+  The wrapper for the step's context.
 
 <a id="literalai.client.BaseLiteralClient.run"></a>
 
@@ -165,23 +146,25 @@ def run(original_function=None,
         name: str = "",
         id: Optional[str] = None,
         parent_id: Optional[str] = None,
-        thread_id: Optional[str] = None)
+        thread_id: Optional[str] = None,
+        root_run_id: Optional[str] = None)
 ```
 
-Decorator or context manager for run-level event grouping.
+Creates a run where all the subsequents steps will be logged. Works as a decorator or a ContextManager.
 
 **Arguments**:
 
-<ResponseField name="original_function" type="callable, optional">Function to decorate. Defaults to None.</ResponseField>
-<ResponseField name="name" type="str, optional">Name of the run. Defaults to "".</ResponseField>
-<ResponseField name="id" type="Optional[str], optional">ID of the run. Defaults to None.</ResponseField>
-<ResponseField name="parent_id" type="Optional[str], optional">Parent ID of the run. Defaults to None.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str], optional">Thread ID of the run. Defaults to None.</ResponseField>
+<ResponseField name="original_function">The function to execute in the step's context.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the step to create.</ResponseField>
+<ResponseField name="id" type="Optional[str]">The id of the step to create.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The id of the parent step.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str]">The id of the parent thread.</ResponseField>
+<ResponseField name="root_run_id" type="Optional[str]">The id of the root run.</ResponseField>
   
 
 **Returns**:
 
-  Union[StepContextManager, callable]: Run context manager or decorated function.
+  The wrapper for the step's context.
 
 <a id="literalai.client.BaseLiteralClient.message"></a>
 
@@ -191,32 +174,76 @@ Decorator or context manager for run-level event grouping.
 def message(content: str = "",
             id: Optional[str] = None,
             parent_id: Optional[str] = None,
-            type: Optional[MessageStepType] = None,
+            type: Optional[MessageStepType] = "assistant_message",
             name: Optional[str] = None,
             thread_id: Optional[str] = None,
             attachments: List[Attachment] = [],
             tags: Optional[List[str]] = None,
-            metadata: Dict = {})
+            metadata: Dict = {},
+            root_run_id: Optional[str] = None)
 ```
 
-Creates and ends a message step.
+Creates a conversational message step and sends it to Literal AI.
+For agentic steps or runs use `step` or `run` respectively instead.
 
 **Arguments**:
 
-<ResponseField name="content" type="str, optional">Content of the message. Defaults to "".</ResponseField>
-<ResponseField name="id" type="Optional[str], optional">ID of the message. Defaults to None.</ResponseField>
-<ResponseField name="parent_id" type="Optional[str], optional">Parent ID of the message. Defaults to None.</ResponseField>
-<ResponseField name="type" type="Optional[MessageStepType], optional">Type of the message. Defaults to None.</ResponseField>
-<ResponseField name="name" type="Optional[str], optional">Name of the message. Defaults to None.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str], optional">Thread ID of the message. Defaults to None.</ResponseField>
-<ResponseField name="attachments" type="List[Attachment], optional">List of attachments. Defaults to [].</ResponseField>
-<ResponseField name="tags" type="Optional[List[str]], optional">List of tags. Defaults to None.</ResponseField>
-<ResponseField name="metadata" type="Dict, optional">Metadata for the message. Defaults to {}.</ResponseField>
+<ResponseField name="content" type="str">The text content of the message.</ResponseField>
+<ResponseField name="id" type="Optional[str]">The id of the step to create.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The id of the parent step.</ResponseField>
+<ResponseField name="type" type="TrueStepType">The type of the step. Must be one of the following :</ResponseField>
+  "user_message", "assistant_message", "system_message".
+<ResponseField name="name" type="Optional[str]">The name of the step to create.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str]">The id of the parent thread.</ResponseField>
+<ResponseField name="attachments" type="List[Attachment]">A list of attachments to append to the message.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">A list of tags to add to the message.</ResponseField>
+<ResponseField name="metadata" type="Dict">Metadata to add to the message, in key-value pairs.</ResponseField>
+<ResponseField name="root_run_id" type="Optional[str]">The id of the root run.</ResponseField>
   
 
 **Returns**:
 
-<ResponseField name="Message">Created message step.</ResponseField>
+<ResponseField name="Message">the created message.</ResponseField>
+
+<a id="literalai.client.BaseLiteralClient.environment"></a>
+
+#### environment
+
+```python
+def environment(original_function=None, env: Environment = "prod", **kwargs)
+```
+
+Sets the environment to add to all subsequent threads and steps. Works as a decorator or a ContextManager.
+Entities logged in the "experiment" environment are filtered out of the Literal AI UI.
+
+**Arguments**:
+
+<ResponseField name="original_function">The function to execute in the step's context.</ResponseField>
+<ResponseField name="env" type="Environment">The environment to add to logged entities.</ResponseField>
+  
+
+**Returns**:
+
+  The wrapper for the context.
+
+<a id="literalai.client.BaseLiteralClient.experiment_item_run"></a>
+
+#### experiment\_item\_run
+
+```python
+def experiment_item_run(original_function=None, **kwargs)
+```
+
+Creates an experiment run. Works as a decorator or a ContextManager.
+
+**Arguments**:
+
+<ResponseField name="original_function">The function to execute in the step's context.</ResponseField>
+  
+
+**Returns**:
+
+  The wrapper for the context.
 
 <a id="literalai.client.BaseLiteralClient.start_step"></a>
 
@@ -228,24 +255,27 @@ def start_step(name: str = "",
                id: Optional[str] = None,
                parent_id: Optional[str] = None,
                thread_id: Optional[str] = None,
+               root_run_id: Optional[str] = None,
                **kwargs)
 ```
 
-Starts a new step.
+Creates a step and starts it in the current context. To log it on Literal AI use `.end()`.
+This is used to create Agent steps. For conversational messages use `message` instead.
 
 **Arguments**:
 
-<ResponseField name="name" type="str, optional">Name of the step. Defaults to "".</ResponseField>
-<ResponseField name="type" type="Optional[TrueStepType], optional">Type of the step. Defaults to None.</ResponseField>
-<ResponseField name="id" type="Optional[str], optional">ID of the step. Defaults to None.</ResponseField>
-<ResponseField name="parent_id" type="Optional[str], optional">Parent ID of the step. Defaults to None.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str], optional">Thread ID of the step. Defaults to None.</ResponseField>
-<ResponseField name="**kwargs">Additional arguments for the step.</ResponseField>
+<ResponseField name="name" type="Optional[str]">The name of the step to create.</ResponseField>
+<ResponseField name="type" type="TrueStepType">The type of the step. Must be one of the following :</ResponseField>
+  "run", "tool", "llm", "embedding", "retrieval","rerank", "undefined".
+<ResponseField name="id" type="Optional[str]">The id of the step to create.</ResponseField>
+<ResponseField name="parent_id" type="Optional[str]">The id of the parent step.</ResponseField>
+<ResponseField name="thread_id" type="Optional[str]">The id of the parent thread.</ResponseField>
+<ResponseField name="root_run_id" type="Optional[str]">The id of the root run.</ResponseField>
   
 
 **Returns**:
 
-<ResponseField name="Step">Started step.</ResponseField>
+<ResponseField name="Step">the created step.</ResponseField>
 
 <a id="literalai.client.BaseLiteralClient.get_current_step"></a>
 
@@ -255,11 +285,7 @@ Starts a new step.
 def get_current_step()
 ```
 
-Retrieves the current active step.
-
-**Returns**:
-
-<ResponseField name="Optional[Step]">The current active step or None if no steps are active.</ResponseField>
+Gets the current step from the context.
 
 <a id="literalai.client.BaseLiteralClient.get_current_thread"></a>
 
@@ -269,11 +295,17 @@ Retrieves the current active step.
 def get_current_thread()
 ```
 
-Retrieves the current active thread.
+Gets the current thread from the context.
 
-**Returns**:
+<a id="literalai.client.BaseLiteralClient.get_current_root_run"></a>
 
-<ResponseField name="Optional[ThreadContextManager]">The current active thread or None if no threads are active.</ResponseField>
+#### get\_current\_root\_run
+
+```python
+def get_current_root_run()
+```
+
+Gets the current root run from the context.
 
 <a id="literalai.client.BaseLiteralClient.reset_context"></a>
 
@@ -283,7 +315,7 @@ Retrieves the current active thread.
 def reset_context()
 ```
 
-Resets the active steps and thread context.
+Resets the context, forgetting active steps & setting current thread to None.
 
 <a id="literalai.client.BaseLiteralClient.flush_and_stop"></a>
 
@@ -293,68 +325,5 @@ Resets the active steps and thread context.
 def flush_and_stop()
 ```
 
-Flushes the event processor and stops it.
-
-<a id="literalai.client.LiteralClient"></a>
-
-## LiteralClient
-
-```python
-class LiteralClient(BaseLiteralClient)
-```
-
-Synchronous LiteralClient for interacting with the Literal API.
-
-**Arguments**:
-
-<ResponseField name="batch_size" type="int, optional">Batch size for event processing. Defaults to 5.</ResponseField>
-<ResponseField name="api_key" type="Optional[str], optional">API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.</ResponseField>
-<ResponseField name="url" type="Optional[str], optional">URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.</ResponseField>
-<ResponseField name="disabled" type="bool, optional">Flag to disable the client. Defaults to False.</ResponseField>
-
-<a id="literalai.client.LiteralClient.flush"></a>
-
-#### flush
-
-```python
-def flush()
-```
-
-Flushes the event processor.
-
-<a id="literalai.client.AsyncLiteralClient"></a>
-
-## AsyncLiteralClient
-
-```python
-class AsyncLiteralClient(BaseLiteralClient)
-```
-
-Asynchronous LiteralClient for interacting with the Literal API.
-
-**Attributes**:
-
-<ResponseField name="api" type="AsyncLiteralAPI">Instance of the asynchronous Literal API.</ResponseField>
-  
-
-**Arguments**:
-
-<ResponseField name="batch_size" type="int, optional">Batch size for event processing. Defaults to 5.</ResponseField>
-<ResponseField name="api_key" type="Optional[str], optional">API key for authentication. If not provided, it will be fetched from the environment variable 'LITERAL_API_KEY'.</ResponseField>
-<ResponseField name="url" type="Optional[str], optional">URL of the Literal API. Defaults to 'https://cloud.getliteral.ai'.</ResponseField>
-<ResponseField name="disabled" type="bool, optional">Flag to disable the client. Defaults to False.</ResponseField>
-
-<a id="literalai.client.AsyncLiteralClient.flush"></a>
-
-#### flush
-
-```python
-async def flush()
-```
-
-Asynchronously flushes the event processor.
-
-**Returns**:
-
-  None
+Sends all threads and steps to the Literal AI API. Waits synchronously for all API calls to be done.
 

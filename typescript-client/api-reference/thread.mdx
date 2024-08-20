@@ -1,5 +1,3 @@
-### Thread
-
 Represents a thread in the system, extending the properties and methods from `ThreadFields`.
 This class manages thread-specific operations such as creation and updates via the API.
 
@@ -22,7 +20,7 @@ Constructs a new Thread instance, with a generated ID if none is provided.
 | Parameter | Type | Description |
 | :------ | :------ | :------ |
 | `client` | `LiteralClient` | - |
-| `data`? | [`ThreadConstructor`](README.md#threadconstructor) | Optional initial data for the thread. |
+| `data`? | `ThreadConstructor` | Optional initial data for the thread. |
 
 **Returns**
 
@@ -118,7 +116,7 @@ Sends the thread to the API, handling disabled state and setting the end time if
 | Parameter | Type | Description |
 | :------ | :------ | :------ |
 | `cb` | (`thread`) => `Output` \| `Promise`\<`Output`\> | The callback function to run within the context of the thread. |
-| `updateThread`? | [`ThreadConstructor`](README.md#threadconstructor) \| (`output`) => [`ThreadConstructor`](README.md#threadconstructor) \| (`output`) => `Promise`\<[`ThreadConstructor`](README.md#threadconstructor)\> | Optional update function to modify the thread after the callback. |
+| `updateThread`? | `ThreadConstructor` \| (`output`) => `ThreadConstructor` \| (`output`) => `Promise`\<`ThreadConstructor`\> | Optional update function to modify the thread after the callback. |
 
 **Returns**
 | type | description |
@@ -142,21 +140,5 @@ It handles nested objects that also implement a serialize method.
 **Inherited from**
 
 ThreadFields.serialize
-
-## Type Aliases
-
-### CleanThreadFields
-
-```ts
-type CleanThreadFields: OmitUtils<ThreadFields>;
-```
-
-***
-
-### ThreadConstructor
-
-```ts
-type ThreadConstructor: Omit<CleanThreadFields, "id" | "steps"> & Partial<Pick<CleanThreadFields, "id">>;
-```
 
 ***

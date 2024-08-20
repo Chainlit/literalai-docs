@@ -78,7 +78,7 @@ cd $BASEDIR
 for i in "${FILES[@]}"; do
 
     # remove the 6 first lines (very bad solution, but removes useless auto-generated stuff)
-    sed -i '' '1,2d' $OUTPUT_DIR/$i.mdx
+    sed -i '' '1,4d' $OUTPUT_DIR/$i.mdx
 
     # remove the 2 last lines (very bad solution, but removes useless auto-generated stuff)
     sed -i '' '$d' $OUTPUT_DIR/$i.mdx
