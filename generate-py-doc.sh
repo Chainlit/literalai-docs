@@ -50,7 +50,7 @@ apiFiles=(
     "observability.step"
     "observability.thread"
     "evaluation.dataset"
-    "evaluation.dataset_item"
+    # "evaluation.dataset_item"
 )
 
 mkdir -p $DOCS_DIR
@@ -85,6 +85,17 @@ if [ -f "$DOCS_DIR/api.__init__.mdx" ]; then
     # change the api.__init__ to api in the file
     # sed -i 's/api.__init__/api/g' $DOCS_DIR/api.mdx
 fi
+
+# for each mdx file in the DOCS_DIR, keep only the last word (after the avant dernier point)
+for file in $DOCS_DIR/*.mdx; do
+    # get the last word of the file
+    filename=$(basename $file)
+    # get the last word of the filename
+    last_word=$(echo $filename | awk -F. '{print $(NF-1)}')
+    # rename the file to the last word
+    mv $file $DOCS_DIR/$last_word.mdx
+    
+done
 
 # for each file in the DOC_DIR, add its name without the extension to a files.txt file
 for file in $DOCS_DIR/*.mdx; do
