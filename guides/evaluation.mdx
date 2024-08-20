@@ -85,11 +85,10 @@ literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 score = literal_client.api.create_score(
             step_id="<STEP_UUID>",
-            generation_id="<GENERATION_UUID>"
-            name="user-feedback",
-            type="HUMAN",
-            comment="Hello world",
-            value=1,
+            name="context-relevancy",
+            type="AI",
+            comment="context is relevant to the question",
+            value=0.9,
         )
 ```
 
@@ -100,11 +99,11 @@ const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 async function main() {
     const score = await literalClient.api.createScore({
-        stepId: '05b217b4-5890-4434-b1a2-1749d842b2db',
-        name: 'user-feedback',
-        type: 'HUMAN',
-        comment: 'Example score',
-        value: 1,
+        stepId: '<STEP_UUID>',
+        name: 'context-relevancy',
+        type: 'AI',
+        comment: 'context is relevant to the question',
+        value: 0.9,
       });
       
 };
@@ -112,32 +111,6 @@ main();
 ```
 </CodeGroup>
 
-The example below highlights how you can receive human feedback on a
-FastAPI server by calling the `create_score` API in Python.
-
-```python server.py
-import os
-from fastapi import FastAPI
-from literalai import LiteralClient
-
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-app = FastAPI()
-
-@app.post("/feedback/")
-def receive_human_feedback():
-
-    # Create a score on the `Step` the user gave feedback for.
-    return literal_client.api.create_score(
-            type="HUMAN",
-            name="user-feedback",
-            value=0.9,
-            comment="This was good",
-            step_id="309a6a10-345b-4fd3-bbba-1dd1b435656c",
-        )
-
-receive_human_feedback()
-```
 
 ## Label LLM logs on Literal AI
 
