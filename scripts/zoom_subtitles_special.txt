@@ -1,0 +1,5 @@
+s/^#### Extends/## Extends/
+s/^#### Properties/## Properties/
+s/^#### Methods/## Methods/
+s/^#### Constructors/## Constructors/
+s/# new/## new/

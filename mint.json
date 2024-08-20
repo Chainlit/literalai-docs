@@ -76,25 +76,15 @@
     },
     {
       "group": "Get Started",
-      "pages": ["python-client/get-started/introduction"]
-    },
-    {
-      "group": "Abstractions",
       "pages": [
-        "python-client/abstractions/thread",
-        "python-client/abstractions/step"
-      ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "python-client/api-reference/client",
-        "python-client/api-reference/api"
+        "python-client/get-started/introduction"
       ]
     },
     {
       "group": "Development",
-      "pages": ["python-client/development/changelog"]
+      "pages": [
+        "python-client/development/changelog"
+      ]
     },
     {
       "group": "Get Started",
@@ -105,19 +95,17 @@
       ]
     },
     {
-      "group": "API Reference",
+      "group": "Development",
       "pages": [
-        "typescript-client/api-reference/dataset",
-        "typescript-client/api-reference/api-reference"
+        "typescript-client/development/changelog"
       ]
     },
     {
-      "group": "Development",
-      "pages": ["typescript-client/development/changelog"]
-    },
-    {
       "group": "Self Hosting",
-      "pages": ["self-hosting/get-started", "self-hosting/deployment"]
+      "pages": [
+        "self-hosting/get-started",
+        "self-hosting/deployment"
+      ]
     },
     {
       "group": "More",
