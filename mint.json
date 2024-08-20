@@ -52,6 +52,7 @@
       "pages": [
         "guides/logs",
         "guides/prompt-management",
+        "guides/playground",
         "guides/evaluation",
         "guides/dataset",
         "guides/experiment",
