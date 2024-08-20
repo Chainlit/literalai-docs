@@ -197,14 +197,15 @@
         "tutorials/evaluating-context-relevancy",
         "tutorials/evaluating-user-satisfaction",
         "tutorials/swap-llms",
-        "tutorials/langgraph-example"
+        "tutorials/langgraph-example-py"
       ]
     },
     {
       "group": "Typescript Tutorials",
       "pages": [
         "tutorials/nextjs-openai-chatbot",
-        "tutorials/promptfoo"
+        "tutorials/promptfoo",
+        "tutorials/langgraph-example-ts"
       ]
     },
     {
