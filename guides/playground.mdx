@@ -1,230 +1,65 @@
 ---
 title: Playground
-description: Prompt Management enables collaboration between engineering and product teams to create, version, A/B test, debug, and monitor prompts directly from Literal AI.
-icon: message-code
+description: The playground is an environment in which you can create, test, and debug prompts and multiple LLMs.
+icon: pen-to-square
 ---
-<Frame caption="Prompt Management: prompts can be stored in either Literal AI or in your application code.">
-<img src="/images/prompt-management.svg" alt="Literal AI Platform"/>
-</Frame>
-## What is a Prompt Template?
 
-A **Prompt** or **Prompt Template** in Literal AI consists of:
-- the **prompt** i.e. the messages, and its variables
-- the **LLM provider** i.e. OpenAI, Anthropic, etc.
-- the **LLM settings** i.e. temperature, top P, etc.
+The playground is an environment in which you can create, test, and debug prompts. You can access the playground via
+1. **The main menu**. This allows you to create, test and save prompts from scratch.
+2. **Prompts**. This allows you to view, edit and test your prompt template and LLM settings and manage prompt versioning.
+3. **LLM Generations**. Via Generations you can access the playground with an individual generation from a real chat conversation. This allows you to debug a single generation of the LLM in context.
 
-Prompts in Literal AI allow you to:
-- Enable product teams and domain experts to draft and iterate on prompts.
-- Deploy new prompt versions without redeploying your code.
-- Track which prompt version was used for a specific generation. Improve prompts by debugging logged LLM generations with context.
-- Compare prompt versions, LLM models, settings and providers to determine which one performs better.
-- Collaborate effectively with your team.
+If you start from scratch in the Prompt Playground, you can open example templates, and iterate from there.
 
-## Create a Prompt
-
-Go to the Prompt Playground to create your first prompt template.
-On the left panel, define the template messages. In each template message, you can define variables following the [Mustache](https://mustache.github.io/mustache.5.html) syntax.
-
-<Frame caption="Create a Prompt Template">
-  <img src="/images/create-prompt.gif" alt="Literal AI Platform"/>
+<Frame caption="Playground Prompt Template">
+  <img src="/images/playground-prompt-template.png" alt="An example of a prompt template in the playground." />
 </Frame>
 
-You can try out the prompt template by setting values for the variables, picking an LLM provider/model and clicking on `Submit`.
+### Design prompt templates
 
-The Prompt Playground supports multiple LLM providers/models and you can switch between them to see how the prompt behaves.
+On the left hand side of the view you can create prompt templates (1). 
+* In a `system message` you give instructions about the role of the assistant. For example, you can say that the assistant should provide concise answers. 
+* In `User`, you give a format of the user query to the LLM. In this example, two variables are used. First, context documents are given, in a for-loop. The content of the variables can be defined below, but are usually defined in the code of the application. Then, the question that the user entered in the chatbot window is given.
+* `Assistant` messages are responses by the LLM. 
+* `Tool` messages are responses by the tool or function.
 
-Once you are happy with the prompt, you click on `Save`.
+You can also pass functions to the prompt template. They are defined in the code or in `Tools`. The LLM model can detect when a specific function needs to be called based on the user's input. 
 
-### Create a new version
+#### Formatting
+The text and code in the prompt template is formatted according to the [the Mustache prompt templating format](https://scalate.github.io/scalate/documentation/mustache.html#Syntax). Tags are surrounded by "mustaches" or double curly brackets. With tags and mustaches, variables, sections, loops and functions can be declared. A variable is written like `{{variable}}`, and an if statement and for-loop is written like the following. If `x` is a boolean value, the section tag acts like an `if` conditional. When `x` is an array, this acts like a `for each` loop. 
 
-Whether to fix a bug or to add a new feature, you can create a new version of a prompt template.
-
-<Frame caption="Create a New Version">
-  <video
-    autoPlay
-    muted
-    loop
-    playsInline
-    src="/images/create-prompt-version.mp4"
-    />
-</Frame>
-
-To do so, go to the Prompts page, select the prompt template you want to iterate on. Then select the version of the prompt you want to create a new version from.
-
-Edit the template messages and click on `Save` when you are done. A diff of the changes will be displayed. Optionally provide a changelog to keep track of the changes.
-
-### Programmatically
-
-If you prefer to keep your Prompt Template in your code, you can still version it on Literal AI.
-Note that A/B testing is not available if you manage prompt templates in your code.
-
-<Note>See [installation](/get-started/installation) to get your API key and instantiate the SDK</Note>
-
-<CodeGroup>
-```python Python
-PROMPT_NAME = "RAG prompt"
-template_messages = [
-    {
-        "role": "user",
-        "content": """Answer the question based on the context below.
-Context:
-{{#chunks}}
+```
+# if statement / for loop using Mustache templating format
+{{#x}}
 {{.}}
-{{/chunks}}
-Query:
-{{query}}
-Answer:"""
-    }
-]
-
-prompt = literalai_client.api.get_or_create_prompt(
-    name=PROMPT_NAME,
-    template_messages=template_messages
-)
+{{/x}}
 ```
-    
-```typescript TypeScript
-const PROMPT_NAME = 'RAG prompt';
 
-const prompt = await literalAiClient.api.getOrCreatePrompt(
-    PROMPT_NAME,
-    [
-        {
-            "role": "user",
-            "content": `Answer the query based on the context below.
-Context:
-{{#chunks}}
-{{.}}
-{{/chunks}}
-Query:
-{{query}}
-Answer:`
-            }
-        ]
-    );
-```
-</CodeGroup>
+### LLM settings
 
-Literal AI will check if the prompt changed compared to the last version and create a new version if needed.
+On the right side of the screen (2), you can set an LLM provider (for example OpenAI or Anthropic). You can change the following settings: 
+* **Model.** Which model of the provider to use.
+* **Temperature.** Control randomness. A lower temperature results in less random generations. As the temperature approaches zero, the model will become deterministic and repetitive. 
+* **Maximum Length.** Maximum length of tokens to generate. Requests can use op to 32,000 tokens, shared between prompt and completion. The exact limit varies per model.
+* **Stop Sequences.** Use up to four sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
+* **Top P** or Nucleas Sampling. Controlling diversity by how many possible words to consider. A high Top P will look at more possible words, even the less likely ones, which makes the generated text more diverse.
+* **Frequency Penalty.** How much to penalize new tokes based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the sam line verbatim.
+* **Presence Penalty.** How much to penalize new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics.
 
-## Pull a Prompt Template from Literal AI
+### Try out & in-context debugging
 
-If your prompt templates live on Literal AI, you will have to pull them in your app before using them.
+In the center of the screen (3), you can try out the settings and prompt template. Make sure you have an API key of the selected provided set (at the top right key icon). Then, you can send messages to the LLM using this template and settings. You can change things, and try again. 
 
-<Check>
-Prompt templates are cached to ensure fast access.
-</Check>
+If you accessed the playground via an LLM call, you get the conversation context which you can use to try out different settings. 
 
-<CodeGroup>
-```python Python
-# Not specifying the version will use the A/B testing rollout probabilities
-prompt = literalai_client.api.get_prompt(name="RAG prompt")
-
-# Specifying the version will use the exact version
-prompt = literalai_client.api.get_prompt(name="RAG prompt", version=0)
-```
-    
-```typescript TypeScript
-// Not specifying the version will use the A/B testing rollout probabilities
-const prompt = await literalAiClient.api.getPrompt("RAG prompt");
-
-// Specifying the version will use the exact version
-const prompt = await literalAiClient.api.getPrompt("RAG prompt", 0);
-```
-</CodeGroup>
-
-## Format a Prompt Template
-
-Once you have your prompt instance, you can format it with the relevant variables.
-
-### Format to OpenAI format
-
-<CodeGroup>
-```python Python
-query = "What are the features of Literal AI?"
-chunks = ["Literal AI is an LLM Ops platform"]
-messages = prompt.format_messages(query=query, chunks=chunks)
-```
-```typescript TypeScript
-const query = "What are the features of Literal AI?"
-const chunks = ["Literal AI is an LLM Ops platform"]
-variables = { query, chunks }
-messages = prompt.format_messages(variables)
-```
-</CodeGroup>
+You can also use multimodality here. For example, you can upload an image in the chat. 
 
 
-### Convert to LangChain Chat Prompt
+### Save
 
-<CodeGroup>
-```python Python
-langchain_prompt = prompt.to_langchain_chat_prompt_template()
-# Use langchain_prompt as any other LangChain prompt
-```
-```typescript TypeScript
-const chatPrompt = prompt.toLangchainChatPromptTemplate();
-// Use chatPrompt as any other LangChain prompt
-```
-</CodeGroup>
+Once you are happy with the template and settings, you can save the prompt. 
 
-Coupled with integrations like [OpenAI](/integrations/openai) or [LangChain](/integrations/langchain), the Literal AI SDK will not only log the generations but also track which prompt versions were used to generate them.
+<Card title="Prompt Management" icon="sparkles" color="#2eb88a" href="/guides/prompt-management">
+  Create, version and A/B test your prompts. Pull prompts in your code with the SDKs.
+</Card>
 
-This is especially useful to track the performance of your prompt versions and debug in context.
-
-## A/B Test a Prompt
-
-### On Literal AI
-
-When pulling a prompt template without specifying a version, Literal AI will use the A/B testing rollout probabilities to select the version to use.
-
-<Frame caption="Setting Prompt Template A/B Testing">
-  <img src="/images/prompt-ab-testing.gif" alt="Literal AI Platform"/>
-</Frame>
-
-By default the `v0` will have a rollout of 100%. You can change the rollout probabilities in the Prompts page.
-
-### From your code
-
-You can also update the A/B testing rollout probabilities from your code:
-
-<CodeGroup>
-```python Python
-literalai_client.api.update_prompt_ab_testing(
-    "MY_PROMPT",
-    [{ "version": 0, "rollout": 0.5 }, { "version": 1, "rollout": 0.5 }]
-    )
-```
-```typescript TypeScript
-await literalAiClient.api.updatePromptAbTesting(
-    "MY_PROMPT",
-    [{ version: 0, rollout: 0.5 }, { version: 1, rollout: 0.5 }]
-    )
-```
-</CodeGroup>
-
-## Add a custom LLM provider
-// TODO 
-
-## Add LLM provider credentials
-
-### Local credentials
-
-In order to interact with various providers using the prompt playground you will need to use your own credentials.
-You can directly setup the credentials for the current provider when using the prompt playground.
-Additionally you can access the credentials you defined in the "Settings > LLMs" page.
-
-<Note>The local credentials are stored in the local storage of your browser.</Note>
-
-### Shared credentials
-
-<Warning>Shared credentials are restricted to the admins of a project.</Warning>
-
-To favor collaboration, you can create credentials in the "Settings > LLMs" page. Once created any admin users of a project will be able to use it in the prompt playground. It is important that we are not exposing shared credentials' keys to the client.
-
-<Note>The shared credentials are stored online, and the key is encrypted.</Note>
-
-## Experiments
-
-You can test a specific prompt template version against a dataset and a set of evaluators to measure the performance of the prompt and avoid regressions.
-
-🚧 Work in progress, coming soon 🚧
