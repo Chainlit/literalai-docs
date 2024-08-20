@@ -6,7 +6,6 @@ icon: list-tree
 
 ## Semantics
 
-TODO: update image
 <Frame caption="A Thread with Steps and Tags.">
   <img src="/images/thread-steps.svg" alt="A Thread with Steps and Tags." />
 </Frame>
@@ -27,13 +26,6 @@ You can log a generation only (typically for extraction use cases), or log a run
 
 ## Log an LLM Generation
 Generations are logged by [integrations](/integrations) with LLM providers. They capture the prompt, completion, settings, and token latency.
-
-<Frame caption="An example of a Generation on Literal AI">     
-  <img
-    src="/images/generation-example.png"
-    alt="An example of a Generation"
-  />
-</Frame>
 
 Here is an example with OpenAI:
 
@@ -160,7 +152,7 @@ You can attach files to a Run or any of its intermediate steps. It is useful for
   />
 </Frame>
 
-Let's add an image to our step tool:
+Here is a sample code to add an attachment.
 
 <CodeGroup>
 ```python Python
@@ -195,9 +187,9 @@ async function loadDocument(city: string) {
 ```
 </CodeGroup>
 
+### Log a Run
 
-
-Here is an example with decorators:
+You can log traces of agent runs or workflow runs in the following way:
 
 <CodeGroup>
 ```python Python
@@ -263,39 +255,6 @@ The intermediate steps and the agent itself are logged using the `Step` class. Y
     Learn how to use the TypeScript Step API.
 </Card>
 </CardGroup>
-
-### Score a Run
-
-Scoring a run is useful to capture product metrics such as:
-- Direct User feedback
-- Implicit user feedback (user accepted suggestion or not)
-
-Here is an example:
-
-<CodeGroup>
-```python Python
-def add_user_feedback(run_id: str, value: int, comment: str):
-    literalai_client.api.create_score(
-        step_id=run_id,
-        name="user-feedback",
-        type="HUMAN",
-        value=value,
-        comment=comment,
-    )
-```
-
-```typescript TypeScript
-async function addUserFeedback(runId: string, value: number, comment: string) {
-    const score = await literalClient.api.createScore({
-        stepId: runId,
-        name: 'user-feedback',
-        type: 'HUMAN',
-        comment,
-        value,
-      });
-};
-```
-</CodeGroup>
 
 
 ## Log a Thread
@@ -393,55 +352,53 @@ async function processMessage(threadId: string, userInput: string) {
 Refer to cookbook X
 
 ## Add a score
-TODO: Score table
-### Add a user feedback
+A Score on Literal AI represents the result of an human or AI evaluation. Scores can be added to any type of Runs, Steps or Generations. 
 
+### Add a user feedback
 <CodeGroup>
 ```python Python
-import os
-from literalai import LiteralClient
-
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-
-score = literal_client.api.create_score(
-            step_id="<STEP_UUID>",
-            name="user-feedback",
-            type="HUMAN",
-            comment="Hello world",
-            value=1,
-        )
+def add_user_feedback(run_id: str, value: int, comment: str):
+    literalai_client.api.create_score(
+        step_id=run_id,
+        name="user-feedback",
+        type="HUMAN",
+        value=value,
+        comment=comment,
+    )
 ```
 
 ```typescript TypeScript
-import { LiteralClient, ChatGeneration} from "@literalai/client";
-
-const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
-
-async function main() {
+async function addUserFeedback(runId: string, value: number, comment: string) {
     const score = await literalClient.api.createScore({
-        stepId: '05b217b4-5890-4434-b1a2-1749d842b2db',
+        stepId: runId,
         name: 'user-feedback',
         type: 'HUMAN',
-        comment: 'Example score',
-        value: 1,
+        comment,
+        value,
       });
-      
 };
-main();
 ```
 </CodeGroup>
 
 
 ### Add a product-related metric
-Can be done on Literal AI. 
-Can be done by pushing on Posthog and others
+Correlate your LLM system to a product metric, such as conversion, churn, upsell, etc.
+This can be done by:
+- adding a specific product-related score on Literal AI.
+- sending the logged run id to your analytics system, such as PostHog or Amplitude. 
 
 ### Add an AI evaluation result
 Refer to [Evaluation](/guides/evaluation.mdx)
 
 ## Filter logs
 
-TODO: Gif about filtering 
+Leverage the powerful filters on Literal AI. Use these same filters to export your data using the SDKs.
+<Frame caption="Filter on logs">
+  <img
+    src="/images/filter-logs.gif"
+    alt="Filter on existing logs"
+  />
+</Frame>
 
 ## Fetch existing logs
 You can get all the threads from Literal AI to your program:
