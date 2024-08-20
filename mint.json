@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Literal AI Documentation",
-  "theme":"venus",
+  "theme": "venus",
   "logo": {
     "dark": "/logo/logo-dark.svg",
     "light": "/logo/logo-light.svg"
@@ -39,7 +39,6 @@
       "icon": "github"
     }
   ],
-
   "navigation": [
     {
       "group": "Get Started",
@@ -114,6 +113,27 @@
         "more/export-data",
         "more/release-notes",
         "more/roadmap"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "python-client/api-reference/api",
+        "python-client/api-reference/client",
+        "python-client/api-reference/dataset",
+        "python-client/api-reference/dataset_item",
+        "python-client/api-reference/message",
+        "python-client/api-reference/step",
+        "python-client/api-reference/thread"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "typescript-client/api-reference/api",
+        "typescript-client/api-reference/dataset",
+        "typescript-client/api-reference/step",
+        "typescript-client/api-reference/thread"
       ]
     }
   ],
