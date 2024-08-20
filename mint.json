@@ -112,25 +112,15 @@
     },
     {
       "group": "Get Started",
-      "pages": ["python-client/get-started/introduction"]
-    },
-    {
-      "group": "Abstractions",
       "pages": [
-        "python-client/abstractions/thread",
-        "python-client/abstractions/step"
-      ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "python-client/api-reference/client",
-        "python-client/api-reference/api"
+        "python-client/get-started/introduction"
       ]
     },
     {
       "group": "Development",
-      "pages": ["python-client/development/changelog"]
+      "pages": [
+        "python-client/development/changelog"
+      ]
     },
     {
       "group": "Get Started",
@@ -141,19 +131,17 @@
       ]
     },
     {
-      "group": "API Reference",
+      "group": "Development",
       "pages": [
-        "typescript-client/api-reference/dataset",
-        "typescript-client/api-reference/api-reference"
+        "typescript-client/development/changelog"
       ]
     },
     {
-      "group": "Development",
-      "pages": ["typescript-client/development/changelog"]
-    },
-    {
       "group": "Self Hosting",
-      "pages": ["self-hosting/get-started", "self-hosting/deployment"]
+      "pages": [
+        "self-hosting/get-started",
+        "self-hosting/deployment"
+      ]
     },
     {
       "group": "More",
@@ -166,11 +154,16 @@
     },
     {
       "group": "Overview",
-      "pages": ["guides/overview"]
+      "pages": [
+        "guides/overview"
+      ]
     },
     {
       "group": "Prompt",
-      "pages": ["guides/prompt/prompt-format", "guides/prompt/prompt-langchain"]
+      "pages": [
+        "guides/prompt/prompt-format",
+        "guides/prompt/prompt-langchain"
+      ]
     },
     {
       "group": "Observability",
@@ -193,7 +186,9 @@
     },
     {
       "group": "Overview",
-      "pages": ["tutorials/overview"]
+      "pages": [
+        "tutorials/overview"
+      ]
     },
     {
       "group": "Python Tutorials",
@@ -207,11 +202,37 @@
     },
     {
       "group": "Typescript Tutorials",
-      "pages": ["tutorials/nextjs-openai-chatbot", "tutorials/promptfoo"]
+      "pages": [
+        "tutorials/nextjs-openai-chatbot",
+        "tutorials/promptfoo"
+      ]
     },
     {
       "group": "GraphQL API Reference",
-      "pages": ["graphql-api-reference/introduction"]
+      "pages": [
+        "graphql-api-reference/introduction"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "python-client/api-reference/api",
+        "python-client/api-reference/client",
+        "python-client/api-reference/dataset",
+        "python-client/api-reference/dataset_item",
+        "python-client/api-reference/message",
+        "python-client/api-reference/step",
+        "python-client/api-reference/thread"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "typescript-client/api-reference/api",
+        "typescript-client/api-reference/dataset",
+        "typescript-client/api-reference/step",
+        "typescript-client/api-reference/thread"
+      ]
     }
   ],
   "footerSocials": {

@@ -1,0 +1,7 @@
+{
+    "scripts": {
+      "pydoc": "sh ./generate-py-doc.sh",
+      "tsdoc": "sh ./generate-ts-doc.sh",
+      "doc": "npm run pydoc && npm run tsdoc"
+    }
+  }
