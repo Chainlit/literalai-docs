@@ -96,3 +96,14 @@ for i in "${FILES[@]}"; do
     python3 scripts/make_returns_tables.py $OUTPUT_DIR/$i.mdx
 
 done
+
+# for each file in the DOC_DIR, add its name without the extension to a files.txt file
+for file in $OUTPUT_DIR/*.mdx; do
+    echo $(basename $file .mdx) >> $OUTPUT_DIR/files.txt
+done
+
+# call the python script to add the files to the mint.json
+python3 scripts/update_api_reference.py -ts $OUTPUT_DIR/files.txt
+
+# remove the files.txt file
+rm $OUTPUT_DIR/files.txt

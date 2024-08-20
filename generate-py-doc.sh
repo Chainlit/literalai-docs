@@ -11,7 +11,7 @@ SOURCE_DIR="../literalai-python"
 # change the DOCS_DIR to output the generated files to a different directory
 DOCS_DIR="python-client/api-reference"
 CONFIG_FILE="pydoc-markdown.yaml"
-BEAUTIFY=false
+BEAUTIFY=true
 
 
 # same as above, but make the arguments switchable and add a --beautify flag
@@ -83,3 +83,14 @@ if [ -f "$DOCS_DIR/api.__init__.mdx" ]; then
     # change the api.__init__ to api in the file
     # sed -i 's/api.__init__/api/g' $DOCS_DIR/api.mdx
 fi
+
+# for each file in the DOC_DIR, add its name without the extension to a files.txt file
+for file in $DOCS_DIR/*.mdx; do
+    echo $(basename $file .mdx) >> $DOCS_DIR/files.txt
+done
+
+# call the python script to add the files to the mint.json
+python3 scripts/update_api_reference.py -py $DOCS_DIR/files.txt
+
+# remove the files.txt file
+rm $DOCS_DIR/files.txt
