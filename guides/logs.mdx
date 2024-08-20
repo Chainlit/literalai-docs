@@ -106,9 +106,11 @@ async function getTemperature(city: string) {
 </CodeGroup>
 
 #### Add metadata and tags
-Metadata serves as a powerful tool for enriching objects with additional context, details, or configuration that can be instrumental in customizing and enhancing the functionality of each object. Specifically, the metadata field is available on Thread, Step, User, and Generation objects within the platform.
+**Tags** can be assigned to Threads, Steps, and Generations to label and filter data across the application. Examples include tags for data management like "to review" or "reviewed," or for categorizing questions such as "billing" or "return policy."
 
-**How to add metadata to a Run or a Step**
+**Metadata** provides additional context, details, or configuration to customize and enhance the functionality of Threads, Steps, Users, and Generations. It adds unique parameters specific to each object.
+
+**How to add metadat and tags to a Run or a Step**
 
 <CodeGroup>
 
@@ -354,7 +356,7 @@ async function processMessage(threadId: string, userInput: string) {
 Refer to cookbook X
 
 ## Add a score
-A Score on Literal AI represents the result of an human or AI evaluation. Scores can be added to any type of Runs, Steps or Generations. 
+**Scores** allow you to evaluate the LLM system performance at three levels: LLM generations, Agent Runs and Conversation Threads. This can be used to track the performance and accuracy of your system. Scores can be human generated (human feedback, like a thump up or down), or AI generated (hallucination evaluation for instance). A score or feedback can be assigned to a Generation, Step or Thread. Scores can be visualized on the dashboard in charts, and data can be filtered by scores.
 
 ### Add a user feedback
 <CodeGroup>
@@ -392,15 +394,6 @@ This can be done by:
 ### Add an AI evaluation result
 Refer to [Evaluation](/guides/evaluation.mdx)
 
-## Filter logs
-
-Leverage the powerful filters on Literal AI. Use these same filters to export your data using the SDKs.
-<Frame caption="Filter on logs">
-  <img
-    src="/images/filter-logs.gif"
-    alt="Filter on existing logs"
-  />
-</Frame>
 
 ## Fetch existing logs
 You can get all the threads from Literal AI to your program:
@@ -438,7 +431,28 @@ async function main() {
 
 More generally, you can fetch any Literal AI object. Check out the SDKs and API reference to learn how.
 
-## Debug logged LLM generations
+
+## On Literal AI
+### Filter logs
+
+Leverage the powerful filters on Literal AI. Use these same filters to export your data using the SDKs.
+<Frame caption="Filter on logs">
+  <img
+    src="/images/filter-logs.gif"
+    alt="Filter on existing logs"
+  />
+</Frame>
+
+### Debug logged LLM generations
+
+// TODO
+
+### Add metadata and scores from the UI
+
+You can add metadata tags and scores directly from the user interface.
+<Frame caption="Add a Tag to a Thread">
+  <img src="/images/add-tag-thread.png" alt="Add a Tag" />
+</Frame>
 
 ## Conclusion
 
