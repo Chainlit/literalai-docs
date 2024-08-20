@@ -23,6 +23,7 @@ mintlify broken-links
 ```
 
 ### SDKs Documentation
+> **⚠️ Warning:** Before proceeding, make sure to run `git pull` in both `sdk` folders to ensure you have the latest changes.
 
 #### Python SDK
 
@@ -42,6 +43,9 @@ The TypeScript SDK documentation is generated using ```generate-ts-doc.sh``` scr
 
 Note that this script only generates one file, ```README.md```, and do not dispose of much options at the moment. WIP !
 
+#### Run both
+
+`npm run doc`
 
 ### Publishing Changes
 
