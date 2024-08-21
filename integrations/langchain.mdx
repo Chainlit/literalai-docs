@@ -45,9 +45,11 @@ import { ChatOpenAI } from '@langchain/openai';
 
 const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
 
-const cb = literalClient.instrumentation.langchain.literalCallback();
+const cb = literalClient.instrumentation.langchain.literalCallback({
+  // You can add a list of chain types you want to ignore on Literal AI
+  chainTypesToIgnore: ["ChatPromptTemplate"],
+});
 
-// Example of using the callback
 const prompt = ChatPromptTemplate.fromMessages([
     ['human', 'Tell me a short joke about {topic}']
   ]);
@@ -58,15 +60,14 @@ const outputParser = new StringOutputParser();
 const chain = prompt.pipe(model).pipe(outputParser);
 
 async function main() {
-    const response = await chain.invoke(
+  const response = await chain.invoke(
+    { topic: "ice cream" },
     {
-        topic: 'ice cream'
-    },
-    {
-        runName: 'joke',
-        callbacks: [cb]
+      // If you give your run a LangChain run name, it will also be named like that in Literal AI
+      runName: "That one Ice Cream joke",
+      callbacks: [cb],
     }
-    );
+  );
 }
 main();
 ```
@@ -91,12 +92,60 @@ with literal_client.thread(name="Langchain example") as thread:
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+const literalClient = new LiteralClient();
 
-const thread = await literalClient.thread({ name: "Langchain Example" }).upsert();
-const cb = literalClient.instrumentation.langchain.literalCallback(thread.id);
+// You have three options to group multiple langchain calls in a single thread
 
-// Call your Langchain agent here
+/**
+ * The first option is to add a threadId to the callback. Every time you run this code, a new
+ * thread called "Jokes" will be created
+*/
+const cb = literalClient.instrumentation.langchain.literalCallback({
+  threadId: "Jokes",
+});
+
+async function main() {
+  const response = await chain.invoke(
+    { topic: "ice cream" },
+    { callbacks: [cb] }
+  );
+}
+main();
+
+/**
+ * The second option is to use LangChain's built-in thread_id concept.
+ * This will create a persistent thread, meaning every time you run this code, the new runs
+ * and generations will be stacked inside the existing thread
+ */
+const cb = literalClient.instrumentation.langchain.literalCallback();
+
+async function main() {
+  const response = await chain.invoke(
+    { topic: "ice cream" },
+    {
+      callbacks: [cb],
+      configurable: { thread_id: "Jokes" },
+    }
+  );
+}
+
+/**
+ * Alternatively, you can still use the Literal AI thread or step wrapper to group multiple langchain calls
+ * Like in the first option, this will create a new thread every time you run this code
+*/
+
+async function main() {
+  await literalClient.thread({ name: "Jokes" }).wrap(async () => {
+    const response = await chain.invoke(
+      { topic: "ice cream" },
+      {
+        callbacks: [cb],
+        configurable: { thread_id: "Jokes" },
+      }
+    );
+  });
+}
+
 ```
 </CodeGroup>
 
@@ -121,8 +170,37 @@ final_state = app.invoke(
     config=RunnableConfig(callbacks=[cb])
 )
 ```
+
+```typescript Typescript
+const cb = literalClient.instrumentation.langchain.literalCallback();
+
+// Define graph, nodes and edges
+const graphState: StateGraphArgs<AgentState>["channels"] = {
+  // ...
+};
+
+const workflow = new StateGraph<AgentState>({ channels: graphState })
+  .addNode(...);
+
+const app = workflow.compile();
+
+// Invoke the graph with the callback handler
+const finalState = await app.invoke(
+  { messages: [new HumanMessage("what is the weather in sf")] },
+  {
+    configurable: { thread_id: "Weather Thread" },
+    runName: "weather",
+    callbacks: [cb],
+  }
+);
+```
 </CodeGroup>
 
-<Card title="Full LangGraph Example" icon="play" href="/tutorials/langgraph-example">
-  Check out this LangGraph example.
+<CardGroup cols={2}>
+<Card title="Python" icon="python" href="https://github.com/Chainlit/literal-cookbook">
+  Check out this Python LangGraph example.
 </Card>
+<Card title="Typescript" icon="node" href="https://github.com/Chainlit/literal-cookbook/typescript/langchain-langgraph/README.md">
+  Check out this Typescript LangGraph example.
+</Card>
+</CardGroup>
