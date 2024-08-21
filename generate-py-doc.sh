@@ -46,11 +46,10 @@ done
 apiFiles=(
     "api.__init__"
     "client"
-    "observability.message"
-    "observability.step"
-    "observability.thread"
+    # "observability.message"
+    # "observability.step"
+    # "observability.thread"
     "evaluation.dataset"
-    # "evaluation.dataset_item"
 )
 
 mkdir -p $DOCS_DIR

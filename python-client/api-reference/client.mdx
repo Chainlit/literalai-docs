@@ -9,19 +9,7 @@
 class BaseLiteralClient()
 ```
 
-<a id="literalai.client.BaseLiteralClient.to_sync"></a>
-
-#### to\_sync
-
-```python
-def to_sync() -> "LiteralClient"
-```
-
-Converts the current client to its synchronous version.
-
-**Returns**:
-
-<ResponseField name="LiteralClient">The current client's synchronous version.</ResponseField>
+Base class for LiteralClient and AsyncLiteralClient.
 
 <a id="literalai.client.BaseLiteralClient.instrument_openai"></a>
 
@@ -74,176 +62,6 @@ Creates a Callback for Langchain that logs all LLM calls to Literal AI.
 **Returns**:
 
 <ResponseField name="LangchainTracer">The callback to use in Langchain's invoke methods.</ResponseField>
-
-<a id="literalai.client.BaseLiteralClient.thread"></a>
-
-#### thread
-
-```python
-def thread(original_function=None,
-           *,
-           thread_id: Optional[str] = None,
-           name: Optional[str] = None,
-           **kwargs)
-```
-
-Creates a thread where all the subsequents steps will be logged.
-Works as a decorator or a ContextManager.
-
-**Arguments**:
-
-<ResponseField name="original_function">The function to execute in the thread's context.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str]">The id of the thread to create.</ResponseField>
-<ResponseField name="name" type="Optional[str]">The name of the thread to create.</ResponseField>
-  
-
-**Returns**:
-
-  The wrapper for the thread's context.
-
-<a id="literalai.client.BaseLiteralClient.step"></a>
-
-#### step
-
-```python
-def step(original_function=None,
-         *,
-         name: str = "",
-         type: TrueStepType = "undefined",
-         id: Optional[str] = None,
-         parent_id: Optional[str] = None,
-         thread_id: Optional[str] = None,
-         root_run_id: Optional[str] = None,
-         **kwargs)
-```
-
-Creates a step where all the subsequents steps will be logged. Works as a decorator or a ContextManager.
-This is used to create Agent steps. For conversational messages use `message` instead.
-
-**Arguments**:
-
-<ResponseField name="original_function">The function to execute in the step's context.</ResponseField>
-<ResponseField name="name" type="Optional[str]">The name of the step to create.</ResponseField>
-<ResponseField name="type" type="TrueStepType">The type of the step. Must be one of the following :</ResponseField>
-  "run", "tool", "llm", "embedding", "retrieval","rerank", "undefined".
-<ResponseField name="id" type="Optional[str]">The id of the step to create.</ResponseField>
-<ResponseField name="parent_id" type="Optional[str]">The id of the parent step.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str]">The id of the parent thread.</ResponseField>
-<ResponseField name="root_run_id" type="Optional[str]">The id of the root run.</ResponseField>
-  
-
-**Returns**:
-
-  The wrapper for the step's context.
-
-<a id="literalai.client.BaseLiteralClient.run"></a>
-
-#### run
-
-```python
-def run(original_function=None,
-        *,
-        name: str = "",
-        id: Optional[str] = None,
-        parent_id: Optional[str] = None,
-        thread_id: Optional[str] = None,
-        root_run_id: Optional[str] = None)
-```
-
-Creates a run where all the subsequents steps will be logged. Works as a decorator or a ContextManager.
-
-**Arguments**:
-
-<ResponseField name="original_function">The function to execute in the step's context.</ResponseField>
-<ResponseField name="name" type="Optional[str]">The name of the step to create.</ResponseField>
-<ResponseField name="id" type="Optional[str]">The id of the step to create.</ResponseField>
-<ResponseField name="parent_id" type="Optional[str]">The id of the parent step.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str]">The id of the parent thread.</ResponseField>
-<ResponseField name="root_run_id" type="Optional[str]">The id of the root run.</ResponseField>
-  
-
-**Returns**:
-
-  The wrapper for the step's context.
-
-<a id="literalai.client.BaseLiteralClient.message"></a>
-
-#### message
-
-```python
-def message(content: str = "",
-            id: Optional[str] = None,
-            parent_id: Optional[str] = None,
-            type: Optional[MessageStepType] = "assistant_message",
-            name: Optional[str] = None,
-            thread_id: Optional[str] = None,
-            attachments: List[Attachment] = [],
-            tags: Optional[List[str]] = None,
-            metadata: Dict = {},
-            root_run_id: Optional[str] = None)
-```
-
-Creates a conversational message step and sends it to Literal AI.
-For agentic steps or runs use `step` or `run` respectively instead.
-
-**Arguments**:
-
-<ResponseField name="content" type="str">The text content of the message.</ResponseField>
-<ResponseField name="id" type="Optional[str]">The id of the step to create.</ResponseField>
-<ResponseField name="parent_id" type="Optional[str]">The id of the parent step.</ResponseField>
-<ResponseField name="type" type="TrueStepType">The type of the step. Must be one of the following :</ResponseField>
-  "user_message", "assistant_message", "system_message".
-<ResponseField name="name" type="Optional[str]">The name of the step to create.</ResponseField>
-<ResponseField name="thread_id" type="Optional[str]">The id of the parent thread.</ResponseField>
-<ResponseField name="attachments" type="List[Attachment]">A list of attachments to append to the message.</ResponseField>
-<ResponseField name="tags" type="Optional[List[str]]">A list of tags to add to the message.</ResponseField>
-<ResponseField name="metadata" type="Dict">Metadata to add to the message, in key-value pairs.</ResponseField>
-<ResponseField name="root_run_id" type="Optional[str]">The id of the root run.</ResponseField>
-  
-
-**Returns**:
-
-<ResponseField name="Message">the created message.</ResponseField>
-
-<a id="literalai.client.BaseLiteralClient.environment"></a>
-
-#### environment
-
-```python
-def environment(original_function=None, env: Environment = "prod", **kwargs)
-```
-
-Sets the environment to add to all subsequent threads and steps. Works as a decorator or a ContextManager.
-Entities logged in the "experiment" environment are filtered out of the Literal AI UI.
-
-**Arguments**:
-
-<ResponseField name="original_function">The function to execute in the step's context.</ResponseField>
-<ResponseField name="env" type="Environment">The environment to add to logged entities.</ResponseField>
-  
-
-**Returns**:
-
-  The wrapper for the context.
-
-<a id="literalai.client.BaseLiteralClient.experiment_item_run"></a>
-
-#### experiment\_item\_run
-
-```python
-def experiment_item_run(original_function=None, **kwargs)
-```
-
-Creates an experiment run. Works as a decorator or a ContextManager.
-
-**Arguments**:
-
-<ResponseField name="original_function">The function to execute in the step's context.</ResponseField>
-  
-
-**Returns**:
-
-  The wrapper for the context.
 
 <a id="literalai.client.BaseLiteralClient.start_step"></a>
 
@@ -326,4 +144,24 @@ def flush_and_stop()
 ```
 
 Sends all threads and steps to the Literal AI API. Waits synchronously for all API calls to be done.
+
+<a id="literalai.client.LiteralClient"></a>
+
+## LiteralClient
+
+```python
+class LiteralClient(BaseLiteralClient)
+```
+
+Synchronous client for interacting with the Literal AI API.
+
+<a id="literalai.client.AsyncLiteralClient"></a>
+
+## AsyncLiteralClient
+
+```python
+class AsyncLiteralClient(BaseLiteralClient)
+```
+
+Asynchronous client for interacting with the Literal AI API.
 
