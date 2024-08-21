@@ -1,0 +1,153 @@
+---
+title: "Datasets"
+description: "Datasets are a collection of input/expected output samples for conducting experiments and non regression tests."
+icon: database
+---
+
+A Dataset consists of `Dataset Items`. A Dataset Item has an `input`, `expected output` and can contain `metadata`. The input, expected output and metadata of the items in a dataset should follow the same schema.
+
+## Dataset Types
+There are two types of datasets in Literal AI: **Key Value** and **Generation**. 
+
+### Key Value Datasets
+
+Key Value datasets can have any key-value pairs for input and expected output. This type of dataset can be used to for example store [Runs](/guides/logs#semantics) of agents. An example of a Key Value dataset item:
+
+``` json
+input = {
+  "query": "Can you name a movie about space travel?"
+}
+
+expected_output = { 
+  "response": "A movie about space travel is \"Interstellar\"." 
+}
+```
+
+### Generation Datasets
+
+Generation datasets are a type of dataset that follow the OpenAI message format. An example of a Generation Dataset Item:
+
+``` json
+input = {
+  "messages": [{
+    "role": "system"
+    "content": "You are a helpful assistant." 
+  }, {
+    "role": "user"
+    "content": "Can you name a movie about space travel?" 
+  }] 
+}
+
+expected_output = { 
+  "role": "assistant",
+  "content": "A movie about space travel is \"Interstellar\"." 
+}
+```
+
+## Create a Dataset
+
+### From a file
+
+You can upload a dataset on Literal AI from a CSV file (Key Value datasets) or a JSONL file (Generation datasets).
+
+To do so, go to the Datasets page and click on the `+` button to create a new dataset. Then drag and drop your file to upload it.
+
+<Frame caption="Uploading a Key Value Dataset">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/upload-dataset.mp4"
+    />
+</Frame>
+
+### From your code
+
+You can also create a dataset and populate it with items programmatically using the SDK.
+
+<Note>See [installation](/get-started/quick-start) to get your API key and instantiate the SDK</Note>
+
+Here is an example of how to create a dataset:
+
+<CodeGroup>
+```python Python
+# create a new dataset
+dataset = literalai_client.api.create_dataset(
+  name="Foo", 
+  description="A dataset to store samples.", 
+  metadata={"isDemo": True},
+  type="key_value" # Default type is "key_value", other is "generation"
+)
+```
+```typescript TypeScript
+const dataset = await literalAiClient.api.createDataset({
+    name: 'Foo',
+    description: 'A dataset to store samples.',
+    metadata: { isDemo: true },
+    type: 'key_value' // other option: 'generation'
+});
+```
+</CodeGroup>
+
+Now that we have a dataset, we can create dataset items:
+
+<CodeGroup>
+```python Python
+dataset_item = literalai_client.api.create_dataset_item(
+  dataset_id = dataset.id
+  input = { "content": "What is Literal AI ?" },
+  expected_output = { "content": "Literal AI is an observability solution." }
+)
+```
+
+```typescript TypeScript
+const datasetId = dataset.id;
+const item = {
+    input: { content: "What is Literal AI?" },
+    expectedOutput: { content: "Literal AI is an observability solution." },
+};
+
+const datasetItem = await literalClient.api.createDatasetItem(
+    datasetId, 
+    item
+);
+```
+</CodeGroup>
+
+### From existing logs
+
+A benefit of managing your datasets and production logs in Literal AI is that you can continuously improve your app by using the logs to create new dataset items.
+
+<Frame caption="Create a Dataset Item from logs">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/ds-item-from-log.mp4"
+    />
+</Frame>
+
+Whenever you identify a new edge case in your logs, you can create a dataset item to account for it in your experiments.
+By editing the expected output to match the desired output, you ensure that your future experiments will account for this particular issue.
+
+## Get a dataset
+
+Once you have created a dataset, you can retrieve it using the SDK to use it in your experiments or your CI.
+
+<CodeGroup>
+```python Python
+dataset = literalai_client.api.get_dataset(id=dataset.id)
+
+for item in dataset.items:
+  pass
+```
+```typescript TypeScript
+const dataset = await literalClient.api.getDataset({id: dataset.id});
+
+dataset?.items.forEach((item) => {
+    console.log(item.id)
+});
+```
+</CodeGroup>

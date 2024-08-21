@@ -1,0 +1,69 @@
+---
+title: Playground
+description: The playground is an environment in which you can create, test, and debug prompts and multiple LLMs.
+icon: pen-to-square
+---
+
+<Card title="Try the Prompt Playground on Literal AI" icon="sparkles" color="#FF0581" href="https://cloud.getliteral.ai">
+  Create your first Prompt on the Prompt Playground and compare different LLMs.
+</Card>
+
+The playground is an environment in which you can create, test, and debug prompts. You can access the playground via
+1. **The main menu**. This allows you to create, test and save prompts from scratch.
+2. **Prompts**. This allows you to view, edit and test your prompt template and LLM settings and manage prompt versioning.
+3. **LLM Generations**. Via Generations you can access the playground with an individual generation from a real chat conversation. This allows you to debug a single generation of the LLM in context.
+
+If you start from scratch in the Prompt Playground, you can open example templates, and iterate from there.
+
+<Frame caption="Playground Prompt Template">
+  <img src="/images/playground-prompt-template.png" alt="An example of a prompt template in the playground." />
+</Frame>
+
+### Design prompt templates
+
+On the left hand side of the view you can create prompt templates (1). 
+* In a `system message` you give instructions about the role of the assistant. For example, you can say that the assistant should provide concise answers. 
+* In `User`, you give a format of the user query to the LLM. In this example, two variables are used. First, context documents are given, in a for-loop. The content of the variables can be defined below, but are usually defined in the code of the application. Then, the question that the user entered in the chatbot window is given.
+* `Assistant` messages are responses by the LLM. 
+* `Tool` messages are responses by the tool or function.
+
+You can also pass functions to the prompt template. They are defined in the code or in `Tools`. The LLM model can detect when a specific function needs to be called based on the user's input. 
+
+#### Formatting
+The text and code in the prompt template is formatted according to the [the Mustache prompt templating format](https://scalate.github.io/scalate/documentation/mustache.html#Syntax). Tags are surrounded by "mustaches" or double curly brackets. With tags and mustaches, variables, sections, loops and functions can be declared. A variable is written like `{{variable}}`, and an if statement and for-loop is written like the following. If `x` is a boolean value, the section tag acts like an `if` conditional. When `x` is an array, this acts like a `for each` loop. 
+
+```
+# if statement / for loop using Mustache templating format
+{{#x}}
+{{.}}
+{{/x}}
+```
+
+### LLM settings
+
+On the right side of the screen (2), you can set an LLM provider (for example OpenAI or Anthropic). You can change the following settings: 
+* **Model.** Which model of the provider to use.
+* **Temperature.** Control randomness. A lower temperature results in less random generations. As the temperature approaches zero, the model will become deterministic and repetitive. 
+* **Maximum Length.** Maximum length of tokens to generate. Requests can use op to 32,000 tokens, shared between prompt and completion. The exact limit varies per model.
+* **Stop Sequences.** Use up to four sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
+* **Top P** or Nucleas Sampling. Controlling diversity by how many possible words to consider. A high Top P will look at more possible words, even the less likely ones, which makes the generated text more diverse.
+* **Frequency Penalty.** How much to penalize new tokes based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the sam line verbatim.
+* **Presence Penalty.** How much to penalize new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics.
+
+### Try out & in-context debugging
+
+In the center of the screen (3), you can try out the settings and prompt template. Make sure you have an API key of the selected provided set (at the top right key icon). Then, you can send messages to the LLM using this template and settings. You can change things, and try again. 
+
+If you accessed the playground via an LLM call, you get the conversation context which you can use to try out different settings. 
+
+You can also use multimodality here. For example, you can upload an image in the chat. 
+
+
+### Save
+
+Once you are happy with the template and settings, you can save the prompt. 
+
+<Card title="Prompt Management" icon="sparkles" color="#2eb88a" href="/guides/prompt-management">
+  Create, version and A/B test your prompts. Pull prompts in your code with the SDKs.
+</Card>
+

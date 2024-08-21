@@ -1,5 +1,6 @@
 ---
 title: Release Notes
+icon: notes
 ---
 
 
@@ -12,6 +13,37 @@ Literal AI cloud is currently compatible with:
 * [Python SDK](/python-client/development) version `0.0.509` and above.
 * [TypeScript SDK](/typescript-client/development) version `0.0.503` and above.
 </Note>
+
+# v0.0.619
+
+### New features
+
+* You can now add descriptions to individual values in score schemas, to help both with human annotation and AI scoring
+* When setting up prompt A/B testing, you can now search prompt versions by their number
+
+### Improvements
+
+* We are in the process of splitting the different stages of step ingestion : upserting the step, updating participant information, etc... This will help with the overall performance of the platform.
+
+### Bug fixes
+* Fixed a bug where you couldn't select a tag when searching for it in the Filters UI
+* Fixed a bug with query refreshing
+* Solved an issue with the registration of clients and products on Stripe
+
+# 0.0.617-beta (August 12th, 2024)
+
+### New Features
+* Prompt A/B testing (replaces the champion system)
+
+### Improvements
+* The UI now supports any number of tags (previously capped at 100)
+* Annotation queues, Datasets and Logs are linked more naturally traversable directly from the UI.
+* You can now edit a step before adding it to a Dataset from an Annotation Queue
+
+### Bug Fixes
+* Fixed multiple bugs in the Annotation Queues
+* Domain Experts are now able to add items to a dataset
+* Redis connection should no longer hang
 
 # 0.0.615-beta (July 31th, 2024)
 
@@ -277,10 +309,6 @@ Literal AI cloud is currently compatible with:
 ### New Features
 
 * **Credentials**: You are now able to share your llm credentials to better collaborate through the prompt playground.
-  <img
-    src="/images/changelog-credentials-04-29-2024.png"
-    alt="Shared credentials settings"
-  />
 
 
 ### Improvements 

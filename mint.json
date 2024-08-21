@@ -1,6 +1,7 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Literal AI Documentation",
+  "theme": "venus",
   "logo": {
     "dark": "/logo/logo-dark.svg",
     "light": "/logo/logo-light.svg"
@@ -21,116 +22,68 @@
     "raiseIssue": true
   },
   "topbarLinks": [],
-  "tabs": [
-    {
-      "name": "Guides",
-      "url": "guides"
-    },
-    {
-      "name": "Tutorials",
-      "url": "tutorials"
-    },
+  "anchors": [
     {
       "name": "Python Client",
-      "url": "python-client"
+      "url": "python-client",
+      "icon": "python"
     },
     {
       "name": "TypeScript Client",
-      "url": "typescript-client"
+      "url": "typescript-client",
+      "icon": "js"
     },
     {
-      "name": "GraphQL API Reference",
-      "url": "graphql-api-reference"
+      "name": "Cookbooks",
+      "url": "https://github.com/Chainlit/literal-cookbook",
+      "icon": "github"
     }
   ],
-  "anchors": [],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
         "get-started/overview",
-        "get-started/installation",
         "get-started/quick-start"
       ]
     },
     {
-      "group": "Concepts",
+      "group": "Guides",
       "pages": [
-        {
-          "group": "Prompt",
-          "pages": [
-            "concepts/prompt/overview",
-            "concepts/prompt/prompt-versioning",
-            "concepts/prompt/prompt-api",
-            "concepts/prompt/prompt-playground"
-          ]
-        },
-        {
-          "group": "Observability",
-          "pages": [
-            "concepts/observability/thread",
-            "concepts/observability/step",
-            "concepts/observability/run",
-            "concepts/observability/generation",
-            "concepts/observability/tags",
-            "concepts/observability/multimodal",
-            "concepts/observability/user",
-            "concepts/observability/scores"
-          ]
-        },
-        {
-          "group": "Evaluation",
-          "pages": [
-            "concepts/evaluation/dataset",
-            "concepts/evaluation/experiment",
-            "concepts/evaluation/queue"
-          ]
-        },
-        {
-          "group": "Monitoring",
-          "pages": [
-            "concepts/monitoring/compare",
-            "concepts/monitoring/online-evaluation"
-          ]
-        },
-        "concepts/settings/project-roles"
+        "guides/logs",
+        "guides/prompt-management",
+        "guides/playground",
+        "guides/evaluation",
+        "guides/dataset",
+        "guides/experiment",
+        "guides/annotation-queue",
+        "guides/settings/project-roles"
       ]
     },
     {
       "group": "Integrations",
       "pages": [
         "integrations/openai",
-        "integrations/openai-assistant",
-        "integrations/mistralai",
-        "integrations/chainlit",
         "integrations/langchain",
         "integrations/llama-index",
         "integrations/llm-providers",
         "integrations/messages-server",
-        "integrations/vercel-ai-sdk"
+        "integrations/mistralai",
+        "integrations/vercel-ai-sdk",
+        "integrations/chainlit"
       ]
     },
     {
       "group": "Get Started",
-      "pages": ["python-client/get-started/introduction"]
-    },
-    {
-      "group": "Abstractions",
       "pages": [
-        "python-client/abstractions/thread",
-        "python-client/abstractions/step"
-      ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "python-client/api-reference/client",
-        "python-client/api-reference/api"
+        "python-client/get-started/introduction"
       ]
     },
     {
       "group": "Development",
-      "pages": ["python-client/development/changelog"]
+      "pages": [
+        "python-client/development/changelog"
+      ]
     },
     {
       "group": "Get Started",
@@ -141,19 +94,17 @@
       ]
     },
     {
-      "group": "API Reference",
+      "group": "Development",
       "pages": [
-        "typescript-client/api-reference/dataset",
-        "typescript-client/api-reference/api-reference"
+        "typescript-client/development/changelog"
       ]
     },
     {
-      "group": "Development",
-      "pages": ["typescript-client/development/changelog"]
-    },
-    {
       "group": "Self Hosting",
-      "pages": ["self-hosting/get-started", "self-hosting/deployment"]
+      "pages": [
+        "self-hosting/get-started",
+        "self-hosting/deployment"
+      ]
     },
     {
       "group": "More",
@@ -165,53 +116,25 @@
       ]
     },
     {
-      "group": "Overview",
-      "pages": ["guides/overview"]
-    },
-    {
-      "group": "Prompt",
-      "pages": ["guides/prompt/prompt-format", "guides/prompt/prompt-langchain"]
-    },
-    {
-      "group": "Observability",
+      "group": "API Reference",
       "pages": [
-        "guides/observability/agent-run",
-        "guides/observability/conversational-agent",
-        "guides/observability/conversational-agent-fastapi",
-        "guides/observability/distributed-tracing",
-        "guides/observability/image-attachment",
-        "guides/observability/guide-tag-scores-metadata"
+        "python-client/api-reference/api",
+        "python-client/api-reference/client",
+        "python-client/api-reference/dataset",
+        "python-client/api-reference/dataset_item",
+        "python-client/api-reference/message",
+        "python-client/api-reference/step",
+        "python-client/api-reference/thread"
       ]
     },
     {
-      "group": "Evaluation",
+      "group": "API Reference",
       "pages": [
-        "guides/evaluation/dataset",
-        "guides/evaluation/ab-testing",
-        "guides/evaluation/evaluate-tools"
+        "typescript-client/api-reference/api",
+        "typescript-client/api-reference/dataset",
+        "typescript-client/api-reference/step",
+        "typescript-client/api-reference/thread"
       ]
-    },
-    {
-      "group": "Overview",
-      "pages": ["tutorials/overview"]
-    },
-    {
-      "group": "Python Tutorials",
-      "pages": [
-        "tutorials/rag-chatbot-offline-evaluation",
-        "tutorials/evaluating-context-relevancy",
-        "tutorials/evaluating-user-satisfaction",
-        "tutorials/swap-llms",
-        "tutorials/langgraph-example"
-      ]
-    },
-    {
-      "group": "Typescript Tutorials",
-      "pages": ["tutorials/nextjs-openai-chatbot", "tutorials/promptfoo"]
-    },
-    {
-      "group": "GraphQL API Reference",
-      "pages": ["graphql-api-reference/introduction"]
     }
   ],
   "footerSocials": {
