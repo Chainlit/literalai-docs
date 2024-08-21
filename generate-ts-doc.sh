@@ -30,8 +30,9 @@ done
 
 FILES=(
     "api"
-    "thread"
-    "step"
+    # "index"
+    # "thread"
+    # "step"
 )
 
 # if output directory does not exist, create it
