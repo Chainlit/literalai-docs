@@ -1,5 +1,6 @@
 ---
 title: Manual Deployment
+icon: docker
 ---
 
 You can deploy the Literal AI platform anywhere by provisioning the infrastructure, setting up the environment variables and running the Docker image.
@@ -8,12 +9,6 @@ You can deploy the Literal AI platform anywhere by provisioning the infrastructu
 # Get the Image
 
 ```shell
-##
-## If you are using the public Docker image
-docker pull literalai/platform-distrib:latest
-
-##
-## If you are using the private Docker image
 docker login --username literalai
 # When prompted for a password, use the token you have been provided with
 docker pull literalai/platform:latest

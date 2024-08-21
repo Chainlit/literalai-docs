@@ -1,0 +1,159 @@
+---
+title: "Evaluation"
+description: "Rules are used to automate actions on Literal AI based on specific conditions. Automated actions can range from evaluating an LLM generation to adding items in a dataset."
+icon: ruler
+---
+
+## Why evaluate?
+
+Evaluation is key to enable continuous deployment of LLM-based applications and guarantee that newer
+versions perform better than previous ones. To best capture the **user experience** one must understand the
+multiple steps which make up the application. As AI applications grow in complexity, they tend to chain 
+multiple steps.
+
+Literal AI lets you log & monitor the various steps of your LLM application. By doing so, you can continuously improve the performance of your LLM system, building the most relevant metrics:
+
+| Level          | Metrics                                       |
+|----------------|--------------------------------------------|
+| LLM Generation | Hallucination, Toxicity, etc.                 |
+| Agent Run      | Task completion, Number of intermediate steps |
+| Conversation Thread         | User satisfaction                             |
+
+
+An example is the vanilla **Retrieval Augmented Generation** (RAG), which augments Large Language Models
+(LLMs) with domain-specific data. Examples of metrics you can score against are: context relevancy, faithfulness, answer relevancy, etc.
+
+
+## How to think about evaluation?
+
+Scores are a crucial part of developing and improving your LLM application or agent.
+
+| Who?  | When?           | Type of eval metrics | Example                                             |
+|---------------|------------------|------------------|-----------------------------------------------------|
+| End-User      | In Production     | Explicit Feedback (👍👎)        | Thumbs-up or down on a chatbot's answer             |
+| End-User      | In Production     | Implicit Feedback based on product metric        | User conversion to paid offering increases by 15%   |
+| LLM-as-a-Judge | In Production  | AI evaluation (without ground truth) | Hallucination, context relevancy, etc. |
+| LLM-as-a-Judge | During Iteration  | AI evaluation against a Dataset (with ground truth or not) | Hallucination, conciseness, helpfulness, context relevancy, answer similarity, etc. |
+| Domain Expert | During Iteration  | Human evaluation against a Dataset (with ground truth or not)  | Hallucination, conciseness, helpfulness, context relevancy, answer similarity, etc. |
+
+
+## Evaluate LLM logs in production automatically
+Automating the evaluation of your [Run outputs or LLM generations](/guides/logs#semantics) can really help to monitor and improve your LLM app in production, especially with large volumes of data.
+
+### Configure an evaluation rule 
+
+Go to the dashboard and click on `Configure Rules` to create/manage rules.
+
+<Frame caption="Pick a Rule Type">
+  <img src="/images/rule-type.png" alt="Pick a rule type" />
+</Frame>
+
+Once you picked a Rule Type, you will be able to update existing rules or create new ones.
+
+<Frame caption="Manage your Rules">
+  <img src="/images/rules.png" alt="Rules" />
+</Frame>
+
+A rule is composed of:
+
+- **Name**: A name to identify the rule.
+- **Sample Rate**: The percentage of outputs that will be evaluated by the rule.
+- **Filters**: Additional conditions to decide if the rule should be triggered.
+- **LLM**: The model to use for the evaluation.
+
+#### Configure a score schema
+
+A rule outputing a score will be based on a **Score Schema** which is a definition of the possible categories to evaluate the output.
+
+A rule outputing a tag will be require a list of possible tags.
+
+<Note>As of now, the prompt used for the evaluation is handled by Literal AI. We are working to allow you to specify your own eval prompt.</Note>
+
+<Frame caption="Configure a Rule">
+  <img src="/images/create-rule.png" alt="Configure Rule" />
+</Frame>
+
+
+### Evaluate with a custom eval metrics (sdk)
+
+The SDKs provide score creation APIs with all fields exposed. Scores must be tied either
+to a Step or a Generation object.
+
+<CodeGroup>
+```python Python
+import os
+from literalai import LiteralClient
+
+literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+
+score = literal_client.api.create_score(
+            step_id="<STEP_UUID>",
+            name="context-relevancy",
+            type="AI",
+            comment="context is relevant to the question",
+            value=0.9,
+        )
+```
+
+```typescript TypeScript
+import { LiteralClient, ChatGeneration} from "@literalai/client";
+
+const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+
+async function main() {
+    const score = await literalClient.api.createScore({
+        stepId: '<STEP_UUID>',
+        name: 'context-relevancy',
+        type: 'AI',
+        comment: 'context is relevant to the question',
+        value: 0.9,
+      });
+      
+};
+main();
+```
+</CodeGroup>
+
+
+## Label LLM logs on Literal AI
+
+The Literal AI application offers an easy way to manage scores: Score Schema. 
+
+Via Score Schemas, admin users can control and expose to users the various types of evaluations
+allowed from the application. Score Templates come in two flavors: *Categorical* and *Continuous*. 
+
+*Categorical* templates let you create a set of categories, each tied to a numeric value.
+*Continuous* templates offer a minimum and a maximum value which users can then select from to score.
+
+
+From a Step or a Generation, admins can then score by selecting a template and filling
+in the required form fields.
+<Frame caption="Label an LLM Generation">
+  <img
+    src="/images/create-score-template.png"
+    alt="Label an LLM Generation"
+  />
+</Frame>
+For simple adding of Scores, you can do it from the Logs tab. 
+If you plan to annotate a batch of logs, leverage the [annotation queue](/guides/annotation-queue.mdx)
+
+
+## Automate actions based on evaluation results
+
+### Add to Datasets/Annotation Queues
+
+🚧 Work in progress, coming soon 🚧
+
+### Add labels
+
+## Monitor evaluation results
+
+Once your rules are set up, you can monitor their activity in the dashboard.
+
+<Frame caption="Monitor your Rules">
+  <img src="/images/monitor-rule.png" alt="Monitor Rules" />
+</Frame>
+
+You can see the number of invocation per rule as well as the average score of the evaluations.
+
+You can also access the logs of the evaluations to look for potential errors.

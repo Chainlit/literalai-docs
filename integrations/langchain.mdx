@@ -1,10 +1,13 @@
 ---
 title: "LangChain/LangGraph"
+icon: check
 ---
 
 The Langchain integration enables to monitor your Langchain agents and chains with a single line of code.
 
 <Note>You should create a new instance of the callback handler for each invocation.</Note>
+
+<Tip>The LangChain integration already support LLM tracing. You should not use it in conjunction with other LLM provider integrations such as [OpenAI](/integrations/openai).</Tip>
 
 <CodeGroup>
 ```python Python
@@ -71,7 +74,7 @@ main();
 
 ## Multiple langchain calls in a single thread
 
-You can combine the Langchain callback handler with the concept of [Thread](/concepts/observability/thread) to monitor multiple langchain calls in a single thread.
+You can combine the Langchain callback handler with the concept of [Thread](/guides/logs) to monitor multiple langchain calls in a single thread.
 
 <CodeGroup>
 ```python Python

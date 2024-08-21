@@ -1,68 +1,67 @@
 ---
-title: Quick Start
+title: "Quick Start"
+description: "Install the Literal AI client and get your API key"
+icon: code
 ---
 
-Once you have your project setup and the Literal AI SDK installed, the fastest way to start logging your data is to **leverage our integrations**.
-
-## Integrations
-
-Literal AI comes with a set of integrations with popular libraries of the GenAI field. Let us know if you want to see a new integration!
-
-
 <CardGroup cols={2}>
-<Card
-  title="OpenAI"
-  icon="circle"
-  color="#ea5a0c"
-  href="/integrations/openai">
->
-  Learn how to monitor your OpenAI completions with Literal AI.
+
+<Card title="Instrument your Code" icon="code" color="#FF0581" href="/get-started/quick-start#logging-llm-generations-agent-runs-or-conversation-threads">
+  Install the Literal AI SDK and get your API key.
 </Card>
 
-<Card
-title="Langchain"
-icon="circle"
-color="#0285c7"
-href="/integrations/langchain">
-  Learn how to use monitor any Langchain agent with Literal AI.
-</Card>
-
-<Card
-title="Llama Index"
-icon="circle"
-color="#8b5cf6"
-href="/integrations/llama-index">
-  Learn how to use monitor your RAG pipeline with Literal AI.
-</Card>
-
-<Card
-title="HuggingFace"
-icon="circle"
-color="#eab308"
-href="/integrations/messages-server">
-  Monitor any HuggingFace model with Literal AI. 
-</Card>
-
-<Card
-  title="OpenAI Assistant"
-  icon="circle"
-  color="#dc2626"
-  href="/integrations/openai-assistant">
->
-  Learn how to monitor your OpenAI Assistants with Literal AI.
-</Card>
-<Card
-title="Chainlit"
-icon="circle"
-color="#F80061"
-href="/integrations/chainlit">
-  Learn how to use monitor your Chainlit application with Literal AI.
+<Card title="Create your first Prompt from the Playground" icon="sparkles" color="#2eb88a" href="/guides/playground">
+  Create, version and A/B test your prompts in the Prompt Playground.
 </Card>
 
 </CardGroup>
 
-## Next up
+## Logging LLM Generations, Agent Runs or Conversation Threads
+<Steps>
+  <Step title="Install the Literal AI package">
+    <CodeGroup>
+    ```shell Python
+    pip install literalai
+    ```
 
-<Card title="Literal AI's Concepts" icon="graduation-cap" href="/concepts">
-  Learn more about Literal AI's Concepts and Entities
+    ```shell TypeScript
+    npm i @literalai/client
+    ```
+    </CodeGroup>
+  </Step>
+
+  <Step title="Instantiate the Literal AI client">
+    <CodeGroup>
+    ```python Python
+    import os
+    from literalai import LiteralClient
+
+    # Not compatible with gunicorn's --preload flag
+    literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) # This is the default and can be omitted
+    ```
+
+    ```typescript TypeScript
+    import { LiteralClient } from '@literalai/client';
+
+    const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+    ```
+    </CodeGroup>
+  </Step>
+  <Step title="Get your Literal AI API Key">
+    Go to your [project page](https://cloud.getliteral.ai) and click on the **Settings** tab. You will find your API key in the **API Key** section.
+    <Frame caption="Copy your API key">
+      <img src="/images/api_key.png" alt="Literal AI API key"/>
+    </Frame>
+  </Step>
+</Steps>
+## Start logging LLM generations and agent runs
+
+<CardGroup cols={2}>
+<Card title="Logging" icon="list-tree" color="#2eb88a" href="/guides/logs">
+  Learn how to instrument your code with the Literal AI SDK.
 </Card>
+
+<Card title="Integrations" icon="gears" color="#FF0581" href="/integrations">
+  Browse the list of integrations available with Literal AI.
+</Card>
+</CardGroup>

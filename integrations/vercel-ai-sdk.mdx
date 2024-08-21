@@ -1,9 +1,11 @@
 ---
 title: "Vercel AI SDK"
+icon: check
 ---
 
-
 This integration allows you to very simply add observability and monitoring to your LLM application based on [Vercel's AI SDK](https://sdk.vercel.ai/docs/introduction). The instrumentation is available for the two main methods of the Vercel AI SDK: `generateText` and `streamText`.
+
+<Tip>The Vercel AI SDK integration already support LLM tracing. You should not use it in conjunction with other LLM provider integrations such as [OpenAI](/integrations/openai).</Tip>
 
 <CodeGroup>
 ```typescript generateText
@@ -51,23 +53,20 @@ export async function POST(req: Request) {
 </CodeGroup>
 
 
-## With Threads and Steps
+## With Threads and Runs
 
-In most cases, you will want to keep track of the different generations from your application by grouping them into [Threads](/concepts/observability/thread) or [Steps](/concepts/observability/step). This is especially useful when you want to understand the context in which a generation was made, or when you want to compare different generations.
-
-You can attach generation to a `Thread` or a `Step` by passing it as the `literalAiParent` parameter. This parameter should be an instance of a `Thread` or a `Step` that you have created using the Literal AI SDK.
+In most cases, you will want to keep track of the different generations from your application by grouping them into [Threads or Runs](/guides/logs). This is especially useful when you want to understand the context in which a generation was made, or when you want to compare different generations.
 
 ```typescript TypeScript
 export async function POST(req: Request) {
-  const thread = await literalClient.thread({ name: "Example" }).upsert();
+  await literalClient.thread({ name: 'Example' }).wrap(async () => {
+    const { text } = await generateText({
+      model: openai('gpt-3.5-turbo'),
+      prompt: question,
+    });
 
-  const { text } = await generateText({
-    model: openai('gpt-3.5-turbo'),
-    prompt: question,
-    literalAiParent: thread,
+    return { text };
   });
-
-  return { text };
 }
 ```
 

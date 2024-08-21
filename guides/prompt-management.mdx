@@ -1,0 +1,230 @@
+---
+title: Prompt Management
+description: Prompt Management enables collaboration between engineering and product teams to create, version, A/B test, debug, and monitor prompts directly from Literal AI.
+icon: message-code
+---
+<Frame caption="Prompt Management: prompts can be stored in either Literal AI or in your application code.">
+<img src="/images/prompt-management.svg" alt="Literal AI Platform"/>
+</Frame>
+## What is a Prompt Template?
+
+A **Prompt** or **Prompt Template** in Literal AI consists of:
+- the **prompt** i.e. the messages, and its variables
+- the **LLM provider** i.e. OpenAI, Anthropic, etc.
+- the **LLM settings** i.e. temperature, top P, etc.
+
+Prompts in Literal AI allow you to:
+- Enable product teams and domain experts to draft and iterate on prompts.
+- Deploy new prompt versions without redeploying your code.
+- Track which prompt version was used for a specific generation. Improve prompts by debugging logged LLM generations with context.
+- Compare prompt versions, LLM models, settings and providers to determine which one performs better.
+- Collaborate effectively with your team.
+
+## Create a Prompt
+
+Go to the Prompt Playground to create your first prompt template.
+On the left panel, define the template messages. In each template message, you can define variables following the [Mustache](https://mustache.github.io/mustache.5.html) syntax.
+
+<Frame caption="Create a Prompt Template">
+  <img src="/images/create-prompt.gif" alt="Literal AI Platform"/>
+</Frame>
+
+You can try out the prompt template by setting values for the variables, picking an LLM provider/model and clicking on `Submit`.
+
+The Prompt Playground supports multiple LLM providers/models and you can switch between them to see how the prompt behaves.
+
+Once you are happy with the prompt, you click on `Save`.
+
+### Create a new version
+
+Whether to fix a bug or to add a new feature, you can create a new version of a prompt template.
+
+<Frame caption="Create a New Version">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/create-prompt-version.mp4"
+    />
+</Frame>
+
+To do so, go to the Prompts page, select the prompt template you want to iterate on. Then select the version of the prompt you want to create a new version from.
+
+Edit the template messages and click on `Save` when you are done. A diff of the changes will be displayed. Optionally provide a changelog to keep track of the changes.
+
+### Programmatically
+
+If you prefer to keep your Prompt Template in your code, you can still version it on Literal AI.
+Note that A/B testing is not available if you manage prompt templates in your code.
+
+<Note>See [installation](/get-started/quick-start) to get your API key and instantiate the SDK</Note>
+
+<CodeGroup>
+```python Python
+PROMPT_NAME = "RAG prompt"
+template_messages = [
+    {
+        "role": "user",
+        "content": """Answer the question based on the context below.
+Context:
+{{#chunks}}
+{{.}}
+{{/chunks}}
+Query:
+{{query}}
+Answer:"""
+    }
+]
+
+prompt = literalai_client.api.get_or_create_prompt(
+    name=PROMPT_NAME,
+    template_messages=template_messages
+)
+```
+    
+```typescript TypeScript
+const PROMPT_NAME = 'RAG prompt';
+
+const prompt = await literalAiClient.api.getOrCreatePrompt(
+    PROMPT_NAME,
+    [
+        {
+            "role": "user",
+            "content": `Answer the query based on the context below.
+Context:
+{{#chunks}}
+{{.}}
+{{/chunks}}
+Query:
+{{query}}
+Answer:`
+            }
+        ]
+    );
+```
+</CodeGroup>
+
+Literal AI will check if the prompt changed compared to the last version and create a new version if needed.
+
+## Pull a Prompt Template from Literal AI
+
+If your prompt templates live on Literal AI, you will have to pull them in your app before using them.
+
+<Check>
+Prompt templates are cached to ensure fast access.
+</Check>
+
+<CodeGroup>
+```python Python
+# Not specifying the version will use the A/B testing rollout probabilities
+prompt = literalai_client.api.get_prompt(name="RAG prompt")
+
+# Specifying the version will use the exact version
+prompt = literalai_client.api.get_prompt(name="RAG prompt", version=0)
+```
+    
+```typescript TypeScript
+// Not specifying the version will use the A/B testing rollout probabilities
+const prompt = await literalAiClient.api.getPrompt("RAG prompt");
+
+// Specifying the version will use the exact version
+const prompt = await literalAiClient.api.getPrompt("RAG prompt", 0);
+```
+</CodeGroup>
+
+## Format a Prompt Template
+
+Once you have your prompt instance, you can format it with the relevant variables.
+
+### Format to OpenAI format
+
+<CodeGroup>
+```python Python
+query = "What are the features of Literal AI?"
+chunks = ["Literal AI is an LLM Ops platform"]
+messages = prompt.format_messages(query=query, chunks=chunks)
+```
+```typescript TypeScript
+const query = "What are the features of Literal AI?"
+const chunks = ["Literal AI is an LLM Ops platform"]
+variables = { query, chunks }
+messages = prompt.format_messages(variables)
+```
+</CodeGroup>
+
+
+### Convert to LangChain Chat Prompt
+
+<CodeGroup>
+```python Python
+langchain_prompt = prompt.to_langchain_chat_prompt_template()
+# Use langchain_prompt as any other LangChain prompt
+```
+```typescript TypeScript
+const chatPrompt = prompt.toLangchainChatPromptTemplate();
+// Use chatPrompt as any other LangChain prompt
+```
+</CodeGroup>
+
+Coupled with integrations like [OpenAI](/integrations/openai) or [LangChain](/integrations/langchain), the Literal AI SDK will not only log the generations but also track which prompt versions were used to generate them.
+
+This is especially useful to track the performance of your prompt versions and debug in context.
+
+## A/B Test a Prompt
+
+### On Literal AI
+
+When pulling a prompt template without specifying a version, Literal AI will use the A/B testing rollout probabilities to select the version to use.
+
+<Frame caption="Setting Prompt Template A/B Testing">
+  <img src="/images/prompt-ab-testing.gif" alt="Literal AI Platform"/>
+</Frame>
+
+By default the `v0` will have a rollout of 100%. You can change the rollout probabilities in the Prompts page.
+
+### From your code
+
+You can also update the A/B testing rollout probabilities from your code:
+
+<CodeGroup>
+```python Python
+literalai_client.api.update_prompt_ab_testing(
+    "MY_PROMPT",
+    [{ "version": 0, "rollout": 0.5 }, { "version": 1, "rollout": 0.5 }]
+    )
+```
+```typescript TypeScript
+await literalAiClient.api.updatePromptAbTesting(
+    "MY_PROMPT",
+    [{ version: 0, rollout: 0.5 }, { version: 1, rollout: 0.5 }]
+    )
+```
+</CodeGroup>
+
+## Add a custom LLM provider
+// TODO 
+
+## Add LLM provider credentials
+
+### Local credentials
+
+In order to interact with various providers using the prompt playground you will need to use your own credentials.
+You can directly setup the credentials for the current provider when using the prompt playground.
+Additionally you can access the credentials you defined in the "Settings > LLMs" page.
+
+<Note>The local credentials are stored in the local storage of your browser.</Note>
+
+### Shared credentials
+
+<Warning>Shared credentials are restricted to the admins of a project.</Warning>
+
+To favor collaboration, you can create credentials in the "Settings > LLMs" page. Once created any admin users of a project will be able to use it in the prompt playground. It is important that we are not exposing shared credentials' keys to the client.
+
+<Note>The shared credentials are stored online, and the key is encrypted.</Note>
+
+## Experiments
+
+You can test a specific prompt template version against a dataset and a set of evaluators to measure the performance of the prompt and avoid regressions.
+
+🚧 Work in progress, coming soon 🚧
