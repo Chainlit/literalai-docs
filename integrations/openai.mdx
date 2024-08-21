@@ -1,12 +1,13 @@
 ---
 title: "OpenAI"
+icon: check
 ---
 
 
 You can use the Literal AI platform to instrument OpenAI API calls. This allows you to track and monitor the usage of the OpenAI API in your application and replay them in the Prompt Playground.
 
 <Check>
-The OpenAI instrumentation supports **completions**, **chat completions**, and **image generation**. It handles both streaming and synchronous responses.
+The OpenAI instrumentation supports **completions**, **chat completions**, and **image generation**. It handles both regular and streamed responses.
 </Check>
 
 ## Instrumenting OpenAI API calls
@@ -20,8 +21,8 @@ from literalai import LiteralClient
 You need to call the `instrument_openai` method from the Literal AI client to
 enable the integration. Call it before any OpenAI API call.
 """
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-literal_client.instrument_openai()
+literalai_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literalai_client.instrument_openai()
 
 # Now you can use the OpenAI API as you normally would
 ```
@@ -49,9 +50,9 @@ main();
 ```
 </CodeGroup>
 
-## With Threads and Steps
+## With Threads and Runs
 
-You can use [Threads](/concepts/observability/thread) and [Steps](/concepts/observability/step) on top of the OpenAI API to create structured and organized logs.
+You can use [Threads and Runs](/guides/logs) on top of the OpenAI API to create structured and organized logs.
 
 <CodeGroup>
 ```python Python
@@ -61,10 +62,10 @@ from openai import OpenAI
 
 openai_client = OpenAI()
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
-literal_client.instrument_openai()
+literalai_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literalai_client.instrument_openai()
 
-@literal_client.step(type="run")
+@literalai_client.step(type="run")
 def my_assistant(user_query: str):
     completion = openai_client.chat.completions.create(
                 model="gpt-3.5-turbo",
@@ -75,24 +76,22 @@ def my_assistant(user_query: str):
                     }
                 ],
             )
-    literal_client.message(content=completion.choices[0].message.content, type="assistant_message", name="My Assistant")
+    return completion.choices[0].message.content
 
 
 def main():
-    with literal_client.thread(name="Example") as thread:
+    with literalai_client.thread(name="Example") as thread:
         initial_user_query = "Hello, how are you?"
-        literal_client.message(content=initial_user_query, type="user_message", name="User")
         my_assistant(initial_user_query)
         
         follow_up_query = "Follow up query"
-        literal_client.message(content=follow_up_query, type="user_message", name="User")
         my_assistant(follow_up_query)
 
 main()
 # Network requests by the SDK are performed asynchronously.
-# Invoke flush_and_stop() to guarantee the completion of all requests prior to the process termination.
+# Invoke flush to guarantee the completion of all requests prior to the process termination.
 # WARNING: If you run a continuous server, you should not use this method.
-literal_client.flush_and_stop()
+literal_client.flush()
 ```
 
 ```typescript TypeScript
@@ -107,10 +106,8 @@ client.instrumentation.openai();
 
 async function myAssistant(initialUserQuery: string) {
   return literalClient
-    .step({
-      output: completion.choices[0].message,
-      type: 'assistant_message',
-      name: 'Assistant response'
+    .run({
+      name: 'My Assistant'
     })
     .wrap(async () => {
       // Because this call is wrapped, it will be logged in the right step
@@ -127,39 +124,19 @@ async function main() {
   await literalClient.thread({ name: 'Example' }).wrap(async () => {
     const initialUserQuery = 'Hello, how are you?';
 
-    await literalClient
-      .step({
-        output: { content: initialUserQuery },
-        type: 'user_message',
-        name: 'User'
-      })
-      .send();
     await myAssistant(initialUserQuery);
 
     const followUpQuery = 'Follow up query';
 
-    await literalClient
-      .step({
-        output: { content: followUpQuery },
-        type: 'user_message',
-        name: 'User'
-      })
-      .send();
     await myAssistant(followUpQuery);
   });
 }
 ```
 </CodeGroup>
 
-Which will produce the following logs in the `Threads` page:
-
-<Frame caption="OpenAI thread">
-  <img src="/images/openai-example.png" alt="A thread on the platform" />
-</Frame>
-
 ## Adding Tags and Metadata
 
-You can add [Tags](/concepts/observability/tags) and metadata to the Generations and Steps created via the instrumentation.
+You can add tags and metadata to the Generations created by the instrumentation.
 
 <CodeGroup>
 ```python Python
@@ -170,26 +147,12 @@ completion = openai_client.chat.completions.create(
     ],
     # Only tags are supported right now on the Python client
     literalai_tags=["tag1", "tag2"],
+    literalai_metadata={"key": "value"},
 )
 ```
 
 ```typescript TypeScript
-// With this method, the tags and metadata will be added to all
-// the logs generated by the OpenAI API
-literalClient.instrumentation.openai({
-  tags: ['tag1', 'tag2'],
-  metadata: { key1: 'value1', key2: 'value2' }
-});
-
-// You can also use an instrumented client to add tags and metadata
-// to specific calls. Tags and metadata from the client will be merged.
-// Please note that this client only supports the following methods :
-// chat.completion.create, completion.create, and image.generate
-const instrumentedOpenAi = literalClient.instrumentation.openai({
-  tags: ['tag1', 'tag2'],
-  metadata: { key1: 'value1', key2: 'value2' }
-});
-await instrumentedOpenAi.chat.completions.create(
+await openai.chat.completions.create(
   {
     model: 'gpt-3.5-turbo',
     messages: [
@@ -203,5 +166,33 @@ await instrumentedOpenAi.chat.completions.create(
   }
 );
 
+```
+</CodeGroup>
+
+## OpenAI Assistants
+
+You can sync your OpenAI Assistant threads with Literal AI in a few lines of code.
+
+<CodeGroup>
+```ts TypeScript
+import OpenAI from 'openai';
+
+import { LiteralClient, User } from '@literalai/client';
+
+const openai = new OpenAI();
+
+const literalAiClient = new LiteralClient(process.env['LITERAL_API_KEY']);
+const syncer = literalAiClient.openai(openai).assistant.syncer;
+
+async function main() {
+  // You can sync a thread at any moment. We recommend to sync it once you get a `completed` run status.
+  const threadId = 'THREAD_ID_TO_SYNC';
+
+  // Optional: Add/update a user to the thread. Use any unique identifier you like.
+  const user = new User({ identifier: 'willy', metadata: { name: 'Willy' } });
+  await syncer.syncThread(threadId, user);
+}
+
+main();
 ```
 </CodeGroup>

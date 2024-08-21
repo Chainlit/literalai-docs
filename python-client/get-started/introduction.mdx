@@ -2,6 +2,11 @@
 title: Installation
 ---
 
+<Card title="Open Source SDK" icon="github" color="#FF0581" href="https://github.com/Chainlit/literalai-python">
+  Check out the open-source Github Repo
+</Card>
+
+
 To install the Python client, run the following command:
 
 ```bash
@@ -9,7 +14,10 @@ pip install literalai
 ```
 
 You can use either the **synchronous** or **asynchronous** Literal AI Python client.  
-To try it out on a small scale, you can use the synchronous version. If you move to production, you'll want to use asynchronous functions. All functions can be used both sync or async, except for functions on `Dataset`, which are always sync. All examples in the documentation are, for simplicity, using the synchronous client. If you want to use the async functions, make sure to `await` the functions.  
+
+All APIs can be used both sync or async, except for functions on `Dataset`, which are always sync. All examples in the documentation are, for simplicity, using the synchronous client.
+
+If you want to use the async functions, make sure to `await` the functions.  
 
 <Warning>The Python client is not compatible with gunicorn's `--preload` flag.</Warning>
 
@@ -33,11 +41,6 @@ async_literal_client = AsyncLiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
 Additionally, you can pass the optional `batch_size` argument to batch multiple events - handled simultaneously by Literal. 
 Events are batched up to `batch_size`. Defaults to 5.
-
-<Warning>
-    If you use the SDK in multiple Python files, do NOT create a new client at the top of each file, as that would break event ingestion.  
-    Make sure to always rely on the same client instance.
-</Warning>
 
 #### Disable Decorators
 

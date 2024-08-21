@@ -22,7 +22,7 @@ Constructs a new Step instance.
 | Parameter | Type | Description |
 | :------ | :------ | :------ |
 | `client` | `LiteralClient` | - |
-| `data` | [`StepConstructor`](README.md#stepconstructor) | The initial data for the step, excluding utility properties. |
+| `data` | `StepConstructor` | The initial data for the step, excluding utility properties. |
 | `ignoreContext`? | `true` | - |
 
 **Returns**
@@ -102,7 +102,7 @@ Creates a new step instance linked to the current step as a parent.
 
 | Parameter | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `Omit`\<[`StepConstructor`](README.md#stepconstructor), `"threadId"`\> | The data for the new step, excluding the threadId which is inherited. |
+| `data` | `Omit`\<`StepConstructor`, `"threadId"`\> | The data for the new step, excluding the threadId which is inherited. |
 
 **Returns**
 | type | description |
@@ -141,7 +141,7 @@ Sends the step to the API, handling disabled state and setting the end time if n
 | Parameter | Type | Description |
 | :------ | :------ | :------ |
 | `cb` | (`step`) => `Output` \| `Promise`\<`Output`\> | The callback function to run within the context of the step. |
-| `updateStep`? | `Partial`\<[`StepConstructor`](README.md#stepconstructor)\> \| (`output`) => `Partial`\<[`StepConstructor`](README.md#stepconstructor)\> \| (`output`) => `Promise`\<`Partial`\<[`StepConstructor`](README.md#stepconstructor)\>\> | Optional update function to modify the step after the callback. |
+| `updateStep`? | `Partial`\<`StepConstructor`\> \| (`output`) => `Partial`\<`StepConstructor`\> \| (`output`) => `Promise`\<`Partial`\<`StepConstructor`\>\> | Optional update function to modify the step after the callback. |
 
 **Returns**
 | type | description |
@@ -164,14 +164,6 @@ type StepType:
   | "tool"
   | "undefined"
   | "user_message";
-```
-
-***
-
-### StepConstructor
-
-```ts
-type StepConstructor: OmitUtils<StepFields>;
 ```
 
 ***
