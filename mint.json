@@ -35,7 +35,7 @@
     },
     {
       "name": "Cookbooks",
-      "url": "https://github.com/Chainlit/literal-cookbook",
+      "url": "https://github.com/Chainlit/literalai-cookbooks",
       "icon": "github"
     }
   ],
