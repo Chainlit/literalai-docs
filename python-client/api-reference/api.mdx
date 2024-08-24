@@ -9,6 +9,14 @@
 class LiteralAPI(BaseLiteralAPI)
 ```
 
+```python
+from literalai import LiteralClient
+# Initialize the client
+client = LiteralClient(api_key="your_api_key_here")
+# Access the API's methods
+print(client.api)
+```
+
 <a id="literalai.api.__init__.LiteralAPI.get_users"></a>
 
 #### get\_users
@@ -1085,6 +1093,14 @@ Retrieves the projectId associated to the API key.
 
 ```python
 class AsyncLiteralAPI(BaseLiteralAPI)
+```
+
+```python
+from literalai import AsyncLiteralClient
+# Initialize the client
+async_client = AsyncLiteralClient(api_key="your_api_key_here")
+# Access the API's methods
+print(async_client.api)
 ```
 
 <a id="literalai.api.__init__.AsyncLiteralAPI.get_users"></a>

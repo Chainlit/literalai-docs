@@ -11,6 +11,22 @@ class BaseLiteralClient()
 
 Base class for LiteralClient and AsyncLiteralClient.
 
+**Example**:
+
+```python
+from literalai import LiteralClient, AsyncLiteralClient
+
+# Initialize the client
+client = LiteralClient(api_key="your_api_key_here")
+async_client = AsyncLiteralClient(api_key="your_api_key_here")
+```
+
+**Attributes**:
+
+<ResponseField name="api" type="Union[LiteralAPI, AsyncLiteralAPI]">The API client used for communication with Literal AI.</ResponseField>
+<ResponseField name="disabled" type="bool">Flag indicating whether the client is disabled.</ResponseField>
+<ResponseField name="event_processor" type="EventProcessor">Processor for handling events.</ResponseField>
+
 <a id="literalai.client.BaseLiteralClient.instrument_openai"></a>
 
 #### instrument\_openai
@@ -155,6 +171,14 @@ class LiteralClient(BaseLiteralClient)
 
 Synchronous client for interacting with the Literal AI API.
 
+**Example**:
+
+```python
+from literalai import LiteralClient
+# Initialize the client
+client = LiteralClient(api_key="your_api_key_here")
+```
+
 <a id="literalai.client.AsyncLiteralClient"></a>
 
 ## AsyncLiteralClient
@@ -164,4 +188,12 @@ class AsyncLiteralClient(BaseLiteralClient)
 ```
 
 Asynchronous client for interacting with the Literal AI API.
+
+**Example**:
+
+```python
+from literalai import AsyncLiteralClient
+# Initialize the client
+async_client = AsyncLiteralClient(api_key="your_api_key_here")
+```
 
