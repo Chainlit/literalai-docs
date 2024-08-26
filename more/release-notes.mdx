@@ -14,16 +14,20 @@ Literal AI cloud is currently compatible with:
 * [TypeScript SDK](/typescript-client/development) version `0.0.503` and above.
 </Note>
 
-# v0.0.619
+# 0.0.620-beta (August 27th, 2024)
 
 ### New features
-
+* Logs now include Scores so that you can browse Human / AI evaluations of your application
+* The Dashboard includes two new tiles for recently ingested Runs & Scores, and you can jump to that data in one click.
 * You can now add descriptions to individual values in score schemas, to help both with human annotation and AI scoring
 * When setting up prompt A/B testing, you can now search prompt versions by their number
 
 ### Improvements
-
-* We are in the process of splitting the different stages of step ingestion : upserting the step, updating participant information, etc... This will help with the overall performance of the platform.
+* API keys are now hidden by default with *** in Settings / LLM. Enjoy screen-sharing with your friends!
+* Improved speed ingestion for Step means faster ways to troubleshoot your application.
+* Identify the origin of Generations at a glance by checking out the Prompt name & version column in the Logs / Generations table. We have also added the much needed Output column!
+* Domain Experts can now browse Settings to better intuit their restricted permissions.
+* Thread details now show a more discoverable Scores section, right underneath Tags.
 
 ### Bug fixes
 * Fixed a bug where you couldn't select a tag when searching for it in the Filters UI
