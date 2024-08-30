@@ -152,6 +152,17 @@ completion = openai_client.chat.completions.create(
 ```
 
 ```typescript TypeScript
+import { v4 as uuidv4 } from 'uuid';
+
+const client = new LiteralClient({ apiKey, apiUrl });
+const openai_ = new OpenAI();
+
+const openai = client.instrumentation.openai({
+  client: openai_
+});
+
+const literalaiStepId = uuidv4();
+
 await openai.chat.completions.create(
   {
     model: 'gpt-3.5-turbo',
@@ -162,7 +173,10 @@ await openai.chat.completions.create(
   },
   {
     literalaiTags: ['tag3', 'tag4'],
-    literalaiMetadata: { otherKey: 'otherValue' }
+    literalaiMetadata: { otherKey: 'otherValue' },
+    // You can also specify a Step ID at the call level
+    // When this generation is logged, it will be created with the given Step ID
+    literalaiStepId
   }
 );
 

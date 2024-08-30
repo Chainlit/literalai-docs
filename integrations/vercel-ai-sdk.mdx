@@ -70,6 +70,25 @@ export async function POST(req: Request) {
 }
 ```
 
+## With Metadata, Tags and Step IDs
+
+Using our Vercel AI SDK integration, you can pass metadata, tags and a step ID at the generation level.
+These values will be automatically added to the generation when it is logged on Literal AI.
+
+```typescript
+import { v4 as uuidv4 } from 'uuid';
+
+const literalaiStepId = uuidv4();
+
+const { text } = await generateText({
+  model: openai('gpt-3.5-turbo'),
+  prompt: question,
+  literalaiStepId,
+  literalaiTags: ['tag1', 'tag2'],
+  literalaiMetadata: { otherKey: 'otherValue' }
+});
+```
+
 ## Cookbooks
 
 You can find more involved examples in our Cookbooks repository :

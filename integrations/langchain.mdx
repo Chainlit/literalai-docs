@@ -149,6 +149,34 @@ async function main() {
 ```
 </CodeGroup>
 
+## Adding tags, metadata or a Step ID
+
+If you use LangChain's built-in tags and metadata, they will be added to the Literal AI generations.
+Additionally, you can specify a Step ID to ensure a generation is logged with this Step ID.
+
+```typescript
+import { v4 as uuidv4 } from 'uuid';
+import { ChatOpenAI } from '@langchain/openai';
+
+const client = new LiteralClient({ apiKey, apiUrl });
+
+const cb = client.instrumentation.langchain.literalCallback();
+
+const model = new ChatOpenAI({});
+
+const literalaiStepId = uuidv4();
+
+
+await model.invoke('Hello, how are you?', {
+  callbacks: [cb],
+  metadata: {
+    key: 'value',
+    // use literalaiStepId in the metadata to specify a Step ID
+    literalaiStepId,
+  },
+  tags: ['tag1', 'tag2'],
+});
+```
 
 ## LangGraph
 
