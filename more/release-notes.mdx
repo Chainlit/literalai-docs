@@ -14,6 +14,24 @@ Literal AI cloud is currently compatible with:
 * [TypeScript SDK](/typescript-client/development) version `0.0.503` and above.
 </Note>
 
+# 0.0.621-beta (September 2nd, 2024)
+
+### New features
+
+* We are introducing the concept of "Model Costs", which will allow you to monitor the actual costs associated with your logged generations. You can now setup the costs for the various LLM models you use in production, including negociated prices.
+* When you exceed your monthly allowance on the free tier, you will now be notified by a pop-up and a persistent message in the sidebar.
+
+### Improvements
+
+* Add a settings column to the prompt versions table.
+* In the Settings page, you can now see details about a Score Schema by hovering above it.
+* Various performance improvements across the platform.
+
+### Bug fixes
+
+* Fixes an ingestion error when a step's data includes Unicode NULL characters.
+* Fixes a race condition which could slow down step ingestion.
+
 # 0.0.620-beta (August 27th, 2024)
 
 ### New features
