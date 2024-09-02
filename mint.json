@@ -51,8 +51,8 @@
       "group": "Guides",
       "pages": [
         "guides/logs",
-        "guides/prompt-management",
         "guides/playground",
+        "guides/prompt-management",
         "guides/evaluation",
         "guides/dataset",
         "guides/experiment",
@@ -118,16 +118,18 @@
     {
       "group": "API Reference",
       "pages": [
-        "python-client/api-reference/api",
-        "python-client/api-reference/client",
-        "python-client/api-reference/dataset"
+        "typescript-client/api-reference/api",
+        "typescript-client/api-reference/dataset"
       ]
     },
     {
       "group": "API Reference",
       "pages": [
-        "typescript-client/api-reference/api",
-        "typescript-client/api-reference/dataset"
+        "python-client/api-reference/api",
+        "python-client/api-reference/client",
+        "python-client/api-reference/dataset",
+        "python-client/api-reference/step",
+        "python-client/api-reference/thread"
       ]
     }
   ],

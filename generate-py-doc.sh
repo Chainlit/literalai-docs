@@ -47,8 +47,8 @@ apiFiles=(
     "api.__init__"
     "client"
     # "observability.message"
-    # "observability.step"
-    # "observability.thread"
+    "observability.step"
+    "observability.thread"
     "evaluation.dataset"
 )
 
