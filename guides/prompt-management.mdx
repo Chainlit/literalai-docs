@@ -218,7 +218,30 @@ await literalAiClient.api.updatePromptAbTesting(
 ```
 </CodeGroup>
 
+## Add LLM provider credentials
+
+### Local credentials
+
+<Check>The local credentials are stored in the local storage of your browser.</Check>
+
+In order to interact with various providers using the prompt playground you will need to use your own credentials.
+You can directly setup the credentials for the current provider when using the prompt playground.
+Additionally you can access the credentials you defined in the "Settings > LLMs" page.
+
+
+### Shared credentials
+
+<Check>The shared credentials are stored online, and the key is encrypted.</Check>
+
+<Note>Shared credentials are managed by admins but can be used by AI engineers.</Note>
+
+To favor collaboration, you can create credentials in the "Settings > LLMs" page. Once created any admin users of a project will be able to use it in the prompt playground. It is important that we are not exposing shared credentials' keys to the client.
+
+
 ## Add a custom LLM provider
+
+If you are hosting your own LLM, you can add it as a custom provider in Literal AI.
+
 <Frame caption="Configure an LLM provider">
   <video
     autoPlay
@@ -228,25 +251,6 @@ await literalAiClient.api.updatePromptAbTesting(
     src="/images/configure-custom-provider.mp4"
     />
 </Frame>
-
-
-## Add LLM provider credentials
-
-### Local credentials
-
-In order to interact with various providers using the prompt playground you will need to use your own credentials.
-You can directly setup the credentials for the current provider when using the prompt playground.
-Additionally you can access the credentials you defined in the "Settings > LLMs" page.
-
-<Note>The local credentials are stored in the local storage of your browser.</Note>
-
-### Shared credentials
-
-<Warning>Shared credentials are restricted to the admins of a project.</Warning>
-
-To favor collaboration, you can create credentials in the "Settings > LLMs" page. Once created any admin users of a project will be able to use it in the prompt playground. It is important that we are not exposing shared credentials' keys to the client.
-
-<Note>The shared credentials are stored online, and the key is encrypted.</Note>
 
 ## Experiments
 
