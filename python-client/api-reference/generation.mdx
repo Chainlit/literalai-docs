@@ -1,0 +1,75 @@
+<a id="literalai.observability.generation"></a>
+
+
+<a id="literalai.observability.generation.BaseGeneration"></a>
+
+## BaseGeneration
+
+```python
+@dataclass(repr=False)
+class BaseGeneration(Utils)
+```
+
+Base class for generation objects, containing common attributes and methods.
+
+**Attributes**:
+
+<ResponseField name="id" type="Optional[str]">The unique identifier of the generation.</ResponseField>
+<ResponseField name="prompt_id" type="Optional[str]">The unique identifier of the prompt associated with the generation.</ResponseField>
+<ResponseField name="provider" type="Optional[str]">The provider of the generation.</ResponseField>
+<ResponseField name="model" type="Optional[str]">The model used for the generation.</ResponseField>
+<ResponseField name="error" type="Optional[str]">Any error message associated with the generation.</ResponseField>
+<ResponseField name="settings" type="Optional[Dict]">Settings used for the generation.</ResponseField>
+<ResponseField name="variables" type="Optional[Dict]">Variables used in the generation.</ResponseField>
+<ResponseField name="tags" type="Optional[List[str]]">Tags associated with the generation.</ResponseField>
+<ResponseField name="metadata" type="Optional[Dict]">Metadata associated with the generation.</ResponseField>
+<ResponseField name="tools" type="Optional[List[Dict]]">Tools used in the generation.</ResponseField>
+<ResponseField name="token_count" type="Optional[int]">The total number of tokens in the generation.</ResponseField>
+<ResponseField name="input_token_count" type="Optional[int]">The number of input tokens in the generation.</ResponseField>
+<ResponseField name="output_token_count" type="Optional[int]">The number of output tokens in the generation.</ResponseField>
+<ResponseField name="tt_first_token" type="Optional[float]">Time to first token in the generation.</ResponseField>
+<ResponseField name="token_throughput_in_s" type="Optional[float]">Token throughput in seconds.</ResponseField>
+<ResponseField name="duration" type="Optional[float]">Duration of the generation.</ResponseField>
+  
+
+**Methods**:
+
+  from_dict(cls, generation_dict: Dict) -> Union["ChatGeneration", "CompletionGeneration"]:
+  Creates a generation object from a dictionary.
+  to_dict(self) -> Dict:
+  Converts the generation object to a dictionary.
+
+<a id="literalai.observability.generation.CompletionGeneration"></a>
+
+## CompletionGeneration
+
+```python
+@dataclass(repr=False)
+class CompletionGeneration(BaseGeneration, Utils)
+```
+
+Represents a completion generation with a prompt and its corresponding completion.
+
+**Attributes**:
+
+<ResponseField name="prompt" type="Optional[str]">The prompt text for the generation.</ResponseField>
+<ResponseField name="completion" type="Optional[str]">The generated completion text.</ResponseField>
+<ResponseField name="type" type="GenerationType">The type of generation, which is set to GenerationType.COMPLETION.</ResponseField>
+
+<a id="literalai.observability.generation.ChatGeneration"></a>
+
+## ChatGeneration
+
+```python
+@dataclass(repr=False)
+class ChatGeneration(BaseGeneration, Utils)
+```
+
+Represents a chat generation with a list of messages and a message completion.
+
+**Attributes**:
+
+<ResponseField name="messages" type="Optional[List[GenerationMessage]]">The list of messages in the chat generation.</ResponseField>
+<ResponseField name="message_completion" type="Optional[GenerationMessage]">The completion message of the chat generation.</ResponseField>
+<ResponseField name="type" type="GenerationType">The type of generation, which is set to GenerationType.CHAT.</ResponseField>
+

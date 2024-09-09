@@ -118,18 +118,19 @@
     {
       "group": "API Reference",
       "pages": [
-        "typescript-client/api-reference/api",
-        "typescript-client/api-reference/dataset"
+        "python-client/api-reference/api",
+        "python-client/api-reference/client",
+        "python-client/api-reference/dataset",
+        "python-client/api-reference/generation",
+        "python-client/api-reference/step",
+        "python-client/api-reference/thread"
       ]
     },
     {
       "group": "API Reference",
       "pages": [
-        "python-client/api-reference/api",
-        "python-client/api-reference/client",
-        "python-client/api-reference/dataset",
-        "python-client/api-reference/step",
-        "python-client/api-reference/thread"
+        "typescript-client/api-reference/api",
+        "typescript-client/api-reference/dataset"
       ]
     }
   ],

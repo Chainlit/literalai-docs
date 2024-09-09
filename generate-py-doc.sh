@@ -49,6 +49,7 @@ apiFiles=(
     # "observability.message"
     "observability.step"
     "observability.thread"
+    "observability.generation"
     "evaluation.dataset"
 )
 
