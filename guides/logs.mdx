@@ -65,7 +65,7 @@ callOpenAI("Hello world");
 ### Multimodal LLM
 You can leverage multimodal capabilities on Literal AI in two ways:
 - Simple logging on API calls to Multimodal LLM APIs, like `gpt-4o`
-- Save multimodal files as [Attachments](/guides/logs#add-an-attachment). Image, videos, audio and other files are shown as `Attachment` in the Literal AI platform, which can be accessed and downloaded via a `Step`. 
+- Save multimodal files as [Attachments](/guides/logs#add-attachments-to-steps). Image, videos, audio and other files are shown as `Attachment` in the Literal AI platform, which can be accessed and downloaded via a `Step`. 
 
 <Frame caption="Example of a logged multimodal LLM call">
   <img
@@ -81,9 +81,9 @@ A **Run** represents a trace of an Agent or Chain execution, capturing all inter
 
 Runs can be logged manually using decorators or through framework integrations such as [Llama Index](/integrations/llama-index) or [LangChain](/integrations/langchain).
 
-### Logging a Run with Intermediate Steps
+### Log a Run with Intermediate Steps
 
-Here’s how you can log a Run with intermediate steps using Python and TypeScript:
+Here's how you can log a Run with intermediate steps using Python and TypeScript:
 
 <CodeGroup>
 ```python Python
@@ -137,7 +137,7 @@ myAgent("Hello world");
 ```
 </CodeGroup>
 
-### Adding Metadata and Tags to Steps
+### Add Metadata and Tags to Steps
 
 **Tags** and **Metadata** can be added to both Runs and Steps to provide additional context and facilitate filtering and categorization.
 
@@ -174,7 +174,7 @@ async function myRun() {
 ```
 </CodeGroup>
 
-### Adding Attachments to Steps
+### Add Attachments to Steps
 
 You can attach files to a Run or any of its intermediate steps, which is particularly useful for multimodal use cases.
 
