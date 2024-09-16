@@ -14,6 +14,30 @@ Literal AI cloud is currently compatible with:
 * [TypeScript SDK](/typescript-client/development) version `0.0.503` and above.
 </Note>
 
+# 0.0.623-beta (September 16th, 2024)
+
+### New features
+* Introduced "Run Experiment" feature on datasets
+* Enabled custom prompt for LLM-as-a-Judge evaluators
+* Enabled structured output in Playground and in prompts
+* Added Total Cost chart to dashboard (input + output tokens)
+
+### Improvements
+* Dataset table was enhanced with a side-panel Item View
+* Prompt Playground - Added keyboard shortcuts
+* Added ability to navigate from Generation to its root Run
+* Improved Step query efficiency for token count and environment filters
+* Improved queries for retrieving steps and threads
+* Optimized score management for faster edits and fewer queries
+* Enhanced worker performance with multi-threaded asynchronous step ingestion
+
+### Bug fixes
+* Prompt Playground:
+  * Fixed template messages editing issues
+  * Improved scroll behavior for streamed LLM generation
+* Enabled Google as a Provider in Playground
+* Updated prompt cache invalidation strategy
+
 # 0.0.621-beta (September 2nd, 2024)
 
 ### New features
