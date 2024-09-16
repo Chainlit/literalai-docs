@@ -205,10 +205,57 @@ async function main() {
 
 ## Run an experiment on Literal AI
 
-Experiments can be ran directly on Literal AI. This allows you to run experiments without having to manage the infrastructure.
-However then can only be used to evaluate prompts managed on Literal AI, see [Prompt Management](/guides/prompt-management).
+Experiments can be run directly on Literal AI. This allows you to run experiments without having to manage an infrastructure.
+However, experiments can only be used to evaluate prompts managed on Literal AI, see [Prompt Management](/guides/prompt-management).
 
-🚧 Work in progress, coming soon 🚧
+To run an experiment, you need:
+- a **Prompt** to iterate on
+- an **Evaluator**
+- a **Dataset**
+
+<Steps>
+  <Step title="Prompt to iterate on">
+    From the Prompt Playground, make modifications to your prompt and save it:
+    <Frame caption="Prompt to iterate on">
+      <img src="/images/save-new-prompt.png" alt="Prompt to iterate on" />
+    </Frame>
+  </Step>
+  <Step title="Create an Evaluator">
+    Currently, Literal AI supports AI evaluators, which you can configure from the Prompt Playground. 
+    AI Evaluators differ from typical prompts in that they specify a **Structured Output** to yield a Score.
+
+    From the Prompt Playground, create a prompt which generates a score with **Structured Output**:
+    <Frame caption="Evaluator Prompt">
+      <img src="/images/evaluator-prompt.png" alt="Evaluator Prompt"/>
+    </Frame>
+  </Step>
+  <Step title="Select a dataset">
+    Select a dataset or [create one](/guides/dataset/). In the upper right corner, click the
+    play icon <Icon icon="play" iconType="light" />:
+    <Frame caption="Run Experiment on Dataset">
+      <img src="/images/run-experiment-dataset.png" alt="Run Experiment on Dataset"/>
+    </Frame>
+  </Step>
+  <Step title="Configure prompts">
+    <Frame caption="Configure Prompts">
+      <img src="/images/configure-prompts.png" alt="Configure Prompts"/>
+    </Frame>
+    For both the prompt to evaluate and the AI Evaluator, you should specify how to resolve template
+    variables with your dataset `input`, `expectedOutput` and `metadata`. The AI Evaluator configuration offers to 
+    use the prompt's output through the `output` key.
+    <Frame caption="Map Prompt variables">
+      <img src="/images/map-prompt-variables.png" alt="Map Prompt variables"/>
+    </Frame>
+  </Step>
+  <Step title="Follow progress on your Experiment">
+    Running the experiment will redirect you to the Experiment details page, where you can track progress!
+    <Frame caption="Track Experiment progress">
+      <img src="/images/track-experiment-progress.png" alt="Track Experiment progress"/>
+    </Frame>
+  </Step>
+</Steps>
+
+More Evaluators to come soon!
 
 ## Compare experiments
 
