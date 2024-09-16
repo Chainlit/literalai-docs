@@ -14,6 +14,8 @@ Wrappers will automatically handle the thread and step IDs for you, and will als
 
 ## Basic usage
 
+### Thread wrapper
+
 ```typescript
 import { LiteralClient } from '@literalai/client';
 
@@ -22,7 +24,7 @@ const client = new LiteralClient();
 await client
   .thread({ name: 'Test Wrappers Thread' })
   .wrap(async () => {
-    // You can access the current thread and step using the client
+    // You can access the current thread using the client
     const thread = client.getCurrentThread();
     // Because we are not currently in a step, the next line would throw if uncommented
     // const step = client.getCurrentStep();
@@ -31,6 +33,74 @@ await client
     await client.step({ name: 'Test Wrappers Step', type: "assistant_message" }).send();
   });
 ```
+
+### Step wrapper
+
+```typescript
+import { LiteralClient } from '@literalai/client';
+
+const client = new LiteralClient();
+
+await client
+  .step({ name: 'Test Wrappers Thread', type: 'run' })
+  .wrap(async () => {
+    // You can access the current step using the client
+    const thread = client.getCurrentStep();
+
+    // This step will be created with the wrapped step as its parent
+    await client.step({ name: 'Test Wrappers Step', type: "assistant_message" }).send();
+
+    const openai = new OpenAI();
+    client.instrumentation.openai();
+
+    // This generation will be created with the wrapped step as its parent
+    const completion = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [{ role: 'user', content: 'Say hello !' }]
+      });
+
+      return completion.choices[0].message;
+  });
+```
+
+### Decoration wrapper
+
+This wrapper is used to add metadata and tags to everything that will be logged inside it. It can 
+also be used to specify in advance the ID of any generation created inside it.
+
+<Note>This is especially useful when using one of our integrations, as you may not be able to specify metadata
+or tags directly in the API call, and you may not be able to retrieve the ID of the generation that was logged.</Note>
+
+```typescript
+import { LiteralClient } from '@literalai/client';
+import { v4 as uuidv4 } from 'uuid';
+
+const client = new LiteralClient();
+
+const openai = new OpenAI();
+client.instrumentation.openai();
+
+const stepId = uuidv4();
+const metadata = { key: 'value' };
+const tags = ['tag1', 'tag2'];
+
+await client.decorate({ metadata, tags, stepId }).wrap(async () => {
+  // This generation will be logged with the provided stepId, metadata and tags
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4',
+    messages: [{ role: 'user', content: 'Say hello !' }]
+  });
+
+  // Because step IDs are unique, this call will revert to the default behaviour of
+  // assigning a random UUID to the generation when it is logged.
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4',
+    messages: [{ role: 'user', content: 'Say hello !' }]
+  });
+})
+
+```
+
 
 ## Advanced usage
 
