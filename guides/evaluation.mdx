@@ -40,15 +40,15 @@ Scores are a crucial part of developing and improving your LLM application or ag
 ## Evaluate LLM logs in production automatically
 Automating the evaluation of your [Run outputs or LLM generations](/guides/logs#semantics) can really help to monitor and improve your LLM app in production, especially with large volumes of data.
 
-### Configure an evaluation rule 
+### Configure an AI Eval 
 
-Go to the dashboard and click on `Configure Rules` to create/manage rules.
+Go to the dashboard and click on `Configure AI Evals` to create/manage AI Evals.
 
-<Frame caption="Pick a Rule Type">
-  <img src="/images/rule-type.png" alt="Pick a rule type" />
+<Frame caption="Configure AI Evals">
+  <img src="/images/configure-ai-evals.png" alt="Configure AI Evals" />
 </Frame>
 
-Once you picked a Rule Type, you will be able to update existing rules or create new ones.
+You will be able to update existing rules or create new ones:
 
 <Frame caption="Manage your Rules">
   <img src="/images/rules.png" alt="Rules" />
@@ -57,24 +57,47 @@ Once you picked a Rule Type, you will be able to update existing rules or create
 A rule is composed of:
 
 - **Name**: A name to identify the rule.
+- **Type**: A type of output: either `Tag` or `Score`
 - **Sample Rate**: The percentage of outputs that will be evaluated by the rule.
 - **Filters**: Additional conditions to decide if the rule should be triggered.
 - **LLM**: The model to use for the evaluation.
 
-#### Configure a score schema
+#### Tag-based Rules
 
-A rule outputing a score will be based on a **Score Schema** which is a definition of the possible categories to evaluate the output.
+A rule which outputs a tag requires a list of possible tags and an LLM configuration. 
+The LLM logs are automatically tagged with the **most relevant tag** based on their semantic meaning. 
 
-A rule outputing a tag will be require a list of possible tags.
+Under the hood, Literal AI uses an optimized classifier prompt parametrized with the given tags. 
+This classifier prompt is managed by Literal AI and not configurable. 
 
-<Note>As of now, the prompt used for the evaluation is handled by Literal AI. We are working to allow you to specify your own eval prompt.</Note>
+For a custom LLM-as-a-Judge evaluation, consider using Score-based rules.
 
-<Frame caption="Configure a Rule">
-  <img src="/images/create-rule.png" alt="Configure Rule" />
+#### Score-based Rules
+
+A rule which outputs a `Score` relies on an Evaluator configuration.  
+
+Literal AI lets you customize an Evaluator Prompt directly from the Prompt Playground:
+
+<Frame caption="Structured Output">
+  <img src="/images/structured-output-option.png" alt="Structured Output" />
+</Frame>
+
+The structured output option lets you enforce a `Score` schema for the evaluation result. 
+Based on the selected `Score` schema, which contains the target score categories with their descriptions, 
+the LLM will automatically score your production logs.
+
+<Frame caption="Enforce a Score Schema">
+  <img src="/images/enforce-score-schema.png" alt="Enforce a Score Schema" />
+</Frame>
+
+Once the evaluation prompt saved, you can select it from the `Configure Evaluator` option, and that
+will conclude your AI Evals setup:
+<Frame caption="Configure Evaluator">
+  <img src="/images/configure-evaluator.png" alt="Configure Evaluator" />
 </Frame>
 
 
-### Evaluate with a custom eval metrics (sdk)
+### Evaluate with a custom eval metrics (SDK)
 
 The SDKs provide score creation APIs with all fields exposed. Scores must be tied either
 to a Step or a Generation object.
