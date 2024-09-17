@@ -130,7 +130,7 @@ def run_and_eval(item):
       # Notice that the experiment item is now linked to the dataset item
       "datasetItemId": item.id,
       "scores": score_output(output),
-      "input": input,
+      "input": item.input,
       "output": output
     }
     experiment.log(experiment_item)
