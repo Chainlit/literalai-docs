@@ -2,6 +2,19 @@
 title: Changelog
 ---
 
+# `0.0.625` (September 27th, 2024)
+* LlamaIndex instrumentation support extended to (in addition to `engine.query`):
+  * `llm.chat` and `llm.predict_and_call`
+  * `agent.chat` for custom `FunctionCallingAgent` and LlamaIndex's `OpenAIAgent`
+  * stream versions of the above methods
+* Prevent duplicate LlamaIndex instrumentation
+
+# `0.0.624` (September 27th, 2024)
+* Make sure each experiment run has its own ID
+* LangChain integration: 
+  * Allow additional variables in prompt template
+  * Make callback handler serializable
+
 # `0.0.623` (September 24th, 2024)
 * Add token usage to LangChain integration
 * Improved LangChain integration to support all types of LangChain messages
