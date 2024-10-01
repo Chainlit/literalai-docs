@@ -19,16 +19,19 @@ from langchain.schema.runnable.config import RunnableConfig
 from langchain.schema import StrOutputParser
 from langchain.prompts import ChatPromptTemplate
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literalai_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+cb = literalai_client.langchain_callback()
 
-cb = literal_client.langchain_callback()
+# optional: attach to a prompt template on Literal AI
+# prompt = literalai_client.api.get_or_create_prompt(...)
+# prompt_template = prompt.to_langchain_chat_prompt_template()
 
-prompt = ChatPromptTemplate.from_messages(
+prompt_template = ChatPromptTemplate.from_messages(
     ['human', 'Tell me a short joke about {topic}']
 )
 
 model = ChatOpenAI(streaming=True)
-runnable = prompt | model | StrOutputParser()
+runnable = prompt_template | model | StrOutputParser()
 
 res = runnable.invoke(
     {"topic": "ice cream"},

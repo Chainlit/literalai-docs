@@ -80,6 +80,8 @@ Answer:"""
 prompt = literalai_client.api.get_or_create_prompt(
     name=PROMPT_NAME,
     template_messages=template_messages
+    #tools=...
+    #settings=...
 )
 ```
     
@@ -99,9 +101,11 @@ Context:
 Query:
 {{query}}
 Answer:`
-            }
-        ]
-    );
+        }
+    ]
+    //tools=...
+    //settings=...
+);
 ```
 </CodeGroup>
 
