@@ -3,28 +3,35 @@ title: Roadmap
 icon: road
 ---
 
-We are continuously developing to Literal AI. Our focus is on rolling out new features as well as improving the Developer Experience. 
+We are continuously developing to Literal AI. Our focus is on rolling out new features as well as improving the Developer Experience. Check out our [release notes](/release-notes) to see what has been released recently.
 
-We release a new [guide](/guides) or cookbook for every new feature in Literal AI.
+We release a new [guide](/guides) or [cookbook](/cookbooks) for every new feature in Literal AI.
 
 Upcoming new features: 
 
 ### Roles and Orgs
 
-Currently in Literal AI, you can define [`Roles` and `Projects`](/guides/settings/project-roles) for collaboration. The project management will be improved with more ganular control over permission:
-* Customization: You will be able to define custom roles with specific permissions. Diverse users and organizational structures will be able to manage their projects in Literal AI. 
-* Security: More granular permission settings reduces the rist ok unauthorized access or actions. 
+Literal AI currently supports [`Roles` and `Projects`](/guides/settings/project-roles) for collaboration. We plan to enhance project management with:
+* Customizable roles and permissions for diverse organizational needs
+* Improved security through granular access controls
+
+### Evaluation
+
+Literal AI currently supports evaluation from your code and LLM-as-a-Judge on Literal AI. We will soon support custom evaluations, directly in Literal AI. 
+This feature will allow you to register code on Literal AI and use it to monitor your LLM system in production.
+
+### Playground and Prompts
+
+We are continuously improving our Playground and Prompt management features:
+* Compare view: We're adding a new feature to compare different models side-by-side in the Playground. This will allow developers to easily evaluate and contrast the outputs of various models for the same input.
+* Enhanced versioning: We're expanding our versioning capabilities to include not just prompt templates and tool definitions, but also the tool code itself. This will provide more comprehensive version control and traceability for your LLM applications.
+These enhancements will enable more robust testing, easier debugging, and better management of your LLM workflows.
 
 ### Dashboard
 
-The User Experience of the Dashboard in Literal AI will be improved. You will be able to visualize and analyze your data more efficiently, using new chart features. Main focus points in this improvement are: 
-* Enhance Data Interaction: visually interact with your data to intuitively extract insights. 
-* Scalability: manage different scales of data and user count without performance degradation. 
-* Smooth transition: as little change in code base and database as possible.
-
-### Online Experiments on Literal AI
-
-Right now, you can run experiments from your code, and view and compare the results in Literal AI. With this new feature you will be able to do online experiments on the Literal AI platform (server-side evaluation instead of client-side). Server-side online evaluation is: score Generation objects as Literal AI ingests them. As a new Generation in a Thread comes in, an automatic evaluation of the content of this LLM Generation is triggered. You can view the performance of your LLM Generations directly in the platform. You enable this by setting an evaluation rule by some metric that you define. 
+The Dashboard in Literal AI will be enhanced for better data visualization and analysis. Key improvements include:
+* Interactive data exploration
+* Minimal changes to existing codebase and database structure
 
 ### Streams 
 
