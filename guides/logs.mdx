@@ -12,8 +12,9 @@ icon: list-tree
 
 Literal AI approaches LLM logging at three levels:
 1. **Generation**: Log of a single LLM call. (Generations are Steps.)
-2. **Run**: Trace of an Agent/Chain run, including its intermediate steps. Can contain one or multiple generations. 
-3. **Thread**: A collection of Runs that are part of a single conversation.
+2. **Step**: Log of a regular function execution, which is usually an intermediate step in an LLM system. Possible `type`s are: `tool`, `embedding`, `retrieval`, `rerank`, `undefined`, etc. Steps can be considered as Spans.
+3. **Run**: Trace of an Agent/Chain run, including its intermediate steps. Can contain one or multiple generations. 
+4. **Thread**: A collection of Runs that are part of a single conversation.
 
 <Frame caption="A Thread containing a run and intermediate steps in Literal AI">
   <img src="/images/threads-overview.gif" alt="Literal AI Platform"/>
@@ -177,6 +178,13 @@ async function myRun() {
 ### Add Attachments to Steps
 
 You can attach files to a Run or any of its intermediate steps, which is particularly useful for multimodal use cases.
+
+<Frame caption="Example of attachments">
+  <img
+    src="/images/attachments.png"
+    alt="Attachments on a step"
+  />
+</Frame>
 
 <CodeGroup>
 ```python Python
