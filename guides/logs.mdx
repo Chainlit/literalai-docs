@@ -316,6 +316,21 @@ async function processMessage(threadId: string, userInput: string) {
 </CodeGroup>
 
 
+## Log to a Specific Environment
+
+Literal AI supports logging to different environments, which allows you to separate your development, staging, and production data: `dev`, `staging`, `prod`.
+This is particularly useful for managing your LLM application lifecycle.
+To specify an environment when initializing the LiteralClient, you can use the `environment` parameter:
+
+<CodeGroup>
+```python Python
+literalai_client = LiteralClient(environment="dev")
+```
+```typescript TypeScript
+const literalAiClient = new LiteralClient({ environment: "dev" });
+```
+</CodeGroup>
+
 ## Log a Distributed Trace
 
 <Card title="Distributed Tracing Cookbook" icon="github" href="https://github.com/Chainlit/literalai-cookbooks/tree/main/python/distributed-tracing">
