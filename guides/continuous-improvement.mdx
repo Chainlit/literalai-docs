@@ -1,0 +1,110 @@
+---
+title: Continuous Improvement
+description: Improve your LLM applications over time with continuous improvement.
+icon: repeat
+---
+
+# Continuous Improvement for LLM Applications
+
+Continuous improvement is a crucial aspect of developing and maintaining high-quality LLM applications. This guide will walk you through the process of evaluating and improving your LLM-powered systems over time.
+
+<Frame caption="Collaborative Flow on Literal AI">
+  <img src="/images/features.svg" alt="Literal AI Features"/>
+</Frame>
+
+## Evaluation Framework
+
+Before implementing continuous improvement, it's essential to establish a robust evaluation framework. Follow these steps to create an effective evaluation process:
+
+### Determine the Evaluation Level
+
+Choose the appropriate level for evaluation:
+
+- LLM call level (similar to unit tests)
+- Agent run level (integration tests)
+- Conversation level (end-to-end tests)
+
+### Define Evaluation Metrics
+
+Identify what aspects of your LLM application you want to measure:
+
+- Hallucination rate
+- Answer relevancy
+- Application-specific behaviors
+- Response quality
+- Task completion rate
+
+### Select Evaluation Methods
+
+Choose one or more evaluation methods based on your needs:
+
+- LLM-as-a-Judge: Use another LLM to evaluate outputs
+- Code-based evaluation: Implement programmatic checks
+- Hybrid approach: Combine LLM and code-based evaluations
+- Embedding similarity: Compare vector representations of responses
+- Human review: Incorporate manual evaluation by experts
+
+## Improvement Process
+
+Once you have established your evaluation framework, follow these steps to continuously improve your LLM application:
+
+### Pre-production Iteration
+
+1. Create a dataset with ground truth examples
+2. Implement your evaluation procedure
+3. Iterate on your LLM application (prompts, code, etc.) to improve performance
+4. Build and test the first production-ready version
+
+### Production Monitoring and Evaluation
+
+Now that you have a production system, implement the following strategies to gather data and improve your application in production:
+
+#### Product Feedback Loops
+
+- Implicit feedback: Track user actions (e.g., accepting or rejecting suggestions)
+- Explicit feedback: Implement user rating systems (e.g., thumbs up/down)
+
+#### Human Review
+
+- Regularly have human experts review a subset of logged interactions
+- Identify areas for improvement and edge cases
+
+#### Automated AI Evaluations
+
+- Implement reference-free evaluations to continuously monitor performance
+- Use metrics like perplexity, coherence, or task-specific scores
+
+### Continuous Improvement Cycle
+
+1. Analyze data from production monitoring
+2. Identify edge cases and areas for improvement
+3. Add new examples to your evaluation dataset
+4. Update prompts, agent code, or model fine-tuning
+5. Run tests to ensure improvements don't introduce regressions
+6. Deploy the new version to production
+
+#### CI/CD Integration
+
+To ensure that there are no regressions, integrate the following test into your CI/CD pipeline:
+
+1. Pull the most representative dataset
+2. Run the LLM system and the evaluations 
+3. Pull the baseline performance metrics w.r.t to that dataset
+4. Compare results to the baseline metrics using a confidence interval
+
+
+### Global Performance Monitoring
+
+Track product metrics such as:
+
+- Conversion rates
+- User retention
+- Task completion rates
+- User satisfaction scores
+
+Use these metrics to assess the overall impact of your LLM application and guide future improvements.
+
+## Conclusion
+
+By implementing a robust continuous improvement process, you can ensure that your LLM application remains effective, relevant, and valuable to your users over time. Regular evaluation, monitoring, and iteration are key to maintaining a high-quality LLM-powered system.
+
