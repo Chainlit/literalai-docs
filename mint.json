@@ -57,6 +57,7 @@
         "guides/dataset",
         "guides/experiment",
         "guides/annotation-queue",
+        "guides/continuous-improvement",
         "guides/settings/project-roles"
       ]
     },
