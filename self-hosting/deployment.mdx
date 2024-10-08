@@ -124,6 +124,17 @@ Either `REDIS_URL` or `REDISHOST` and `REDISPORT` can be used.
 | `REDISHOST` | Redis host (useful with Google Cloud Run). | `127.0.0.1` |
 | `REDISPORT` | Redis port. | `6379` |
 
+<Warning>
+The cache allows for asynchronous task handling such as:
+- step ingestion
+- AI evals monitoring
+- experiment runs
+
+Control over the queues and workers handling the asynchronous tasks requires an authentication
+token defined via the `ADMIN_AUTH_TOKEN` environment variable. Set it to a non-empty value to
+be able to investigate your cache-based queueing system.
+</Warning>
+
 ## 6. SMTP Configuration [Optional]
 <Note>Setting up SMTP is optional. It enables Literal AI to send emails for password resets and project invitations.</Note>
 
