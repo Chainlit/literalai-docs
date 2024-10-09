@@ -191,7 +191,7 @@ You can attach files to a Run or any of its intermediate steps, which is particu
 @literalai_client.step(type="tool")
 def load_document():
     with open ("./some.pdf", "rb") as file:
-        literalai_client.create_attachment(
+        literalai_client.api.create_attachment(
           name="pdf_document",
           content=file.read()
           )
