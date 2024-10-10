@@ -67,6 +67,7 @@
         "integrations/openai",
         "integrations/langchain",
         "integrations/llama-index",
+        "integrations/litellm",
         "integrations/llm-providers",
         "integrations/messages-server",
         "integrations/mistralai",
