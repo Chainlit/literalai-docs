@@ -19,7 +19,7 @@ If you start from scratch in the Prompt Playground, you can open example templat
   <img src="/images/playground-prompt-template.png" alt="An example of a prompt template in the playground." />
 </Frame>
 
-### Design prompt templates
+## Design prompt templates
 
 On the left hand side of the view you can create prompt templates (1). 
 * In a `system message` you give instructions about the role of the assistant. For example, you can say that the assistant should provide concise answers. 
@@ -29,7 +29,7 @@ On the left hand side of the view you can create prompt templates (1).
 
 You can also pass functions to the prompt template. They are defined in the code or in `Tools`. The LLM model can detect when a specific function needs to be called based on the user's input. 
 
-#### Formatting
+### Formatting
 The text and code in the prompt template is formatted according to the [the Mustache prompt templating format](https://scalate.github.io/scalate/documentation/mustache.html#Syntax). Tags are surrounded by "mustaches" or double curly brackets. With tags and mustaches, variables, sections, loops and functions can be declared. A variable is written like `{{variable}}`, and an if statement and for-loop is written like the following. If `x` is a boolean value, the section tag acts like an `if` conditional. When `x` is an array, this acts like a `for each` loop. 
 
 ```
@@ -38,6 +38,25 @@ The text and code in the prompt template is formatted according to the [the Must
 {{.}}
 {{/x}}
 ```
+
+## LLM Provider
+
+Literal AI's playground supports multiple LLM providers. You can select the provider and model you want to use in the LLM settings.
+
+### Add a custom LLM provider
+
+If you are hosting your own LLM, you can add it as a custom provider in Literal AI.
+
+<Frame caption="Configure an LLM provider">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/configure-custom-provider.mp4"
+    />
+</Frame>
+
 
 ### LLM settings
 
@@ -50,7 +69,8 @@ On the right side of the screen (2), you can set an LLM provider (for example Op
 * **Frequency Penalty.** How much to penalize new tokes based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the sam line verbatim.
 * **Presence Penalty.** How much to penalize new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics.
 
-### Try out & in-context debugging
+
+## Try out & in-context debugging
 
 In the center of the screen (3), you can try out the settings and prompt template. Make sure you have an API key of the selected provided set (at the top right key icon). Then, you can send messages to the LLM using this template and settings. You can change things, and try again. 
 
@@ -59,7 +79,7 @@ If you accessed the playground via an LLM call, you get the conversation context
 You can also use multimodality here. For example, you can upload an image in the chat. 
 
 
-### Save
+## Save
 
 Once you are happy with the template and settings, you can save the prompt. 
 
