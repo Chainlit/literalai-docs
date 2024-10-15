@@ -339,6 +339,24 @@ const literalAiClient = new LiteralClient({ environment: "dev" });
 ```
 </CodeGroup>
 
+## Log with a Release
+
+Literal AI supports pairing your logs to a release, a release is a version of your deployed code to help you identify new issues and regressions.
+
+This is particularly useful for managing your LLM application once in production.
+The value can be arbitrary, but we recommend Semantic Versioning, Calendar Versioning, or the Git commit SHA.
+
+To specify a release when initializing the LiteralClient, you can use the `release` parameter:
+
+<CodeGroup>
+```python Python
+literalai_client = LiteralClient(release="81bec25")
+```
+```typescript TypeScript
+const literalAiClient = new LiteralClient({ release: "81bec25" });
+```
+</CodeGroup>
+
 ## Log a Distributed Trace
 
 <Card title="Distributed Tracing Cookbook" icon="github" href="https://github.com/Chainlit/literalai-cookbooks/tree/main/python/distributed-tracing">
