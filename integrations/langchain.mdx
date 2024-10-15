@@ -46,9 +46,9 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { ChatOpenAI } from '@langchain/openai';
 
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+const literalAiClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
 
-const cb = literalClient.instrumentation.langchain.literalCallback({
+const cb = literalAiClient.instrumentation.langchain.literalCallback({
   // You can add a list of chain types you want to ignore on Literal AI
   chainTypesToIgnore: ["ChatPromptTemplate"],
 });
@@ -85,17 +85,17 @@ You can combine the Langchain callback handler with the concept of [Thread](/gui
 import os
 from literalai import LiteralClient
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literalai_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-with literal_client.thread(name="Langchain example") as thread:
-    cb = literal_client.langchain_callback()
+with literalai_client.thread(name="Langchain example") as thread:
+    cb = literalai_client.langchain_callback()
     # Call your Langchain agent here
 ```
 
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-const literalClient = new LiteralClient();
+const literalAiClient = new LiteralClient();
 
 // You have three options to group multiple langchain calls in a single thread
 
@@ -103,7 +103,7 @@ const literalClient = new LiteralClient();
  * The first option is to add a threadId to the callback. Every time you run this code, a new
  * thread called "Jokes" will be created
 */
-const cb = literalClient.instrumentation.langchain.literalCallback({
+const cb = literalAiClient.instrumentation.langchain.literalCallback({
   threadId: "Jokes",
 });
 
@@ -120,7 +120,7 @@ main();
  * This will create a persistent thread, meaning every time you run this code, the new runs
  * and generations will be stacked inside the existing thread
  */
-const cb = literalClient.instrumentation.langchain.literalCallback();
+const cb = literalAiClient.instrumentation.langchain.literalCallback();
 
 async function main() {
   const response = await chain.invoke(
@@ -138,7 +138,7 @@ async function main() {
 */
 
 async function main() {
-  await literalClient.thread({ name: "Jokes" }).wrap(async () => {
+  await literalAiClient.thread({ name: "Jokes" }).wrap(async () => {
     const response = await chain.invoke(
       { topic: "ice cream" },
       {
@@ -195,7 +195,7 @@ workflow = StateGraph(MessagesState)
 app = workflow.compile(checkpointer=checkpointer)
 
 # run the app with LangChain callback handler
-cb = literal_client.langchain_callback()
+cb = literalai_client.langchain_callback()
 final_state = app.invoke(
     {"messages": [HumanMessage(content="what is the weather in sf")]},
     config=RunnableConfig(callbacks=[cb])
@@ -203,7 +203,7 @@ final_state = app.invoke(
 ```
 
 ```typescript Typescript
-const cb = literalClient.instrumentation.langchain.literalCallback();
+const cb = literalAiClient.instrumentation.langchain.literalCallback();
 
 // Define graph, nodes and edges
 const graphState: StateGraphArgs<AgentState>["channels"] = {

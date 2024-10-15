@@ -37,13 +37,13 @@ icon: code
     from literalai import LiteralClient
 
     # Not compatible with gunicorn's --preload flag
-    literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) # This is the default and can be omitted
+    literalai_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) # This is the default and can be omitted
     ```
 
     ```typescript TypeScript
     import { LiteralClient } from '@literalai/client';
 
-    const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+    const literalAiClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
     ```
     </CodeGroup>
   </Step>

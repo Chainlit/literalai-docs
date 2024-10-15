@@ -141,7 +141,7 @@ def run_experiment():
 ```
 ```typescript TypeScript
 const datasetId = 'MY_DATASET_ID';
-const dataset = await literalClient.api.getDataset({id: datasetId});
+const dataset = await literalAiClient.api.getDataset({id: datasetId});
 
 async function main() {
     const experiment = await literalaiClient.api.createExperiment({
@@ -189,7 +189,7 @@ experiment = literalai_client.api.create_experiment(
 ```typescript TypeScript
 const promptName = 'MY_PROMPT';
 const promptVersion = 0
-prompt = literalClient.api.getPrompt(promptName, promptVersion);
+prompt = literalAiClient.api.getPrompt(promptName, promptVersion);
 
 async function main() {
     const experiment = await literalaiClient.api.createExperiment({

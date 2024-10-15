@@ -31,12 +31,12 @@ literalai_client.instrument_openai()
 import { LiteralClient } from '@literalai/client';
 import OpenAI from 'openai';
 
-const literalClient = new LiteralClient();
+const literalAiClient = new LiteralClient();
 
 const openai = new OpenAI();
 
 // Instrument the OpenAI client
-literalClient.instrumentation.openai();
+literalAiClient.instrumentation.openai();
 
 async function main() {
   // This will be automagically logged by Literal AI
@@ -91,21 +91,21 @@ main()
 # Network requests by the SDK are performed asynchronously.
 # Invoke flush to guarantee the completion of all requests prior to the process termination.
 # WARNING: If you run a continuous server, you should not use this method.
-literal_client.flush()
+literalai_client.flush()
 ```
 
 ```typescript TypeScript
 import { LiteralClient, Thread } from '@literalai/client';
 import OpenAI from 'openai';
 
-const literalClient = new LiteralClient();
+const literalAiClient = new LiteralClient();
 
 const openai = new OpenAI();
 
 client.instrumentation.openai();
 
 async function myAssistant(initialUserQuery: string) {
-  return literalClient
+  return literalAiClient
     .run({
       name: 'My Assistant'
     })
@@ -121,7 +121,7 @@ async function myAssistant(initialUserQuery: string) {
 }
 
 async function main() {
-  await literalClient.thread({ name: 'Example' }).wrap(async () => {
+  await literalAiClient.thread({ name: 'Example' }).wrap(async () => {
     const initialUserQuery = 'Hello, how are you?';
 
     await myAssistant(initialUserQuery);

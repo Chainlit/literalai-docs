@@ -107,9 +107,9 @@ to a Step or a Generation object.
 import os
 from literalai import LiteralClient
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
+literalai_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"))
 
-score = literal_client.api.create_score(
+score = literalai_client.api.create_score(
             step_id="<STEP_UUID>",
             name="context-relevancy",
             type="AI",
@@ -121,10 +121,10 @@ score = literal_client.api.create_score(
 ```typescript TypeScript
 import { LiteralClient, ChatGeneration} from "@literalai/client";
 
-const literalClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalAiClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
 
 async function main() {
-    const score = await literalClient.api.createScore({
+    const score = await literalAiClient.api.createScore({
         stepId: '<STEP_UUID>',
         name: 'context-relevancy',
         type: 'AI',

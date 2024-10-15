@@ -11,7 +11,7 @@ class Step(Utils)
 
 ## Using the decorator on a function
 
-If you want to create a step from a function, you should use the `@literal_client.step` decorator.
+If you want to create a step from a function, you should use the `@literalai_client.step` decorator.
 
 The step is automatically ended and sent to the platform when the function returns.
 
@@ -25,7 +25,7 @@ Here is how to use the decorator:
 
 <CodeGroup>
 ```python
-@literal_client.step
+@literalai_client.step
 def my_step():
     # do something
 ```
@@ -35,7 +35,7 @@ If you want to override the default step parameters, you can pass them to the de
 
 <CodeGroup>
 ```python
-@literal_client.step(id="my-step-id", name="My step", type="run")
+@literalai_client.step(id="my-step-id", name="My step", type="run")
 def my_step():
     # do something
 ```
@@ -45,9 +45,9 @@ You can access the step object with the `get_current_step` method:
 
 <CodeGroup>
 ```python
-@literal_client.step
+@literalai_client.step
 def my_step():
-    step = literal_client.get_current_step()
+    step = literalai_client.get_current_step()
     # do something
 ```
 </CodeGroup>
@@ -60,7 +60,7 @@ The step is automatically ended and sent to the platform when the code exits the
 
 <CodeGroup>
 ```python
-with literal_client.step() as step:
+with literalai_client.step() as step:
     # do something
 ```
 </CodeGroup>
@@ -69,7 +69,7 @@ If you want to override the default step parameters, you can pass them to the `s
 
 <CodeGroup>
 ```python
-with literal_client.step(id="my-step-id", name="My step", type="run") as step:
+with literalai_client.step(id="my-step-id", name="My step", type="run") as step:
     # do something
 ```
 </CodeGroup>
@@ -82,7 +82,7 @@ You must call the `end` method on the step object to end the step and send it to
 
 <CodeGroup>
 ```python
-step = literal_client.start_step()
+step = literalai_client.start_step()
 # do something
 step.end()
 ```
@@ -92,7 +92,7 @@ You can either pass the step parameters to the `start_step` method, or set them 
 
 <CodeGroup>
 ```python
-step = literal_client.start_step(id="my-step-id", name="My step", type="run")
+step = literalai_client.start_step(id="my-step-id", name="My step", type="run")
 step.input = "test input"
 # do something
 step.output = "Hello world"

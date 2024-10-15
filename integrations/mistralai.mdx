@@ -15,8 +15,8 @@ from mistralai import Mistral, UserMessage
 import json, os
 from literalai import LiteralClient
 
-lai = LiteralClient(api_key="")
-lai.instrument_mistralai()
+literalai_client = LiteralClient(api_key="")
+literalai_client.instrument_mistralai()
 
 client = Mistral(api_key="")
 

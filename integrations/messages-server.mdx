@@ -17,7 +17,7 @@ from openai import OpenAI
 # Point to the local server
 client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
-completion = literal_client.chat.completions.create(
+completion = literalai_client.chat.completions.create(
   model="TheBloke/Mistral-7B-Instruct-v0.2-GGUF/mistral-7b-instruct-v0.2.Q4_K_S.gguf",
   messages=[
     {"role": "system", "content": "Always answer in rhymes."},
@@ -32,13 +32,13 @@ print(completion.choices[0].message)
 import { LiteralClient } from '@literalai/client';
 import OpenAI from 'openai';
 
-const literalClient = new LiteralClient();
+const literalAiClient = new LiteralClient();
 
 const openai = new OpenAI({
   baseURL: "http://localhost:1234/v1"
 });
 
-literalClient.instrumentation.openai();
+literalAiClient.instrumentation.openai();
 
 async function createAndInstrumentOpenAIStream() {
   const stream = await openai.chat.completions.create({

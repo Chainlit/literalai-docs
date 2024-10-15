@@ -30,7 +30,7 @@ To instantiate the synchronous client:
 import os
 from literalai import LiteralClient
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
+literalai_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
 ```
 
 or, async:
@@ -39,7 +39,7 @@ or, async:
 import os
 from literalai import AsyncLiteralClient
 
-async_literal_client = AsyncLiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
+async_literalai_client = AsyncLiteralClient(api_key=os.getenv("LITERAL_API_KEY")) 
 ```
 
 Additionally, you can pass the optional `batch_size` argument to batch multiple events - handled simultaneously by Literal. 
@@ -53,5 +53,5 @@ When instantiating the client, you have the option to disable logging. This can 
 import os
 from literalai import LiteralClient
 
-literal_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True) # Disable decorators
+literalai_client = LiteralClient(api_key=os.getenv("LITERAL_API_KEY"), disabled=True) # Disable decorators
 ```

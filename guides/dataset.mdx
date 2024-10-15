@@ -108,7 +108,7 @@ const item = {
     expectedOutput: { content: "Literal AI is an observability solution." },
 };
 
-const datasetItem = await literalClient.api.createDatasetItem(
+const datasetItem = await literalAiClient.api.createDatasetItem(
     datasetId, 
     item
 );
@@ -144,7 +144,7 @@ for item in dataset.items:
   pass
 ```
 ```typescript TypeScript
-const dataset = await literalClient.api.getDataset({id: dataset.id});
+const dataset = await literalAiClient.api.getDataset({id: dataset.id});
 
 dataset?.items.forEach((item) => {
     console.log(item.id)

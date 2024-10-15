@@ -369,7 +369,7 @@ def add_user_feedback(run_id: str, value: int, comment: str):
 
 ```typescript TypeScript
 async function addUserFeedback(runId: string, value: number, comment: string) {
-    const score = await literalClient.api.createScore({
+    const score = await literalAiClient.api.createScore({
         stepId: runId,
         name: 'user-feedback',
         type: 'HUMAN',

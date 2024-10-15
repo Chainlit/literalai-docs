@@ -10,18 +10,18 @@ Monitor all LLM providers via LangChain simple unified interface `init_chat_mode
 from langchain.chat_models import init_chat_model
 from literalai import LiteralClient
 
-lai = LiteralClient()
+literalai_client = LiteralClient()
 gpt_4o = init_chat_model("gpt-4o", model_provider="openai", temperature=0)
 claude_opus = init_chat_model("claude-3-opus-20240229", model_provider="anthropic", temperature=0)
 
 # Literal AI callback
-cb = lai.langchain_callback()
+cb = literalai_client.langchain_callback()
 
 # Invoke the model with input and callback configuration
 gpt_4o.invoke("what's your name", config=RunnableConfig(callbacks=[cb]))
 claude_opus.invoke("what's your name", config=RunnableConfig(callbacks=[cb]))
 
-lai.flush()
+literalai_client.flush()
 ```
 
 
@@ -31,8 +31,8 @@ import { LiteralClient } from "@literalai/client";
 import { HumanMessage } from "@langchain/core/messages";
 import { ChatAnthropic } from "@langchain/anthropic";
 
-const literal_client = new LiteralClient(process.env.LITERAL_API_KEY);
-const cb = literal_client.instrumentation.langchain.literalCallback();
+const literalai_client = new LiteralClient(process.env.LITERAL_API_KEY);
+const cb = literalai_client.instrumentation.langchain.literalCallback();
 
 // Example of using the callback
 const message = new HumanMessage({ content: "What is the capital of France?" });

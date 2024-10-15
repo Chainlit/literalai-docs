@@ -13,11 +13,11 @@ import { LiteralClient } from '@literalai/client';
 import { generateText as baseGenerateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 
-const literalClient = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalAiClient = new LiteralClient(process.env['LITERAL_API_KEY']);
 
 // Here we wrap `generateText` with the Literal AI instrumentation. This will allow us to automatically capture
 // both the response from the LLM API and the other informations present in the response (latency, token counts, etc...).
-const generateText = literalClient.instrumentation.vercel.instrument(baseGenerateText);
+const generateText = literalAiClient.instrumentation.vercel.instrument(baseGenerateText);
 
 export async function POST(req: Request) {
   // The wrapped version of `generateText` accepts the same parameters as the original function.
@@ -37,7 +37,7 @@ import { openai } from '@ai-sdk/openai';
 
 // Here we wrap `streamText` with the Literal AI instrumentation. This will allow us to automatically capture
 // both the response from the LLM API and the other informations present in the response (latency, token counts, etc...).
-const streamText = literalClient.instrumentation.vercel.instrument(baseStreamText);
+const streamText = literalAiClient.instrumentation.vercel.instrument(baseStreamText);
 
 export async function POST(req: Request) {
   // The wrapped version of `streamText` accepts the same parameters as the original function.
@@ -59,7 +59,7 @@ In most cases, you will want to keep track of the different generations from you
 
 ```typescript TypeScript
 export async function POST(req: Request) {
-  await literalClient.thread({ name: 'Example' }).wrap(async () => {
+  await literalAiClient.thread({ name: 'Example' }).wrap(async () => {
     const { text } = await generateText({
       model: openai('gpt-3.5-turbo'),
       prompt: question,
