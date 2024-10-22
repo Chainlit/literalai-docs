@@ -57,6 +57,21 @@ If you are hosting your own LLM, you can add it as a custom provider in Literal 
     />
 </Frame>
 
+#### Azure OpenAI
+
+You need to map the Azure OpenAI endpoint to the following format:
+
+`https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/chat/completions?api-version=2024-06-01`
+
+For instance, 
+`https://my_instance.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-06-01`
+
+would map to the following Literal AI provider:
+<Frame caption="Azure OpenAI endpoint"  >
+  <img src="/images/azureopenai.png" alt="An example of an Azure OpenAI endpoint." />
+</Frame>
+
+Don't add a base URL to the endpoint.
 
 ### LLM settings
 
