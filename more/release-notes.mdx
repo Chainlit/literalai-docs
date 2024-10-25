@@ -14,6 +14,28 @@ Literal AI cloud is currently compatible with:
 * [TypeScript SDK](/typescript-client/development) version `0.0.503` and above.
 </Note>
 
+# 0.0.629-beta (October 25th, 2024)
+
+### New features
+* Prompt Playground allows for model comparison with multiple tabs
+* AI Evals let you configure monitoring rules with custom prompts
+* A new "Scoring" tab in Settings lets you manage `Score` Schemas: categories, descriptions, etc.
+
+### Improvements
+* Experiment Item details view:
+  * Shows scores and input/output diffs
+  * Clarifies diffed experiments in comparison mode
+* Prevent deletion of AI Score on `Experiment`
+* `Thread` tree view: allow expand/collapse nested steps on tree nodes
+* Styling: navigation side bar, code editors, spacing, etc.
+
+### Bug fixes
+* Fix handling of max database connections
+* Gracefully handle streaming errors - e.g. tool calls with Google
+* Invalidate cache on `Prompt` version tags edition
+* Prevent overlap of Human Review on `Experiment` item details
+* Move "Sentiment classification" prompt example to rely on `json_schema` with `oneOf` descriptions
+
 # 0.0.628-beta (October 21th, 2024)
 
 ### New features
@@ -31,7 +53,7 @@ Literal AI cloud is currently compatible with:
 ### Bug fixes
 * Fix uncaught error in Playground monitoring
 * Facilitate credentials management in Playground
-* Fix credential visibility issue
+* Fix credential visibility issue (Amazon Bedrock)
 
 # 0.0.627-beta (October 14th, 2024)
 
