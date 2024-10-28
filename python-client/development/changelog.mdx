@@ -2,7 +2,18 @@
 title: Changelog
 ---
 
-# `0.0.625` (September 27th, 2024)
+# `0.0.627` (October 28th, 2024)
+* Added fields `label`, `status` and `tags` to `Prompt` query retrieval
+* Fixed serialization/deserialization in LangChain integration
+
+<Warning>Starting with `0.0.627`, you need to have Literal AI version 0.0.629-beta or above.</Warning>
+
+# `0.0.626` (October 21st, 2024)
+* Exposed `label` to `create_scores` API for non-solely numerical scores
+* Added `release` parameter to `LiteralClient` constructor.
+* Fixed `Prompt` object string representation
+
+# `0.0.625` (October 1st, 2024)
 * LlamaIndex instrumentation support extended to (in addition to `engine.query`):
   * `llm.chat` and `llm.predict_and_call`
   * `agent.chat` for custom `FunctionCallingAgent` and LlamaIndex's `OpenAIAgent`
