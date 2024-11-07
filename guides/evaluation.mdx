@@ -121,7 +121,7 @@ score = literalai_client.api.create_score(
 ```typescript TypeScript
 import { LiteralClient, ChatGeneration} from "@literalai/client";
 
-const literalAiClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]});
 
 async function main() {
     const score = await literalAiClient.api.createScore({
