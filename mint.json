@@ -59,7 +59,8 @@
         "guides/annotation-queue",
         "guides/monitoring",
         "guides/continuous-improvement",
-        "guides/settings/project-roles"
+        "guides/settings/project-roles",
+        "guides/settings/credentials"
       ]
     },
     {
