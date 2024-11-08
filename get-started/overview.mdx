@@ -24,7 +24,7 @@ Literal AI is developed by the builders of [Chainlit](https://github.com/Chainli
 
 3. [Dataset:](/guides/dataset) Create datasets mixing production data and hand written examples to run non regression tests/experiments.
 
-4. [Evaluation:](/guides/evaluation) Evaluate and monitor the performance of your LLM app in production. View LLM metrics in a dashboard, set automated rules and collect product & user analytics.
+4. [Evaluation:](/guides/scorers) Evaluate and monitor the performance of your LLM app in production. View LLM metrics in a dashboard, set automated rules and collect product & user analytics.
 
 <Frame caption="Literal AI Platform Overview">
   <img src="/images/literal-ai-overview.png" alt="Literal AI Platform"/>
@@ -44,3 +44,39 @@ Literal AI is developed by the builders of [Chainlit](https://github.com/Chainli
 </Card>
 
 </CardGroup>
+
+
+
+
+## Why evaluate?
+
+Evaluation is key to enable continuous deployment of LLM-based applications and guarantee that newer
+versions perform better than previous ones. To best capture the **user experience** one must understand the
+multiple steps which make up the application. As AI applications grow in complexity, they tend to chain 
+multiple steps.
+
+Literal AI lets you log & monitor the various steps of your LLM application. By doing so, you can continuously improve the performance of your LLM system, building the most relevant metrics:
+
+| Level          | Metrics                                       |
+|----------------|--------------------------------------------|
+| LLM Generation | Hallucination, Toxicity, etc.                 |
+| Agent Run      | Task completion, Number of intermediate steps |
+| Conversation Thread         | User satisfaction                             |
+
+
+An example is the vanilla **Retrieval Augmented Generation** (RAG), which augments Large Language Models
+(LLMs) with domain-specific data. Examples of metrics you can score against are: context relevancy, faithfulness, answer relevancy, etc.
+
+
+## How to think about evaluation?
+
+Scores are a crucial part of developing and improving your LLM application or agent.
+
+| Who?  | When?           | Type of eval metrics | Example                                             |
+|---------------|------------------|------------------|-----------------------------------------------------|
+| End-User      | In Production     | Explicit Feedback (👍👎)        | Thumbs-up or down on a chatbot's answer             |
+| End-User      | In Production     | Implicit Feedback based on product metric        | User conversion to paid offering increases by 15%   |
+| LLM-as-a-Judge | In Production  | AI evaluation (without ground truth) | Hallucination, context relevancy, etc. |
+| LLM-as-a-Judge | During Iteration  | AI evaluation against a Dataset (with ground truth or not) | Hallucination, conciseness, helpfulness, context relevancy, answer similarity, etc. |
+| Domain Expert | During Iteration  | Human evaluation against a Dataset (with ground truth or not)  | Hallucination, conciseness, helpfulness, context relevancy, answer similarity, etc. |
+

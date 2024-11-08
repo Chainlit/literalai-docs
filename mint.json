@@ -48,24 +48,45 @@
       ]
     },
     {
-      "group": "Guides",
+      "group": "Application",
       "pages": [
+        "guides/monitoring",
         "guides/logs",
-        "guides/playground",
         "guides/prompt-management",
-        "guides/evaluation",
+        "guides/playground",
+        "guides/users"
+      ]
+    },
+    {
+      "group": "Evaluation",
+      "pages": [
+        "guides/scorers",
+        "guides/online-evals",
         "guides/dataset",
         "guides/experiment",
-        "guides/annotation-queue",
-        "guides/monitoring",
+        "guides/annotation-queue"
+      ]
+    },
+    {
+      "group": "Settings",
+      "pages": [
+        "guides/settings/general",
+        "guides/settings/llm",
+        "guides/settings/scoring",
+        "guides/settings/team"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
         "guides/continuous-improvement",
-        "guides/settings/project-roles",
-        "guides/settings/credentials"
+        "guides/structured-output"
       ]
     },
     {
       "group": "Integrations",
       "pages": [
+        
         "integrations/openai",
         "integrations/langchain",
         "integrations/llama-index",

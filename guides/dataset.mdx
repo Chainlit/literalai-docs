@@ -1,17 +1,17 @@
 ---
 title: "Datasets"
-description: "Datasets are a collection of input/expected output samples for conducting experiments and non regression tests."
+description: "Datasets are collections of input/expected output samples for conducting experiments and non regression tests."
 icon: database
 ---
 
-A Dataset consists of `Dataset Items`. A Dataset Item has an `input`, `expected output` and can contain `metadata`. The input, expected output and metadata of the items in a dataset should follow the same schema.
+A Dataset is made of items. A Dataset item has an `input`, `expected output` and can contain `metadata`. The input, expected output and metadata of the items in a dataset should follow the same schema.
 
 ## Dataset Types
-There are two types of datasets in Literal AI: **Key Value** and **Generation**. 
+There are two types of datasets in Literal AI: **Key-Value** and **Generation**. 
 
-### Key Value Datasets
+### Key-Value Datasets
 
-Key Value datasets can have any key-value pairs for input and expected output. This type of dataset can be used to for example store [Runs](/guides/logs#semantics) of agents. An example of a Key Value dataset item:
+Key-Value datasets can have any key-value pairs for input and expected output. This type of dataset can be used to for example store [Runs](/guides/logs#semantics) of agents. An example of a Key-Value dataset item:
 
 ``` json
 input = {
@@ -46,13 +46,13 @@ expected_output = {
 
 ## Create a Dataset
 
-### From a file
+### From File
 
-You can upload a dataset on Literal AI from a CSV file (Key Value datasets) or a JSONL file (Generation datasets).
+You can upload a dataset on Literal AI from CSV (**Key-Value** datasets) or JSONL (**Generation** datasets).
 
 To do so, go to the Datasets page and click on the `+` button to create a new dataset. Then drag and drop your file to upload it.
 
-<Frame caption="Uploading a Key Value Dataset">
+<Frame caption="Uploading a Key-Value Dataset">
   <video
     autoPlay
     muted
@@ -62,11 +62,11 @@ To do so, go to the Datasets page and click on the `+` button to create a new da
     />
 </Frame>
 
-### From your code
+### From Code
 
-You can also create a dataset and populate it with items programmatically using the SDK.
+You can also create a `Dataset` and populate it with items programmatically using SDKs.
 
-<Note>See [installation](/get-started/quick-start) to get your API key and instantiate the SDK</Note>
+<Note>See [installation](/get-started/quick-start) to get your API key and instantiate SDKs</Note>
 
 Here is an example of how to create a dataset:
 
@@ -90,7 +90,7 @@ const dataset = await literalAiClient.api.createDataset({
 ```
 </CodeGroup>
 
-Now that we have a dataset, we can create dataset items:
+Now that we have a `Dataset`, we can create dataset items:
 
 <CodeGroup>
 ```python Python
@@ -120,13 +120,7 @@ const datasetItem = await literalAiClient.api.createDatasetItem(
 A benefit of managing your datasets and production logs in Literal AI is that you can continuously improve your app by using the logs to create new dataset items.
 
 <Frame caption="Create a Dataset Item from logs">
-  <video
-    autoPlay
-    muted
-    loop
-    playsInline
-    src="/images/ds-item-from-log.mp4"
-    />
+  <img src="/images/add-to-dataset.gif" alt="Create a Dataset Item from logs" />
 </Frame>
 
 Whenever you identify a new edge case in your logs, you can create a dataset item to account for it in your experiments.

@@ -1,5 +1,5 @@
 ---
-title: "Monitoring"
+title: "Dashboard"
 description: "Learn how to effectively monitor your AI application for performance and reliability"
 icon: "chart-line"
 ---
@@ -8,7 +8,7 @@ icon: "chart-line"
 
 Effective monitoring is crucial for maintaining and optimizing your AI application. This guide will walk you through the key aspects of monitoring, including using the dashboard, understanding important metrics, and accessing logs.
 
-Monitoring is closely related to [evaluation](/guides/evaluation) and [continuous improvement](/guides/continuous-improvement).
+Monitoring is closely related to [evaluation](/guides/online-evals) and [continuous improvement](/guides/continuous-improvement).
 
 ## Dashboard Overview
 
@@ -45,33 +45,7 @@ Monitor the speed and responsiveness of your AI:
 Evaluate the quality and effectiveness of your AI:
 
 - Set up AI evaluations in production to continuously monitor performance
-- For detailed information on setting up evaluations, refer to our [evaluation guide](/guides/evaluation)
-
-### Cost Tracking
-
-Keep an eye on the financial aspects of your AI application:
-
-<Steps>
-  <Step title="Access LLM Settings">
-    Navigate to the "Settings" section and select the "LLM" tab.
-  </Step>
-  <Step title="Configure Model Costs">
-    Configure the cost per token for each model you're using to enable precise cost tracking:
-
-    - **Pattern**: Specify a regular expression to match the model name (e.g., "gpt-4o*" for all GPT-4o variants)
-    - **Input Price**: Set the cost for input tokens in USD per million tokens
-    - **Output Price**: Set the cost for output tokens in USD per million tokens
-    - **Period**: Optionally define start and end dates for time-specific pricing (useful for handling price changes)
-
-    You can add multiple model configurations to accurately track expenses across your LLM providers.
-  </Step>
-  <Step title="Monitor Costs in the Dashboard">
-    Return to the main dashboard to view cost metrics over time, including total cost, cost per conversation, and cost breakdowns by model.
-    <Frame caption="Cost Metrics in the Dashboard">
-      <img src="/images/model-costs.png" alt="Cost Metrics in the Dashboard" />
-    </Frame>
-  </Step>
-</Steps>
+- For detailed information on setting up evaluations, refer to our [evaluation guide](/guides/scorers)
 
 ## Accessing Logs
 
@@ -80,5 +54,3 @@ Detailed [logs](/guides/logs) provide valuable insights for troubleshooting and 
 1. In the sidebar, navigate to the "Logs" section
 2. Use filters to narrow down logs by date, conversation ID, or AI eval results
 3. Review log entries for specific conversations or errors to identify root causes
-
-
