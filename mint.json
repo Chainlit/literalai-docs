@@ -50,9 +50,9 @@
     {
       "group": "Application",
       "pages": [
-        "guides/monitoring",
+        "guides/dashboard",
         "guides/logs",
-        "guides/prompt-management",
+        "guides/prompts",
         "guides/playground",
         "guides/users"
       ]
@@ -79,6 +79,7 @@
     {
       "group": "Guides",
       "pages": [
+        "guides/evaluation",
         "guides/continuous-improvement",
         "guides/structured-output"
       ]

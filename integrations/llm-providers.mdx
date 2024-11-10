@@ -12,14 +12,14 @@ from literalai import LiteralClient
 
 literalai_client = LiteralClient()
 gpt_4o = init_chat_model("gpt-4o", model_provider="openai", temperature=0)
-claude_opus = init_chat_model("claude-3-opus-20240229", model_provider="anthropic", temperature=0)
+claude_sonnet = init_chat_model("claude-3-5-sonnet-20241022", model_provider="anthropic", temperature=0)
 
 # Literal AI callback
 cb = literalai_client.langchain_callback()
 
 # Invoke the model with input and callback configuration
 gpt_4o.invoke("what's your name", config=RunnableConfig(callbacks=[cb]))
-claude_opus.invoke("what's your name", config=RunnableConfig(callbacks=[cb]))
+claude_sonnet.invoke("what's your name", config=RunnableConfig(callbacks=[cb]))
 
 literalai_client.flush()
 ```
