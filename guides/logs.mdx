@@ -1,6 +1,6 @@
 ---
 title: Logs
-description: Logs are essential to monitor and improve your LLM app in production. Literal AI provides a flexible and composable SDK to log your LLM app at different levels of granularity.
+description: Logs are essential to monitor and improve your LLM app in production. Literal AI provides flexible and composable SDKs to log your LLM app at different levels of granularity.
 icon: list-tree
 ---
 
@@ -16,7 +16,7 @@ Literal AI approaches LLM logging at three levels:
 3. **Run**: Trace of an Agent/Chain run, including its intermediate steps. Can contain one or multiple generations. 
 4. **Thread**: A collection of Runs that are part of a single conversation.
 
-<Frame caption="A Thread containing a run and intermediate steps in Literal AI">
+<Frame caption="A `Thread` with runs & intermediate steps">
   <img src="/images/threads-overview.gif" alt="Literal AI Platform"/>
 </Frame>
 
@@ -410,7 +410,7 @@ This can be done by:
 - Sending the logged run id to your analytics system, such as PostHog or Amplitude. 
 
 ### Add an AI Evaluation Result
-Refer to [Evaluation](/guides/evaluation)
+Refer to [Online Evals](/guides/online-evals)
 
 
 ## Fetch Existing Logs
@@ -466,13 +466,7 @@ Leverage the powerful filters on Literal AI. Use these same filters to export yo
 ### Debug logged LLM generations
 
 <Frame caption="Replay a logged LLM generation in the Playground">
-  <video
-    autoPlay
-    muted
-    loop
-    playsInline
-    src="/images/debug-generation.mp4"
-  />
+  <img src="/images/debug-generation.gif" alt="Debug a logged LLM generation" />
 </Frame>
 
 ### Add Tags and Scores from the UI

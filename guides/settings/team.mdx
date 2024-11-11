@@ -1,0 +1,48 @@
+---
+title: Team
+icon: users
+---
+
+## Create & Invite Members to a Project
+
+To create a new project, click on the Project switcher at the bottom of the sidebar and click on `Create Project`.
+
+<Frame caption="Create a New Project">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    src="/images/create-project.mp4"
+    />
+</Frame>
+
+Once a project is created, you can invite others to collaborate:
+
+1. Go to the project `Settings`.
+2. Go to the `Team` tab.
+3. Click on the `+` button.
+
+### Role Based Access Control (RBAC)
+
+Project administrators hold the responsibility of assigning and managing permissions for all team members. Permissions in Literal AI are packaged as the following set of roles :
+
+#### Supported roles
+
+- **Admin**: Full access to the project, including team management, project settings, and all resources.
+- **AI Engineer**: Manages observability data, API keys, and AI prompts. Cannot alter project settings or team roles.
+- **Domain Expert**: Reads observability data, scores, and tags data. Limited access to project resources and no API key or project settings management.
+
+Feel free to reach out to us to create a custom role: contact@literalai.com
+
+#### Permissions per role
+
+| | Admin | AI Engineer | Domain Expert |
+|--|-------|-------------|---------------|
+| Annotations (scores, tags...) | Read & Write | Read & Write | Read & Write |
+| Observability (threads, steps...) | Read & Write | Read & Write | Read |
+| Datasets (items, experiments...) | Read & Write | Read & Write | Read |
+| Prompt (playground, versions...) | Read & Write | Read & Write |  |
+| API Keys & Credentials | Read & Write | Read & Write |  |
+| Project & Team | Read & Write | Read |  |
+

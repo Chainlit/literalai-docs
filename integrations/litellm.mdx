@@ -33,7 +33,7 @@ litellm.failure_callback = ["literalai"] # Log Errors to LiteralAI
 
 # openai call
 response = litellm.completion(
-  model="gpt-3.5-turbo",
+  model="gpt-4o-mini",
   messages=[
     {"role": "user", "content": "Hi 👋 - i'm openai"}
   ]
@@ -63,7 +63,7 @@ literalai_client = LiteralClient()
 def my_agent(question: str):
     # agent logic here
     response = litellm.completion(
-        model="gpt-3.5-turbo",
+        model="gpt-4o-mini",
         messages=[{"role": "user", "content": question}],
         metadata={"literalai_parent_id": literalai_client.get_current_step().id}
     )
@@ -75,13 +75,13 @@ my_agent("Hello world")
 literalai_client.flush()
 ```
 
-Learn more about [Literal AI logging capabilities](https://docs.literalai.com/guides/logs).
+Learn more about [Literal AI logging capabilities](/guides/logs).
 
 ## Bind a Generation to its Prompt Template
 
 This integration works out of the box with prompts managed on Literal AI. This means that a specific LLM generation will be bound to its template.
 
-Learn more about [Prompt Management](https://docs.literalai.com/guides/prompt-management#pull-a-prompt-template-from-literal-ai) on Literal AI.
+Learn more about [Prompt Management](/guides/prompts) on Literal AI.
 
 ## OpenAI Proxy Usage
 
@@ -102,7 +102,7 @@ literalai_client = LiteralClient(api_key="")
 literalai_client.instrument_openai()
 
 settings = {
-    "model": "gpt-3.5-turbo", # model you want to send litellm proxy
+    "model": "gpt-4o-mini", # model you want to send litellm proxy
     "temperature": 0,
     # ... more settings
 }

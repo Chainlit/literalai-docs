@@ -1,0 +1,98 @@
+---
+title: LLM
+description: Manage your LLM credentials and costs.
+icon: key-skeleton
+---
+
+## Credentials
+
+### Supported providers
+
+<Check>Credentials are stored online, and keys are encrypted.</Check>
+
+Literal AI supports all major LLM providers:
+- OpenAI
+- Mistral
+- Anthropic
+- Google
+- Azure OpenAI
+- Amazon Bedrock
+- Groq
+
+Adding a credential is as simple as providing an API key:
+<Frame caption="Add a credential">
+    <img src="/images/add-credentials.gif" alt="Add a credential" />
+</Frame>
+
+<Tip>
+Literal AI comes with a set of pre-configured models for each provider, but you can add your own.  
+*Custom Models* should be the list of models you fine-tuned on specific providers.
+</Tip>
+
+<Info>
+All credentials can be **used** by any Admin or AI Engineer on your team.  
+Once added, credentials are not visible anymore. Admins may edit or delete credentials.
+</Info>
+
+**Azure OpenAI** and **Amazon Bedrock** have additional fields to configure.
+
+For Azure OpenAI, you need to map the Azure OpenAI endpoint to the following format:
+
+`https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/chat/completions?api-version=2024-06-01`
+
+For instance, 
+`https://my_instance.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-06-01`
+
+would map to the following Literal AI provider:
+<Frame caption="Azure OpenAI Credential Configuration"  >
+  <img src="/images/azureopenai.png" alt="An example of an Azure OpenAI credential configuration." />
+</Frame>
+
+<Note>
+No need to add a base URL to the endpoint!
+</Note>
+
+### Custom providers
+
+If your LLM provider does not fall into one of the above, you may define your own, custom. 
+
+In addition to the API key, you provide a base URL and the available models.
+
+<Note>
+The chat completions endpoint should follow OpenAI's API format.
+</Note>
+
+<Frame caption="Custom provider">
+  <img src="/images/add-custom-provider.gif" alt="An example of a custom provider." />
+</Frame>
+
+<Warning>
+Make sure your endpoint is reachable from the Internet!  
+Especially if using LM Studio with `http://localhost:1234/v1` 😉
+</Warning>
+
+## Cost Tracking
+
+Keep an eye on the financial aspects of your LLM application:
+
+<Steps>
+  <Step title="Access LLM Settings">
+    Navigate to the "Settings" section and select the "LLM" tab.
+  </Step>
+  <Step title="Configure Model Costs">
+    Configure the cost per token for each model you're using to enable precise cost tracking:
+
+    - **Pattern**: Specify a regular expression to match the model name (e.g., "gpt-4o*" for all GPT-4o variants)
+    - **Input Price**: Set the cost for input tokens in USD per million tokens
+    - **Output Price**: Set the cost for output tokens in USD per million tokens
+    - **Period**: Optionally define start and end dates for time-specific pricing (useful for handling price changes)
+
+    You can add multiple model configurations to accurately track expenses across your LLM providers.
+  </Step>
+  <Step title="Monitor Costs in the Dashboard">
+    Return to the main dashboard to view cost metrics over time, including total cost, cost per conversation, and cost breakdowns by model.
+    <Frame caption="Cost Metrics in the Dashboard">
+      <img src="/images/model-costs.png" alt="Cost Metrics in the Dashboard" />
+    </Frame>
+  </Step>
+</Steps>

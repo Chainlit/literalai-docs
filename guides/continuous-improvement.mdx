@@ -44,7 +44,7 @@ Choose one or more evaluation methods based on your needs:
 - Embedding similarity: Compare vector representations of responses
 - Human review: Incorporate manual evaluation by experts
 
-You can find more information on how to perform evaluations [here](/guides/evaluation).
+You can find more information on how to perform evaluations [here](/guides/scorers).
 
 ## Improvement Process
 
@@ -53,8 +53,8 @@ Once you have established your evaluation framework, follow these steps to conti
 ### Pre-production Iteration
 
 1. Create a [dataset](/guides/dataset) with ground truth examples
-2. Implement your [evaluation](/guides/evaluation) procedure
-3. Iterate on your LLM application ([prompts](/guides/prompt-management), code, etc.) to improve performance
+2. Implement your [evaluation](/guides/scorers) procedure
+3. Iterate on your LLM application ([prompts](/guides/prompts), code, etc.) to improve performance
 4. Build and test the first production-ready version
 
 ### Production Monitoring and Evaluation
@@ -76,14 +76,14 @@ Now that you have a production system, implement the following strategies to gat
 - Implement reference-free evaluations to continuously monitor performance
 - Use metrics like perplexity, coherence, or task-specific scores
 
-You can find more information on how to perform evaluations [here](/guides/evaluation#evaluate-llm-logs-in-production-automatically).
+You can find more information on how to perform evaluations [here](/guides/online-evals).
 
 ### Continuous Improvement Cycle
 
 1. Analyze data from production monitoring
 2. Identify edge cases and areas for improvement
 3. Add new examples to your [evaluation dataset](/guides/dataset)
-4. Update [prompts](/guides/prompt-management), agent code, or model fine-tuning
+4. Update [prompts](/guides/prompts), agent code, or model fine-tuning
 5. Run tests to ensure improvements don't introduce regressions
 6. Deploy the new version to production
 
@@ -92,7 +92,7 @@ You can find more information on how to perform evaluations [here](/guides/evalu
 To ensure that there are no regressions, integrate the following test into your CI/CD pipeline:
 
 1. Pull the most representative [dataset](/guides/dataset)
-2. Run the LLM system and the [evaluations](/guides/evaluation)
+2. Run the LLM system and the [evaluations](/guides/experiment)
 3. Pull the baseline performance metrics with regards to that dataset
 4. Compare results to the baseline metrics using a confidence interval
 
@@ -109,4 +109,4 @@ Use these metrics to assess the overall impact of your LLM application and guide
 
 ## Conclusion
 
-By implementing a robust continuous improvement process, you can ensure that your LLM application remains effective, relevant, and valuable to your users over time. Regular [evaluation](/guides/evaluation), monitoring, and iteration are key to maintaining a high-quality LLM-powered system.
+By implementing a robust continuous improvement process, you can ensure that your LLM application remains effective, relevant, and valuable to your users over time. Regular [evaluation](/guides/experiment), monitoring, and iteration are key to maintaining a high-quality LLM-powered system.

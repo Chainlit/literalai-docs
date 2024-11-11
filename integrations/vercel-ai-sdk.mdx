@@ -22,7 +22,7 @@ const generateText = literalAiClient.instrumentation.vercel.instrument(baseGener
 export async function POST(req: Request) {
   // The wrapped version of `generateText` accepts the same parameters as the original function.
   const { text } = await generateText({
-    model: openai('gpt-3.5-turbo'),
+    model: openai('gpt-4o-mini'),
     prompt: question
   });
 
@@ -42,7 +42,7 @@ const streamText = literalAiClient.instrumentation.vercel.instrument(baseStreamT
 export async function POST(req: Request) {
   // The wrapped version of `streamText` accepts the same parameters as the original function.
   const { textStream } = await streamText({
-    model: openai('gpt-3.5-turbo'),
+    model: openai('gpt-4o-mini'),
     system: question,
     messages: history
   });
@@ -61,7 +61,7 @@ In most cases, you will want to keep track of the different generations from you
 export async function POST(req: Request) {
   await literalAiClient.thread({ name: 'Example' }).wrap(async () => {
     const { text } = await generateText({
-      model: openai('gpt-3.5-turbo'),
+      model: openai('gpt-4o-mini'),
       prompt: question,
     });
 
@@ -81,7 +81,7 @@ import { v4 as uuidv4 } from 'uuid';
 const literalaiStepId = uuidv4();
 
 const { text } = await generateText({
-  model: openai('gpt-3.5-turbo'),
+  model: openai('gpt-4o-mini'),
   prompt: question,
   literalaiStepId,
   literalaiTags: ['tag1', 'tag2'],

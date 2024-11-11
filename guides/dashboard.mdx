@@ -1,0 +1,57 @@
+---
+title: "Dashboard"
+description: "Monitor your AI application usage, and track performance and reliability."
+icon: "chart-line"
+---
+
+# Monitoring Your AI Application
+
+Effective monitoring is crucial for maintaining and optimizing your AI application. 
+This guide will walk you through the key aspects of monitoring, including using the dashboard, understanding important metrics, and accessing logs.
+
+Monitoring is closely related to [evaluation](/guides/online-evals) and [continuous improvement](/guides/continuous-improvement).
+
+## Dashboard Overview
+
+The dashboard provides a comprehensive view of your AI application's performance and usage. 
+<Frame caption="Dashboard">
+  <img src="/images/dashboard.png" alt="Dashboard" />
+</Frame>
+
+Here are the main sections you'll find:
+
+### Volume Metrics
+
+Track the usage and activity of your AI application over time:
+
+- Number of conversation threads
+- Agent runs
+- Text generations
+- Token usage
+- User feedback submissions
+
+### Latency Metrics
+
+Monitor the speed and responsiveness of your AI:
+
+- Time to first token: How quickly your AI starts generating a response
+- Token throughput: The rate at which tokens are generated
+
+### AI Performance Evaluations
+
+<Frame caption="Configure AI Evaluations">
+  <img src="/images/configure-ai-evals.png" alt="Configure AI Evaluations" />
+</Frame>
+
+Evaluate the quality and effectiveness of your AI:
+
+- Set up AI evaluations in production to continuously monitor performance
+- For detailed information on setting up evaluations, refer to our [evaluation guide](/guides/scorers)
+
+## Accessing Logs
+
+Detailed [logs](/guides/logs) provide valuable insights for troubleshooting and optimization:
+
+1. In the sidebar, navigate to the "Logs" section
+2. Use filters to narrow down logs by date, conversation ID, or AI eval results
+3. Review log entries for specific conversations or errors to identify root causes
