@@ -13,7 +13,7 @@ import { LiteralClient } from '@literalai/client';
 import { generateText as baseGenerateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 
-const literalAiClient = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]});
 
 // Here we wrap `generateText` with the Literal AI instrumentation. This will allow us to automatically capture
 // both the response from the LLM API and the other informations present in the response (latency, token counts, etc...).

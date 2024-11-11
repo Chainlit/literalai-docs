@@ -46,7 +46,7 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { ChatOpenAI } from '@langchain/openai';
 
-const literalAiClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]}); // This is the default and can be omitted
 
 const cb = literalAiClient.instrumentation.langchain.literalCallback({
   // You can add a list of chain types you want to ignore on Literal AI

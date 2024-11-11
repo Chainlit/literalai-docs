@@ -45,7 +45,7 @@ while has_next_page:
 ```typescript TypeScript
 import { LiteralClient } from '@literalai/client';
 
-const client = new LiteralClient(process.env['LITERAL_API_KEY']);
+const client = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]});
 
 let hasNextPage = true;
 let after = null;

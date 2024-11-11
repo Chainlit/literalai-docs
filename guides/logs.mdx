@@ -158,7 +158,7 @@ def my_step(input):
 ```typescript TypeScript
 import { LiteralClient } from "@literalai/client";
 
-const literalAiClient = new LiteralClient(process.env["LITERAL_API_KEY"]);
+const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]});
 
 // The Assistant could have intermediary steps
 async function myRun() {

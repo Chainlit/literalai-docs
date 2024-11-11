@@ -195,7 +195,7 @@ import { LiteralClient, User } from '@literalai/client';
 
 const openai = new OpenAI();
 
-const literalAiClient = new LiteralClient(process.env['LITERAL_API_KEY']);
+const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]});
 const syncer = literalAiClient.openai(openai).assistant.syncer;
 
 async function main() {

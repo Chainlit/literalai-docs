@@ -43,7 +43,8 @@ icon: code
     ```typescript TypeScript
     import { LiteralClient } from '@literalai/client';
 
-    const literalAiClient = new LiteralClient(process.env['LITERAL_API_KEY']); // This is the default and can be omitted
+    const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]}); // This is the default and can be omitted
+
     ```
     </CodeGroup>
   </Step>

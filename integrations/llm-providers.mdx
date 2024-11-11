@@ -31,8 +31,8 @@ import { LiteralClient } from "@literalai/client";
 import { HumanMessage } from "@langchain/core/messages";
 import { ChatAnthropic } from "@langchain/anthropic";
 
-const literalai_client = new LiteralClient(process.env.LITERAL_API_KEY);
-const cb = literalai_client.instrumentation.langchain.literalCallback();
+const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]});
+const cb = literalAiClient.instrumentation.langchain.literalCallback();
 
 // Example of using the callback
 const message = new HumanMessage({ content: "What is the capital of France?" });
