@@ -14,6 +14,36 @@ Literal AI cloud is currently compatible with:
 * [TypeScript SDK](/typescript-client/development) version `0.0.503` and above.
 </Note>
 
+# 0.1.0-beta (November 11th, 2024)
+
+<Warning>
+This release includes a complete overhaul on credentials.  
+
+Each major LLM provider now offers a single credential.  
+Additional credentials should be created as Custom LLM providers.  
+
+See [Credentials](/guides/settings/llm).
+</Warning>
+
+## New Features
+- Added ability to run experiments on prompt directly from Playground
+- Added `Scorers` page to manage ways to score on Online Evals and Experiments
+- Added `Online Evals` page to manage automatic monitoring
+- Made score columns sortable on the experiments table for better data analysis
+- Added scores distribution chart and error display in experiments
+- Enabled editing of `Dataset` items
+- On `Datasets` table, we now have links to experiments on each dataset
+
+## Improvements
+- Overhauled credentials management to simplify Experiment/Online Evals setup
+- Keep sidebar state in localStorage and removed playground resize
+- Added close button on hover for error messages
+- Changed display to 8-character UUIDs and added a copy ID button
+
+## Bug Fixes
+- Removed Summary tab and scores displays in tables
+- Defaulted table JSON previews to YAML
+
 # 0.0.629-beta (October 25th, 2024)
 
 ### New features
