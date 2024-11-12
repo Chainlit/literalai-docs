@@ -2,6 +2,12 @@
 title: Changelog
 ---
 
+# `0.1.0` (November 12th, 2024)
+* Added `create_prompt_variant` API to create `Prompt` variants
+* Modified `create_experiment` to take as input a `Prompt` variant ID instead of a `Prompt` ID
+
+<Warning>Starting with `0.1.0`, you need to have Literal AI version 0.1.0-beta or above to create experiments.</Warning>
+
 # `0.0.627` (October 28th, 2024)
 * Added fields `label`, `status` and `tags` to `Prompt` query retrieval
 * Fixed serialization/deserialization in LangChain integration
