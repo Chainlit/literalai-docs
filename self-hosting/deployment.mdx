@@ -34,19 +34,7 @@ It is your responsibility to ensure that the infrastructure is secure and compli
 
 Before running the container, you need to set up the environment variables.
 
-## 1. Literal AI authorization
-
-<Info>You can ignore these variables if you are using the **private Docker image**.</Info>
-
-Once you have registered your self-hosted platform [here](https://distrib.literalai.com/register.html), you will receive these informations by email.
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `LITERAL_CLIENT_ID` | Your Literal Client ID | `your-company-name` |
-| `LITERAL_AUTH_TOKEN` | Your Literal Authorization Token | `75e0dca...` |
-
-
-## 2. Database Configuration
+## 1. Database Configuration
 
 <Warning>The [pgcrypto](https://www.postgresql.org/docs/current/pgcrypto.html) module is required for PostgreSQL. When using Azure, you will need to manually [add the extension](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions).</Warning>
 ### Required 
@@ -73,7 +61,7 @@ OR
 | `DATABASE_DIRECT_URL` | Direct URL for database migrations (cannot use pg-bouncer). | `postgresql://username:password@host:port/db_name` |
 | `DATABASE_SSL` | Set to 'true' if using a secure network. | `false` |
 
-## 3. Authentication Configuration
+## 2. Authentication Configuration
 ### Provider Agnostic
 | Variable | Description | Example |
 |----------|-------------|---------|
@@ -91,7 +79,7 @@ OR
 | [Okta](https://next-auth.js.org/providers/okta) | `OKTA_CLIENT_ID` `OKTA_CLIENT_SECRET` `OKTA_ISSUER` | `/api/auth/callback/okta` |
 | [GitHub](https://next-auth.js.org/providers/github) | `GITHUB_ID` `GITHUB_SECRET` | `/api/auth/callback/github` |
 
-## 4. File Storage Configuration
+## 3. File Storage Configuration
 
 ### Provider Agnostic
 | Variable | Description | Example |
@@ -112,7 +100,7 @@ OR
 - [Azure Blob Storage](https://learn.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services)
 
 
-## 5. Cache Configuration [Optional]
+## 4. Cache Configuration [Optional]
 
 <Note>Setting up a cache is optional, but recommended to decrease latency.</Note>
 
@@ -135,7 +123,7 @@ token defined via the `ADMIN_AUTH_TOKEN` environment variable. Set it to a non-e
 be able to investigate your cache-based queueing system.
 </Warning>
 
-## 6. SMTP Configuration [Optional]
+## 5. SMTP Configuration [Optional]
 <Note>Setting up SMTP is optional. It enables Literal AI to send emails for password resets and project invitations.</Note>
 
 | Variable | Description | Example |
