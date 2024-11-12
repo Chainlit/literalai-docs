@@ -86,7 +86,7 @@ best action based on the user's input.
 If you need to specify the **return value** of a tool, use template messages above and select the `Tool` message type.
 </Note>
 
-### Output
+### Output types
 
 Choose the output format for your prompt:
 
@@ -94,11 +94,17 @@ Choose the output format for your prompt:
   <img src="/images/playground-output.png" alt="List of output formats." />
 </Frame>
 
-Pick any of:
-- `text`: free-text response
-- `json_object`: JSON response with no specific schema enforced. Some providers ask to **explicitly** instruct the LLM to output JSON.
-- `json_schema`: JSON response following the given JSON schema. 
-- `score_schema`: specific to Literal AI and particular useful for LLM-as-a-Judge prompts. 
+#### Text
+`text`: free-text response
+
+#### JSON mode
+`json_object`: JSON response with no specific schema enforced. Some providers ask to **explicitly** instruct the LLM to output JSON.
+
+#### JSON schema
+`json_schema`: JSON response following the given JSON schema. 
+
+#### Score schema
+`score_schema`: specific to Literal AI and particular useful for LLM-as-a-Judge prompts. 
 You can choose a Score Schema which forces your LLM to output a JSON of the form:
 ```json
 {
@@ -106,8 +112,6 @@ You can choose a Score Schema which forces your LLM to output a JSON of the form
   "category": "..." // Category in score schema picked by LLM
 }
 ```
-
-You can achieve the same behavior with `json_schema`.
 
 
 <Warning>
@@ -172,4 +176,4 @@ Selectively run tabs with the play button on the top right of each tab.
 Once satisfied with your "vibes check", it's time to run [experiments](/guides/experiment) on larger datasets. 
 
 Saving, A/B testing and deploying your prompt comes in last.  
-Check out the [Prompts](/guides/prompt) documentation.
+Check out the [Prompts](/guides/prompts) documentation.
