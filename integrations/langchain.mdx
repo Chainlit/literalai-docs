@@ -235,3 +235,22 @@ const finalState = await app.invoke(
   Check out this Typescript LangGraph example.
 </Card>
 </CardGroup>
+
+## Link a Literal AI Prompt to a LangChain/LangGraph Run
+
+<CodeGroup>
+```python Python
+prompt = literalai_client.api.get_prompt(name="RAG prompt")
+langchain_prompt = prompt.to_langchain_chat_prompt_template()
+# Use langchain_prompt as any other LangChain prompt
+```
+```typescript TypeScript
+const prompt = await literalAiClient.api.getPrompt("RAG prompt");
+const chatPrompt = prompt.toLangchainChatPromptTemplate();
+// Use chatPrompt as any other LangChain prompt
+```
+</CodeGroup>
+
+The Literal AI SDK will not only log the generations but also track which prompt versions were used to generate them.
+
+This is especially useful to track the performance of your prompt versions and debug in context.
