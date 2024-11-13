@@ -102,7 +102,7 @@ const literalAiClient = new LiteralClient();
 
 const openai = new OpenAI();
 
-client.instrumentation.openai();
+literalAiClient.instrumentation.openai();
 
 async function myAssistant(initialUserQuery: string) {
   return literalAiClient
