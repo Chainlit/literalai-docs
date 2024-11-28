@@ -297,33 +297,43 @@ You can learn more about the Thread API in the following references:
 
 </CardGroup>
 
-### Bind a Thread to a User
+### Bind a `Thread` to a `User`
 
-You can bind a thread to a user to track the user's activity. This is useful for chatbots or any other conversational AI.
+You can bind a `Thread` to a `User` to track their activity: quite handy for chatbots and conversational AIs!
 
-To do so, you need to use a common identifier for the user, such as an email or a user ID:
+Simply provide a unique `User` identifier, such as an email.
 
 <CodeGroup>
 ```python Python
-user = literalai_client.api.get_or_create_user(identifier="John Doe")
-
+# If the user `john.doe@example.com` does not exist, it's automatically created.
 def process_message(thread_id: str, user_input: str):
-    with literalai_client.thread(participant_id=user.id, thread_id=thread_id) as thread:
+    with literalai_client.thread(thread_id=thread_id, 
+                                 participant_id="john.doe@example.com") as thread:
         # Reusing the Agent from the previous example
         my_agent(user_input)
 ```
 ```typescript TypeScript
-const participantId = await literalAiClient.api.getOrCreateUser('John Doe');
-
+// If the user `john.doe@example.com` does not exist, it's automatically created.
 async function processMessage(threadId: string, userInput: string) {
     await literalAiClient
-        .thread({ participantId, id: threadId})
+        .thread({ participantId: "john.doe@example.com", id: threadId})
         .wrap(async () => {
             await myAgent(userInput);
         });
 }
 ```
 </CodeGroup>
+
+<Note>
+You can create a `User` at any time with the [create_user API](/python-client/api-reference/api#create-user).  
+If your `User` already exists, you may update its `metadata` with the [update_user API](/python-client/api-reference/api#update-user).
+
+The Literal AI client method `thread()` takes a `participant_id` (`participantId` in TypeScript) argument which accepts any of:
+- `User.id`: the unique ID of your `User` -- it's a UUID
+- `User.identifier`: the unique identifier of your `User` -- it can be an email, a username, etc.
+
+Careful with collisions when letting users pick their own `identifier`!
+</Note>
 
 
 ## Log to a Specific Environment
