@@ -4,9 +4,19 @@ icon: check
 ---
 
 
-Literal AI supports [OpenLLMetry](https://github.com/traceloop/openllmetry) and its integrations.
+Literal AI supports [OpenLLMetry](https://github.com/traceloop/openllmetry) and its integrations. 
+
+You can use the OpenLLMetry integration to log your LLM, AI framework, and RAG pipeline calls to Literal AI.
+
+```python
+from literalai import AsyncLiteralClient
+import os
+lai = AsyncLiteralClient(api_key=os.environ["LITERAL_API_KEY"])
+lai.initialize()
+```
 
 
+Here is an example of how to log a regular OpenAI chat completion:
 ```python
 from literalai import AsyncLiteralClient
 import os
