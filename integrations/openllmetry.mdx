@@ -1,0 +1,34 @@
+---
+title: "OpenLLMetry"
+icon: check
+---
+
+
+Literal AI supports [OpenLLMetry](https://github.com/traceloop/openllmetry) and its integrations.
+
+
+```python
+from literalai import AsyncLiteralClient
+import os
+lai = AsyncLiteralClient(api_key=os.environ["LITERAL_API_KEY"])
+lai.initialize()
+# Run a regular OpenAI chat completion
+
+@lai.thread()
+async def run_openai_chat_completion():
+    lai.set_properties(
+        tags=["hello", "world"],
+        metadata={"foo": 1},
+    )
+
+    oai = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
+    await oai.chat.completions.create(
+        model="gpt-4o",
+        messages=[{ "role": "user", "content": "Hello, how are you?" }]
+    )
+
+asyncio.run(run_openai_chat_completion())
+```
+
+Here are examples: [Example 1](https://github.com/Chainlit/literalai-python/blob/cafe70ddd5838a2cf35193ac922c9b1fd85f79e7/examples/langchain_variable.py#L40) and [Example 2](https://github.com/Chainlit/literalai-python/blob/cafe70ddd5838a2cf35193ac922c9b1fd85f79e7/examples/multimodal.py#L25)

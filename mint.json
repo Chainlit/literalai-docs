@@ -96,6 +96,7 @@
         "integrations/messages-server",
         "integrations/mistralai",
         "integrations/vercel-ai-sdk",
+        "integrations/openllmetry",
         "integrations/chainlit"
       ]
     },
