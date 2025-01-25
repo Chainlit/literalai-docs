@@ -37,14 +37,24 @@ In most cases, you will want to keep track of the different generations from you
 const generateText = literalAiClient.instrumentation.vercel.generateText;
 
 export async function POST(req: Request) {
-  await literalAiClient.thread({ name: 'Example' }).wrap(async () => {
-    const { text } = await generateText({
-      model: openai('gpt-4o-mini'),
-      prompt: question,
+const streamText =
+  literalAiClient.instrumentation.vercel.streamText;
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
+
+  const result = await literalAiClient
+    .thread({ name: "Example" })
+    .wrap(async () => {
+      return streamText({
+        model: openai("gpt-4o"),
+        messages,
+      });
     });
 
-    return { text };
-  });
+  return result.toDataStreamResponse();
+}
+
 }
 ```
 
