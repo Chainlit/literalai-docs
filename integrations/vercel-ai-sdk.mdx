@@ -7,7 +7,7 @@ This integration allows you to very simply add observability and monitoring to y
 
 <Tip>The Vercel AI SDK integration already support LLM tracing. You should not use it in conjunction with other LLM provider integrations such as [OpenAI](/integrations/openai).</Tip>
 
-```typescript streamText
+```typescript
 import { LiteralClient } from '@literalai/client';
 import { openai } from '@ai-sdk/openai';
 
@@ -27,8 +27,6 @@ export async function POST(req: Request) {
   return result.toDataStreamResponse();
 }
 ```
-</CodeGroup>
-
 
 ## With Threads and Runs
 
