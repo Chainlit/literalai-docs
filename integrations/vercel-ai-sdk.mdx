@@ -7,28 +7,6 @@ This integration allows you to very simply add observability and monitoring to y
 
 <Tip>The Vercel AI SDK integration already support LLM tracing. You should not use it in conjunction with other LLM provider integrations such as [OpenAI](/integrations/openai).</Tip>
 
-<CodeGroup>
-```typescript generateText
-import { LiteralClient } from '@literalai/client';
-import { openai } from '@ai-sdk/openai';
-
-const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]});
-
-// Here we use the wrapped `generateText` from the Literal AI client. This will allow us to automatically capture
-// both the response from the LLM API and the other informations present in the response (latency, token counts, etc...).
-const generateText = literalAiClient.instrumentation.vercel.generateText;
-
-export async function POST(req: Request) {
-  // The wrapped version of `generateText` accepts the same parameters as the original function.
-  const { text } = await generateText({
-    model: openai('gpt-4o-mini'),
-    prompt: question
-  });
-
-  return { text };
-}
-```
-
 ```typescript streamText
 import { LiteralClient } from '@literalai/client';
 import { openai } from '@ai-sdk/openai';
@@ -38,14 +16,15 @@ import { openai } from '@ai-sdk/openai';
 const streamText = literalAiClient.instrumentation.vercel.streamText;
 
 export async function POST(req: Request) {
+    const { messages } = await req.json();
+  
   // The wrapped version of `streamText` accepts the same parameters as the original function.
-  const { textStream } = await streamText({
-    model: openai('gpt-4o-mini'),
-    system: question,
-    messages: history
+  const result = streamTextWithLiteralAI({
+    model: openai('gpt-4o'),
+    messages,
   });
 
-  return textStream;
+  return result.toDataStreamResponse();
 }
 ```
 </CodeGroup>
