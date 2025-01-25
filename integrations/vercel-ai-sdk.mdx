@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
   
   // The wrapped version of `streamText` accepts the same parameters as the original function.
-  const result = streamTextWithLiteralAI({
+  const result = streamText({
     model: openai('gpt-4o'),
     messages,
   });
