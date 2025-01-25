@@ -33,6 +33,9 @@ export async function POST(req: Request) {
 In most cases, you will want to keep track of the different generations from your application by grouping them into [Threads or Runs](/guides/logs). This is especially useful when you want to understand the context in which a generation was made, or when you want to compare different generations.
 
 ```typescript TypeScript
+
+const generateText = literalAiClient.instrumentation.vercel.generateText;
+
 export async function POST(req: Request) {
   await literalAiClient.thread({ name: 'Example' }).wrap(async () => {
     const { text } = await generateText({
@@ -54,6 +57,8 @@ These values will be automatically added to the generation when it is logged on 
 import { v4 as uuidv4 } from 'uuid';
 
 const literalaiStepId = uuidv4();
+
+const generateText = literalAiClient.instrumentation.vercel.generateText;
 
 const { text } = await generateText({
   model: openai('gpt-4o-mini'),
