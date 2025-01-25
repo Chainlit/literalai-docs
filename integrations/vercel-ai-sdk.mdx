@@ -10,7 +10,6 @@ This integration allows you to very simply add observability and monitoring to y
 <CodeGroup>
 ```typescript generateText
 import { LiteralClient } from '@literalai/client';
-import { generateText as baseGenerateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 
 const literalAiClient = new LiteralClient({apiKey: process.env["LITERAL_API_KEY"]});
@@ -32,7 +31,6 @@ export async function POST(req: Request) {
 
 ```typescript streamText
 import { LiteralClient } from '@literalai/client';
-import { streamText as baseStreamText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 
 // Here we use the wrapped `streamText` from the Literal AI client. This will allow us to automatically capture
