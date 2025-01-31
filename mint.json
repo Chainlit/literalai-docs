@@ -22,6 +22,10 @@
     "raiseIssue": true
   },
   "topbarLinks": [],
+  "topAnchor": {
+    "name": "Documentation",
+    "icon": "book-open"
+  },
   "anchors": [
     {
       "name": "Python Client",
