@@ -29,16 +29,17 @@ order_by = {
     "column": "createdAt",
     "direction": "DESC"
 }
-    
+
+threads = []
 while has_next_page:
     response = client.api.get_threads(
         filters=filters,
         order_by=order_by,
         after=after
     )
-    print(response.to_dict())
-    has_next_page = response.pageInfo.hasNextPage
-    after = response.pageInfo.endCursor
+    threads.extend(response.data)
+    has_next_page = response.page_info.has_next_page
+    after = response.page_info.end_cursor
 
 ```
 
