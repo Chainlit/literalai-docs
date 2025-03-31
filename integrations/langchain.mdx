@@ -7,6 +7,8 @@ The Langchain integration enables to monitor your Langchain agents and chains wi
 
 <Note>You should create a new instance of the callback handler for each invocation.</Note>
 
+<Note>You should call `literalai_client.flush()` at the end of your script to ensure all generations are logged.</Note>
+
 <Tip>The LangChain integration already support LLM tracing. You should not use it in conjunction with other LLM provider integrations such as [OpenAI](/integrations/openai).</Tip>
 
 <CodeGroup>
